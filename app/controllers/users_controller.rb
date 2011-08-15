@@ -6,7 +6,20 @@ class UsersController < ApplicationController
   end
   
   def new
+    @user = User.new
     @title = "Sign up"
   end
 
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+      flash[:success] = "Welcome to JobScape!"
+      redirect_to @user
+    else
+      @user.password = nil
+      @user.password_confirmation = nil
+      @title = "Sign up"
+      render 'new'
+    end
+  end
 end
