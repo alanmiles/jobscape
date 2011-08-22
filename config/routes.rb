@@ -1,6 +1,7 @@
 Jobscape::Application.routes.draw do
 
   resources :users
+  resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
   
   match '/signup',  :to => 'users#new'
@@ -10,6 +11,7 @@ Jobscape::Application.routes.draw do
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
+  match '/admin',   :to => 'pages#admin_home'
   
   root :to => 'pages#home'
 

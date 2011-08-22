@@ -27,6 +27,11 @@ describe "LayoutLinks" do
     response.should have_selector('title', :content => "Sign up")
   end
   
+  it "should have an Admin Menu page at '/admin'" do
+    get '/admin'
+    response.should have_selector('title', :content => "Admin")
+  end
+  
   it "should have the right links on the layout" do
     visit root_path
     click_link "About"
@@ -70,6 +75,23 @@ describe "LayoutLinks" do
       response.should have_selector("a", :href => user_path(@user),
                                          :content => "Profile")
     end
+  end
+  
+  describe "when signed in as an administrator" do
+  
+    before(:each) do
+      @user = Factory(:user, :admin => true)
+      visit signin_path
+      fill_in :email,    :with => @user.email
+      fill_in :password, :with => @user.password
+      click_button
+    end
+    
+    it "should direct to the Admin Menu page" do
+      visit root_path
+      response.should have_selector("title", :content => "Admin")
+    end
+  
   end
 end
 

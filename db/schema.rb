@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110817000119) do
+ActiveRecord::Schema.define(:version => 20110820193919) do
+
+  create_table "occupations", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "occupations", ["name"], :name => "index_occupations_on_name"
 
   create_table "users", :force => true do |t|
     t.string   "name"

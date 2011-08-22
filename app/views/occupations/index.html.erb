@@ -1,0 +1,10 @@
+<h1><%= @title %></h1>
+<% @occupations.each do |occupation| %>
+   <%= link_to occupation.name, edit_occupation_path(occupation) %>
+  
+  | <%= link_to "delete", occupation, 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Delete #{occupation.name}" %>
+    <br />
+<% end %>

@@ -21,6 +21,16 @@ module SessionsHelper
     user == current_user
   end
   
+  def authenticate
+    deny_access unless signed_in?
+  end
+  
+  def admin_user
+    unless current_user.admin?
+      redirect_to root_path, :notice => "Only available to administrators"
+    end
+  end
+  
   def deny_access
     store_location
     redirect_to signin_path, :notice => "Please sign in to access this page."
