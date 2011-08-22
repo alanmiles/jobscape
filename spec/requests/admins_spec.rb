@@ -12,5 +12,6 @@ describe "Admins" do
   it "should have a link to the occupations list" do
     click_link "Occupations"
     response.should have_selector("title", :content => "Occupations")
+    response.should have_selector("a", :href => new_occupation_path)
   end
 end

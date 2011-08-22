@@ -189,3 +189,8 @@ ul.users {
 .users li {
   list-style: none;
 }
+
+.r-float {
+  float:right;
+}
+

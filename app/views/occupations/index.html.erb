@@ -1,4 +1,11 @@
+<div class = "r-float">
+<%= link_to "Add a new occupation", new_occupation_path %>
+</div>
+
 <h1><%= @title %></h1>
+
+
+
 <% @occupations.each do |occupation| %>
    <%= link_to occupation.name, edit_occupation_path(occupation) %>
   
