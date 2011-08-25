@@ -10,6 +10,15 @@ Factory.define :occupation do |occupation|
   occupation.name	     "Sales"
 end
 
+Factory.define :business do |business|
+  business.name		     "Cambiz"
+  business.address	     "34 Walpole Road, Cambridge"
+  business.city	     	     "Cambridge"
+  business.country           "United Kingdom"
+  business.latitude          52.1877923
+  business.longitude         0.1623374
+end
+
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
 end

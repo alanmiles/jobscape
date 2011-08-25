@@ -1,0 +1,21 @@
+<div class = "r-float">
+<%= link_to "Cancel", business_path(@business) %>
+</div>
+
+<h1>Edit business</h1>
+<%= form_for(@business) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+<div class="field">
+  <%= f.label :name %> <small> (50 character maximum)  </small><br />
+  <%= f.text_field :name %>
+</div>
+<div class="field">
+  <%= f.label :address, "UK post-code or address" %><br />
+  <small>If the post-code wasn't recognized, enter the address instead (max 50 characters)</small><br />
+  <%= f.text_field :address %>
+</div>
+
+  <div class="actions">
+    <%= f.submit "Confirm" %>
+  </div>
+<% end %>

@@ -1,0 +1,20 @@
+<div class = "r-float">
+<%= link_to "Cancel", businesses_path %>
+</div>
+
+<h1>Add your business</h1>
+<%= form_for(@business) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+<div class="field">
+  <%= f.label :name %> <small> (50 character maximum)  </small><br />
+  <%= f.text_field :name %>
+</div>
+<div class="field">
+  <%= f.label :address, "UK post-code" %><br />
+  <%= f.text_field :address %>
+</div>
+
+  <div class="actions">
+    <%= f.submit "Create" %>
+  </div>
+<% end %>

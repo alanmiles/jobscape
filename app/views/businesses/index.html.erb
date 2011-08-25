@@ -1,0 +1,29 @@
+<div class = "r-float">
+  <small>Total: <%= @businesses.count %></small>
+</div>
+<h1><%= @title %></h1>
+
+<%= will_paginate %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>City</th>
+    <th>Country</th>
+    <th></th>
+  </tr>
+  
+  <% @businesses.each do |business| %>
+  <tr>
+    <td><%= business.name %></td> 
+    <td><%= business.city %></td>
+    <td><%= business.country %></td>
+    <td><small><%= link_to "delete", business, 
+    			:method => :delete, 
+    			:confirm => "You sure?",
+                        :title => "Delete #{business.name}" %></small>
+    </td>
+  </tr>
+  <% end %>
+
+</table>
+<%= will_paginate %>
