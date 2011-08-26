@@ -15,7 +15,7 @@
 
 class Business < ActiveRecord::Base
 
-  attr_accessible :name, :address, :latitude, :longitude
+  attr_accessible :name, :address, :latitude, :longitude, :created_by
   geocoded_by :address
   reverse_geocoded_by :latitude, :longitude do |obj, results|
     if geo = results.first
@@ -25,7 +25,8 @@ class Business < ActiveRecord::Base
   end
   after_validation :geocode, :if => :address_changed?
   after_validation :reverse_geocode, :if => :address_changed?
-  
+
+  has_many :employees
   
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 },
@@ -33,5 +34,5 @@ class Business < ActiveRecord::Base
   			         :message => "+ address appears to be a duplicate" }
   validates :address, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }
-  			
+  		
 end

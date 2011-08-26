@@ -51,8 +51,9 @@ describe "BusinessCreations" do
         response.should have_selector("title", :content => "Edit business")
         response.should render_template('businesses/edit')
       end.should change(Business, :count).by(1)
-    
+     
     end
   
   end
+  
 end

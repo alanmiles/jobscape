@@ -214,7 +214,17 @@ describe BusinessesController do
           @business = assigns(:business)
           #@business.reload
           @business.city.should == "Tonbridge"
+        end
+        
+        it "should create an Employee record, linking business and user" do
+          post :create, :business => @attr
+          @business = assigns(:business)
+          @employee = Employee.find(:first, 
+           		:conditions => ["user_id = ? and business_id = ?", 
+           		@user.id, @business.id])
+          @employee.should be_valid
         end    
+        
       end     
         
     end

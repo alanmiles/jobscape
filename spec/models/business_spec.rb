@@ -71,5 +71,6 @@ describe Business do
     @business = Business.create!(@attr)
     @business.reload
     @business.latitude.should_not be_nil
-  end  
+  end
+  
 end

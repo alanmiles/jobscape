@@ -27,11 +27,6 @@ describe "LayoutLinks" do
     response.should have_selector('title', :content => "Sign up")
   end
   
-  it "should have an Admin Menu page at '/admin'" do
-    get '/admin'
-    response.should have_selector('title', :content => "Admin")
-  end
-  
   it "should have the right links on the layout" do
     visit root_path
     click_link "About"
@@ -64,6 +59,11 @@ describe "LayoutLinks" do
       click_button
     end
 
+    it "should direct to the user home page" do
+      visit root_path
+      response.should have_selector("title", :content => "User Menu")
+    end
+
     it "should have a signout link" do
       visit root_path
       response.should have_selector("a", :href => signout_path,
@@ -91,7 +91,7 @@ describe "LayoutLinks" do
       visit root_path
       response.should have_selector("title", :content => "Admin")
     end
-  
+   
   end
 end
 

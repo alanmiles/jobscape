@@ -7,7 +7,6 @@ class CreateBusinesses < ActiveRecord::Migration
       t.string          :country
       t.float 		:latitude
       t.float 		:longitude
-      #t.boolean 	:coded, :default => false
 
       t.timestamps
     end

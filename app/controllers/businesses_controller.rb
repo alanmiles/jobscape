@@ -29,10 +29,12 @@ class BusinessesController < ApplicationController
         @title = "Edit business"
         redirect_to edit_business_path(@business)  
       else
-        #@business.update_attribute(:coded, true)
         flash[:success] = "#{@business.name} added."
         redirect_to @business
       end
+      Employee.create!(:user_id => current_user.id, :business_id => @business.id,
+                       :officer => true)
+      
     else
       @title = "New business"
       render 'new'

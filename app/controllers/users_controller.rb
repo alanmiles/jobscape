@@ -66,7 +66,9 @@ class UsersController < ApplicationController
     end
     
     def signedin
-      flash[:notice] = "You're already signed up"
-      redirect_to(user_path(current_user)) if signed_in? 
+      if signed_in?
+        flash[:notice] = "You're already signed up"
+        redirect_to(user_path(current_user))
+      end 
     end
 end
