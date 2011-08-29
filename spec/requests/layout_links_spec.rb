@@ -61,7 +61,7 @@ describe "LayoutLinks" do
 
     it "should direct to the user home page" do
       visit root_path
-      response.should have_selector("title", :content => "User Menu")
+      response.should have_selector("title", :content => "User Home")
     end
 
     it "should have a signout link" do

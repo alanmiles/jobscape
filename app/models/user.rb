@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
-  has_many :employees
+  has_many :employees, :dependent => :destroy
+  has_many :businesses, :through => :employees
   
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }
@@ -29,6 +30,16 @@ class User < ActiveRecord::Base
                        	:length       	=> { :within => 6..40 }
                        	
   before_save :encrypt_password
+
+  def belongs_to_business?
+    businesses.count > 0
+  end
+  
+  def single_business?
+    if belongs_to_business?
+      businesses.count == 1
+    end
+  end
 
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)

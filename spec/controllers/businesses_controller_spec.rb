@@ -104,6 +104,24 @@ describe BusinessesController do
         delete :destroy, :id => @business
         response.should redirect_to(businesses_path)
       end
+      
+      before(:each) do
+        @user_employed = Factory(:user, :email => "employed@example.com")
+        @employee = Factory(:employee, :user_id => @user_employed.id,
+                            :business_id => @business.id)
+      end
+      
+      it "should remove associated 'Employee' records" do
+        lambda do
+          delete :destroy, :id => @business
+        end.should change(Employee, :count).by(-1)
+      end
+      
+      it "should not remove any user previously associated with the business" do
+        lambda do
+          delete :destroy, :id => @business
+        end.should_not change(User, :count)
+      end
     end
     
   end

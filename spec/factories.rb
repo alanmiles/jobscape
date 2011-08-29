@@ -19,6 +19,11 @@ Factory.define :business do |business|
   business.longitude         0.1623374
 end
 
+Factory.define :employee do |employee|
+  employee.association :user
+  employee.association :business
+end
+
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
 end

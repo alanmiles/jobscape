@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       if current_user.admin?
         redirect_back_or admin_path
       else
-        redirect_back_or user_menu_path
+        redirect_back_or user_home_path
       end
     end
   end

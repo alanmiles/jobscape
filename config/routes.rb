@@ -13,7 +13,7 @@ Jobscape::Application.routes.draw do
   match '/about',   	:to => 'pages#about'
   match '/help',    	:to => 'pages#help'
   match '/admin',   	:to => 'pages#admin_home'
-  match '/user_menu', 	:to => 'pages#user_home'
+  match '/user_home', 	:to => 'pages#user_home'
   
   root :to => 'pages#home'
 

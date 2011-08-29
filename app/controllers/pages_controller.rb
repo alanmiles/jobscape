@@ -7,7 +7,7 @@ class PagesController < ApplicationController
       if current_user.admin?
         redirect_to admin_path
       else
-        redirect_to user_menu_path
+        redirect_to user_home_path
       end
     else
       @title = "Home"
@@ -31,7 +31,15 @@ class PagesController < ApplicationController
   end
   
   def user_home
-    @title = "User Menu"
+    @title = "User Home"
     @user = current_user
+    if @user.belongs_to_business?
+      if @user.single_business?
+        @business = @user.businesses.first
+        @employee = Employee.find_by_user_id(@user)
+      else
+        @employees = Employee.find_all_by_user_id(@user)
+      end
+    end
   end  
 end

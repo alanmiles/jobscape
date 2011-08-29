@@ -55,7 +55,7 @@ describe SessionsController do
 
       it "should redirect to the user menu page" do
         post :create, :session => @attr
-        response.should redirect_to(user_menu_path)
+        response.should redirect_to(user_home_path)
       end
     end
   end

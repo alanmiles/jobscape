@@ -17,7 +17,15 @@ class Employee < ActiveRecord::Base
   belongs_to :user
   belongs_to :business
   
-  validates :user_id,		:presence 	=> true,
-  				:uniqueness 	=> { :scope => :business_id } 
-  validates :business_id,	:presence 	=> true
+  validates :user_id,		:presence 	=> true
+  validates :business_id,	:presence 	=> true,
+  				:uniqueness 	=> { :scope => :user_id }
+  
+  def role
+    if officer?
+      return "Officer"
+    else
+      return "Employee"
+    end
+  end				
 end

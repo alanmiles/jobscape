@@ -26,7 +26,7 @@ class Business < ActiveRecord::Base
   after_validation :geocode, :if => :address_changed?
   after_validation :reverse_geocode, :if => :address_changed?
 
-  has_many :employees
+  has_many :employees, :dependent => :destroy
   
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 },

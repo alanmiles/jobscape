@@ -77,30 +77,52 @@ describe UsersController do
     before(:each) do
       @user = Factory(:user)
     end
-
-    it "should be successful" do
-      get :show, :id => @user
-      response.should be_success
-    end
-
-    it "should find the right user" do
-      get :show, :id => @user
-      assigns(:user).should == @user
+    
+    describe "for non-signed-in users" do
+    
+      it "should not be successful" do
+        get :show, :id => @user
+        response.should_not be_success
+      end
+      
+      it "should redirect to the signin page" do
+        get :show, :id => @user
+        response.should redirect_to(signin_path)
+      end
+    
     end
     
-    it "should have the right title" do
-      get :show, :id => @user
-      response.should have_selector("title", :content => @user.name)
-    end
+    describe "for signed-in non-admin users" do
+    
+      before(:each) do
+        test_sign_in(@user)
+      end  
 
-    it "should include the user's name" do
-      get :show, :id => @user
-      response.should have_selector("h1", :content => @user.name)
-    end
+      it "should be successful" do
+        get :show, :id => @user
+        response.should be_success
+      end
 
-    it "should have a profile image" do
-      get :show, :id => @user
-      response.should have_selector("h1>img", :class => "gravatar")
+      it "should find the right user" do
+        get :show, :id => @user
+        assigns(:user).should == @user
+      end
+    
+      it "should have the right title" do
+        get :show, :id => @user
+        response.should have_selector("title", :content => @user.name)
+      end
+
+      it "should include the user's name" do
+        get :show, :id => @user
+        response.should have_selector("h1", :content => @user.name)
+      end
+
+      it "should have a profile image" do
+        get :show, :id => @user
+        response.should have_selector("h1>img", :class => "gravatar")
+      end
+      
     end
   end
   
@@ -350,6 +372,29 @@ describe UsersController do
         delete :destroy, :id => @user
         response.should redirect_to(users_path)
       end
+      
+      before(:each) do
+        @business_1 = Factory(:business)
+        @business_2 = Factory(:business, :address => "TN9 1SP")
+        @employee_1 = Factory(:employee, :user_id => @user.id, 
+        			       :business_id => @business_1.id)
+        @employee_2 = Factory(:employee, :user_id => @user.id, 
+        			       :business_id => @business_2.id)
+        			       
+      end
+      
+      it "should destroy any associated Employee records" do
+        lambda do
+          delete :destroy, :id => @user
+        end.should change(Employee, :count).by(-2)
+      end
+      
+      it "should not destroy businesses with which the user was connected" do
+        lambda do
+          delete :destroy, :id => @user
+        end.should_not change(Business, :count)
+      end
+      
     end
 
   end
