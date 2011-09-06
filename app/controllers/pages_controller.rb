@@ -1,6 +1,8 @@
 class PagesController < ApplicationController
-  before_filter :authenticate, :only => [:user_home, :admin_home]
+  before_filter :authenticate, :only => [:user_home, :admin_home, :select_business]
   before_filter :admin_user, :only => :admin_home
+  before_filter :not_admin_user, :only => :select_business
+  before_filter :not_with_single_business, :only => :select_business
   
   def home
     if signed_in?
@@ -30,6 +32,18 @@ class PagesController < ApplicationController
     @title = "Admin"
   end
   
+  def select_business
+    @title = "Select business"
+    @user = current_user
+    @employees = Employee.find_all_by_user_id(@user)
+  end
+  
+  def officer_home
+    @business = Business.find(session[:biz])
+    @user = current_user
+    @employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
+  end
+  
   def user_home
     @title = "User Home"
     @user = current_user
@@ -37,9 +51,23 @@ class PagesController < ApplicationController
       if @user.single_business?
         @business = @user.businesses.first
         @employee = Employee.find_by_user_id(@user)
+        session[:biz] = @business.id
+        if @employee.officer?
+          redirect_to officer_home_path
+        end
       else
-        @employees = Employee.find_all_by_user_id(@user)
+        #@employees = Employee.find_all_by_user_id(@user)
+        redirect_to select_business_path
       end
     end
-  end  
+  end
+  
+  private
+  
+    def not_with_single_business
+      if current_user.single_business?
+        redirect_to user_home_path, :message => "Not available if you belong to only one business"  
+      end
+    end
+
 end

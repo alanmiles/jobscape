@@ -1,0 +1,12 @@
+<div class = "r-float">
+<%= link_to "Cancel", business_jobs_path(@business) %>
+</div>
+
+<h1><%= @title %></h1>
+<%= form_for([@business, @job]) do |f| %>
+  <%= render 'fields', :f => f %>
+
+  <div class="actions">
+    <%= f.submit "Create" %>
+  </div>
+<% end %>

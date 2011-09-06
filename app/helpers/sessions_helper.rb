@@ -31,9 +31,19 @@ module SessionsHelper
     end
   end
   
+  def not_admin_user
+    if current_user.admin?
+      redirect_to admin_path, :notice => "Not available to administrators"
+    end
+  end
+  
   def deny_access
     store_location
     redirect_to signin_path, :notice => "Please sign in to access this page."
+  end
+  
+  def business_session?
+    session[:biz]!= nil
   end
   
   def redirect_back_or(default)

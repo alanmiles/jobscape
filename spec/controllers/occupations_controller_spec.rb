@@ -271,8 +271,20 @@ describe OccupationsController do
       
       describe "failure" do
       
-        it "should not delete an occupation that's linked to a job" 
-      
+        describe "when the occupation is linked to existing jobs" do
+       
+          before(:each) do
+            @business = Factory(:business)
+            @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+          end
+          
+          it "should not delete an occupation that's linked to a job" do
+            lambda do
+              delete :destroy, :id => @occupation
+              flash[:error].should == " Cannot delete occupation while associated jobs exist"
+            end.should_not change(Occupation, :count)
+          end
+        end
       end
       
     

@@ -2,10 +2,17 @@ class Occupation < ActiveRecord::Base
 
   attr_accessible :name
   
-  validates :name, 	:presence 	=> true,
+  has_many 	:jobs
+  
+  validates 	:name, 	:presence 	=> true,
   			:length		=> { :maximum => 30 }
 
   default_scope :order => 'occupations.name'
+  
+  def associated_jobs?
+    self.jobs.count > 0
+  end
+  
 end
 
 # == Schema Information

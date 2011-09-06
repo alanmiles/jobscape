@@ -78,6 +78,34 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 
+.display_box {
+  margin-left: 30px;
+  margin-right: 30px;
+  width: 240px;
+  text-align: center;
+  padding: 15px;
+  font-size: 100%;
+}
+
+.pink {
+  color: #660033;
+  background: #cc9999;
+}
+
+.beige {
+  color: #666633;
+  background: #cccc99;
+}
+
+.grun {
+  color: #336633;
+  background: #99cc99;
+}
+
+.rightpos {
+  float:right;
+}
+
 /* Sign up button */
 
 a.signup_button {
@@ -130,6 +158,10 @@ td.sidebar {
   padding: 1em;
   vertical-align: top;
   background: #ffc;
+}
+
+td.control {
+  font-size: 0.7em;
 }
 
 .profile img.gravatar {

@@ -33,6 +33,19 @@ describe PagesController do
     end
   end
   
+  describe "GET 'select_business'" do
+  
+    it "should not be successful" do
+      get :select_business
+      response.should_not be_success
+    end
+    
+    it "should redirect to the signin path" do
+      get :select_business
+      response.should redirect_to signin_path
+    end
+  end
+  
   describe "GET 'admin_home'" do
   
     it "should not be successful" do
@@ -70,6 +83,20 @@ describe PagesController do
                         :content => @base_title + " | Admin")
       end
     end
+    
+    describe "GET 'select_business'" do
+    
+      it "should not be successful" do
+        get :select_business
+        response.should_not be_success
+      end
+    
+      it "should redirect to the admin_home path" do
+        get :select_business
+        response.should redirect_to admin_path
+      end
+    end
+    
   end
   
   describe "signed in as a non-admin non-officer" do
@@ -118,20 +145,41 @@ describe PagesController do
           @business = Factory(:business)
           @employee = Factory(:employee, :user_id => @user.id,
                                        :business_id => @business.id,
-                                       :officer =>  true )             
+                                       :officer =>  true )            
         end
         
-        it "should display the business" do
+        it "should not display the 'User Home' page" do
           get :user_home
-          response.should have_selector("h4", 
-            :content => "#{@business.name}, #{@business.city}, #{@business.country}")
+          response.should_not be_success
         end
         
-        it "should have an 'OFFICER MENU' title" do
+        it "should redirect to the Officer Home page" do
           get :user_home
-          response.should have_selector("p", :content => "OFFICER MENU")
+          response.should redirect_to officer_home_path
         end
         
+        it "should display the 'Officer Home' page" do
+          session[:biz] = @business.id
+          get :officer_home
+          response.should be_success
+        end
+        
+        #it "should display the current business" do
+        #  get :officer_home
+        #  response.should have_selector("h4", 
+        #    :content => "#{@business.name}, #{@business.city}, #{@business.country}")
+        #end
+        
+        #it "should have an 'OFFICER MENU' title" do
+        #  get :officer_home
+        #  response.should have_selector("p", :content => "OFFICER MENU")
+        #end
+        
+        #it "should not display the 'Select Business' page" do
+        #  get :select_business
+        #  response.should_not be_success
+        #  response.should redirect_to user_home_path
+        #end
         
       end
     
@@ -147,13 +195,9 @@ describe PagesController do
         it "should display the business" do
           get :user_home
           response.should have_selector("h4", 
-            :content => "#{@business.name}, #{@business.city}, #{@business.country}")
+            :content => "EMPLOYEE MENU: #{@business.name}, #{@business.city}")
         end
         
-        it "should have an 'EMPLOYEE MENU' title" do
-          get :user_home
-          response.should have_selector("p", :content => "EMPLOYEE MENU")
-        end
       end
        
       describe "when user is connected to multiple businesses" do
@@ -172,8 +216,23 @@ describe PagesController do
           @employees = [@employee_1, @employee_2, @employee_3]
         end
         
+        it "should display the 'select business' form successfully" do
+          get :select_business
+          response.should be_success
+        end 
+       
+        it "should have the right title" do
+          get :select_business
+          response.should have_selector("title", :content => "Select business")
+        end
+        
+        it "should have a reference to the current user" do
+          get :select_business
+          response.should have_selector("p", :content => @user.name)
+        end
+        
         it "should show all associated businesses for the current user" do
-          get :user_home
+          get :select_business
           @employees[0..1].each do |employee|
             response.should have_selector("td", 
                :content => employee.business.name)
@@ -181,7 +240,7 @@ describe PagesController do
         end
         
         it "should show the correct officer value for each business" do
-          get :user_home
+          get :select_business
           @employees[0..1].each do |employee|
             if employee.officer?
               response.should have_selector("td", :content => "Officer")
@@ -192,7 +251,7 @@ describe PagesController do
         end
         
         it "should exclude non-associated businesses or users" do
-          get :user_home
+          get :select_business
           @employees.each do |employee|
             response.should_not have_selector("td", 
                :content => @business_3.name)

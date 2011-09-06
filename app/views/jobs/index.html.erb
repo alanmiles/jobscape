@@ -1,0 +1,28 @@
+<div class = "r-float">
+<%= link_to "Add a new job", new_business_job_path(@business) %>
+</div>
+
+<h1>Jobs at <%= @business.name %></h1>
+
+<% unless @jobs.empty? %>
+  <%= will_paginate %>
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th></th>
+    </tr>
+    <% @jobs.each do |job| %>
+    <tr>
+      <td><%= link_to job.job_title, job_path(job) %>
+      <td><%= job.occupation.name %> </td> 
+      <td class = "control"><%= link_to "delete", job, 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Delete #{job.job_title}" %>
+      <td> 
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate %>
+<% end %>

@@ -10,6 +10,12 @@ Factory.define :occupation do |occupation|
   occupation.name	     "Sales"
 end
 
+Factory.define :job do |job|
+  job.job_title		     "Sales Manager"
+  job.association :business
+  job.association :occupation
+end
+
 Factory.define :business do |business|
   business.name		     "Cambiz"
   business.address	     "34 Walpole Road, Cambridge"
@@ -26,4 +32,8 @@ end
 
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
+end
+
+Factory.sequence :job_title do |j|
+  "job-#{j}"
 end

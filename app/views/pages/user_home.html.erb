@@ -1,38 +1,12 @@
 
-<h1>
-  <%= gravatar_for @user %>
-  <%= @user.name %>
-</h1>
+  <h1>
+    <%= gravatar_for @user %>
+    <%= @user.name %>
+  </h1>
 
 <% if @user.belongs_to_business? %>
-  <% if @user.single_business? %>
-    <h4><%= @business.name %>, <%= @business.city %>, <%= @business.country %>
-    </h4>
-    <p>
-      <% if @employee.officer? %>
-        OFFICER MENU:
-        <ul>
-          <li><%= link_to "Business details", @business %></li>
-          <li>Jobs</li>
-          <li>Employees</li>
-        </ul>
-      <% else %>
-        EMPLOYEE MENU:
-      <% end %>
-    </p>
-  <% else %>
-    <p>SELECT BUSINESS</p>
-    <table>
-      <% @employees.each do |employee| %>
-      <tr>
-        <td><strong><%= employee.business.name %></strong>, 
-            <%= employee.business.city %>
-        </td>
-        <td><%= employee.role %></td>
-      </tr>
-      <% end %>
-    </table>
-  <% end %>
+
+<h4>EMPLOYEE MENU: <%= @business.name %>, <%= @business.city %></h4>
   
   <p><%= link_to "Add a new business", new_business_path %></p>
 <% else %>

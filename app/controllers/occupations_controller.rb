@@ -41,8 +41,13 @@ class OccupationsController < ApplicationController
   end
   
   def destroy
-    @occupation = Occupation.find(params[:id]).destroy
-    flash[:success] = "#{@occupation.name} removed."
+    @occupation = Occupation.find(params[:id])
+    if @occupation.associated_jobs?
+      flash[:error] = " Cannot delete occupation while associated jobs exist"
+    else
+      @occupation.destroy
+      flash[:success] = "#{@occupation.name} removed."
+    end
     redirect_to occupations_path
   end
 

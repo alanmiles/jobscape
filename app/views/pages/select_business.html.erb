@@ -1,0 +1,21 @@
+<h1>
+  <%= gravatar_for @user %>
+  <%= @user.name %>
+</h1>
+
+<h4>SELECT BUSINESS</h4>
+<p>These are the businesses associated with <%= @user.name %>.  
+    Select one.
+</p>    
+<table>
+  <% @employees.each do |employee| %>
+  <tr>
+    <td><strong><%= employee.business.name %></strong>, 
+                <%= employee.business.city %>
+    </td>
+    <td><%= employee.role %></td>
+  </tr>
+  <% end %>
+</table>
+    
+<p><%= link_to "Add a new business", new_business_path %></p>

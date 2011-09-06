@@ -1,0 +1,10 @@
+<%= render 'shared/error_messages', :object => f.object %>
+<div class="field">
+  <%= f.label :job_title %><br />
+  <%= f.text_field :job_title %>
+</div>
+<div class="field">
+  <%= f.label :occupation_id, "Category" %><br />
+  <%= collection_select(:job, :occupation_id, Occupation.all, :id, 
+                        :name, :prompt => true) %>
+</div>
