@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110829210434) do
+ActiveRecord::Schema.define(:version => 20110907054607) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -51,6 +51,20 @@ ActiveRecord::Schema.define(:version => 20110829210434) do
   end
 
   add_index "occupations", ["name"], :name => "index_occupations_on_name"
+
+  create_table "plans", :force => true do |t|
+    t.integer  "job_id"
+    t.boolean  "responsibilities",    :default => false
+    t.boolean  "goals",               :default => false
+    t.boolean  "personal_attributes", :default => false
+    t.boolean  "recruitment_factors", :default => false
+    t.boolean  "summary",             :default => false
+    t.boolean  "evaluation",          :default => false
+    t.integer  "job_value"
+    t.integer  "last_edited_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

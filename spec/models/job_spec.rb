@@ -47,6 +47,24 @@ describe Job do
   
   end
   
+  describe "plan associations" do
+
+    before(:each) do
+      @job = @business.jobs.create(@attr)
+     # @plan = Factory(:plan, :job_id => @job.id)
+    end
+
+    it "should have a plan attribute" do
+      @job.should respond_to(:plan)
+    end
+    
+    it "should destroy the associated plan" do
+      @job.destroy
+      Plan.find_by_job_id(@job.id).should be_nil
+    end
+    
+  end
+  
   describe "validations" do
   
     it "should require a business id" do

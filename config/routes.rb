@@ -1,11 +1,15 @@
 Jobscape::Application.routes.draw do
 
+  get "plans/show"
+
   resources :users
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
   resources :businesses do
     resources :jobs, :shallow => true
   end
+  resources :plans, :shallow => true
+  
   
   match '/signup',  		:to => 'users#new'
   match '/signin',  		:to => 'sessions#new'
@@ -17,7 +21,8 @@ Jobscape::Application.routes.draw do
   match '/admin',   		:to => 'pages#admin_home'
   match '/user_home', 		:to => 'pages#user_home'
   match '/officer_home',	:to => 'pages#officer_home'
-  match '/select_business', 	:to => 'pages#select_business'  
+  match '/select_business', 	:to => 'pages#select_business' 
+  
   root :to => 'pages#home'
 
   # The priority is based upon order of creation:

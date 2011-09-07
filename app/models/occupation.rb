@@ -5,7 +5,8 @@ class Occupation < ActiveRecord::Base
   has_many 	:jobs
   
   validates 	:name, 	:presence 	=> true,
-  			:length		=> { :maximum => 30 }
+  			:length		=> { :maximum => 30 },
+  			:uniqueness	=> { :case_sensitive => false } 
 
   default_scope :order => 'occupations.name'
   

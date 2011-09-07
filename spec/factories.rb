@@ -30,6 +30,10 @@ Factory.define :employee do |employee|
   employee.association :business
 end
 
+Factory.define :plan do |plan|
+  plan.association :job
+end
+
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
 end

@@ -12,6 +12,7 @@ class JobsController < ApplicationController
   def show
     @job = Job.find(params[:id])
     @title = @job.job_title
+    @plan = Plan.find_by_job_id(@job)
   end
   
   def new

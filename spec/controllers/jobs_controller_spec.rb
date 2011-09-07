@@ -138,7 +138,6 @@ describe JobsController do
     describe "GET 'index'" do
       
       before(:each) do
-        @occupation = Factory(:occupation)
         @job2 = Factory(:job, :job_title => "Merchandiser", :occupation_id => @occupation.id,
         						    :business_id => @business.id)
         @job3 = Factory(:job, :job_title => "Sales Assistant", :occupation_id => @occupation.id,
@@ -255,15 +254,21 @@ describe JobsController do
       
       it "should have an 'adjust vacancies' button"
       
-      describe "when the job has no A-Plan" do
+      it "should have a link to the A-Plan" do
+        @plan = Plan.find_by_job_id(@job)
+        get :show, :id => @job
+        response.should have_selector("a", :href => plan_path(@plan))
+      end
       
-        it "should have a link to a new A-Plan" 
+      describe "when the A-Plan in incomplete" do
+      
+        it "should show that the A-Plan needs more work" 
         
       end
       
       describe "when the job has an A-Plan" do
       
-        it "should have a link to the A-Plan show-page"
+        it "should show that the A-Plan is useable"
         
       end
       
@@ -375,6 +380,13 @@ describe JobsController do
           post :create, :business_id => @business.id, :job => @attr
           flash[:success].should == @title + " added."
         end    
+       
+        it "should create an associated achievement plan" do
+          post :create, :business_id => @business.id, :job => @attr
+          @job = Job.last
+          @plan = Plan.find_by_job_id(@job.id)
+          @plan.should_not be_nil
+        end
        
       end
     end

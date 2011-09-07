@@ -30,6 +30,12 @@ describe Occupation do
     long_name_occupation = Occupation.new(@attr.merge(:name => @long_occupation))
     long_name_occupation.should_not be_valid
   end
+  
+  it "should not allow a duplicate name" do
+    Occupation.create(@attr)
+    duplicate_record = Occupation.new(@attr)
+    duplicate_record.should_not be_valid
+  end
 end
 
 
