@@ -1,0 +1,12 @@
+<div class = "r-float">
+<%= link_to "All responsibilities for job", plan_responsibilities_path(@responsibility.plan_id) %>
+</div>
+
+<h1>Responsibility</h1>
+<h4>for <%= @job.title_location %></h4>
+
+<p class = "display_text beige round"><%= @responsibility.definition %>
+           &nbsp; <span style = "font-weight: normal">
+             <%= link_to "(edit)", edit_responsibility_path(@responsibility) %>
+           </span>
+</p>

@@ -11,7 +11,7 @@
 #  summary             :boolean         default(FALSE)
 #  evaluation          :boolean         default(FALSE)
 #  job_value           :integer
-#  last_edited_by      :integer
+#  updated_by          :integer
 #  created_at          :datetime
 #  updated_at          :datetime
 #

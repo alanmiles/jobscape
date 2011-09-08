@@ -1,0 +1,30 @@
+<div class = "r-float">
+<%= link_to "Add a new responsibility", new_plan_responsibility_path(@plan) %><br />
+<%= link_to "Back to A-Plan menu", @plan %>
+</div>
+
+<h1>Responsibilities:</h1> 
+<h4>for <%= @job.title_location %></h4>
+
+<table>
+  <tr>
+   <th>Responsibility</th>
+   <th class = "numeric">Rating</th> 
+   <th></th>
+   <th></th> 
+  </tr>
+
+  <% @responsibilities.each do |responsibility| %>
+    <tr>
+      <td><%= responsibility.definition %></td>
+      <td class = "numeric"><%= responsibility.display_rating %></td>
+      <td class = "control"><%= link_to "Goals/Edit", responsibility %></td>
+      <td class = "control"><%= link_to "Remove", responsibility, 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Remove responsibility." %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+

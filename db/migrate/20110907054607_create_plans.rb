@@ -9,7 +9,7 @@ class CreatePlans < ActiveRecord::Migration
       t.boolean :summary, :default => false
       t.boolean :evaluation, :default => false
       t.integer :job_value
-      t.integer :last_edited_by
+      t.integer :updated_by
 
       t.timestamps
     end

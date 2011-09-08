@@ -6,11 +6,13 @@ class JobsController < ApplicationController
   def index
     @business = Business.find(session[:biz])
     @title = "Jobs at #{@business.name}"
-    @jobs = @business.jobs.paginate(:page => params[:page])  
+    @jobs = @business.jobs.paginate(:page => params[:page]) 
+    session[:jobid] = nil 
   end
 
   def show
     @job = Job.find(params[:id])
+    session[:jobid] = @job.id
     @title = @job.job_title
     @plan = Plan.find_by_job_id(@job)
   end

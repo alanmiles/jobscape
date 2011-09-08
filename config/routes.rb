@@ -1,5 +1,9 @@
 Jobscape::Application.routes.draw do
 
+  get "responsibilities/index"
+
+  get "responsibilities/new"
+
   get "plans/show"
 
   resources :users
@@ -8,7 +12,9 @@ Jobscape::Application.routes.draw do
   resources :businesses do
     resources :jobs, :shallow => true
   end
-  resources :plans, :shallow => true
+  resources :plans do
+    resources :responsibilities, :shallow => true
+  end
   
   
   match '/signup',  		:to => 'users#new'

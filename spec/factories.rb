@@ -30,8 +30,15 @@ Factory.define :employee do |employee|
   employee.association :business
 end
 
-Factory.define :plan do |plan|
-  plan.association :job
+#Factory.define :plan do |plan|
+#  plan.association :job
+#end
+
+Factory.define :responsibility do |responsibility|
+  responsibility.association :plan
+  responsibility.definition 	"Responsibility 1"
+  responsibility.created_by     1
+  responsibility.rating		0
 end
 
 Factory.sequence :email do |n|

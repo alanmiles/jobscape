@@ -42,6 +42,7 @@ class PagesController < ApplicationController
     @business = Business.find(session[:biz])
     @user = current_user
     @employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
+    session[:jobid] = nil
   end
   
   def user_home

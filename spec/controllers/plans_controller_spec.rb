@@ -27,7 +27,10 @@ describe PlansController do
       response.should have_selector("a", :href => job_path(@job))
     end
     
-    it "should have a link to 'responsibilities'"
+    it "should have a link to 'responsibilities'" do
+      get 'show', :id => @plan.id
+      response.should have_selector("a", :href => plan_responsibilities_path(@plan))
+    end
     
     it "should count the number of responsibilities entered"
     

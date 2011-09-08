@@ -1,0 +1,25 @@
+<div class = "r-float">
+ <%= link_to "Cancel", @responsibility %>
+</div>
+<h1>Edit responsibility</h1>
+<h4>for <%= @job.title_location %></h4>
+
+<%= form_for(@responsibility) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class = "field centerplace" >
+    <%= f.label :definition, "Update the statement" %><br /> 
+    <%= f.text_area :definition, :cols => 50, :rows => 4 %>
+  </div> 
+  <div class = "field">
+    <em>Or you can check the box below <u>to remove this responsibility completely</u>.  If you've 		used the statement in a previous appraisal, don't worry - it'll be hidden, not deleted, 	and you'll still see it when you look back at the appraisal history.
+    </em>
+  </div>
+  <div class = "field centerplace">
+    <%= f.label :removed, "Check this box to remove the statement entirely" %> 
+    <%= f.check_box :removed %>
+  </div>
+  <br />
+  <div class="actions">
+    <%= f.submit "Confirm changes" %>
+  </div>
+<% end %>
