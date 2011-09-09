@@ -10,12 +10,16 @@
     <tr>
       <th>Title</th>
       <th>Category</th>
+      <th style = "text-align: center">A-Plan?</th>
       <th></th>
     </tr>
     <% @jobs.each do |job| %>
     <tr>
       <td><%= link_to job.job_title, job_path(job) %>
       <td><%= job.occupation.name %> </td> 
+      <td style = "text-align:center">
+        <%= image_tag("complete.png", :size => "15x15") if job.plan.complete? %>
+      </td>
       <td class = "control"><%= link_to "delete", job, 
                    :method => :delete, 
                    :confirm => "You sure?",

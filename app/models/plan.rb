@@ -23,4 +23,18 @@ class Plan < ActiveRecord::Base
   
   validates	:job_id,  	:presence 		=> true,
                                 :uniqueness		=> true
+                                
+  
+  def count_responsibilities
+    self.responsibilities.count(:all, :conditions => ["responsibilities.removed = ?", false]) 
+  end
+  
+  def has_responsibilities?
+    count_responsibilities > 0
+  end
+  
+  def complete?
+    #correct during build
+    count_responsibilities > 1
+  end
 end

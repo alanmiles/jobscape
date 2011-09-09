@@ -131,6 +131,7 @@ describe JobsController do
       				:business_id => @business.id)
       @occupation = Factory(:occupation)
       @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+      @plan = Plan.find_by_job_id(@job.id)
       test_sign_in(@user)
         
     end
@@ -255,21 +256,46 @@ describe JobsController do
       it "should have an 'adjust vacancies' button"
       
       it "should have a link to the A-Plan" do
-        @plan = Plan.find_by_job_id(@job)
+        #@plan = Plan.find_by_job_id(@job)
         get :show, :id => @job
         response.should have_selector("a", :href => plan_path(@plan))
       end
       
-      describe "when the A-Plan in incomplete" do
+      describe "A-Plan status" do
       
-        it "should show that the A-Plan needs more work" 
+        describe "when the A-Plan has not been started" do
+          
+          it "should state that there's no A-Plan" do
+            get :show, :id => @job
+            response.should have_selector("span#status", :content => "Create one now")
+          end
+          
+        end
         
-      end
-      
-      describe "when the job has an A-Plan" do
-      
-        it "should show that the A-Plan is useable"
+      	describe "when the A-Plan in incomplete" do
+          
+          it "should show that the A-Plan needs more work" do
+            @responsibility = Factory(:responsibility, :plan_id => @plan.id)
+            get :show, :id => @job
+            response.should have_selector("span#status", 
+                          :content => "Incomplete - continue building")
+          end
         
+      	end
+      
+        describe "when the job has an A-Plan" do
+      
+          it "should show that the A-Plan is useable" do
+            @responsibility = Factory(:responsibility, :plan_id => @plan.id)
+            @responsibility2 = Factory(:responsibility, 
+            		:definition => "Responsibility 2", :plan_id => @plan.id)
+            get :show, :id => @job
+            response.should have_selector("span#status", 
+                          :content => "Complete - view/edit?")
+          end
+        
+        end
+      
       end
       
       describe "when the job has attached employees" do

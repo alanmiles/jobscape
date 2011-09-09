@@ -11,7 +11,7 @@
   <tr>
     <td><strong><%= link_to "Responsibilities", plan_responsibilities_path(@plan) %></strong></td>
     <td>10-20 key activities</td>
-    <td>0 entered</td>
+    <td><span id = "responsibilities"><%= @plan.count_responsibilities %> entered</span></td>
   </tr>
   <tr>
     <td><strong>Goals</strong></td>
