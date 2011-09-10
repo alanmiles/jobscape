@@ -8,13 +8,15 @@ class ResponsibilitiesController < ApplicationController
          :conditions => ["responsibilities.removed = ?", false],
          :order => "responsibilities.rating DESC")
     @title = "Responsibilities: #{@job.job_title}"
+    session[:responid] = nil
   end
 
   def show
     @responsibility = Responsibility.find(params[:id])
+    session[:responid] = @responsibility.id
     @job = Job.find(session[:jobid])
     @title = "Responsibility for #{@job.job_title}"
-    
+    @goals = @responsibility.goals.all
   end
   
   def new
@@ -34,6 +36,7 @@ class ResponsibilitiesController < ApplicationController
       redirect_to @responsibility
     else
       @title = "New responsibility: #{@job.job_title}"
+      @responsibility.created_by = current_user.id
       render 'new'
     end
   end

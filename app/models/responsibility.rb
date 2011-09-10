@@ -19,6 +19,7 @@ class Responsibility < ActiveRecord::Base
   attr_accessible :definition, :removed, :created_by, :rating
   
   belongs_to :plan
+  has_many :goals, :dependent => :destroy
   
   validates	:plan_id,	:presence 	=> true
   validates	:definition,	:presence 	=> true,

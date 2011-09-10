@@ -292,7 +292,52 @@ describe ResponsibilitiesController do
           get :show, :id => @responsibility.id
           response.should have_selector("a", :href => plan_responsibilities_path(@plan))
         end
-       
+        
+        it "should have a link to 'add a new goal'" do
+          get :show, :id => @responsibility.id
+          response.should have_selector("a", 
+                     :href => new_responsibility_goal_path(@responsibility))
+        end
+        
+        describe "showing the responsibility's goals" do
+          
+          before(:each) do
+            @responsibility2 = Factory(:responsibility, :plan_id => @plan.id,
+                                     :definition => "A second responsibility",
+                                     :rating => 90 )
+            @goal1 = Factory(:goal, :responsibility_id => @responsibility.id)
+            @goal2 = Factory(:goal, :objective => "Goal 2",
+                                    :responsibility_id => @responsibility.id)
+            @wrong_resp_goal = Factory(:goal, :objective => "Goal wrong",
+                                    :responsibility_id => @responsibility2.id)
+            @goals = [@goal1, @goal2]
+          end
+                    
+          it "should show the responsibility's goals" do
+            get :show, :id => @responsibility.id
+            response.should have_selector("td", :content => @goal1.objective)
+            response.should have_selector("td", :content => @goal2.objective)
+          end
+          
+          it "should not show goals for different responsibilities" do
+            get :show, :id => @responsibility.id
+            response.should_not have_selector("td", :content => @wrong_resp_goal.objective)
+          end 
+          
+          it "should have an 'edit' button for each goal" do
+            get :show, :id => @responsibility.id
+            @goals.each do |goal|
+              response.should have_selector("a", :href => edit_goal_path(goal))
+            end
+          end
+          
+          it "should have a 'Remove' button for each goal" do
+            get :show, :id => @responsibility.id
+            @goals.each do |goal|
+              response.should have_selector("a", :title => "Remove goal.")
+            end
+          end 
+        end
       end
       
       describe "GET 'edit'" do

@@ -41,6 +41,12 @@ Factory.define :responsibility do |responsibility|
   responsibility.rating		0
 end
 
+Factory.define :goal do |goal|
+  goal.association :responsibility
+  goal.objective	"Objective 1"
+  goal.created_by	1
+end
+
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
 end

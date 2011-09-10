@@ -1,0 +1,23 @@
+<div class = "r-float">
+<%= link_to "Cancel", @responsibility %>
+</div>
+
+<h1>New goal</h1>
+
+<h4><%= @job.title_location %></h4>
+<h4><strong>Responsibility: <br /></strong><%= @responsibility.definition %></h4>
+
+<%= form_for([@responsibility, @goal]) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class = "field">
+    <%= f.label :objective, "Set a MEASURABLE objective" %><br />
+    <em><small>140 characters or less.  
+               You can set up to 3 goals for each responsibility.
+    </small></em>
+    <%= f.text_area :objective, :cols => 50, :rows => 4 %>
+  </div> 
+    <%= f.hidden_field :created_by %>
+  <div class="actions">
+    <%= f.submit "Create" %>
+  </div>
+<% end %>
