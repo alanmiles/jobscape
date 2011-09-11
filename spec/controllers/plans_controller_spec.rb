@@ -15,6 +15,25 @@ describe PlansController do
   end
   
   describe "GET 'show'" do
+  
+    before(:each) do
+      @responsibility1 = Factory(:responsibility, :plan_id => @plan.id)
+      @responsibility2 = Factory(:responsibility, :definition => "Responsibility 2",
+                                 :plan_id => @plan.id) 
+      @wrong_plan_responsibility = Factory(:responsibility, :plan_id => @plan2.id,
+                                                  :definition => "Wrong responsibility")   
+      @removed_responsibility = Factory(:responsibility, :definition => "Responsibility 3",
+                                 :plan_id => @plan.id, :removed => true)                         
+      @diff_plan_responsibility = Factory(:responsibility, :definition => "Responsibility 4",
+                                 :plan_id => @plan2.id)
+      @goal = Factory(:goal, :responsibility_id => @responsibility1.id)
+      @removed_goal = Factory(:goal, :objective => "Removed", 
+      				     :responsibility_id => @responsibility1.id,
+      				     :removed => true)
+      @wrong_responsibility_goal = Factory(:goal, :objective => "Wrong responsibility goal",
+      				      :responsibility_id => @wrong_plan_responsibility.id)
+    end
+    
     it "should be successful" do
       get 'show', :id => @plan.id
       response.should be_success
@@ -37,22 +56,14 @@ describe PlansController do
     end
     
     it "should count the number of responsibilities entered" do
-      @responsibility1 = Factory(:responsibility, :plan_id => @plan.id)
-      @responsibility2 = Factory(:responsibility, :definition => "Responsibility 2",
-                                 :plan_id => @plan.id)
-      @removed_responsibility = Factory(:responsibility, :definition => "Responsibility 3",
-                                 :plan_id => @plan.id, :removed => true)                         
-      @diff_plan_responsibility = Factory(:responsibility, :definition => "Responsibility 4",
-                                 :plan_id => @plan2.id)
-      
       get 'show', :id => @plan.id
       response.should have_selector("span#responsibilities", :content => "2 entered")
-    
     end
     
-    it "should have a link to goals"
-    
-    it "should count the number of responsibilities with goals set"
+    it "should count the number of responsibilities with goals set" do
+      get 'show', :id => @plan.id
+      response.should have_selector("span#goals", :content => "1 / 2")
+    end
     
     it "should have a link to personal attributes"
     

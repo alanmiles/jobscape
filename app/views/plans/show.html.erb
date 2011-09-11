@@ -14,9 +14,11 @@
     <td><span id = "responsibilities"><%= @plan.count_responsibilities %> entered</span></td>
   </tr>
   <tr>
-    <td><strong>Goals</strong> <small>(set via responsibilities)</small></td>
+    <td><strong>Goals</strong> <small>(set via Responsibilities)</small></td>
     <td>1-3 measurable outcomes for each responsibility</td>
-    <td><%= @plan.responsibilities_with_goals %> / <%= @plan.count_responsibilities %></td>
+    <td><span id = "goals"><%= @plan.responsibilities_with_goals %> / <%= @plan.count_responsibilities %>
+        </span> 
+    </td>
   </tr>
   <tr>
     <td><strong>Personal Attributes</strong></td>
