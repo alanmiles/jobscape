@@ -41,4 +41,16 @@ class Plan < ActiveRecord::Base
     #correct during build
     count_responsibilities > 1
   end
+  
+  def responsibilities_with_goals
+    tot = 0
+    @responsibilities = Responsibility.find(:all, 
+              :conditions => ["plan_id = ? and removed = ?", self.id, false])
+    @responsibilities.each do |responsibility|
+      if responsibility.has_goals?
+        tot = tot + 1
+      end
+    end
+    return tot.to_s
+  end
 end
