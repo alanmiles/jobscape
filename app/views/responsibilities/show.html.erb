@@ -12,7 +12,11 @@
 </p>
 
 <div class = "r-float">
-<%= link_to "Add a goal", new_responsibility_goal_path(@responsibility) %>
+  <% if @responsibility.maximum_goals? %>
+     <u>3 goals is the maximum</u>
+  <% else %>
+    <%= link_to "Add a goal", new_responsibility_goal_path(@responsibility) %>
+  <% end %>
 </div>
 <h1>Goals</h1> 
 <table>

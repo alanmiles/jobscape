@@ -46,122 +46,188 @@ describe GoalsController do
     
       describe "GET 'new'" do
         
-        it "should be successful" do
-          get 'new', :responsibility_id => @responsibility.id
-          response.should be_success
+        describe "if there are already 3 goals for the responsibility" do
+
+          before(:each) do
+            @goal2 = Factory(:goal, :responsibility_id => @responsibility.id,
+                                    :objective => "Goal2")
+            @goal3 = Factory(:goal, :responsibility_id => @responsibility.id,
+                                    :objective => "Goal3")
+          end
+        
+          it "should not be successful" do
+            get 'new', :responsibility_id => @responsibility.id
+            response.should_not be_success
+          end
+          
+          it "should redirect to the responsibility 'show' page" do
+            get 'new', :responsibility_id => @responsibility.id
+            response.should redirect_to responsibility_path(@responsibility)
+          end
+          
         end
         
-        it "should have the right title" do
-          get 'new', :responsibility_id => @responsibility.id
-          response.should have_selector("title", :content => "Set a goal")
-        end
+        describe "if there are fewer than 3 goals for the responsibility" do
         
-        it "should mention the job and business" do
-          get 'new', :responsibility_id => @responsibility.id
-          response.should have_selector("h4", 
+          it "should be successful" do
+            get 'new', :responsibility_id => @responsibility.id
+            response.should be_success
+          end
+        
+          it "should have the right title" do
+            get 'new', :responsibility_id => @responsibility.id
+            response.should have_selector("title", :content => "Set a goal")
+          end
+        
+          it "should mention the job and business" do
+            get 'new', :responsibility_id => @responsibility.id
+            response.should have_selector("h4", 
                   :content => "#{@job.job_title} - #{@business.name}, #{@business.city}")
-        end
+          end
         
-        it "should mention the responsibility" do
-          get 'new', :responsibility_id => @responsibility.id
-          response.should have_selector("h4", 
+          it "should mention the responsibility" do
+            get 'new', :responsibility_id => @responsibility.id
+            response.should have_selector("h4", 
                   :content => @responsibility.definition)
-        end
+          end
         
-        it "should have a link to the responsibility 'show' page" do
-          get 'new', :responsibility_id => @responsibility.id
-          response.should have_selector("a", 
+          it "should have a link to the responsibility 'show' page" do
+            get 'new', :responsibility_id => @responsibility.id
+            response.should have_selector("a", 
                   :href => responsibility_path(@responsibility))
-        end
+          end
         
-        it "should have an 'objective' text area" do
-          get 'new', :responsibility_id => @responsibility.id
-          response.should have_selector("textarea", 
+          it "should have an 'objective' text area" do
+            get 'new', :responsibility_id => @responsibility.id
+            response.should have_selector("textarea", 
                     :name => "goal[objective]")
-        end
+          end
         
-        it "should have a hidden field - created_by" do
-          get 'new', :responsibility_id => @responsibility.id
-          response.should have_selector("input", 
+          it "should have a hidden field - created_by" do
+            get 'new', :responsibility_id => @responsibility.id
+            response.should have_selector("input", 
                     :name => "goal[created_by]",
                     :type => "hidden")
-        end
+          end
         
-        it "should have a create button" do
-          get 'new', :responsibility_id => @responsibility.id
-          response.should have_selector("input", 
+          it "should have a create button" do
+            get 'new', :responsibility_id => @responsibility.id
+            response.should have_selector("input", 
                     :type => "submit", 
                     :value => "Create")
+          end
+          
         end
+        
       end
       
       describe "POST 'create'" do
       
-        describe "failure" do
-          
+        describe "if the responsibility already has 3 goals" do
+        
           before(:each) do
-            @obj = ""
-            @attr = { :definition => @obj }
+            @goal2 = Factory(:goal, :responsibility_id => @responsibility.id,
+                                    :objective => "Goal2")
+            @goal3 = Factory(:goal, :responsibility_id => @responsibility.id,
+                                    :objective => "Goal3")
+            @obj = "New objective"
+            @attr = { :objective => @obj, :created_by => @user.id }
           end
-
+          
           it "should not create a goal" do
             lambda do
               post :create, :responsibility_id => @responsibility.id, :goal => @attr
             end.should_not change(Goal, :count)
           end
 
-          it "should have the right title" do
-            post :create, :responsibility_id => @responsibility.id, :goal => @attr
-            response.should have_selector("title", 
-                           :content => "Set a goal")
-          end
+          #it "should have the right title" do
+          #  post :create, :responsibility_id => @responsibility.id, :goal => @attr
+          #  response.should have_selector("title", 
+          #                 :content => "Responsibility for #{@job.job_title}")
+          #end
 
-          it "should render the 'new' page" do
+          it "should redirect to the responsibilities 'show' page" do
             post :create, :responsibility_id => @responsibility.id, :goal => @attr
-            response.should render_template('new')
+            response.should redirect_to(responsibility_path(@responsibility))
           end
-        
+          
         end
         
-        describe "success" do
+        describe "if the responsibility has less than 3 goals" do
         
-          before(:each) do
-            @obj = "New objective"
-            @attr = { :objective => @obj, :created_by => @user.id }
-          end
-        
-          it "should create a goal" do
-            lambda do
-              post :create, :responsibility_id => @responsibility.id, :goal => @attr
-            end.should change(Goal, :count).by(1)
-          end
+          describe "failure" do
+          
+            before(:each) do
+              @obj = ""
+              @attr = { :definition => @obj }
+            end
 
-          it "should redirect to the responsibility show page" do
-            post :create, :responsibility_id => @responsibility.id, :goal => @attr
-            response.should redirect_to responsibility_path(@responsibility)
+            it "should not create a goal" do
+              lambda do
+                post :create, :responsibility_id => @responsibility.id, :goal => @attr
+              end.should_not change(Goal, :count)
+            end
+
+            it "should have the right title" do
+              post :create, :responsibility_id => @responsibility.id, :goal => @attr
+              response.should have_selector("title", 
+                           :content => "Set a goal")
+            end
+
+            it "should render the 'new' page" do
+              post :create, :responsibility_id => @responsibility.id, :goal => @attr
+              response.should render_template('new')
+            end
+        
           end
+        
+          describe "success" do
+        
+            before(:each) do
+              @obj = "New objective"
+              @attr = { :objective => @obj, :created_by => @user.id }
+            end
+        
+            it "should create a goal" do
+              lambda do
+                post :create, :responsibility_id => @responsibility.id, :goal => @attr
+              end.should change(Goal, :count).by(1)
+            end
+
+            it "should redirect to the responsibility show page" do
+              post :create, :responsibility_id => @responsibility.id, :goal => @attr
+              response.should redirect_to responsibility_path(@responsibility)
+            end
       
-          it "should have a success message" do
-            post :create, :responsibility_id => @responsibility.id, :goal => @attr
-            flash[:success].should == "Goal successfully added."
-          end    
+            it "should have a success message" do
+              post :create, :responsibility_id => @responsibility.id, :goal => @attr
+              flash[:success].should == "Goal successfully added."
+            end    
        
-          it "should be connected to the correct responsibility" do
-            post :create, :responsibility_id => @responsibility.id, :goal => @attr
-            @goal = Goal.last
-            @goal.responsibility_id.should == @responsibility.id
-          end
+            it "should be connected to the correct responsibility" do
+              post :create, :responsibility_id => @responsibility.id, :goal => @attr
+              @goal = Goal.last
+              @goal.responsibility_id.should == @responsibility.id
+            end
           
-          it "should show the current user as creator" do
-            post :create, :responsibility_id => @responsibility.id, :goal => @attr
-            @goal = Goal.last
-            @goal.created_by.should == @user.id
-          end
+            it "should show the current user as creator" do
+              post :create, :responsibility_id => @responsibility.id, :goal => @attr
+              @goal = Goal.last
+              @goal.created_by.should == @user.id
+            end
           
-          describe "after the third goal has been added" do
+            describe "after the third goal has been added" do
           
-            it "should state that all goals have now been set"
-            
+              before(:each) do
+            	@goal2 = Factory(:goal, :responsibility_id => @responsibility.id,
+                                        :objective => "Goal2")
+              end
+              
+              it "should state that all goals have now been set" do
+                post :create, :responsibility_id => @responsibility.id, :goal => @attr
+                flash[:notice].should == "You've now set all three goals for the responsibility"
+              end
+            end
           end
         end
         

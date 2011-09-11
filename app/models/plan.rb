@@ -33,6 +33,10 @@ class Plan < ActiveRecord::Base
     count_responsibilities > 0
   end
   
+  def max_responsibilities?
+    count_responsibilities >= 20
+  end
+  
   def complete?
     #correct during build
     count_responsibilities > 1

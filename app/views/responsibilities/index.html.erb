@@ -1,24 +1,30 @@
 <div class = "r-float">
-<%= link_to "Add a new responsibility", new_plan_responsibility_path(@plan) %><br />
+<% if @plan.max_responsibilities? %>
+  <u>No more responsibilities can be added</u>
+<% else %>
+  <%= link_to "Add a new responsibility", new_plan_responsibility_path(@plan) %><br />
+<% end %>
 <%= link_to "Back to A-Plan menu", @plan %>
 </div>
 
 <h1>Responsibilities:</h1> 
 <h4>for <%= @job.title_location %></h4>
-
+<p><em>Click on <%= image_tag("select.png", :size => "15x15") %> to edit responsibility or view/edit/add/delete goals.</em></p>
 <table>
   <tr>
-   <th>Responsibility</th>
-   <th class = "numeric">Rating</th> 
    <th></th>
+   <th>Responsibility</th>
+   <th class = "numeric">Goals</th>
+   <th class = "numeric">Rating</th> 
    <th></th> 
   </tr>
 
   <% @responsibilities.each do |responsibility| %>
     <tr>
+      <td><%= link_to(image_tag("select.png", :size => "15x15"), responsibility) %>
       <td><%= responsibility.definition %></td>
+      <td class = "numeric"><%= responsibility.count_current_goals %></td>
       <td class = "numeric"><%= responsibility.display_rating %></td>
-      <td class = "control"><%= link_to "Goals/Edit", responsibility %></td>
       <td class = "control"><%= link_to "Remove", responsibility, 
                    :method => :delete, 
                    :confirm => "You sure?",

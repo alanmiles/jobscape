@@ -54,3 +54,7 @@ end
 Factory.sequence :job_title do |j|
   "job-#{j}"
 end
+
+Factory.sequence :definition do |d|
+  "Definition-#{d}"
+end

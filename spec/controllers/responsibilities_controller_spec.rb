@@ -79,9 +79,20 @@ describe ResponsibilitiesController do
                           :content => "Responsibilities: #{@job.job_title}")
         end
         
-        it "should have an 'add a responsibility' link" do
+        it "should have an 'add a responsibility' link (if < 21 responsibilities)" do
           get :index, :plan_id => @plan.id
           response.should have_selector("a", :href => new_plan_responsibility_path(@plan))
+        end
+        
+        it "should not allow more than 20 responsibilities to be added" do
+          17.times do
+            @responsibilities << Factory(:responsibility, :definition => Factory.next(:definition),
+                                         :plan_id => @plan.id)
+          end
+          get :index, :plan_id => @plan.id
+          response.should_not have_selector("a", :href => new_plan_responsibility_path(@plan))
+          response.should have_selector("div.r-float", 
+                                        :content => "No more responsibilities can be added")
         end
         
         it "should have a 'return to A-Plan menu' link" do
@@ -93,6 +104,13 @@ describe ResponsibilitiesController do
           get :index, :plan_id => @plan.id
           @responsibilities[0..2].each do |responsibility|
             response.should have_selector("td", :content => responsibility.definition)
+          end
+        end
+        
+        it"should have a link to the 'show' page for each responsibility" do
+          get :index, :plan_id => @plan.id
+          @responsibilities[0..2].each do |responsibility|
+            response.should have_selector("a", :href => responsibility_path(responsibility))
           end
         end
         
@@ -123,7 +141,13 @@ describe ResponsibilitiesController do
           end
         end
         
-        it "should show how many goals have been created for the responsibility"
+        it "should show how many goals have been created for the responsibility" do
+          @goal1 = Factory(:goal, :responsibility_id => @responsibility.id)
+          @goal2 = Factory(:goal, :objective => "Second goal", 
+                                  :responsibility_id => @responsibility.id)
+          get :index, :plan_id => @plan.id
+          response.should have_selector("td.numeric", :content => "2")                     
+        end
          
         it "should rank the responsibilities by rating (descending)"
                
@@ -164,110 +188,175 @@ describe ResponsibilitiesController do
       end
 
       describe "GET 'new'" do
-        it "should be successful" do
-          get :new, :plan_id => @plan.id
-          response.should be_success
+        
+        describe "if there are already 20 responsibilities for the job" do
+          
+          it "should not be successful" do
+            @responsibilities = [@responsibility]
+            19.times do
+              @responsibilities << Factory(:responsibility, 
+                                           :definition => Factory.next(:definition),
+                                           :plan_id => @plan.id)
+            end
+            get :new, :plan_id => @plan.id
+            response.should_not be_success
+          end
+ 
         end
         
-        it "should have the right title" do
-          get :new, :plan_id => @plan.id
-          response.should have_selector("title", 
+        describe "if there are fewer than 20 responsibilities for the job" do
+        
+          it "should be successful" do
+            get :new, :plan_id => @plan.id
+            response.should be_success
+          end
+        
+          it "should have the right title" do
+            get :new, :plan_id => @plan.id
+            response.should have_selector("title", 
                       :content => "New responsibility: #{@job.job_title}")
-        end
+          end
         
-        it "should have a 'cancel' option" do
-          get :new, :plan_id => @plan.id
-          response.should have_selector("a", 
+          it "should have a 'cancel' option" do
+            get :new, :plan_id => @plan.id
+            response.should have_selector("a", 
                     :href => plan_responsibilities_path(@plan),
           	    :content => "Cancel")
-        end
+          end
         
-        it "should have a 'definition' text area" do
-          get :new, :plan_id => @plan.id
-          response.should have_selector("textarea", 
+          it "should have a 'definition' text area" do
+            get :new, :plan_id => @plan.id
+            response.should have_selector("textarea", 
                     :name => "responsibility[definition]")
-        end
+          end
         
-        it "should have a hidden field - created_by" do
-          get :new, :plan_id => @plan.id
-          response.should have_selector("input", 
+          it "should have a hidden field - created_by" do
+            get :new, :plan_id => @plan.id
+            response.should have_selector("input", 
                     :name => "responsibility[created_by]",
                     :type => "hidden")
-        end
+          end
         
-        it "should have a create button" do
-          get :new, :plan_id => @plan.id
-          response.should have_selector("input", 
+          it "should have a create button" do
+            get :new, :plan_id => @plan.id
+            response.should have_selector("input", 
                     :type => "submit", 
                     :value => "Create")
+          end
         end
+      
       end
       
       describe "POST 'create'" do
       
-        describe "failure" do
-          
+        describe "if there are already 20 responsibilities for the job" do
+        
           before(:each) do
-            @def = ""
-            @attr = { :definition => @def }
+            @responsibilities = [@responsibility]
+            19.times do
+              @responsibilities << Factory(:responsibility, 
+                                           :definition => Factory.next(:definition),
+                                           :plan_id => @plan.id)
+            end
+            @def = "New responsibility"
+            @attr = { :definition => @def, :created_by => @user.id }
           end
-
+        
           it "should not create a responsibility" do
             lambda do
               post :create, :plan_id => @plan.id, :responsibility => @attr
             end.should_not change(Responsibility, :count)
           end
 
-          it "should have the right title" do
+          it "should render the job's responsibility list page" do
             post :create, :plan_id => @plan.id, :responsibility => @attr
-            response.should have_selector("title", 
-                           :content => "New responsibility: #{@job.job_title}")
-          end
-
-          it "should render the 'new' page" do
-            post :create, :plan_id => @plan.id, :responsibility => @attr
-            response.should render_template('new')
-          end
-        
-        end
-        
-        describe "success" do
-        
-          before(:each) do
-            @def = "New responsibility"
-            @attr = { :definition => @def, :created_by => @user.id }
-          end
-        
-          it "should create a responsibility" do
-            lambda do
-              post :create, :plan_id => @plan.id, :responsibility => @attr
-            end.should change(Responsibility, :count).by(1)
-          end
-
-          it "should redirect to the responsibility show page" do
-            post :create, :plan_id => @plan.id, :responsibility => @attr
-            @responsibility = Responsibility.last
-            response.should redirect_to responsibility_path(@responsibility)
-          end
-      
-          it "should have a success message" do
-            post :create, :plan_id => @plan.id, :responsibility => @attr
-            flash[:success].should == "Responsibility added - now set goal(s)."
-          end    
-       
-          it "should be connected to the correct plan" do
-            post :create, :plan_id => @plan.id, :responsibility => @attr
-            @responsibility = Responsibility.last
-            @responsibility.plan_id.should == @plan.id
+            response.should redirect_to plan_responsibilities_path(@plan)
           end
           
-          it "should show the current user as creator" do
-            post :create, :plan_id => @plan.id, :responsibility => @attr
-            @responsibility = Responsibility.last
-            @responsibility.created_by.should == @user.id
+        end
+        
+        describe "if there are fewer than 20 responsibilities for the job" do
+        
+          describe "failure" do
+          
+            before(:each) do
+              @def = ""
+              @attr = { :definition => @def }
+            end
+
+            it "should not create a responsibility" do
+              lambda do
+                post :create, :plan_id => @plan.id, :responsibility => @attr
+              end.should_not change(Responsibility, :count)
+            end
+
+            it "should have the right title" do
+              post :create, :plan_id => @plan.id, :responsibility => @attr
+              response.should have_selector("title", 
+                           :content => "New responsibility: #{@job.job_title}")
+            end
+
+            it "should render the 'new' page" do
+              post :create, :plan_id => @plan.id, :responsibility => @attr
+              response.should render_template('new')
+            end
+        
+          end
+        
+          describe "success" do
+        
+            before(:each) do
+              @def = "New responsibility"
+              @attr = { :definition => @def, :created_by => @user.id }
+            end
+        
+            it "should create a responsibility" do
+              lambda do
+                post :create, :plan_id => @plan.id, :responsibility => @attr
+              end.should change(Responsibility, :count).by(1)
+            end
+
+            it "should redirect to the responsibility show page" do
+              post :create, :plan_id => @plan.id, :responsibility => @attr
+              @responsibility = Responsibility.last
+              response.should redirect_to responsibility_path(@responsibility)
+            end
+      
+            it "should have a success message" do
+              post :create, :plan_id => @plan.id, :responsibility => @attr
+              flash[:success].should == "Responsibility added - now add up to 3 goals."
+            end    
+       
+            it "should be connected to the correct plan" do
+              post :create, :plan_id => @plan.id, :responsibility => @attr
+              @responsibility = Responsibility.last
+              @responsibility.plan_id.should == @plan.id
+            end
+          
+            it "should show the current user as creator" do
+              post :create, :plan_id => @plan.id, :responsibility => @attr
+              @responsibility = Responsibility.last
+              @responsibility.created_by.should == @user.id
+            end
+            
+            describe "when the job's 20th responsibility has been created" do
+            
+              before(:each) do
+                18.times do
+                  @responsibilities = [@responsibility]
+                  @responsibilities << Factory(:responsibility, 
+                                           :definition => Factory.next(:definition),
+                                           :plan_id => @plan.id)
+                end
+              end
+              
+              it "should have a flash message explaining no more can be created" do  
+                post :create, :plan_id => @plan.id, :responsibility => @attr
+                flash[:notice].should == "You've now set the maximum number of responsibilities for the job"   
+              end
+            end
           end
         end
-      
       end
       
       describe "GET 'show'" do
@@ -336,6 +425,28 @@ describe ResponsibilitiesController do
             @goals.each do |goal|
               response.should have_selector("a", :title => "Remove goal.")
             end
+          end
+          
+          describe "if there are already 3 goals" do
+            
+            before(:each) do
+              @goal3 = Factory(:goal, :objective => "Goal 3",
+                                    :responsibility_id => @responsibility.id)
+              @goals << @goal3
+            end
+            
+            it "should not allow another goal to be added" do
+              get :show, :id => @responsibility.id
+              response.should_not have_selector("a", 
+                     :href => new_responsibility_goal_path(@responsibility))
+            end
+            
+            it "should state that 3 goals is the maximum" do
+              get :show, :id => @responsibility.id
+              response.should have_selector("div.r-float", 
+              			:content => "3 goals is the maximum")
+            end
+          
           end 
         end
       end

@@ -39,4 +39,12 @@ class Responsibility < ActiveRecord::Base
     end 
   end
   
+  def count_current_goals
+    self.goals.count(:conditions => ["removed =?", false])
+  end
+  
+  def maximum_goals?
+    count_current_goals >= 3
+  end
+  
 end

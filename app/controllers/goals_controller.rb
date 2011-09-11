@@ -4,23 +4,39 @@ class GoalsController < ApplicationController
   
   def new
     @responsibility = Responsibility.find(session[:responid])
-    @goal = @responsibility.goals.new 
-    @goal.created_by = current_user.id
-    @title = "Set a goal"
     @job = Job.find(session[:jobid])
+    if @responsibility.maximum_goals?
+      flash[:notice] = "Sorry, you can only have 3 goals for each responsibility"
+      @title = "Responsibility for #{@job.job_title}"
+      redirect_to @responsibility
+    else
+      @goal = @responsibility.goals.new 
+      @goal.created_by = current_user.id
+      @title = "Set a goal"
+    end
   end
   
   def create
     @responsibility = Responsibility.find(session[:responid])
-    @goal = @responsibility.goals.new(params[:goal])
-    if @goal.save
-      flash[:success] = "Goal successfully added."
+    @job = Job.find(session[:jobid])
+    if @responsibility.maximum_goals?
+      flash[:notice] = "Sorry, you can only have 3 goals for each responsibility"
+      @title = "Responsibility for #{@job.job_title}"
       redirect_to @responsibility
     else
-      @title = "Set a goal"
-      @job = Job.find(session[:jobid])
-      @goal.created_by = current_user.id
-      render 'new'
+      @goal = @responsibility.goals.new(params[:goal])
+      if @goal.save
+        if @responsibility.count_current_goals == 3
+          flash[:notice] = "You've now set all three goals for the responsibility"
+        else
+          flash[:success] = "Goal successfully added."
+        end
+        redirect_to @responsibility
+      else
+        @title = "Set a goal"
+        @goal.created_by = current_user.id
+        render 'new'
+      end
     end
   end
 
