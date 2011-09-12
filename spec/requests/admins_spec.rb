@@ -19,4 +19,9 @@ describe "Admins" do
     click_link "Businesses"
     response.should have_selector("title", :content => "Businesses")
   end
+  
+  it "should have a link to the personal attributes list" do
+    click_link "Personal Attributes"
+    response.should have_selector("title", :content => "Personal Attributes")
+  end
 end

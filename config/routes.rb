@@ -1,6 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "goals/new"
 
   resources :users
   resources :occupations
@@ -14,6 +13,7 @@ Jobscape::Application.routes.draw do
   resources :responsibilities do
     resources :goals, :shallow => true
   end
+  resources :qualities
   
   match '/signup',  		:to => 'users#new'
   match '/signin',  		:to => 'sessions#new'

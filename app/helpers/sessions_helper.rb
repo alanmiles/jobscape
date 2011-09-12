@@ -53,6 +53,9 @@ module SessionsHelper
   
   def sign_out
     cookies.delete(:remember_token)
+    session[:biz] = nil
+    session[:jobid] = nil
+    session[:responid] = nil
     self.current_user = nil
   end
   

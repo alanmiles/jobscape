@@ -1,0 +1,17 @@
+<div class = "r-float">
+  <%= link_to "Cancel", qualities_path %>
+</div>
+
+<h1><%= @title %></h1>
+<%= form_for(@quality) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :quality, "Attribute" %> <small> (- a 1 or 2-word label)  </small><br />
+    <%= f.text_field :quality %>
+  </div>
+  <%= f.hidden_field :created_by %>
+  <%= f.hidden_field :business_id %>
+  <div class="actions">
+    <%= f.submit "Create" %>
+  </div>
+<% end %>

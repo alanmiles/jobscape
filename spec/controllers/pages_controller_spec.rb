@@ -257,6 +257,11 @@ describe PagesController do
                :content => @business_3.name)
           end
         end
+        
+        it "should have a nil value for session[:biz]" do
+          get :select_business
+          session[:biz].should == nil
+        end
       end
     
      

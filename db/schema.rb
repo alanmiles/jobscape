@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110909124736) do
+ActiveRecord::Schema.define(:version => 20110911223722) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -73,6 +73,19 @@ ActiveRecord::Schema.define(:version => 20110909124736) do
     t.boolean  "evaluation",          :default => false
     t.integer  "job_value"
     t.integer  "updated_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "qualities", :force => true do |t|
+    t.string   "quality"
+    t.boolean  "approved",     :default => false
+    t.integer  "created_by"
+    t.integer  "business_id"
+    t.integer  "updated_by"
+    t.boolean  "seen",         :default => false
+    t.boolean  "removed",      :default => false
+    t.date     "removal_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

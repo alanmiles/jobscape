@@ -36,6 +36,7 @@ class PagesController < ApplicationController
     @title = "Select business"
     @user = current_user
     @employees = Employee.find_all_by_user_id(@user)
+    session[:biz] = nil
   end
   
   def officer_home
