@@ -19,10 +19,27 @@ class Quality < ActiveRecord::Base
 
   attr_accessible :quality, :approved, :seen, :removed, :created_by
   
+  after_create  :build_pams
+  
+  has_many :pams, :dependent => :destroy
+  
   validates	:quality,	:presence 	=> true,
                 		:length		=> { :maximum => 50 },
   				:uniqueness	=> { :case_sensitive => false }
   validates	:created_by,	:presence	=> true,
   				:numericality	=> { :integer => true }
   
+  
+  
+  private
+  
+    def build_pams
+      @qlt = Quality.last
+      @content = "Descriptor for "
+      @grades = ["A", "B", "C", "D", "E"]
+      @grades.each do |grade|
+        @qlt.pams.create(:grade => grade, 
+                   :descriptor => "#{@content}" + grade.to_s)  
+      end
+    end
 end

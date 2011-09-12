@@ -13,7 +13,9 @@ Jobscape::Application.routes.draw do
   resources :responsibilities do
     resources :goals, :shallow => true
   end
-  resources :qualities
+  resources :qualities do
+    resources :pams, :shallow => true
+  end
   
   match '/signup',  		:to => 'users#new'
   match '/signin',  		:to => 'sessions#new'

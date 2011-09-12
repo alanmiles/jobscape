@@ -47,6 +47,11 @@ Factory.define :goal do |goal|
   goal.created_by	1
 end
 
+Factory.define :quality do |quality|
+  quality.quality		"First quality"
+  quality.created_by		1
+end
+
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
 end
