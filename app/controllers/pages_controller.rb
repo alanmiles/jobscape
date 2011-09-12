@@ -39,7 +39,14 @@ class PagesController < ApplicationController
     session[:biz] = nil
   end
   
+  def biz_selection
+    @business = Business.find(params[:id])
+    session[:biz] = @business.id
+    redirect_to officer_home_path 
+  end
+  
   def officer_home
+    @title = "Officer Home"
     @business = Business.find(session[:biz])
     @user = current_user
     @employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)

@@ -10622,3 +10622,10 @@ REQUESTING PAGE: GET /signin with {} and HTTP headers {}
 REQUESTING PAGE: POST /sessions with {"utf8"=>"\xE2\x9C\x93", "session"=>{"email"=>"mhartl@example.com", "password"=>"foobar"}, "commit"=>"Sign in"} and HTTP headers {"HTTP_REFERER"=>"/signin"}
 REQUESTING PAGE: GET http://www.example.com/admin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
 REQUESTING PAGE: GET /qualities with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/admin"}
+REQUESTING PAGE: GET /signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"\xE2\x9C\x93", "session"=>{"email"=>"mhartl@example.com", "password"=>"foobar"}, "commit"=>"Sign in"} and HTTP headers {"HTTP_REFERER"=>"/signin"}
+REQUESTING PAGE: GET http://www.example.com/user_home with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://www.example.com/select_business with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/user_home"}
+REQUESTING PAGE: GET /select_business with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/select_business"}
+REQUESTING PAGE: GET /biz_selection?id=2 with {} and HTTP headers {"HTTP_REFERER"=>"/select_business"}
+REQUESTING PAGE: GET http://www.example.com/officer_home with {} and HTTP headers {"HTTP_REFERER"=>"/biz_selection?id=2"}

@@ -27,5 +27,10 @@ class Employee < ActiveRecord::Base
     else
       return "Employee"
     end
-  end				
+  end
+  
+  def business_location
+    "#{self.business.name}, #{self.business.city}"
+  end
+
 end
