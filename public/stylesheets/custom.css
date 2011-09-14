@@ -167,6 +167,10 @@ table.profile {
   margin-bottom: 0;
 }
 
+.narrow {
+  width: 40%
+}
+
 td.main {
   width: 70%;
   padding: 1em;

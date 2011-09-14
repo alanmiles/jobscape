@@ -4,7 +4,6 @@ class CreateQualities < ActiveRecord::Migration
       t.string :quality
       t.boolean :approved, :default => false
       t.integer :created_by
-      t.integer :business_id
       t.integer :updated_by
       t.boolean :seen, :default => false
       t.boolean :removed, :default => false

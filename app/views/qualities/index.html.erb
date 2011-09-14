@@ -1,6 +1,24 @@
 <div class = "r-float">
-  <%= link_to "Add an attribute", new_quality_path %>
+  <%= link_to "Add an attribute", new_quality_path %><br />
+  <%= link_to "New submissions", submitted_qualities_path %> <span id="submits">(<%= @submissions %>)</span>
 </div>
 
 <h1><%= @title %></h1>
-<p>Find me in app/views/qualities/index.html.erb</p>
+<table class="narrow">
+  <tr>
+    <th>Attribute</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @qualities.each do |quality| %>
+  <tr>
+    <td><%= quality.quality %></td>  
+    <td><%= link_to "Edit", edit_quality_path(quality) %></td>
+    <td><%= link_to "Remove", quality, 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Remove #{quality.quality}" %>
+    </td>
+  </tr>
+  <% end %> 
+</table>

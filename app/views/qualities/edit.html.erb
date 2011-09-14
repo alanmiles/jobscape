@@ -2,7 +2,8 @@
   <%= link_to "Cancel", qualities_path %>
 </div>
 
-<h1><%= @title %></h1>
+<h1><%= "Edit attribute" %></h1>
+
 <%= form_for(@quality) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
@@ -10,7 +11,8 @@
     <%= f.text_field :quality %>
   </div>
   <%= f.hidden_field :created_by %>
+  <%= f.hidden_field :updated_by %>
   <div class="actions">
-    <%= f.submit "Create" %>
+    <%= f.submit "Confirm" %>
   </div>
 <% end %>

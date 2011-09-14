@@ -1,6 +1,5 @@
 Jobscape::Application.routes.draw do
 
-
   resources :users
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
@@ -16,6 +15,8 @@ Jobscape::Application.routes.draw do
   resources :qualities do
     resources :pams, :shallow => true
   end
+  resources :submitted_qualities
+  
   
   match '/signup',  		:to => 'users#new'
   match '/signin',  		:to => 'sessions#new'

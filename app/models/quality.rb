@@ -6,7 +6,6 @@
 #  quality      :string(255)
 #  approved     :boolean         default(FALSE)
 #  created_by   :integer
-#  business_id  :integer
 #  updated_by   :integer
 #  seen         :boolean         default(FALSE)
 #  removed      :boolean         default(FALSE)
@@ -24,12 +23,22 @@ class Quality < ActiveRecord::Base
   has_many :pams, :dependent => :destroy
   
   validates	:quality,	:presence 	=> true,
-                		:length		=> { :maximum => 50 },
+                		:length		=> { :maximum => 25 },
   				:uniqueness	=> { :case_sensitive => false }
   validates	:created_by,	:presence	=> true,
   				:numericality	=> { :integer => true }
   
+  def self.official_list
+    self.find(:all, :conditions => ["approved = ? and removed = ?", true, false])
+  end
   
+  def self.new_list
+    self.find(:all, :conditions => ["approved = ? and removed = ? and seen = ?", false, false, false])
+  end
+  
+  def self.new_submissions
+    self.new_list.count
+  end
   
   private
   

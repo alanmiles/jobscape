@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(:version => 20110912163343) do
     t.string   "quality"
     t.boolean  "approved",     :default => false
     t.integer  "created_by"
-    t.integer  "business_id"
     t.integer  "updated_by"
     t.boolean  "seen",         :default => false
     t.boolean  "removed",      :default => false

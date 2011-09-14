@@ -4,6 +4,18 @@ describe QualitiesController do
 
   render_views
   
+  before(:each) do
+    @quality1 = Factory(:quality, :approved => true)
+    @quality2 = Factory(:quality, :quality => "Second quality", :approved => true) 
+    @quality3 = Factory(:quality, :quality => "Third quality", :approved => true)
+    @unapproved_quality = Factory(:quality, :quality => "Fourth quality", :seen => true)
+    @removed_quality = Factory(:quality, :quality => "Fifth quality", 
+                               :approved => true, :removed => true)
+    @unseen_quality = Factory(:quality, :quality => "Sixth quality")
+    
+    @qualities = [@quality1, @quality2, @quality3, @unapproved_quality, @removed_quality, @unseen_quality]
+  end
+  
   describe "GET 'index'" do
     it "should be successful" do
       get :index
@@ -20,10 +32,36 @@ describe QualitiesController do
       response.should have_selector("a", :href => new_quality_path,
       			:content => "Add an attribute")
     end
+    
   end
   
   describe "for non-signed-in users" do
   
+    describe "GET 'index'" do
+    
+      it "should list all the admin-approved attributes" do
+        get :index
+        @qualities[0..2].each do |quality|
+          response.should have_selector("td", :content => quality.quality)
+        end
+      end 
+      
+      it "should not list any non-approved attributes" do
+        get :index
+        @qualities.each do |quality|
+          response.should_not have_selector("td", :content => "Fourth quality")
+        end
+      end
+    
+      it "should not list any removed attributes" do
+        get :index
+        @qualities.each do |quality|
+          response.should_not have_selector("td", :content => "Fifth quality")
+        end
+      end
+      
+    end
+    
     describe "GET 'new'" do
     
       it "should not be successful" do
@@ -39,7 +77,7 @@ describe QualitiesController do
   
   end
 
-  describe "for signed-in users, with a business selected" do
+  describe "for signed-in non-admin users" do
   
     before(:each) do
       @business = Factory(:business)
@@ -80,13 +118,6 @@ describe QualitiesController do
       			:type => "hidden")
       end
     
-      it "should have a hidden field for the business id" do
-        get :new
-        response.should have_selector("input", 
-      			:name => "quality[business_id]",
-      			:type => "hidden")
-      end
-    
       it "should have a 'Create' button" do
         get :new
         response.should have_selector("input", 
@@ -107,8 +138,13 @@ describe QualitiesController do
         it "should not create a new quality" do
           lambda do
             post :create, :quality => @attr
-            response.should_not change(Quality, :count)
-          end
+          end.should_not change(Quality, :count)
+        end
+        
+        it "should not create new PAMs" do
+          lambda do
+            post :create, :quality => @attr
+          end.should_not change(Pam, :count)
         end
         
         it "should have the correct title" do
@@ -127,20 +163,21 @@ describe QualitiesController do
       describe "success" do
       
         before(:each) do
-          @attr = { :quality => "First quality",
-          	    :created_by => @user.id,
-          	    :business_id => @business.id }
+          @attr = { :quality => "Another quality",
+          	    :created_by => @user.id }
         end
       
         it "should create a new attribute" do
           lambda do
             post :create, :quality => @attr
-            response.should change(Quality, :count).by(1)
-          end
+          end.should change(Quality, :count).by(1)
         end
         
-        #Personal Attribute Measurements
-        it "should generate a related set of empty PAMs"
+        it "should create 5 new PAMs" do
+          lambda do
+            post :create, :quality => @attr
+          end.should change(Pam, :count).by(5)
+        end
         
         it "should redirect to the 'show' page" do
           post :create, :quality => @attr
@@ -151,12 +188,6 @@ describe QualitiesController do
           post :create, :quality => @attr
           @quality = assigns(:quality)
           flash[:success].should == "#{@quality.quality} added. Now set the 5 PAMs."
-        end
-          
-        it "should set the business_id" do
-          post :create, :quality => @attr
-          @quality = assigns(:quality)
-          @quality.should respond_to(:business_id)
         end
           
         it "should set 'approved' to false" do
@@ -174,65 +205,126 @@ describe QualitiesController do
     end
   end
   
-  describe "for signed-in non-admins with no business selected" do
-  
-    before(:each) do
-      @nobiz_user = Factory(:user)
-      test_sign_in(@nobiz_user)
-    end
-    
-    describe "GET 'new'" do
-    
-      it "should not be successful" do
-        get :new
-        response.should_not be_success
-      end
-      
-      it "should redirect to the business_select page" do
-        get :new
-        response.should redirect_to select_business_path
-      end
-    end
-    
-    describe "POST 'create'" do
-    
-      before(:each) do
-        @attr = { :quality => "First quality",
-          	    :created_by => @nobiz_user.id,
-          	    :business_id => 1 }
-      end
-      
-      it "should not create a new attribute" do
-        lambda do
-          post :create, :quality => @attr
-          response.should_not change(Quality, :count)
-        end
-      end
-        
-      #Personal Attribute Measurements
-      it "should not generate a related set of empty PAMs"
-           
-      it "should redirect to the business-selection page" do
-        post :create, :quality => @attr
-        response.should redirect_to select_business_path   
-      end
-            
-      it "should display an explanatory flash message" do
-        post :create, :quality => @attr
-        flash[:notice] = "Illegal procedure. You must select a business 
-           and use the buttons provided before you can create a new
-           attribute."    
-      end
-    
-    end
-  
-  end
-  
   describe "for signed-in admins" do
   
     before(:each) do
       @admin_user = Factory(:user, :admin => true)
       test_sign_in(@admin_user)
+    end
+  
+    describe "GET 'index'" do
+    
+      it "should be successful" do
+        get :index
+        response.should be_success
+      end
+    
+      it "should have the correct title" do
+        get :index
+        response.should have_selector("title", 
+                    :content => "Personal Attributes")
+      end
+    
+      it "should have a link to the 'new' page" do
+        get :index
+        response.should have_selector("a", :href => new_quality_path,
+      			:content => "Add an attribute")
+      end
+    
+      describe "official approved list" do
+      
+        it "should list all the admin-approved attributes" do
+          get :index
+          @qualities[0..2].each do |quality|
+            response.should have_selector("td", :content => quality.quality)
+          end
+        end 
+      
+        it "should not list any non-approved attributes" do
+          get :index
+          @qualities.each do |quality|
+            response.should_not have_selector("td", 
+                   :content => "Fourth quality")
+          end
+        end
+    
+        it "should not list any removed attributes" do
+          get :index
+          @qualities.each do |quality|
+            response.should_not have_selector("td", 
+                    :content => "Fifth quality")
+          end
+        end
+      
+        it "should have an edit button for each element" do
+          get :index
+          @qualities[0..2].each do |quality|
+            response.should have_selector("a", 
+                                       :href => edit_quality_path(quality))
+          end
+        end
+      
+        it "should have a Remove button for each element" do
+          get :index
+          @qualities[0..2].each do |quality|
+            response.should have_selector("a", 
+                                 :title => "Remove #{quality.quality}")
+          end
+        end
+        
+        it "should have a link to unseen attributes" do
+          get :index
+          response.should have_selector("a", :href => submitted_qualities_path,
+      					:content => "New submissions")
+        end
+        
+        it "should count the number of unseen submissions" do
+          get :index
+          response.should have_selector("span#submits",
+      					:content => "(1)")
+        end
+      end
+      
+    end
+    
+    describe "GET 'new'" do
+      it "should be successful" do
+        get :new
+        response.should be_success
+      end
+    
+      it "should have the right title" do
+        get :new
+        response.should have_selector("title", 
+                      :content => "New Personal Attribute")
+      end
+    
+      it "should have a 'Cancel' button, returning to the Qualities list" do
+        get :new
+        response.should have_selector("a", :href => qualities_path,
+      					:content => "Cancel")
+      end
+    
+      it "should have a text field for the attribute name" do
+        get :new
+        response.should have_selector("input", 
+      			:name => "quality[quality]")
+      end
+    
+      it "should have a hidden field for the creator" do
+        get :new
+        response.should have_selector("input", 
+      			:name => "quality[created_by]",
+      			:type => "hidden")
+      end
+    
+      it "should have a 'Create' button" do
+        get :new
+        response.should have_selector("input", 
+            	    :type => "submit", 
+                    :value => "Create")
+    
+      end
     end
   
     describe "POST 'create'" do
@@ -292,12 +384,6 @@ describe QualitiesController do
           flash[:success].should == "#{@quality.quality} added. Now set the 5 PAMs."
         end
           
-        it "should not set the business_id" do
-          post :create, :quality => @attr
-          @quality = assigns(:quality)
-          @quality.business_id.should == nil
-        end
-          
         it "should set 'approved' to true" do
           post :create, :quality => @attr
           @quality = assigns(:quality)
@@ -312,6 +398,195 @@ describe QualitiesController do
           #maybe set to false when there are more admins
             
       end    
+    end
+    
+    describe "GET 'edit'" do
+      
+      describe "already approved" do
+      
+        it "should be successful" do
+          get :edit, :id => @quality1.id
+          response.should be_success
+        end
+        
+        it "should have the right title" do
+          get :edit, :id => @quality1.id
+          response.should have_selector("title", :content => "Edit attribute")
+        end
+      
+        it "should have a 'Cancel' button, returning to the official Qualities list" do
+          get :edit, :id => @quality1.id
+          response.should have_selector("a", :href => qualities_path,
+      					:content => "Cancel")
+        end
+        
+        it "should have a 'confirm changes' button" do
+          get :edit, :id => @quality1.id
+          response.should have_selector("input", 
+                    :type => "submit", 
+                    :value => "Confirm")
+        end
+        
+        it "should have an edit box for the attribute" do
+          get :edit, :id => @quality1.id
+          response.should have_selector("input", 
+                    :name => "quality[quality]")
+        
+        end
+        
+      end
+      
+      #describe "unseen" do
+      
+      #  it "should be successful" do
+      #    get :edit, :id => @unseen_quality.id
+      #    response.should be_success
+      #  end
+        
+      #  it "should have the right title" do
+      #    get :edit, :id => @unseen_quality.id
+      #    response.should have_selector("title", :content => "Edit attribute")
+      #  end
+        
+      #  it "should have a 'Cancel' button, returning to the unseen Qualities list" do
+      #    get :edit, :id => @unseen_quality.id
+      #    response.should have_selector("a", :href => submitted_qualities_path,
+      #					:content => "Cancel")
+      #  end
+      #end
+      
+      #describe "seen but not approved" do
+      
+      #  it "should be successful" do
+      #    get :edit, :id => @unapproved_quality.id
+      #    response.should be_success
+      #  end
+        
+      #  it "should have the right title" do
+      #    get :edit, :id => @unapproved_quality.id
+      #    response.should have_selector("title", :content => "Edit attribute")
+      #  end
+        
+      #  it "should have a 'Cancel' button, returning to the unapproved Qualities list" do
+      #    get :edit, :id => @_unapproved_quality.id
+      #    response.should have_selector("a", :href => rejected_qualities_path,
+      #					:content => "Cancel")
+      #  end
+      #end
+      
+      #describe "removed" do
+      
+      #  it "should be successful" do
+      #    get :edit, :id => @removed_quality.id
+      #    response.should be_success
+      #  end
+      
+      #  it "should have the right title" do
+      #    get :edit, :id => @removed_quality.id
+      #    response.should have_selector("title", :content => "Edit attribute")
+      #  end
+        
+     #   it "should have a 'Cancel' button, returning to the removed Qualities list" do
+      #    get :edit, :id => @removed_quality.id
+      #    response.should have_selector("a", :href => removed_qualities_path,
+      #					:content => "Cancel")
+      #  end
+      #end
+        
+    end
+    
+    describe "PUT 'update'" do
+    
+      describe "failure" do
+      
+        before(:each) do
+          @attr = { :quality => ""}
+        end
+        
+        it "should not change the number of qualities" do
+          lambda do
+            put :update, :id => @quality1, :quality => @attr
+          end.should_not change(Quality, :count)
+        end
+            
+        it "should render the 'edit' page" do
+          put :update, :id => @quality1, :quality => @attr
+          response.should render_template('edit')
+        end
+
+        it "should have the right title" do
+          put :update, :id => @quality1, :quality => @attr
+          response.should have_selector("title", 
+                  :content => "Edit attribute")
+        end
+        
+        it "should not change the goal's attributes" do
+          put :update, :id => @quality1, :quality => @attr
+          @quality1.reload
+          @quality1.quality.should_not  == ""
+          @quality1.removed.should == false
+        end
+          
+      end
+      
+      describe "success" do
+      
+        before(:each) do
+          @attr = { :quality => "Changed attribute",
+                        :updated_by => @admin_user.id }
+        end
+            
+        it "should not change the number of qualities" do
+          lambda do
+            put :update, :id => @quality1, :quality => @attr
+          end.should_not change(Quality, :count)
+        end
+
+        it "should change the quality's attributes" do
+          put :update, :id => @quality1, :quality => @attr
+          @quality1.reload
+          @quality1.quality.should  == @attr[:quality]
+          @quality1.removed.should == false
+        end
+            
+        it "should save the current user as the last updater" do
+          put :update, :id => @quality1, :quality => @attr
+          @quality1.reload
+          @quality1.updated_by.should  == @admin_user.id
+        end
+
+        it "should redirect to the attributes list page" do
+          put :update, :id => @quality1, :quality => @attr
+          response.should redirect_to qualities_path
+        end
+
+        it "should have a flash message" do
+          put :update, :id => @quality1, :quality => @attr
+          flash[:success].should == "'Changed attribute' updated."
+        end
+      
+      end
+    
+    end
+    
+    describe "GET 'show'" do
+    
+      it "should be successful" do
+        get :show, :id => @quality1
+        response.should be_success
+      end
+      
+      it "should have the right title" do
+        get :show, :id => @quality1
+        response.should have_selector("title", :content => "Attribute: #{@quality1.quality}")
+      end
+      
+      it "should have a link to the quality 'edit' page" do
+        get :show, :id => @quality1
+        response.should have_selector("a", :href => edit_quality_path(@quality1))
+      end
+    
+    
     end
   
   end

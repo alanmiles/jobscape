@@ -1,25 +1,24 @@
 class QualitiesController < ApplicationController
   
   before_filter :authenticate, :except => :index
-  before_filter :no_business, :only => [:new, :create]
   
   def index
     @title = "Personal Attributes"
+    @qualities = Quality.official_list.paginate(:page => params[:page])
+    @submissions = Quality.new_submissions
   end
 
   def new
     @title = "New Personal Attribute"
     @quality = Quality.new
     @quality.created_by = current_user.id
-    @quality.business_id = session[:biz] unless session[:biz] == nil?
   end
   
   def create
     @quality = Quality.new(params[:quality])
     if @quality.save
       if current_user.admin?
-        @quality.update_attributes(:business_id => nil,
-                 :approved => true,
+        @quality.update_attributes(:approved => true,
                  :seen => true)
       end
       flash[:success] = "#{@quality.quality} added. Now set the 5 PAMs."
@@ -32,22 +31,25 @@ class QualitiesController < ApplicationController
   
   def show
     @quality = Quality.find(params[:id])
-    @title = "Personal Attribute"
+    @title = "Attribute: #{@quality.quality}"
   end
   
-  private
+  def edit
+    @quality = Quality.find(params[:id])
+    @title = "Edit attribute"
+  end
   
-    def no_business
-      if signed_in?
-        unless current_user.admin?
-          if session[:biz] == nil
-            flash[:notice] = "Illegal procedure. You must select a business 
-              and use the buttons provided before you can create a new
-              attribute."
-            redirect_to select_business_path        
-          end
-        end
-      end
+  def update
+    @quality = Quality.find(params[:id])
+    @new_title = params[:quality][:quality]
+    if @quality.update_attributes(params[:quality])
+      @quality.update_attribute(:updated_by, current_user.id)
+      flash[:success] = "'#{@new_title}' updated."
+      redirect_to qualities_path
+    else
+      @title = "Edit attribute"
+      render 'edit'
     end
+  end
 
 end

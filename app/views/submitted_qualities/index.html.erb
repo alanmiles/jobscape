@@ -1,0 +1,23 @@
+<div class = "r-float">
+  <%= link_to "Approved list", qualities_path %>
+</div>
+
+<h1>Personal Attributes: new submissions</h1>
+<table class="narrow">
+  <tr>
+    <th>Attribute</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @qualities.each do |quality| %>
+  <tr>
+    <td><%= quality.quality %></td>  
+    <td><%= link_to "Edit", edit_submitted_quality_path(quality) %></td>
+    <td><%= link_to "delete", quality, 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Delete #{quality.quality}" %>
+    </td>
+  </tr>
+  <% end %> 
+</table>

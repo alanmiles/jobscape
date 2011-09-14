@@ -6,7 +6,6 @@
 #  quality      :string(255)
 #  approved     :boolean         default(FALSE)
 #  created_by   :integer
-#  business_id  :integer
 #  updated_by   :integer
 #  seen         :boolean         default(FALSE)
 #  removed      :boolean         default(FALSE)
@@ -21,7 +20,6 @@ describe Quality do
   
   before(:each) do
     @user = Factory(:user)
-    @business = Factory(:business)
     @attr = { :quality => "Quality", :created_by => @user.id }
   end
   
@@ -35,7 +33,7 @@ describe Quality do
   end
   
   it "should not have a long quality" do
-    long_name = "a" * 51
+    long_name = "a" * 26
     long_name_quality = Quality.create(@attr.merge(:quality => long_name))
     long_name_quality.should_not be_valid
   end
