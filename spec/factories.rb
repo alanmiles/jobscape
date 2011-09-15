@@ -52,6 +52,12 @@ Factory.define :quality do |quality|
   quality.created_by		1
 end
 
+Factory.define :pam do |pam|
+  pam.association :quality
+  pam.grade			"A"
+  pam.descriptor		"Grade for A"
+end
+
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
 end

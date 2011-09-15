@@ -4,7 +4,7 @@ class QualitiesController < ApplicationController
   
   def index
     @title = "Personal Attributes"
-    @qualities = Quality.official_list.paginate(:page => params[:page])
+    @qualities = Quality.official_list
     @submissions = Quality.new_submissions
   end
 
@@ -32,6 +32,7 @@ class QualitiesController < ApplicationController
   def show
     @quality = Quality.find(params[:id])
     @title = "Attribute: #{@quality.quality}"
+    @pams = @quality.pams.all
   end
   
   def edit

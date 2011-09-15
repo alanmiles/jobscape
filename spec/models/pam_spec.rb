@@ -22,8 +22,10 @@ describe Pam do
     @dup_attr = { :grade => "B", :descriptor => "Measurement" }
   end
   
-  it "should create a PAM given valid attributes" do
-    @quality.pams.create!(@attr)
+  it "should have created a PAM as the Quality was created" do
+    #@quality.pams.create!(@attr)
+    @pam = Pam.find(:first, :conditions => ["quality_id = ?", @quality.id])
+    @pam.should be_valid
   end
   
   describe "associations" do
@@ -80,10 +82,11 @@ describe Pam do
     
     it "can accept a duplicate descriptor for a different quality" do
       @quality2 = Factory(:quality, :quality => "Second quality")
-  
-      @quality.pams.create(@attr)
-      diff_quality = @quality2.pams.new(@attr)
-      diff_quality.should be_valid
+      @pam_1 = Pam.find(:first, :conditions => ["quality_id = ? and grade = ?", @quality.id, "A"])
+      @pam_2 = Pam.find(:first, :conditions => ["quality_id = ? and grade = ?", @quality2.id, "A"])
+     
+      @pam_2.should be_valid
+      @pam_1.descriptor.should == @pam_2.descriptor
     end
     
   end

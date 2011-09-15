@@ -27,13 +27,16 @@ class Quality < ActiveRecord::Base
   				:uniqueness	=> { :case_sensitive => false }
   validates	:created_by,	:presence	=> true,
   				:numericality	=> { :integer => true }
+  				
   
   def self.official_list
-    self.find(:all, :conditions => ["approved = ? and removed = ?", true, false])
+    self.find(:all, :conditions => ["approved = ? and removed = ?", true, false], :order => "quality")
   end
   
   def self.new_list
-    self.find(:all, :conditions => ["approved = ? and removed = ? and seen = ?", false, false, false])
+    self.find(:all, 
+              :conditions => ["approved = ? and removed = ? and seen = ?", false, false, false],
+              :order => "quality")
   end
   
   def self.new_submissions

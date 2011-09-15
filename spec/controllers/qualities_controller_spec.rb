@@ -255,6 +255,14 @@ describe QualitiesController do
                     :content => "Fifth quality")
           end
         end
+        
+        it "should have a 'show' link for each attribute" do
+          get :index
+          @qualities[0..2].each do |quality|
+            response.should have_selector("a", 
+                    :href => quality_path(quality))
+          end
+        end
       
         it "should have an edit button for each element" do
           get :index
@@ -414,9 +422,9 @@ describe QualitiesController do
           response.should have_selector("title", :content => "Edit attribute")
         end
       
-        it "should have a 'Cancel' button, returning to the official Qualities list" do
+        it "should have a 'Cancel' button, returning to the Qualities show page" do
           get :edit, :id => @quality1.id
-          response.should have_selector("a", :href => qualities_path,
+          response.should have_selector("a", :href => quality_path(@quality1),
       					:content => "Cancel")
         end
         
@@ -581,12 +589,48 @@ describe QualitiesController do
         response.should have_selector("title", :content => "Attribute: #{@quality1.quality}")
       end
       
+      it "should have a link back to the attributes list" do
+        get :show, :id => @quality1
+        response.should have_selector("a", :href => qualities_path)
+      end
+      
       it "should have a link to the quality 'edit' page" do
         get :show, :id => @quality1
         response.should have_selector("a", :href => edit_quality_path(@quality1))
       end
     
-    
+      describe "showing the attribute's grades" do
+          
+        before(:each) do
+          @pam_a = Pam.find(:first, :conditions => ["quality_id = ? and grade = ?", @quality1.id, "A"])
+          @pam_b = Pam.find(:first, :conditions => ["quality_id = ? and grade = ?", @quality1.id, "B"])
+          @pam_c = Pam.find(:first, :conditions => ["quality_id = ? and grade = ?", @quality1.id, "C"])                     
+          @pam_d = Pam.find(:first, :conditions => ["quality_id = ? and grade = ?", @quality1.id, "D"])
+          @pam_e = Pam.find(:first, :conditions => ["quality_id = ? and grade = ?", @quality1.id, "E"])
+          @wrong_pam = Pam.find(:first, :conditions => ["quality_id = ? and grade = ?", @quality2.id, "A"])
+          @wrong_pam.update_attribute(:descriptor, "wrong")
+          @pams = [@pam_a, @pam_b, @pam_c, @Pam_d, @pam_e]
+        end
+                    
+        it "should show the attribute's grades" do
+          get :show, :id => @quality1.id
+          response.should have_selector("td", :content => @pam_a.descriptor)
+          response.should have_selector("td", :content => @pam_b.descriptor)
+        end
+          
+        it "should not show grades for different attributes" do
+          get :show, :id => @quality1.id
+          response.should_not have_selector("td", :content => @wrong_pam.descriptor)
+        end 
+          
+        it "should have an 'edit' link for each descriptor" do
+          get :show, :id => @quality1.id
+          @pams.each do |pam|
+            response.should have_selector("a", :href => edit_pam_path(pam))
+          end
+        end
+          
+      end
     end
   
   end

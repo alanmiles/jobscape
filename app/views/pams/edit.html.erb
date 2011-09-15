@@ -1,0 +1,30 @@
+<%= form_for(@pam) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+<div class = "r-float">
+ <%= link_to "Cancel", quality_path(@pam.quality_id) %>
+</div>
+<p class = "display_text grun round cntr">Attribute: <%= @pam.quality.quality %></p>
+
+<div class = "info_box rightpos">
+  <strong>All current PAMs</strong><br />
+  <table>
+    <% @pams.each do |pam| %>
+    <tr>
+      <td class = "at_top"><%= pam.grade %></td>
+      <td><%= pam.descriptor %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+
+
+  <div class = "field">
+    <span class="label_large"><%= f.label :descriptor, "Edit PAM: Grade " + @pam.grade %></span><br />
+    <%= f.text_area :descriptor, :cols => 40, :rows => 10 %>
+  </div>
+  <%= f.hidden_field :updated_by %>
+  <br />
+  <div class="actions">
+    <%= f.submit "Confirm changes" %>
+  </div>
+<% end %>

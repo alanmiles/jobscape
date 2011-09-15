@@ -4,15 +4,15 @@
 </div>
 
 <h1><%= @title %></h1>
+<p><em>
+  Click on <%= image_tag("select.png", :size => "15x15") %> to view or 
+  edit the associated grades/objectives.
+</em></p>
 <table class="narrow">
-  <tr>
-    <th>Attribute</th>
-    <th></th>
-    <th></th>
-  </tr>
   <% @qualities.each do |quality| %>
   <tr>
-    <td><%= quality.quality %></td>  
+    <td><%= quality.quality %></td>
+    <td><%= link_to(image_tag("select.png", :size => "15x15"), quality) %> 
     <td><%= link_to "Edit", edit_quality_path(quality) %></td>
     <td><%= link_to "Remove", quality, 
                    :method => :delete, 

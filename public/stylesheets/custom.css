@@ -23,7 +23,7 @@ section {
 }
 
 section h1 {
-  font-size: 200%;
+  font-size: 150%;
 }
 
 /* Links */
@@ -85,7 +85,6 @@ nav ul li a:hover {
   padding: 15px;
   font-size: 100%;
   font-weight: bold;
-
 }
 
 .display_box {
@@ -95,6 +94,14 @@ nav ul li a:hover {
   text-align: center;
   padding: 15px;
   font-size: 100%;
+}
+
+.info_box {
+  margin-left: 15px;
+  margin-right: 15px;
+  width: 240px;
+  padding: 0px 15px;
+  font-size: 80%;
 }
 
 .pink {
@@ -125,6 +132,11 @@ nav ul li a:hover {
   height: 4em;
 }
 
+.label_large {
+  font-size: 150%
+  font-weight: normal;
+}
+
 /* Sign up button */
 
 a.signup_button {
@@ -146,6 +158,10 @@ a.signup_button {
   -moz-border-radius:    10px;
   -webkit-border-radius: 10px;
   border-radius:         10px;
+}
+
+.cntr {
+  text-align: center;
 }
 
 footer {
@@ -185,6 +201,10 @@ td.sidebar {
 
 td.control {
   font-size: 0.7em;
+}
+
+td.at_top {
+  vertical-align: top;
 }
 
 .numeric {

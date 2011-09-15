@@ -1,5 +1,20 @@
 <div class = "r-float">
-  <%= link_to "Edit attribute", edit_quality_path(@quality) %><br />
+  <%= link_to "Attributes list", qualities_path %><br />
 </div>
 
-<h1><%= @title %></h1>
+<p class = "display_text grun round cntr">Attribute: <%= @quality.quality %>
+           &nbsp; <span style = "font-weight: normal">
+             <%= link_to "(Edit)", edit_quality_path(@quality) %>
+           </span>
+</p>
+
+<h1>PAMs <i style = "font-size:0.6em">( = personal attribute measurements )</i></h1> 
+<table>
+  <% @pams.each do |pam| %>
+    <tr>
+      <td class = "at_top"><%= pam.grade %></td>
+      <td><%= pam.descriptor %></td>
+      <td class = "control at_top"><%= link_to "Edit", edit_pam_path(pam) %></td> 
+    </tr>  
+  <% end %>
+</table>

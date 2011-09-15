@@ -1,5 +1,7 @@
 Jobscape::Application.routes.draw do
 
+  get "pams/edit"
+
   resources :users
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
