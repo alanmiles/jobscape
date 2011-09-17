@@ -58,6 +58,12 @@ Factory.define :pam do |pam|
   pam.descriptor		"Grade for A"
 end
 
+Factory.define :jobquality do |jobquality|
+  jobquality.association :plan
+  jobquality.association :quality
+  jobquality.position		1
+end
+
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
 end

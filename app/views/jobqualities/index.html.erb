@@ -1,0 +1,29 @@
+<div class = "r-float">
+<% if @plan.max_attributes? %>
+  <u>No more attributes can be added</u>
+<% else %>
+  <%= link_to "Add a new attribute", new_plan_jobquality_path(@plan) %><br />
+<% end %>
+<%= link_to "Back to A-Plan menu", @plan %>
+</div>
+
+<h1>Personal Attributes:</h1> 
+<h4>for <%= @job.title_location %></h4>
+
+
+  
+<ul id="a-plan" style="cursor: move">
+  <% @jobqualities.each do |f| %>
+    <li id="item_<%= f.id %>">
+      
+      <%= f.quality.quality %>
+      <%= image_tag("select.png", :size => "15x15") %>
+      <%= image_tag("cancel.png", :size => "15x15") %>
+    </li>
+  <% end %>
+</ul>
+
+<%= sortable_element('a-plan', 
+    :url => { :action => "sort", :id => @plan }, 
+    
+    :complete => visual_effect(:highlight, "a-plan")) %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110912163343) do
+ActiveRecord::Schema.define(:version => 20110916131852) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -45,6 +45,18 @@ ActiveRecord::Schema.define(:version => 20110912163343) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "jobqualities", :force => true do |t|
+    t.integer  "plan_id"
+    t.integer  "quality_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "position"
+  end
+
+  add_index "jobqualities", ["plan_id", "quality_id"], :name => "index_jobqualities_on_plan_id_and_quality_id", :unique => true
+  add_index "jobqualities", ["plan_id"], :name => "index_jobqualities_on_plan_id"
+  add_index "jobqualities", ["quality_id"], :name => "index_jobqualities_on_quality_id"
 
   create_table "jobs", :force => true do |t|
     t.string   "job_title"

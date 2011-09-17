@@ -1,0 +1,2 @@
+module JobqualitiesHelper
+end

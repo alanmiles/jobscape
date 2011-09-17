@@ -20,6 +20,7 @@ class Plan < ActiveRecord::Base
 
   belongs_to :job
   has_many :responsibilities, :dependent => :destroy
+  has_many :jobqualities, :dependent => :destroy
   
   validates	:job_id,  	:presence 		=> true,
                                 :uniqueness		=> true
@@ -35,6 +36,18 @@ class Plan < ActiveRecord::Base
   
   def max_responsibilities?
     count_responsibilities >= 20
+  end
+  
+  def count_attributes
+    self.jobqualities.count(:all)
+  end
+  
+  def has_attributes?
+    count_attributes > 0
+  end
+  
+  def max_attributes?
+    count_attributes >= 10
   end
   
   def complete?

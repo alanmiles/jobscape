@@ -78,6 +78,12 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 
+li .handle {
+  color: #777;
+  cursor: move;
+  font-size: 12px;
+}
+
 .display_text {
   margin-left: 75px;
   margin-right: 75px;

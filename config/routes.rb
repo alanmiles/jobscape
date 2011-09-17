@@ -1,7 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "pams/edit"
-
   resources :users
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
@@ -10,6 +8,11 @@ Jobscape::Application.routes.draw do
   end
   resources :plans do
     resources :responsibilities, :shallow => true
+    resources :jobqualities, :shallow => true do
+      collection do
+        post :sort
+      end
+    end  
   end
   resources :responsibilities do
     resources :goals, :shallow => true

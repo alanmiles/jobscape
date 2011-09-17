@@ -1,0 +1,18 @@
+<div class = "r-float">
+<%= link_to "Cancel", plan_jobqualities_path(@plan) %>
+</div>
+<h1>Select a Personal Attribute</h1>
+<h4>for <%= @job.title_location %></h4>
+
+<%= form_for([@plan, @jobquality]) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class = "field">
+    <%= f.label :quality_id, "Select a key attribute for the job" %><br />
+    <%= collection_select(:jobquality, :quality_id, @qualities, :id, 
+                        :quality, :prompt => true) %>
+  </div> 
+  
+  <div class="actions">
+    <%= f.submit "Confirm selection" %>
+  </div>
+<% end %>

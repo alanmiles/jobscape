@@ -6,6 +6,7 @@ gem 'gravatar_image_tag', '1.0.0.pre2'
 gem 'will_paginate', '3.0.pre2'
 gem 'geocoder', '1.0.2'
 gem 'redis', '2.2.2'
+gem 'acts_as_list', '0.1.4'
 
 group :development do
   gem 'rspec-rails', '2.6.1'

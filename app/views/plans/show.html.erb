@@ -1,5 +1,6 @@
 <div class = "r-float">
-<%= link_to "#{@job.job_title} menu", @job %>
+<%= link_to "#{@job.job_title} menu", @job %> <br />
+<%= link_to "All jobs in business", business_jobs_path(@business) %>
 </div>
 <h1>Achievement Plan</h1>
 <h4><%= @job.title_location %></h4>
@@ -21,9 +22,9 @@
     </td>
   </tr>
   <tr>
-    <td><strong>Personal Attributes</strong></td>
+    <td><strong><%= link_to "Personal Attributes", plan_jobqualities_path(@plan) %></strong></td>
     <td>10 key qualities for jobholders</td>
-    <td>0 selected</td>
+    <td><span id = "attribs"><%= @plan.count_attributes %> selected</span></td>
   </tr>
   <tr>
     <td><strong>Hiring Requirements</strong></td>

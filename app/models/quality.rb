@@ -21,6 +21,7 @@ class Quality < ActiveRecord::Base
   after_create  :build_pams
   
   has_many :pams, :dependent => :destroy
+  has_many :jobqualities
   
   validates	:quality,	:presence 	=> true,
                 		:length		=> { :maximum => 25 },
@@ -30,8 +31,21 @@ class Quality < ActiveRecord::Base
   				
   
   def self.official_list
-    self.find(:all, :conditions => ["approved = ? and removed = ?", true, false], :order => "quality")
+    self.where("approved = ? and removed = ?", true, false).order("quality")
   end
+  
+  def self.official_list_excluding_taken(plan)
+    @plan = Plan.find(plan)
+    already_taken = []
+    @jobqualities = Jobquality.where("plan_id = ?", @plan.id)
+    @jobqualities.each do |jq|
+      already_taken << jq.quality_id
+    end 
+    
+    qualities_table = Arel::Table.new(:qualities)
+    self.where(qualities_table[:id].not_in already_taken).where("approved = ? and removed = ?", true, false)
+  end
+  
   
   def self.new_list
     self.find(:all, 
