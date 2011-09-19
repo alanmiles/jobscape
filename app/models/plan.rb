@@ -50,6 +50,14 @@ class Plan < ActiveRecord::Base
     count_attributes >= 10
   end
   
+  def attributes_available
+    if jobqualities.count == 0
+      Quality.official_list
+    else
+      Quality.official_list_excluding_taken(self.id)
+    end
+  end
+  
   def complete?
     #correct during build
     count_responsibilities > 1

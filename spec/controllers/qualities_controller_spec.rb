@@ -14,6 +14,7 @@ describe QualitiesController do
     @unseen_quality = Factory(:quality, :quality => "Sixth quality")
     
     @qualities = [@quality1, @quality2, @quality3, @unapproved_quality, @removed_quality, @unseen_quality]
+    
   end
   
   describe "GET 'index'" do
@@ -264,21 +265,17 @@ describe QualitiesController do
           end
         end
       
-        it "should have an edit button for each element" do
-          get :index
-          @qualities[0..2].each do |quality|
-            response.should have_selector("a", 
-                                       :href => edit_quality_path(quality))
-          end
-        end
-      
-        it "should have a Remove button for each element" do
+        it "should have a Remove button for each unused element" do
           get :index
           @qualities[0..2].each do |quality|
             response.should have_selector("a", 
                                  :title => "Remove #{quality.quality}")
           end
         end
+        
+        it "should show how many times the attribute has been selected, if any"
+        
+        
         
         it "should have a link to unseen attributes" do
           get :index
@@ -290,6 +287,48 @@ describe QualitiesController do
           get :index
           response.should have_selector("span#submits",
       					:content => "(1)")
+        end
+        
+        describe "when the attribute is in current A-plans" do
+        
+          before(:each) do
+            @occupation = Factory(:occupation)
+            @business = Factory(:business)
+            @job_1 = Factory(:job, :business_id => @business.id, 
+            			:occupation_id => @occupation.id)
+            @job_2 = Factory(:job, :business_id => @business.id, 
+            			:occupation_id => @occupation.id,
+            			:job_title => "Another job")
+            @plan_1 = Plan.find_by_job_id(@job_1.id)
+            @plan_2 = Plan.find_by_job_id(@job_2.id)
+            @jobquality_1 = Factory(:jobquality, :plan_id => @plan_1.id, :quality_id => @quality1.id)
+            @jobquality_2 = Factory(:jobquality, :plan_id => @plan_1.id, :quality_id => @quality2.id)
+            @jobquality_3 = Factory(:jobquality, :plan_id => @plan_2.id, :quality_id => @quality1.id)
+            @jobquality_4 = Factory(:jobquality, :plan_id => @plan_2.id, :quality_id => @quality2.id) 
+          end
+        
+          it "should display the number of uses of the attribute" do
+            get :index
+            @qualities[0..1].each do |quality|
+            response.should have_selector("span#uses", 
+                                 :content => "2")
+            end
+          end
+          
+          it "should not display a remove button for these attributes" do
+            get :index
+            @qualities[0..1].each do |quality|
+              response.should_not have_selector("a", 
+                                 :title => "Remove #{quality.quality}")
+            end
+          end
+          
+        end
+        
+        describe "when the attribute is not in current use but is in history" do
+        
+          it "should not have a remove button"
+          
         end
       end
       
@@ -631,8 +670,66 @@ describe QualitiesController do
         end
           
       end
+    
     end
   
+    describe "DELETE 'destroy'" do
+    
+      describe "when the attribute is in current A-plans" do
+      
+        before(:each) do
+          @occupation = Factory(:occupation)
+          @business = Factory(:business)
+          @job = Factory(:job, :business_id => @business.id, 
+          			:occupation_id => @occupation.id)
+          @plan = Plan.find_by_job_id(@job.id)
+          @jobquality = Factory(:jobquality, :plan_id => @plan.id, :quality_id => @quality1.id)     
+        end
+        
+        it "should not delete the attribute" do
+          lambda do
+            delete :destroy, :id => @quality1
+          end.should_not change(Quality, :count)
+        end
+        
+        it "should explain why the attribute cannot be deleted" do
+          delete :destroy, :id => @quality1
+          flash[:error].should == "Illegal procedure. This attribute is in use and cannot be removed."
+        end
+        
+        it "should redirect to the attribute list" do
+          delete :destroy, :id => @quality1
+          response.should redirect_to root_path
+        end
+        
+      end
+      
+      describe "when the attribute is still in history but not in A-plans" do
+      
+        it "should not be deletable"
+      end
+      
+      describe "when the attribute is not in use at all" do
+      
+        it "should delete the attribute" do
+          lambda do
+            delete :destroy, :id => @quality1
+          end.should change(Quality, :count).by(-1)
+        end
+        
+        it "should have a success message" do
+          delete :destroy, :id => @quality1
+          flash[:success].should == "#{@quality1.quality} successfully deleted."
+        end
+        
+        it "should redirect to the qualities list" do
+          delete :destroy, :id => @quality1
+          response.should redirect_to qualities_path
+        end
+      
+      end
+    
+    end
   end
 
 end

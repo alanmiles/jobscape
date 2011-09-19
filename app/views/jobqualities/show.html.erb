@@ -1,0 +1,18 @@
+<div class = "r-float">
+  <%= link_to "Job attributes list", plan_jobqualities_path(@jobquality.plan) %>
+</div>
+<h1><%= @title %></h1>
+<div class = "display_wider">
+  <i>The 5 grades below will be used when reviewing the capabilities of 
+          candidates or jobholders for your '<span id="job"><%= @job.job_title %></span>' job.
+  </i><br />
+  <table style = "padding-top:15px">
+    <% @pams.each do |pam| %>
+    <tr>
+      <td class = "at_top"><%= pam.grade %></td>
+      <td><%= pam.descriptor %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+

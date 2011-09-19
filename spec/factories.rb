@@ -61,7 +61,6 @@ end
 Factory.define :jobquality do |jobquality|
   jobquality.association :plan
   jobquality.association :quality
-  jobquality.position		1
 end
 
 Factory.sequence :email do |n|
@@ -74,4 +73,8 @@ end
 
 Factory.sequence :definition do |d|
   "Definition-#{d}"
+end
+
+Factory.sequence :quality do |q|
+  "Quality-#{q}"
 end

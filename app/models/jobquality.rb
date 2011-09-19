@@ -24,6 +24,11 @@ class Jobquality < ActiveRecord::Base
   				:uniqueness	=> { :scope => :plan_id }
   				
   				
-
+  def self.count_attribute(quality)
+    @total = self.find_all_by_quality_id(quality).count
+  end
   
+  def self.attribute_used?(quality)
+    self.count_attribute(quality) > 0
+  end
 end

@@ -1,3 +1,4 @@
+<div style ="min-height: 20em">
 <div class = "r-float">
 <%= link_to "Cancel", plan_jobqualities_path(@plan) %>
 </div>
@@ -6,13 +7,29 @@
 
 <%= form_for([@plan, @jobquality]) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
+  
+  <% if @plan.has_attributes? %>
+    <div class = "info_box rightpos">
+      ALREADY SELECTED<br />
+      <ul>
+        <% @selected_qualities.each do |sq| %>
+          <li><%= sq.quality.quality %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <br /><br />
+    
   <div class = "field">
     <%= f.label :quality_id, "Select a key attribute for the job" %><br />
     <%= collection_select(:jobquality, :quality_id, @qualities, :id, 
                         :quality, :prompt => true) %>
   </div> 
-  
+  <br />
   <div class="actions">
     <%= f.submit "Confirm selection" %>
   </div>
+  <br />
 <% end %>
+</div>

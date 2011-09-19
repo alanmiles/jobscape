@@ -13,12 +13,16 @@
   <tr>
     <td><%= quality.quality %></td>
     <td><%= link_to(image_tag("select.png", :size => "15x15"), quality) %> 
-    <td><%= link_to "Edit", edit_quality_path(quality) %></td>
-    <td><%= link_to "Remove", quality, 
+    <td style = "text-align: center"><span id ="uses">
+    <% if Jobquality.attribute_used?(quality) %>
+      <%= Jobquality.count_attribute(quality) %>
+    <% else %>
+      <%= link_to image_tag("cancel.png", :size => "15x15"), quality, 
                    :method => :delete, 
                    :confirm => "You sure?",
                    :title => "Remove #{quality.quality}" %>
-    </td>
+    <% end %>
+    </span></td>
   </tr>
   <% end %> 
 </table>

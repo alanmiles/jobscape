@@ -53,4 +53,18 @@ class QualitiesController < ApplicationController
     end
   end
 
+  def destroy
+    ##TO BE UPDATED - If in use in employee history, should not be deletable
+    
+    @quality = Quality.find(params[:id])
+    if Jobquality.attribute_used?(@quality)
+      flash[:error] = "Illegal procedure. This attribute is in use and cannot be removed."
+      redirect_to root_path
+    else
+      @quality.destroy
+      flash[:success] = "#{@quality.quality} successfully deleted."
+      redirect_to qualities_path
+    end
+  
+  end
 end

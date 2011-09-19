@@ -226,11 +226,6 @@ describe PagesController do
           response.should have_selector("title", :content => "Select business")
         end
         
-        it "should have a reference to the current user" do
-          get :select_business
-          response.should have_selector("p", :content => @user.name)
-        end
-        
         it "should show all associated businesses for the current user" do
           get :select_business
           @employees[0..1].each do |employee|

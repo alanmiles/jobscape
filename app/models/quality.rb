@@ -68,4 +68,5 @@ class Quality < ActiveRecord::Base
                    :descriptor => "#{@content}" + grade.to_s)  
       end
     end
+    
 end
