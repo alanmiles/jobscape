@@ -1,0 +1,26 @@
+<div class = "r-float">
+  <%= link_to "Return to current job", new_plan_jobquality_path(@plan) %>
+</div>
+
+<h1>Suggest a new Personal Attribute</h1> 
+
+<%= form_for(@quality, :url => submitted_qualities_path) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  
+  <div class = "info_box">
+    Enter your suggested attribute here.  After you click the 'Suggest' button, we'll also
+    ask you to propose 5 PAMs (= Personal Attribute Measurements).<br /><br />
+    Your suggestion will be reviewed by our team - if it's modified or not accepted, we'll
+    advise you by email.
+  </div>
+  
+<div class="field">
+  <%= f.label :quality, "Your suggestion" %> <small> ( max 25 characters )  </small><br />
+  <%= f.text_field :quality %>
+</div>
+  <%= f.hidden_field :created_by %>
+
+  <div class="actions">
+    <%= f.submit "Suggest now" %>
+  </div>
+<% end %>

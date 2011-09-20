@@ -1,0 +1,2 @@
+module SubmittedPamsHelper
+end

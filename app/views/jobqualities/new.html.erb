@@ -18,18 +18,19 @@
       </ul>
     </div>
   <% end %>
-
-  <br /><br />
     
   <div class = "field">
     <%= f.label :quality_id, "Select a key attribute for the job" %><br />
     <%= collection_select(:jobquality, :quality_id, @qualities, :id, 
                         :quality, :prompt => true) %>
   </div> 
-  <br />
   <div class="actions">
     <%= f.submit "Confirm selection" %>
   </div>
   <br />
 <% end %>
+
+<p><i>Can't find what you want in the list?<br />  
+  Then why not <%= link_to "suggest a new personal attribute", new_submitted_quality_path %>?</i>
+</p>
 </div>

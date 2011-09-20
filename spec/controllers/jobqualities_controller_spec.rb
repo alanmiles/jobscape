@@ -242,6 +242,11 @@ describe JobqualitiesController do
                   :value => "Confirm selection")
         end
         
+        it "should have a link to new attribute suggestions" do
+          get :new, :plan_id => @plan.id
+          response.should have_selector("a", :href => new_submitted_quality_path)
+        end
+        
         describe "handling previously-selected attributes" do
         
           before(:each) do

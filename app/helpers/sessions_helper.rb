@@ -27,7 +27,8 @@ module SessionsHelper
   
   def admin_user
     unless current_user.admin?
-      redirect_to root_path, :notice => "Only available to administrators"
+      flash[:notice] = "Only available to administrators"
+      redirect_to root_path
     end
   end
   
