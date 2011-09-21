@@ -1,0 +1,25 @@
+<div class = "r-float">
+  <%= link_to "Return to current job", new_plan_jobquality_path(@plan) %>
+</div>
+<h1><%= @title %></h1>
+
+<div class="narrow rightpos"><small>Click on an attribute to see its 5 PAMs.  If the attribute is still 'Pending', you can
+still change or delete it.  The record is fixed after approval or rejection.</small></div>
+
+
+<table class="extend">
+  <% @qualities.each do |quality| %>
+  <tr>
+    <td>
+      <% if quality.status == "Pending" %>
+        <%= link_to quality.quality, submitted_quality_path(quality) %>
+      <% else %>
+        <%= link_to quality.quality, my_submission_path(quality) %>
+      <% end %>
+    </td>
+    <td class = "control"><%= quality.status %></td>
+    <td class = "control"><%= time_ago_in_words(quality.created_at) %> ago </td>
+    <td><%= image_tag("cancel.png", :size => "15x15") if quality.status == "Pending" %></td>
+  </tr>
+  <% end %>
+</table>

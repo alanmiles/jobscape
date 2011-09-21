@@ -56,6 +56,11 @@ class User < ActiveRecord::Base
     (user && user.salt == cookie_salt) ? user : nil
   end
   
+  def has_attribute_submissions?
+    total = Quality.find_all_by_created_by(self.id).count
+    return true if total > 0 
+  end
+  
   private
 
     def encrypt_password

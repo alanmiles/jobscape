@@ -33,4 +33,7 @@
 <p><i>Can't find what you want in the list?<br />  
   Then why not <%= link_to "suggest a new personal attribute", new_submitted_quality_path %>?</i>
 </p>
+
+<i><%= link_to("View your previous suggestions", my_submissions_path) if current_user.has_attribute_submissions? %></i>
+
 </div>

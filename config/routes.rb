@@ -1,7 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "submitted_pams/index"
-
   resources :users
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
@@ -24,6 +22,7 @@ Jobscape::Application.routes.draw do
   end
   resources :submitted_qualities 
   resources :submitted_pams
+  resources :my_submissions
   
   
   

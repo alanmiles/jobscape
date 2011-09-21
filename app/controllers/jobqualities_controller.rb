@@ -31,6 +31,7 @@ class JobqualitiesController < ApplicationController
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
     @selected_qualities = @plan.jobqualities.order("jobqualities.position")
+    session[:return_to] = new_plan_jobquality_path(@plan)
     if @plan.max_attributes?
       flash[:notice] = "Sorry, you're only allowed 10 attributes. You'll need to delete an attribute before adding a new one."
       @title = "Attributes: #{@job.job_title}"

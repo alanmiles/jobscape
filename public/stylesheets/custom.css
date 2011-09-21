@@ -207,6 +207,10 @@ table.profile {
   width: 40%
 }
 
+.extend {
+  width: 50%;
+}
+
 td.main {
   width: 70%;
   padding: 1em;

@@ -57,6 +57,16 @@ class Quality < ActiveRecord::Base
     self.new_list.count
   end
   
+  def status
+    if removed?
+      return "Rejected"
+    elsif approved?
+      return "Approved"
+    else
+      return "Pending"
+    end
+  end
+    
   private
   
     def build_pams

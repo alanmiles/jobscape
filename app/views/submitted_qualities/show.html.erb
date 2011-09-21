@@ -1,5 +1,5 @@
 <div class = "r-float">
-  <%= link_to "Return to current job", new_plan_jobquality_path(@plan) %>
+  <%= link_to "Back", session[:return_to] %>
 </div>
 <h1>Your suggested attribute</h1>
 
@@ -9,10 +9,10 @@
              <%= link_to "(Edit)", edit_submitted_quality_path(@quality) %>
            </span>
 </p>
-<p style = "padding-left:25px; padding-right:25px">
+<p style = "padding-left:5px; padding-right:5px">
    <small>Your suggestion has been saved and is awaiting approval.  Now edit the 5 PAMs, 
    making them clear and if possible measurable, so that 2 people commenting on the same 
-   employee's qualities would agree on the rating.</small>
+   employee's qualities would agree on the rating. Click on 'Back' when complete.</small>
 </p>
 <h1>PAMs <i style = "font-size:0.6em">( = personal attribute measurements )</i></h1> 
 <table>

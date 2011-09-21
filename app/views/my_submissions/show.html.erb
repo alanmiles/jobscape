@@ -1,0 +1,21 @@
+<div class = "r-float">
+  <%= link_to "All your submissions", my_submissions_path %>
+</div>
+<h1>Your suggested attribute</h1>
+
+
+<p class = "display_text grun round cntr">Attribute: <%= @quality.quality %>
+           &nbsp; <span style = "font-weight: normal">
+             (<%= @quality.status %>)
+           </span>
+</p>
+
+<h1>PAMs <i style = "font-size:0.6em">( = personal attribute measurements )</i></h1> 
+<table>
+  <% @pams.each do |pam| %>
+    <tr>
+      <td class = "at_top"><%= pam.grade %></td>
+      <td><%= pam.descriptor %></td>
+    </tr>  
+  <% end %>
+</table>

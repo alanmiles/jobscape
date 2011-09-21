@@ -231,11 +231,8 @@ describe SubmittedQualitiesController do
             :content => "#{@unseen_quality1.quality}")
         end
     
-        it "should have a link back to the new attribute selection page" do
-          get :show, :id => @unseen_quality1
-          response.should have_selector("a", 
-            	    :href => new_plan_jobquality_path(@plan))
-        end
+        it "should have a link back to the new attribute selection page" 
+          #Test the return_to link with an integration 
       
         it "should have a link to the attribute 'edit' page" do
           get :show, :id => @unseen_quality1
