@@ -1,7 +1,11 @@
 <%= form_for(@pam) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
 <div class = "r-float">
- <%= link_to "Cancel", quality_path(@pam.quality_id) %>
+  <% if @pam.quality.submitted? | @pam.quality.rejected? %>
+    <%= link_to "Cancel", attribute_submission_path(@pam.quality_id) %>
+  <% else %>
+    <%= link_to "Cancel", quality_path(@pam.quality_id) %>
+  <% end %>
 </div>
 <p class = "display_text grun round cntr">Attribute: <%= @pam.quality.quality %></p>
 

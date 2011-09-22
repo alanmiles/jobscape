@@ -60,6 +60,12 @@ class SubmittedQualitiesController < ApplicationController
     
   end
   
+  def destroy
+    @submission = Quality.find(params[:id]).destroy
+    flash[:success] = "'#{@submission.quality}' and all associated PAMs removed."
+    redirect_to submitted_qualities_path
+  end
+  
   private
   
     def check_status

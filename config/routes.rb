@@ -23,6 +23,8 @@ Jobscape::Application.routes.draw do
   resources :submitted_qualities 
   resources :submitted_pams
   resources :my_submissions
+  resources :attribute_submissions
+  resources :attribute_rejections
   
   
   

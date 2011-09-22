@@ -24,7 +24,7 @@ class Pam < ActiveRecord::Base
   				:inclusion	=> { :in => %w(A B C D E) },
   				:uniqueness 	=> { :scope => :quality_id }
   validates :descriptor,	:presence 	=> true,
-  				:length		=> { :maximum => 140 },
+  				:length		=> { :maximum => 255 },
   				:uniqueness	=> { :case_sensitive => false, 
   						     :scope => :quality_id }
   

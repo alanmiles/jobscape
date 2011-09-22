@@ -1,0 +1,41 @@
+<div style = "min-height:24em">
+<div class = "r-float">
+  <%= cancel_route %>
+</div>
+
+<h1><%= approval_header %></h1>
+
+<p class = "display_text grun round cntr">Attribute: <%= @quality.quality %></p>
+
+<div class="info_box_wide rightpos">
+  <table>
+    <tr>
+    <% @pams.each do |pam| %>
+      <td class="at_top"><%= pam.grade %></td>
+      <td><%= pam.descriptor %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+
+<div>
+<%= form_for(@quality, :url => attribute_submission_path(@quality)) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <p><i><%= approval_instruction %></i></p>
+  <div class="field">
+    <%= f.label :approved %> &nbsp;
+    <%= f.check_box :approved %>
+  </div>
+  <div class="field">
+    <%= f.label :removed, "Rejected" %> &nbsp; &nbsp;
+    <%= f.check_box :removed %>
+  </div>
+  
+  <%= f.hidden_field :removal_date %>
+  
+  <div class="actions">
+    <%= f.submit "Confirm" %>
+  </div>
+<% end %>
+</div>
+</div>

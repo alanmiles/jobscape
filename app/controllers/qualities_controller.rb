@@ -6,6 +6,7 @@ class QualitiesController < ApplicationController
     @title = "Personal Attributes"
     @qualities = Quality.official_list
     @submissions = Quality.new_submissions
+    @rejections = Quality.all_rejected
   end
 
   def new
@@ -46,7 +47,11 @@ class QualitiesController < ApplicationController
     if @quality.update_attributes(params[:quality])
       @quality.update_attribute(:updated_by, current_user.id)
       flash[:success] = "'#{@new_title}' updated."
-      redirect_to qualities_path
+      if @quality.submitted? | @quality.rejected?
+        redirect_to attribute_submission_path(@quality)
+      else
+        redirect_to qualities_path
+      end
     else
       @title = "Edit attribute"
       render 'edit'

@@ -1,3 +1,4 @@
+<div style = "min-height:10em">
 <div class = "r-float">
   <%= link_to "Return to current job", new_plan_jobquality_path(@plan) %>
 </div>
@@ -19,7 +20,15 @@ still change or delete it.  The record is fixed after approval or rejection.</sm
     </td>
     <td class = "control"><%= quality.status %></td>
     <td class = "control"><%= time_ago_in_words(quality.created_at) %> ago </td>
-    <td><%= image_tag("cancel.png", :size => "15x15") if quality.status == "Pending" %></td>
+    <td>
+      <% if quality.status == "Pending" %>
+        <%= link_to(image_tag("cancel.png", :size => "15x15"), my_submission_path(quality), 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Delete '#{quality.quality}' completely") %>  
+      <% end %>   
+    </td>
   </tr>
   <% end %>
 </table>
+</div>

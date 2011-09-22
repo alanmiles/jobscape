@@ -1,5 +1,9 @@
 <div class = "r-float">
-  <%= link_to "Cancel", @quality %>
+  <% if @quality.submitted? | @quality.rejected? %>
+    <%= link_to "Cancel", attribute_submission_path(@quality) %>
+  <% else %>
+    <%= link_to "Cancel", @quality %>
+  <% end %>
 </div>
 
 <h1><%= "Edit attribute" %></h1>

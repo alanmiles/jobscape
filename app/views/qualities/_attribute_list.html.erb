@@ -1,0 +1,23 @@
+<table class="extend">
+  <tr>
+    <th class="control">View/Edit</th>
+    <th class="control">Created</th>
+    <th class="control">Approval</th>
+    <th class="control">Remove</th>
+  </tr>
+  <% @qualities.each do |quality| %>
+  <tr>
+    <td><%= link_to quality.quality, 
+    			attribute_submission_path(quality), 
+    			:title => "View/edit full details" %></td>
+    <td class = "control"><%= time_ago_in_words(quality.created_at) %> ago </td>
+    <td class="centralize"><%= link_to(image_tag("select.png", :size => "15x15"), 
+    			edit_attribute_submission_path(quality), 
+    			:title => "Approve/Reject") %></td>
+    <td class="centralize"><%= link_to(image_tag("cancel.png", :size => "15x15"), attribute_submission_path(quality), 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Delete '#{quality.quality}' completely") %>
+  </tr>
+  <% end %>
+</table>

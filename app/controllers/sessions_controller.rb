@@ -23,6 +23,9 @@ class SessionsController < ApplicationController
   
   def destroy
     sign_out
+    session[:jobid] = nil
+    session[:return_to] = nil
+    session[:biz] = nil
     redirect_to root_path
   end
 end

@@ -13,7 +13,7 @@
   <tr>
     <td><%= quality.quality %></td>  
     <td><%= link_to "Edit", edit_submitted_quality_path(quality) %></td>
-    <td><%= link_to "delete", quality, 
+    <td><%= link_to "delete", submitted_quality_path(quality), 
                    :method => :delete, 
                    :confirm => "You sure?",
                    :title => "Delete #{quality.quality}" %>

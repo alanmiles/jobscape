@@ -14,7 +14,11 @@ class PamsController < ApplicationController
     @pam = Pam.find(params[:id])
     if @pam.update_attributes(params[:pam])
       flash[:success] = "Grade #{@pam.grade} updated."
-      redirect_to quality_path(@pam.quality_id)
+      if @pam.quality.submitted? | @pam.quality.rejected?
+        redirect_to attribute_submission_path(@pam.quality_id)
+      else
+        redirect_to quality_path(@pam.quality_id)
+      end
     else
       @title = "Edit PAM"
       @pam.updated_by = current_user.id

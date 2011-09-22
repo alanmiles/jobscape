@@ -1,6 +1,8 @@
 <div class = "r-float">
   <%= link_to "Add an attribute", new_quality_path %><br />
-  <%= link_to "New submissions", submitted_qualities_path %> <span id="submits">(<%= @submissions %>)</span>
+  <%= link_to "New submissions", attribute_submissions_path %> <span id="submits">(<%= @submissions %>)</span><br />
+  <%= link_to "Recent rejections", attribute_rejections_path %> <span id="submits">(<%= @rejections %>)</span><br />
+    
 </div>
 
 <h1><%= @title %></h1>
@@ -9,6 +11,7 @@
   edit the associated grades/objectives.
 </em></p>
 <table class="narrow">
+  
   <% @qualities.each do |quality| %>
   <tr>
     <td><%= quality.quality %></td>

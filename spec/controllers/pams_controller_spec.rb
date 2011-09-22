@@ -67,9 +67,9 @@ describe PamsController do
                     :value => "Confirm changes")
       end
       
-      it "should have a link to return to the attribute 'show' page" do
+      it "should have a link to return to the attribute_submission 'show' page" do
         get :edit, :id => @pam.id
-        response.should have_selector("a", :href => quality_path(@pam.quality_id),
+        response.should have_selector("a", :href => attribute_submission_path(@pam.quality_id),
         			:content => "Cancel")
       end
       
@@ -79,6 +79,36 @@ describe PamsController do
         get :edit, :id => @pam.id
         @pams.each do |pam|
           response.should have_selector("td", :content => pam.descriptor)
+        end
+      end
+      
+      describe "for approved attributes" do
+        
+        before(:each) do
+          @approved_quality = Factory(:quality, :quality => "Approved Attr",
+          	:approved => true)
+          @approved_pam = Pam.where("quality_id = ? and grade = ?", @approved_quality.id, "A")
+        end
+        
+        it "should have a link to return to the attribute 'show' page" do
+          get :edit, :id => @approved_pam
+          response.should have_selector("a", :href => quality_path(@approved_quality.id),
+        			:content => "Cancel")
+        end
+      end
+      
+      describe "for rejected attributes" do
+      
+        before(:each) do
+          @rejected_quality = Factory(:quality, :quality => "Rejected",
+          	:approved => false, :removed => true, :removal_date => Date.today)
+          @rejected_pam = Pam.where("quality_id = ? and grade = ?", @rejected_quality.id, "A")
+        end
+        
+        it "should have a link to return to the attribute_submission 'show' page" do
+          get :edit, :id => @rejected_pam
+          response.should have_selector("a", :href => attribute_submission_path(@rejected_quality.id),
+        			:content => "Cancel")
         end
       end
       
@@ -135,14 +165,44 @@ describe PamsController do
           @pam.updated_by.should  == @admin.id
         end
 
-        it "should redirect to the attribute show page" do
+        it "should redirect to the attribute_submissions show page" do
           put :update, :id => @pam, :pam => @attr
-          response.should redirect_to quality_path(@pam.quality_id)
+          response.should redirect_to attribute_submission_path(@pam.quality_id)
         end
 
         it "should have a flash message" do
           put :update, :id => @pam, :pam => @attr
           flash[:success].should == "Grade #{@pam.grade} updated."
+        end
+        
+        describe "for approved attributes" do
+          
+          before(:each) do
+            @approved_quality = Factory(:quality, :quality => "Approved",
+          	:approved => true)
+            @approved_pam = Pam.where("quality_id = ? and grade = ?", @approved_quality.id, "A")
+          end
+          
+          it "should redirect to the attribute show page" do
+            put :update, :id => @approved_pam, :pam => @attr
+            response.should redirect_to quality_path(@approved_quality.id)
+          end
+
+        end
+        
+        describe "for rejected attributes" do
+        
+          before(:each) do
+            @rejected_quality = Factory(:quality, :quality => "Rejected",
+          	:approved => false, :removed => true, :removal_date => Date.today)
+            @rejected_pam = Pam.where("quality_id = ? and grade = ?", @rejected_quality.id, "A")
+          end
+          
+          it "should redirect to the attribute_submissions show page" do
+            put :update, :id => @rejected_pam, :pam => @attr
+            response.should redirect_to attribute_submission_path(@rejected_quality.id)
+          end
+          
         end
       
       end

@@ -16,7 +16,7 @@
 
 class Quality < ActiveRecord::Base
 
-  attr_accessible :quality, :approved, :seen, :removed, :created_by
+  attr_accessible :quality, :approved, :seen, :removed, :removal_date, :created_by
   
   after_create  :build_pams
   
@@ -48,13 +48,27 @@ class Quality < ActiveRecord::Base
   
   
   def self.new_list
-    self.find(:all, 
-              :conditions => ["approved = ? and removed = ? and seen = ?", false, false, false],
-              :order => "quality")
+    self.where("approved = ? and removed = ? and seen = ?", false, false, false).order("created_at")
+  end
+  
+  def self.rejected_list
+    self.where("removed = ? and approved = ? and seen = ?", true, false, false).order("created_at")
+  end
+  
+  def submitted?
+    approved == false && removed == false && seen == false  
+  end
+  
+  def rejected?
+    approved == false && removed == true and seen == false
   end
   
   def self.new_submissions
     self.new_list.count
+  end
+  
+  def self.all_rejected
+    self.rejected_list.count
   end
   
   def status

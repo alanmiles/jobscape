@@ -20,6 +20,7 @@ section {
   font-size: 120%;
   padding: 20px;
   background: #fff;
+  min-height: 24em;
 }
 
 section h1 {
@@ -115,8 +116,21 @@ li .handle {
   margin-right: 15px;
   margin-bottom: 10px;
   width: 240px;
+  height: 18em;
   padding: 0px 15px;
-  font-size: 80%;
+  font-size: 85%;
+  overflow: auto;
+}
+
+.info_box_wide {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  width: 60%;
+  height: 18em;
+  padding: 0px 15px;
+  font-size: 85%;
+  overflow: auto;
 }
 
 .pink {
@@ -211,6 +225,14 @@ table.profile {
   width: 50%;
 }
 
+.extend_more {
+  width: 65%;
+}
+
+th.control {
+  font-size: 0.8em;
+}
+
 td.main {
   width: 70%;
   padding: 1em;
@@ -227,6 +249,9 @@ td.control {
   font-size: 0.7em;
 }
 
+td.centralize {
+  text-align: center;
+}
 td.at_top {
   vertical-align: top;
 }

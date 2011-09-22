@@ -279,7 +279,7 @@ describe QualitiesController do
         
         it "should have a link to unseen attributes" do
           get :index
-          response.should have_selector("a", :href => submitted_qualities_path,
+          response.should have_selector("a", :href => attribute_submissions_path,
       					:content => "New submissions")
         end
         

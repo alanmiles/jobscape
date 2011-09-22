@@ -1,0 +1,8 @@
+<div class = "r-float">
+  <%= link_to "Approved list", qualities_path %><br />
+  <%= link_to "New submissions", attribute_submissions_path %> <span id="submits">(<%= @submissions %>)</span><br />
+  
+</div>
+
+<h1>Recent attribute rejections</h1>
+<%= render "/qualities/attribute_list" %>
