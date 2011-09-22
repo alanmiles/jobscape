@@ -16,6 +16,7 @@ class AttributeSubmissionsController < ApplicationController
   
   def update
     @quality = Quality.find(params[:id])
+    @user = User.find(@quality.created_by)
     @rejected = params[:quality][:removed]
     if params[:quality][:approved] == params[:quality][:removed]
       flash.now[:error] = "Please check just ONE of the boxes"
@@ -26,9 +27,11 @@ class AttributeSubmissionsController < ApplicationController
       if @quality.update_attributes(params[:quality])
         if @rejected == "1"
       	  @quality.update_attribute(:removal_date, Date.today)
+      	  UserMailer.attribute_rejected(@quality, @user).deliver
           flash[:success] = "'#{@quality.quality}' rejected."
           redirect_to attribute_rejections_path
         else
+          UserMailer.attribute_approved(@quality, @user).deliver
           flash[:success] = "'#{@quality.quality}' approved."
           redirect_to qualities_path
         end  

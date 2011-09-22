@@ -14,10 +14,14 @@
     <td class="centralize"><%= link_to(image_tag("select.png", :size => "15x15"), 
     			edit_attribute_submission_path(quality), 
     			:title => "Approve/Reject") %></td>
-    <td class="centralize"><%= link_to(image_tag("cancel.png", :size => "15x15"), attribute_submission_path(quality), 
+    <td class="centralize">
+      <% unless quality.submitted? %>
+        <%= link_to(image_tag("cancel.png", :size => "15x15"), attribute_submission_path(quality), 
                    :method => :delete, 
                    :confirm => "You sure?",
                    :title => "Delete '#{quality.quality}' completely") %>
+      <% end %>
+    </td>
   </tr>
   <% end %>
 </table>
