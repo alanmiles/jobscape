@@ -8,6 +8,11 @@ Jobscape::Application.routes.draw do
   end
   resources :plans do
     resources :responsibilities, :shallow => true
+    resources :qualifications, :shallow => true do
+      collection do
+        post :sort
+      end
+    end
     resources :jobqualities, :shallow => true do
       collection do
         post :sort
@@ -25,6 +30,7 @@ Jobscape::Application.routes.draw do
   resources :my_submissions
   resources :attribute_submissions
   resources :attribute_rejections
+  resources :hiring_requirements
   
   
   

@@ -21,6 +21,7 @@ class Plan < ActiveRecord::Base
   belongs_to :job
   has_many :responsibilities, :dependent => :destroy
   has_many :jobqualities, :dependent => :destroy
+  has_many :qualifications, :dependent => :destroy
   
   validates	:job_id,  	:presence 		=> true,
                                 :uniqueness		=> true

@@ -1,0 +1,33 @@
+<div class = "r-float">
+  <%= link_to "All hiring requirements", hiring_requirements_path %><br />
+  <%= link_to "Add a qualification", new_plan_qualification_path(@plan) %><br />
+</div>
+<h1>Qualifications when hiring</h1>
+<h4>for <%= @job.title_location %></h4>
+<div class = "display_wider" style = "padding-top:0px"> 
+  <i>As you build your list, arrange the qualifications in order of priority with the most
+     important at the top.  Click on a qualification and drag it up or down to its new position.<br /><br />
+     Select <%= image_tag("select.png", :size => "15x15") %> to edit and 
+     <%= image_tag("cancel.png", :size => "15x15") %> to remove the qualification. 
+   </i>
+</div>    
+<ul id="qlfctn" style="cursor: move"> 
+  <% @qualifications.each do |f| %>
+    <li id="item_<%= f.id %>">
+      <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+                   	:method => :delete, 
+                   	:confirm => "You sure?",
+                   	:title => "Remove this qualification") %>&nbsp;
+      <%= link_to(image_tag("select.png", :size => "15x15"), 
+    			edit_qualification_path(f), 
+    			:title => "Edit this qualification") %> &nbsp;
+      <%= f.qualification %> 
+        
+    </li> 
+  <% end %>
+</ul>
+
+<%= sortable_element('qlfctn', 
+    :url => { :action => "sort", :id => @plan }, 
+    
+    :complete => visual_effect(:highlight, "qlfctn")) %>

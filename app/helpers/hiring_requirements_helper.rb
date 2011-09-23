@@ -1,0 +1,2 @@
+module HiringRequirementsHelper
+end

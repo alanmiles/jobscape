@@ -47,6 +47,19 @@ module SessionsHelper
     session[:biz]!= nil
   end
   
+  def job_owner?
+    @job = Job.find(session[:jobid])
+    @business = Business.find(@job.business_id)
+    found = Employee.where("business_id =? and user_id = ?", @business.id, current_user.id).count
+    found == 1
+  end
+  
+  def correct_job
+    unless job_owner?
+      redirect_to root_path, :notice => "You can't deal with jobs outside your own business"      
+    end  
+  end
+  
   def redirect_back_or(default)
     redirect_to(session[:return_to] || default)
     clear_return_to
