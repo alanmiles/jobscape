@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110922202118) do
+ActiveRecord::Schema.define(:version => 20110923172104) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -99,14 +99,6 @@ ActiveRecord::Schema.define(:version => 20110922202118) do
     t.datetime "updated_at"
   end
 
-  create_table "qualifications", :force => true do |t|
-    t.integer  "plan_id"
-    t.string   "qualification"
-    t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "qualities", :force => true do |t|
     t.string   "quality"
     t.boolean  "approved",     :default => false
@@ -115,6 +107,14 @@ ActiveRecord::Schema.define(:version => 20110922202118) do
     t.boolean  "seen",         :default => false
     t.boolean  "removed",      :default => false
     t.date     "removal_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "requirements", :force => true do |t|
+    t.integer  "plan_id"
+    t.string   "requirement"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

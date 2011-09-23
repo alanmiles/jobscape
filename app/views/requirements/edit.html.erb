@@ -1,0 +1,18 @@
+<div class = "r-float">
+<%= link_to "Cancel", plan_requirements_path(@plan) %>
+</div>
+<h1><%= @title %></h1>
+
+<h4>for <%= @job.title_location %></h4>
+
+<%= form_for @requirement do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  
+  <div class = "field">
+    <%= f.label :requirement %> <small>(Max 50 characters)</small><br />
+    <%= f.text_field :requirement %>
+  </div> 
+  <div class="actions">
+    <%= f.submit "Confirm changes" %>
+  </div>
+<% end %>

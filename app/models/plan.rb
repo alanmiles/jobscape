@@ -21,7 +21,7 @@ class Plan < ActiveRecord::Base
   belongs_to :job
   has_many :responsibilities, :dependent => :destroy
   has_many :jobqualities, :dependent => :destroy
-  has_many :qualifications, :dependent => :destroy
+  has_many :requirements, :dependent => :destroy
   
   validates	:job_id,  	:presence 		=> true,
                                 :uniqueness		=> true
@@ -57,6 +57,18 @@ class Plan < ActiveRecord::Base
     else
       Quality.official_list_excluding_taken(self.id)
     end
+  end
+  
+  def count_requirements
+    self.requirements.count(:all)
+  end
+  
+  def has_requirements?
+    count_requirements > 0
+  end
+  
+  def max_requirements?
+    count_requirements >= 10  
   end
   
   def complete?

@@ -1,0 +1,35 @@
+<div class = "r-float">
+  <%= link_to "Back to A-Plan menu", @plan %><br />
+  <%= link_to "Add a requirement", new_plan_requirement_path(@plan) %><br />
+</div>
+
+<h1><%= @title %></h1>
+<h4>for <%= @job.title_location %></h4>
+<div class = "display_wider" style = "padding-top:0px"> 
+  <i>As you build your list, arrange the requirements in order of priority with the most
+     important at the top.  Click on a requirement and drag it up or down to its new position.<br /><br />
+     Select <%= image_tag("select.png", :size => "15x15") %> to edit and 
+     <%= image_tag("cancel.png", :size => "15x15") %> to remove the requirement. 
+   </i>
+</div>
+    
+<ul id="req" style="cursor: move"> 
+  <% @requirements.each do |f| %>
+    <li id="item_<%= f.id %>">
+      <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+                   	:method => :delete, 
+                   	:confirm => "You sure?",
+                   	:title => "Remove this requirement") %>&nbsp;
+      <%= link_to(image_tag("select.png", :size => "15x15"), 
+    			edit_requirement_path(f), 
+    			:title => "Edit this requirement") %> &nbsp;
+      <%= f.requirement %> 
+        
+    </li> 
+  <% end %>
+</ul>
+
+<%= sortable_element('req', 
+    :url => { :action => "sort", :id => @plan }, 
+    
+    :complete => visual_effect(:highlight, "req")) %>

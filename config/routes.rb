@@ -1,5 +1,9 @@
 Jobscape::Application.routes.draw do
 
+  get "requirements/index"
+
+  get "requirements/new"
+
   resources :users
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
@@ -8,7 +12,7 @@ Jobscape::Application.routes.draw do
   end
   resources :plans do
     resources :responsibilities, :shallow => true
-    resources :qualifications, :shallow => true do
+    resources :requirements, :shallow => true do
       collection do
         post :sort
       end
