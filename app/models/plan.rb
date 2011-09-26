@@ -18,7 +18,10 @@
 
 class Plan < ActiveRecord::Base
 
+  #after_create :build_outline
+  
   belongs_to :job
+  
   has_many :responsibilities, :dependent => :destroy
   has_many :jobqualities, :dependent => :destroy
   has_many :requirements, :dependent => :destroy
@@ -73,7 +76,7 @@ class Plan < ActiveRecord::Base
   
   def complete?
     #correct during build
-    count_responsibilities > 1
+    count_responsibilities >= 10 && max_attributes && has_requirements? && goals_complete? && self.job.outline.complete?
   end
   
   def responsibilities_with_goals
@@ -87,4 +90,15 @@ class Plan < ActiveRecord::Base
     end
     return tot.to_s
   end
+  
+  def goals_complete?
+    responsibilities_with_goals == count_responsibilities
+  end
+  
+  private
+  
+    def build_outline
+      @outline = Outline.new(:plan_id => self.id)
+      @outline.save
+    end
 end

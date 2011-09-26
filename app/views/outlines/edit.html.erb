@@ -1,0 +1,24 @@
+<div class = "r-float">
+  <%= link_to "Cancel", @outline %>
+</div>
+<h1><%= @title %></h1> 
+<h4>for <%= @job.title_location %></h4>
+
+<%= form_for(@outline) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+<div class="field" style = "margin-left: 40px">
+  <%= f.label :role %><br />
+  <%= f.text_area :role, :cols => 75, :rows => 4 %>
+</div>
+<div class="field" style = "margin-left: 40px">
+  <%= f.label :qualities %><br />
+  <%= f.text_area :qualities, :cols => 75, :rows => 4  %>
+</div>
+<div class="field" style = "margin-left: 40px">
+  <%= f.label :importance %><br />
+  <%= f.text_area :importance, :cols => 75, :rows => 4  %>
+</div>
+  <div class="actions">
+    <%= f.submit "Confirm" %>
+  </div>
+<% end %>

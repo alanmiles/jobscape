@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110923172104) do
+ActiveRecord::Schema.define(:version => 20110923231235) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -74,6 +74,15 @@ ActiveRecord::Schema.define(:version => 20110923172104) do
   end
 
   add_index "occupations", ["name"], :name => "index_occupations_on_name"
+
+  create_table "outlines", :force => true do |t|
+    t.integer  "job_id"
+    t.text     "role",       :default => "Your role is to "
+    t.text     "qualities",  :default => "To do this job well, you need "
+    t.text     "importance", :default => "The job is important to the organization because "
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "pams", :force => true do |t|
     t.integer  "quality_id"

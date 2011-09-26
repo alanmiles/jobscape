@@ -1,9 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "requirements/index"
-
-  get "requirements/new"
-
   resources :users
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
@@ -23,6 +19,7 @@ Jobscape::Application.routes.draw do
       end
     end  
   end
+  resources :outlines, :only => [:show, :edit, :update]
   resources :responsibilities do
     resources :goals, :shallow => true
   end
@@ -34,11 +31,7 @@ Jobscape::Application.routes.draw do
   resources :my_submissions
   resources :attribute_submissions
   resources :attribute_rejections
-  resources :hiring_requirements
-  
-  
-  
-  
+  #resources :hiring_requirements
   
   match '/signup',  		:to => 'users#new'
   match '/signin',  		:to => 'sessions#new'

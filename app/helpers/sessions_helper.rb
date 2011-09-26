@@ -48,10 +48,15 @@ module SessionsHelper
   end
   
   def job_owner?
-    @job = Job.find(session[:jobid])
-    @business = Business.find(@job.business_id)
-    found = Employee.where("business_id =? and user_id = ?", @business.id, current_user.id).count
-    found == 1
+    if session[:jobid] == nil
+      flash.now[:error] = "Illegal procedure - please use the buttons provided, not the URL, to access records."
+      redirect_to root_path
+    else
+      @job = Job.find(session[:jobid])
+      @business = Business.find(@job.business_id)
+      found = Employee.where("business_id =? and user_id = ?", @business.id, current_user.id).count
+      found == 1
+    end
   end
   
   def correct_job

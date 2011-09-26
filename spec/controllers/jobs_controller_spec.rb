@@ -272,7 +272,7 @@ describe JobsController do
           
         end
         
-      	describe "when the A-Plan in incomplete" do
+      	describe "when the A-Plan is incomplete" do
           
           it "should show that the A-Plan needs more work" do
             @responsibility = Factory(:responsibility, :plan_id => @plan.id)
@@ -283,17 +283,17 @@ describe JobsController do
         
       	end
       
-        describe "when the job has an A-Plan" do
+        describe "when the job has a completed A-Plan" do
       
-          it "should show that the A-Plan is useable" do
-            @responsibility = Factory(:responsibility, :plan_id => @plan.id)
-            @responsibility2 = Factory(:responsibility, 
-            		:definition => "Responsibility 2", :plan_id => @plan.id)
-            get :show, :id => @job
-            response.should have_selector("span#status", 
-                          :content => "Complete - view/edit?")
-          end
-        
+          it "should show that the A-Plan is useable"
+            #@responsibility = Factory(:responsibility, :plan_id => @plan.id)
+            #@responsibility2 = Factory(:responsibility, 
+            #		:definition => "Responsibility 2", :plan_id => @plan.id)
+            #get :show, :id => @job
+            #response.should have_selector("span#status", 
+            #              :content => "Complete - view/edit?")
+          #end
+          #UPDATE TO INCLUDE ALL REQUIRED FACTORSerwqg
         end
       
       end

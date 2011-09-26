@@ -16,11 +16,12 @@ class Job < ActiveRecord::Base
   attr_accessible :job_title, :occupation_id, :vacancy
   
   after_create :build_plan
+  after_create :build_outline
   
   belongs_to :business
   belongs_to :occupation
   has_one :plan, :dependent => :destroy
-  
+  has_one :outline, :dependent => :destroy
   validates :job_title, :presence 	=> true,
   			:length		=> { :maximum => 50 },
   			:uniqueness 	=> { :scope => :business_id, 
@@ -38,6 +39,12 @@ class Job < ActiveRecord::Base
   
     def build_plan
       @plan = Plan.new(:job_id => self.id)
-      @plan.save
+      @plan.save 
     end
+    
+    def build_outline
+      @outline = Outline.new(:job_id => self.id)
+      @outline.save
+    end
+    
 end

@@ -32,9 +32,9 @@
     <td><%= @plan.count_requirements %> entered</td>
   </tr>
   <tr>
-    <td><strong>Summary</strong></td>
+    <td><strong><%= link_to "Summary", @outline %></strong></td>
     <td>3-paragraph description of job</td>
-    <td>Incomplete</td>
+    <td><%= outline_status %></td>
   </tr>
   <tr>
     <td><strong>Job evaluation</strong></td>
