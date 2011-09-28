@@ -11,15 +11,18 @@
 #  longitude  :float
 #  created_at :datetime
 #  updated_at :datetime
+#  sector_id  :integer
 #
 
 require 'spec_helper'
 
 describe Business do
   before(:each) do
+    @sector = Factory(:sector)
     @attr = { 
       :name => "Some Company", 
-      :address => "CB1 3TJ"
+      :address => "CB1 3TJ",
+      :sector_id => @sector.id
     }
   end
 

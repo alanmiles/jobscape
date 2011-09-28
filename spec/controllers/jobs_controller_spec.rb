@@ -5,7 +5,8 @@ describe JobsController do
   render_views
   
   before(:each) do
-    @business = Factory(:business)
+    @sector = Factory(:sector)
+    @business = Factory(:business, :sector_id => @sector.id)
     session[:biz] = @business.id
   end
 
@@ -165,7 +166,7 @@ describe JobsController do
       end
       
       it "should not display jobs from another business" do
-        @business2 = Factory(:business, :name => "Not Cambiz")
+        @business2 = Factory(:business, :name => "Not Cambiz", :sector_id => @sector.id)
         @employee2 = Factory(:employee, :user_id => @user.id, :business_id => @business2.id)
         @job_99 = Factory(:job, :job_title => "Another job", :business_id => @business2.id,
                                                     :occupation_id => @occupation.id)
@@ -532,7 +533,7 @@ describe JobsController do
    
     before(:each) do
       @user = Factory(:user)
-      @business2 = Factory(:business, :name => "Not Cambiz")
+      @business2 = Factory(:business, :name => "Not Cambiz", :sector_id => @sector.id)
       @employee = Factory(:employee, :user_id => @user.id,
       				:business_id => @business2.id)
       @occupation = Factory(:occupation)

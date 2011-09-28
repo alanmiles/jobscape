@@ -1,3 +1,7 @@
+<div class = "r-float">
+  <%= link_to "Add a new business", new_business_path %>
+</div>
+
 <h1>
   <%= gravatar_for @user %>
   <%= @user.name %>
@@ -14,8 +18,15 @@
     
     </td>
     <td><%= employee.role %></td>
+    <td>
+      <% if employee.role == "Officer" && employee.business.no_associations? %>
+        <%= link_to(image_tag("cancel.png", :size => "15x15"), officer_business_path(employee.business_id), 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Delete #{employee.business.name}") %>
+      <% end %>
+    </td> 
   </tr>
   <% end %>
 </table>
-    
-<p><%= link_to "Add a new business", new_business_path %></p>
+

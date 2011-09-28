@@ -22,6 +22,8 @@ class Job < ActiveRecord::Base
   belongs_to :occupation
   has_one :plan, :dependent => :destroy
   has_one :outline, :dependent => :destroy
+  has_many :vacancies, :dependent => :destroy
+  
   validates :job_title, :presence 	=> true,
   			:length		=> { :maximum => 50 },
   			:uniqueness 	=> { :scope => :business_id, 

@@ -16,6 +16,7 @@ class BusinessesController < ApplicationController
   def new
     @title = "New business"
     @business = Business.new
+    @sectors = Sector.order("sector")
   end
 
   def create
@@ -27,9 +28,12 @@ class BusinessesController < ApplicationController
          	          post-code last time, try the postal address this time,
          	          or vice versa. (Max 50 characters)."
         @title = "Edit business"
+        session[:biz] = @business.id
+        @sectors = Sector.order("sector")
         redirect_to edit_business_path(@business)  
       else
         flash[:success] = "#{@business.name} added."
+        session[:biz] = @business.id
         redirect_to @business
       end
       Employee.create!(:user_id => current_user.id, :business_id => @business.id,
@@ -37,6 +41,7 @@ class BusinessesController < ApplicationController
       
     else
       @title = "New business"
+      @sectors = Sector.order("sector")
       render 'new'
     end
   end
@@ -44,6 +49,7 @@ class BusinessesController < ApplicationController
   def edit
     @title = "Edit business"
     @business = Business.find(params[:id])
+    @sectors = Sector.order("sector")
   end
   
   def update
@@ -53,6 +59,7 @@ class BusinessesController < ApplicationController
       redirect_to @business
     else
       @title = "Edit business"
+      @sectors = Sector.order("sector")
       render 'edit'
     end
   end

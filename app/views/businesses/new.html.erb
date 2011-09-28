@@ -10,6 +10,11 @@
   <%= f.text_field :name %>
 </div>
 <div class="field">
+  <%= f.label :sector, "Sector" %><br />
+  <%= collection_select(:business, :sector_id, @sectors, :id, 
+                        :sector, :prompt => true) %>
+</div>
+<div class="field">
   <%= f.label :address, "UK post-code" %><br />
   <%= f.text_field :address %>
 </div>

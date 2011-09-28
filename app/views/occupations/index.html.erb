@@ -1,17 +1,20 @@
 <div class = "r-float">
-<%= link_to "Add a new occupation", new_occupation_path %>
+  <%= link_to "Add a new occupation", new_occupation_path %><br />
 </div>
 
 <h1><%= @title %></h1>
 
 
-
-<% @occupations.each do |occupation| %>
-   <%= link_to occupation.name, edit_occupation_path(occupation) %>
-  
-  | <%= link_to "delete", occupation, 
+<ul>
+  <% @occupations.each do |occupation| %>
+    <li><%= link_to occupation.name, edit_occupation_path(occupation) %>
+      <% unless occupation.associated_jobs? %>
+        &nbsp;
+        <%= link_to(image_tag("cancel.png", :size => "15x15"), occupation, 
                    :method => :delete, 
                    :confirm => "You sure?",
-                   :title => "Delete #{occupation.name}" %>
-    <br />
-<% end %>
+                   :title => "Delete #{occupation.name}") %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

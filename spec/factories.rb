@@ -16,6 +16,10 @@ Factory.define :job do |job|
   job.association :occupation
 end
 
+Factory.define :sector do |sector|
+  sector.sector		     "Defence"
+end
+
 Factory.define :business do |business|
   business.name		     "Cambiz"
   business.address	     "34 Walpole Road, Cambridge"
@@ -23,6 +27,7 @@ Factory.define :business do |business|
   business.country           "United Kingdom"
   business.latitude          52.1877923
   business.longitude         0.1623374
+  business.association :sector
 end
 
 Factory.define :employee do |employee|

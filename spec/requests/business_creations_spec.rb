@@ -4,6 +4,7 @@ describe "BusinessCreations" do
   
   before(:each) do
     @user = Factory(:user)
+    @sector = Factory(:sector)
     integration_sign_in(@user)
   end
   
@@ -13,6 +14,7 @@ describe "BusinessCreations" do
       lambda do
         visit new_business_path
         fill_in "Name",         :with => "Test"
+        select "Defence", :from => 'business_sector_id'
         fill_in "UK post-code", :with => "TN9 1SP"
         click_button
         response.should render_template('businesses')
@@ -28,6 +30,7 @@ describe "BusinessCreations" do
       lambda do
         visit new_business_path
         fill_in "Name",         :with => ""
+        select "Defence", :from => 'business_sector_id'
         fill_in "UK post-code", :with => "TN9 1SP"
         click_button
         response.should have_selector("div#error_explanation")
@@ -45,6 +48,7 @@ describe "BusinessCreations" do
       lambda do
         visit new_business_path
         fill_in "Name",         :with => "Good Jobs"
+        selects "Defence", :from => 'business_sector_id'
         fill_in "UK post-code", :with => "XX91SPvv123g"
         click_button
         #response.should have_selector("div#error_explanation")

@@ -4,8 +4,10 @@ describe "BusinessSelections" do
   
   before(:each) do
     @user = Factory(:user)
-    @business1 = Factory(:business)
-    @business2 = Factory(:business, :name => "Not Cambiz")
+    @sector = Factory(:sector)
+    @business1 = Factory(:business, :sector_id => @sector.id)
+    @business2 = Factory(:business, :name => "Not Cambiz",
+                         :sector_id => @sector.id)
     @employee1 = Factory(:employee, :user_id => @user.id, 
     				    :business_id => @business1.id,
     				    :officer => true)
@@ -23,5 +25,6 @@ describe "BusinessSelections" do
       session[:biz].should == @business2.id
       response.should have_selector("title", :content => "Officer Home")  
     end
+
   end
 end

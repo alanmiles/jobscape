@@ -1,11 +1,12 @@
 <div class = "r-float">
-<%= link_to "Edit", edit_business_path(@business) %>
+  <%= link_to "Edit", edit_business_path(@business) %><br />
+  <%= link_to "Business home page", officer_home_path %>
 </div>
 
 <h1>Business details</h1>
 
 <h3><%= @business.name %></h3>
-
+<p>Sector: <%= @business.sector.sector %></p>
 <p>Address was entered as '<%= @business.address %>'.</p>
 <p><i>Verifying location ... <br />
 </i> In the neighbourhood of <b> <%= @business.city %>, <%= @business.country %></b>.

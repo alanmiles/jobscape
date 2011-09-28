@@ -1,0 +1,14 @@
+<div class = "r-float">
+  <%= link_to "Cancel", sectors_path %>
+</div>
+<h1><%= @title %></h1>
+
+<%= form_for(@sector) do |f| %>
+ 
+  <%= render 'fields', :f => f %>
+  
+  <div class="actions">
+    <%= f.submit "Confirm changes" %>
+  </div>
+  
+<% end %>

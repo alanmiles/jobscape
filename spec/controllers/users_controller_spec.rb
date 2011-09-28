@@ -374,8 +374,9 @@ describe UsersController do
       end
       
       before(:each) do
-        @business_1 = Factory(:business)
-        @business_2 = Factory(:business, :address => "TN9 1SP")
+        @sector = Factory(:sector)
+        @business_1 = Factory(:business, :sector_id => @sector.id)
+        @business_2 = Factory(:business, :address => "TN9 1SP", :sector_id => @sector.id)
         @employee_1 = Factory(:employee, :user_id => @user.id, 
         			       :business_id => @business_1.id)
         @employee_2 = Factory(:employee, :user_id => @user.id, 

@@ -4,10 +4,14 @@ describe BusinessesController do
 
   render_views
   
+  before(:each) do
+    @sector = Factory(:sector)
+  end
+  
   describe "for non-signed-in users" do
     
     before(:each) do
-      @business = Factory(:business)
+      @business = Factory(:business, :sector_id => @sector.id)
     end
       
     describe "GET 'index'" do
@@ -59,9 +63,11 @@ describe BusinessesController do
     describe "GET 'index'" do
     
       before(:each) do
-        @biz1 = Factory(:business)
-        @biz2 = Factory(:business, :name => "Biz2", :address => "CB1 3TJ")
-        @biz3 = Factory(:business, :name => "Biz3", :address => "CB1 3TJ") 
+        @biz1 = Factory(:business, :sector_id => @sector.id)
+        @biz2 = Factory(:business, :name => "Biz2", :address => "CB1 3TJ",
+        		:sector_id => @sector.id)
+        @biz3 = Factory(:business, :name => "Biz3", :address => "CB1 3TJ",
+        		:sector_id => @sector.id) 
         @businesses = [@biz1, @biz2, @biz3]                          
       end
       
@@ -91,7 +97,7 @@ describe BusinessesController do
     describe "DELETE 'destroy'" do
     
       before(:each) do
-        @business = Factory(:business)
+        @business = Factory(:business, :sector_id => @sector.id)
       end
       
       it "should destroy the business" do
@@ -144,7 +150,7 @@ describe BusinessesController do
     describe "GET 'show'" do
     
       before(:each) do
-        @business = Factory(:business)
+        @business = Factory(:business, :sector_id => @sector.id)
       end
       
       it "should have the right title" do
@@ -183,7 +189,7 @@ describe BusinessesController do
 
         before(:each) do
         
-          @attr = { :name => "", :address => "" }
+          @attr = { :name => "", :address => "", :sector_id => @sector.id }
         end
 
         it "should not create a business" do
@@ -208,7 +214,8 @@ describe BusinessesController do
 
         before(:each) do
           @name = "Some business"
-          @attr = { :name => @name, :address => "TN9 1SP" }
+          @attr = { :name => @name, :address => "TN9 1SP",
+                    :sector_id => @sector.id }
         end
 
         it "should create a business" do
@@ -250,7 +257,7 @@ describe BusinessesController do
     describe "GET 'edit'" do
     
       before(:each) do
-        @business = Factory(:business)
+        @business = Factory(:business, :sector_id => @sector.id)
       end
       
       it "should be successful" do
@@ -273,7 +280,7 @@ describe BusinessesController do
     describe "PUT 'update'" do
     
       before(:each) do
-        @business = Factory(:business)
+        @business = Factory(:business, :sector_id => @sector.id)
       end
       
       describe "failed validation" do

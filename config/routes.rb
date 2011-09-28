@@ -3,6 +3,7 @@ Jobscape::Application.routes.draw do
   resources :users
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
+  resources :sectors
   resources :businesses do
     resources :jobs, :shallow => true
   end
@@ -32,6 +33,9 @@ Jobscape::Application.routes.draw do
   resources :my_submissions
   resources :attribute_submissions
   resources :attribute_rejections
+  namespace :officer do
+    resources :businesses, :only => :destroy
+  end
   #resources :hiring_requirements
   
   match '/signup',  		:to => 'users#new'

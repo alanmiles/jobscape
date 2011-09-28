@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110926175332) do
+ActiveRecord::Schema.define(:version => 20110928094852) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20110926175332) do
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sector_id"
   end
 
   create_table "employees", :force => true do |t|
@@ -150,6 +151,12 @@ ActiveRecord::Schema.define(:version => 20110926175332) do
     t.datetime "updated_at"
   end
 
+  create_table "sectors", :force => true do |t|
+    t.string   "sector"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
@@ -161,5 +168,19 @@ ActiveRecord::Schema.define(:version => 20110926175332) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+
+  create_table "vacancies", :force => true do |t|
+    t.integer  "job_id"
+    t.integer  "sector_id"
+    t.integer  "annual_salary"
+    t.decimal  "hourly_rate",    :precision => 5, :scale => 2
+    t.boolean  "voluntary",                                    :default => false
+    t.boolean  "filled",                                       :default => false
+    t.string   "notes"
+    t.string   "contact_person"
+    t.string   "contact_email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

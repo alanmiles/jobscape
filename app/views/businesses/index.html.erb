@@ -9,6 +9,7 @@
     <th>Name</th>
     <th>City</th>
     <th>Country</th>
+    <th>Sector</th>
     <th></th>
   </tr>
   
@@ -17,7 +18,8 @@
     <td><%= business.name %></td> 
     <td><%= business.city %></td>
     <td><%= business.country %></td>
-    <td><small><%= link_to "delete", business, 
+    <td><%= business.sector.sector %></td>
+    <td><small><%= link_to image_tag("cancel.png", :size => "50x50"), business, 
     			:method => :delete, 
     			:confirm => "You sure?",
                         :title => "Delete #{business.name}" %></small>

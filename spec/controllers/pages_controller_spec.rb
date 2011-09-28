@@ -203,9 +203,12 @@ describe PagesController do
       describe "when user is connected to multiple businesses" do
     
         before(:each) do
-          @business_1 = Factory(:business)
-          @business_2 = Factory(:business, :name => "Business_2")
-          @business_3 = Factory(:business, :name => "Business_3")
+          @sector = Factory(:sector)
+          @business_1 = Factory(:business, :sector_id => @sector.id)
+          @business_2 = Factory(:business, :name => "Business_2",
+                                :sector_id => @sector.id)
+          @business_3 = Factory(:business, :name => "Business_3",
+                                :sector_id => @sector.id)
           @employee_1 = Factory(:employee, :user_id => @user.id,
        			:business_id => @business_1.id, :officer => true)
        	  @employee_2 = Factory(:employee, :user_id => @user.id,

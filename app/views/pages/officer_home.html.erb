@@ -1,3 +1,9 @@
+<% if @user.single_business? %>
+  <div class = "r-float">
+    <%= link_to "Add a new business", new_business_path %>
+  </div>
+<% end %>
+
 <h1>
   <%= gravatar_for @user %>
   <%= @user.name %>
@@ -9,4 +15,3 @@
     <li>Employees</li>
   </ul>
   
-<p><%= link_to "Add a new business", new_business_path %></p>
