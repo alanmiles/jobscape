@@ -18,8 +18,12 @@ class Responsibility < ActiveRecord::Base
 
   attr_accessible :definition, :removed, :created_by, :rating
   
+  after_create :build_evaluation
+  after_destroy :reset_job_value
+  
   belongs_to :plan
   has_many :goals, :dependent => :destroy
+  has_one :evaluation, :dependent => :destroy
   
   validates	:plan_id,	:presence 	=> true
   validates	:definition,	:presence 	=> true,
@@ -39,6 +43,14 @@ class Responsibility < ActiveRecord::Base
     end 
   end
   
+  def show_rating
+    if rating == 0
+      "Not set"
+    else
+      rating
+    end
+  end
+  
   def count_current_goals
     self.goals.count(:conditions => ["removed =?", false])
   end
@@ -51,4 +63,23 @@ class Responsibility < ActiveRecord::Base
     count_current_goals >= 3
   end
   
+  private
+  
+    def build_evaluation
+      @evaluation = Evaluation.new(:responsibility_id => self.id)
+      @evaluation.save
+    end
+    
+    def reset_job_value      
+      #@responsibility = Responsibility.find(self.responsibility_id)
+      @plan = Plan.find(self.plan_id)
+      if @plan.responsibilities_with_ratings >= 10
+        @val_tt = @plan.top_ten_value
+        @plan.update_attribute(:job_value, @val_tt) unless @val_tt == @plan.job_value
+      else
+        unless @plan.job_value == 0
+          @plan.update_attribute(:job_value, 0)
+        end
+      end       
+    end
 end

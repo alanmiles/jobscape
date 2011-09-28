@@ -1,0 +1,35 @@
+<div class = "r-float">
+<%= link_to "Cancel", @responsibility %>
+</div>
+<h1><%= @title %></h1>
+
+<h4>for <%= @job.title_location %></h4>
+<p class = "display_text beige round"><%= @responsibility.definition %>
+           &nbsp; <span style = "font-weight: normal">
+             <%= link_to "(Edit)", edit_responsibility_path(@responsibility) %>
+           </span>
+</p>
+
+<%= form_for @evaluation do |f| %>
+  <h3>Assess the impact of this responsibility on:</h3>
+  <div class = "field">
+    <%= f.label :profits, "Business profit:" %> &nbsp;
+    <%= select( :evaluation, :profits, @ratings ) %>
+    <span style="float:right; margin-right:100px">
+      <%= f.label :customers, "Customer satisfaction:" %> &nbsp;
+      <%= select( :evaluation, :customers, @ratings ) %>
+    </span>
+  </div>
+  <div class = "field">
+    <%= f.label :staff, "Staff well-being:" %> &nbsp;
+    <%= select( :evaluation, :staff, @ratings ) %>
+    <span style="float:right; margin-right:100px">
+      <%= f.label :processes, "Business processes:" %> &nbsp;
+      <%= select( :evaluation, :processes, @ratings ) %>
+    </span>
+  </div>
+  <br />
+  <div class="actions">
+    <%= f.submit "Confirm and calculate rating" %>
+  </div>
+<% end %>

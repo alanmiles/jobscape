@@ -18,13 +18,13 @@
     <%= link_to "Add a goal", new_responsibility_goal_path(@responsibility) %>
   <% end %>
 </div>
-<h1>Goals</h1> 
+<h3>Goals:</h3> 
 <table>
   <% @goals.each do |goal| %>
     <tr>
       <td><%= goal.objective %></td>
-      <td class = "control"><%= link_to "Edit", edit_goal_path(goal) %></td> 
-      <td class = "control"><%= link_to "Remove", goal, 
+      <td class = "control at_top"><%= link_to "Edit", edit_goal_path(goal) %></td> 
+      <td class = "control at_top"><%= link_to "Remove", goal, 
                    :method => :delete, 
                    :confirm => "You sure?",
                    :title => "Remove goal." %>
@@ -32,3 +32,6 @@
     </tr>  
   <% end %>
 </table>
+<h3>Rating: <%= @responsibility.show_rating %> &nbsp;
+   <small style = "font-size:0.8em"><%= evaluation %></small>
+</h3>

@@ -27,6 +27,14 @@ section h1 {
   font-size: 150%;
 }
 
+section h2 {
+  font-size: 140%;
+}
+
+section h3 {
+  font-size: 130%;
+}
+
 /* Links */
 
 a {
@@ -246,7 +254,7 @@ td.sidebar {
 }
 
 td.control {
-  font-size: 0.7em;
+  font-size: 0.85em;
 }
 
 td.centralize {

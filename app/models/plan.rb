@@ -25,6 +25,7 @@ class Plan < ActiveRecord::Base
   has_many :responsibilities, :dependent => :destroy
   has_many :jobqualities, :dependent => :destroy
   has_many :requirements, :dependent => :destroy
+  has_many :evaluations, :through => :responsibilities
   
   validates	:job_id,  	:presence 		=> true,
                                 :uniqueness		=> true
@@ -76,7 +77,7 @@ class Plan < ActiveRecord::Base
   
   def complete?
     #correct during build
-    count_responsibilities >= 10 && max_attributes && has_requirements? && goals_complete? && self.job.outline.complete?
+    count_responsibilities >= 10 && max_attributes? && has_requirements? && goals_complete? && self.job.outline.complete?
   end
   
   def responsibilities_with_goals
@@ -93,6 +94,34 @@ class Plan < ActiveRecord::Base
   
   def goals_complete?
     responsibilities_with_goals == count_responsibilities
+  end
+  
+  def responsibilities_with_ratings
+    totl = 0
+    @responsibilities = Responsibility.find(:all, 
+              :conditions => ["plan_id = ? and removed = ?", self.id, false])
+    @responsibilities.each do |responsibility|
+      if responsibility.rating >0
+        totl = totl + 1        
+      end
+    end
+    return totl
+  end
+  
+  def ratings_complete?
+    responsibilities_with_ratings == count_responsibilities  
+  end
+  
+  def top_ten_ratings
+    self.responsibilities.order("responsibilities.rating DESC").limit(10)
+  end
+  
+  def top_ten_value
+    score = 0
+    self.top_ten_ratings.each do |r|
+      score = score + r.rating
+    end
+    return score
   end
   
   private

@@ -1,5 +1,6 @@
 <div class = "r-float">
-<%= link_to "Add a new job", new_business_job_path(@business) %>
+<%= link_to "Add a new job", new_business_job_path(@business) %><br />
+<%= link_to "Menu for this business", officer_home_path %>
 </div>
 
 <h1>Jobs at <%= @business.name %></h1>
@@ -10,13 +11,21 @@
     <tr>
       <th>Title</th>
       <th>Category</th>
+      <th style = "text-align: center">Rating</th>
       <th style = "text-align: center">A-Plan?</th>
       <th></th>
     </tr>
     <% @jobs.each do |job| %>
     <tr>
       <td><%= link_to job.job_title, job_path(job) %>
-      <td><%= job.occupation.name %> </td> 
+      <td><%= job.occupation.name %> </td>
+      <td style = "text-align:center">
+        <% if job.plan.job_value.nil? || job.plan.job_value == nil %>
+          n/a
+        <% else %>
+          <%= job.plan.job_value %>        
+        <% end %>
+      </td>
       <td style = "text-align:center">
         <%= image_tag("complete.png", :size => "15x15") if job.plan.complete? %>
       </td>

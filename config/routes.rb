@@ -23,6 +23,7 @@ Jobscape::Application.routes.draw do
   resources :responsibilities do
     resources :goals, :shallow => true
   end
+  resources :evaluations, :only => [:edit, :update]
   resources :qualities do
     resources :pams, :shallow => true
   end

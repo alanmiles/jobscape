@@ -9,4 +9,5 @@ module JobsHelper
       "Create one now"
     end
   end
+  
 end

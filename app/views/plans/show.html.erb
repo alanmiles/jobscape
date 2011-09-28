@@ -4,7 +4,7 @@
 </div>
 <h1>Achievement Plan</h1>
 <h4><%= @job.title_location %></h4>
-<p><em>Complete the plan, and you'll have a powerful tool for recruitment, appraisal, training
+<p><em>Click the links to build the A-PLAN, a powerful tool for recruitment, appraisal, training
        needs analysis, and succession planning.  Best of all, everyone in the job will be 
        focused on achievement!
  </em></p>
@@ -22,6 +22,13 @@
     </td>
   </tr>
   <tr>
+    <td><strong>Ratings</strong> <small>(set via Responsibilities)</small></td>
+    <td>The importance of each responsibility to the business</td>
+    <td><span id = "goals"><%= @plan.responsibilities_with_ratings %> / <%= @plan.count_responsibilities %>
+        </span>
+    </td> 
+  </tr>
+  <tr>
     <td><strong><%= link_to "Personal Attributes", plan_jobqualities_path(@plan) %></strong></td>
     <td>10 key qualities for jobholders</td>
     <td><span id = "attribs"><%= @plan.count_attributes %> selected</span></td>
@@ -36,11 +43,8 @@
     <td>3-paragraph description of job</td>
     <td><%= outline_status %></td>
   </tr>
-  <tr>
-    <td><strong>Job evaluation</strong></td>
-    <td>The importance of the job to the business</td>
-    <td>Incomplete
-  </tr>
-  
 </table>
+<h4>Overall Job Rating: <%= job_valuation %> &nbsp;
+    <small style = "font-size: 0.65em">(based on the 10 highest-rated responsibilities)</small>
+</h4>
 
