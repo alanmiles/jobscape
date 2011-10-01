@@ -132,9 +132,9 @@ describe PagesController do
               :content => "WHERE DO YOU WANT TO START?")
         end
         
-        it "should not have a button to create a new business" do
+        it "should have a button to create a new business" do
           get :user_home
-          response.should_not have_selector("a", 
+          response.should have_selector("a", 
                              :href => new_business_path)
         end
       end

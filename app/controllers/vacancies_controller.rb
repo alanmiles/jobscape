@@ -1,4 +1,9 @@
 class VacanciesController < ApplicationController
+  
+  before_filter :authenticate
+  before_filter :not_admin_user
+  before_filter :correct_officer
+  
   def index
   end
 

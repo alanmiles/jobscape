@@ -2,18 +2,31 @@ require 'spec_helper'
 
 describe VacanciesController do
 
-  describe "GET 'index'" do
-    it "should be successful" do
-      get 'index'
-      response.should be_success
-    end
-  end
+  render_views
+  
+  describe "for non-signed-in users" do
 
-  describe "GET 'new'" do
-    it "should be successful" do
-      get 'new'
-      response.should be_success
+    describe "GET 'new'" do
+      it "should not be successful"
+        #get 'new'
+        #response.should be_success
+      #end
     end
-  end
 
+  end
+  
+  describe "for signed-in non-officers" do
+  
+  
+  end
+  
+  describe "for signed-in admins" do
+  
+  end
+  
+  describe "for signed-in officers" do
+  
+  
+  end
+  
 end
