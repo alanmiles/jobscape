@@ -5,19 +5,35 @@
 <h1>Add your business</h1>
 <%= form_for(@business) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-<div class="field">
-  <%= f.label :name %> <small> (50 character maximum)  </small><br />
-  <%= f.text_field :name %>
-</div>
-<div class="field">
-  <%= f.label :sector, "Sector" %><br />
-  <%= collection_select(:business, :sector_id, @sectors, :id, 
+  <div class="info_box rightpos beige round"><br />
+    Sign up your business to:
+    <ul>
+      <li>Create achievement plans for all.</li>
+      <li>Simplify and streamline recruitment.</li>
+      <li>Evaluate the importance of your jobs.</li>
+      <li>Show staff what's really important.</li>
+      <li>Take the pain out of appraisals.</li> 
+      <li>Identify the key training needs.</li>
+      <li>Spot your high-fliers - and keep them.</li>
+    </ul>
+    Try HYGWIT for free with up to 5 jobs.<br /><br />
+    To add more jobs there's a small monthly fee for a corporate account.
+    <br /><br />
+  </div>
+
+  <div class="field">
+    <%= f.label :name %> <small> (50 character maximum)  </small><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :sector, "Sector" %><br />
+    <%= collection_select(:business, :sector_id, @sectors, :id, 
                         :sector, :prompt => true) %>
-</div>
-<div class="field">
-  <%= f.label :address, "UK post-code" %><br />
-  <%= f.text_field :address %>
-</div>
+  </div>
+  <div class="field">
+    <%= f.label :address, "UK post-code" %><br />
+    <%= f.text_field :address %>
+  </div>
   <div class="actions">
     <%= f.submit "Create" %>
   </div>

@@ -3,7 +3,8 @@
 }
 
 body {
-  background: #29AFD6;
+  background: #E0E6F8;
+  
 }
 
 header {
@@ -124,7 +125,7 @@ li .handle {
   margin-right: 15px;
   margin-bottom: 10px;
   width: 240px;
-  height: 18em;
+  min-height: 18em;
   padding: 0px 15px;
   font-size: 85%;
   overflow: auto;
@@ -154,6 +155,11 @@ li .handle {
 .grun {
   color: #336633;
   background: #99cc99;
+}
+
+.mandy {
+  color: black;
+  background: #FE9A2E;
 }
 
 .rightpos {

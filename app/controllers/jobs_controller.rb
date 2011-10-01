@@ -15,6 +15,8 @@ class JobsController < ApplicationController
     session[:jobid] = @job.id
     @title = @job.job_title
     @plan = Plan.find_by_job_id(@job)
+    @count_vacancies = Vacancy.sum_for(@job)
+    @vacancy = Vacancy.find_by_job_id(@job) if @count_vacancies > 0
   end
   
   def new

@@ -1,5 +1,9 @@
 Jobscape::Application.routes.draw do
 
+  get "vacancies/index"
+
+  get "vacancies/new"
+
   resources :users
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
@@ -33,6 +37,7 @@ Jobscape::Application.routes.draw do
   resources :my_submissions
   resources :attribute_submissions
   resources :attribute_rejections
+  resources :vacancies
   namespace :officer do
     resources :businesses, :only => :destroy
   end

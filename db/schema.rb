@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(:version => 20110928094852) do
     t.string   "job_title"
     t.integer  "business_id"
     t.integer  "occupation_id"
-    t.boolean  "vacancy",       :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -172,9 +171,12 @@ ActiveRecord::Schema.define(:version => 20110928094852) do
   create_table "vacancies", :force => true do |t|
     t.integer  "job_id"
     t.integer  "sector_id"
+    t.integer  "quantity",                                     :default => 1
     t.integer  "annual_salary"
     t.decimal  "hourly_rate",    :precision => 5, :scale => 2
+    t.boolean  "full_time",                                    :default => true
     t.boolean  "voluntary",                                    :default => false
+    t.date     "close_date"
     t.boolean  "filled",                                       :default => false
     t.string   "notes"
     t.string   "contact_person"

@@ -29,7 +29,7 @@
       <td style = "text-align:center">
         <%= image_tag("complete.png", :size => "15x15") if job.plan.complete? %>
       </td>
-      <td class = "control"><%= link_to "delete", job, 
+      <td class = "control"><%= link_to image_tag("cancel.png", :size => "15x15"), job, 
                    :method => :delete, 
                    :confirm => "You sure?",
                    :title => "Delete #{job.job_title}" %>

@@ -6,7 +6,6 @@
 #  job_title     :string(255)
 #  business_id   :integer
 #  occupation_id :integer
-#  vacancy       :boolean         default(FALSE)
 #  created_at    :datetime
 #  updated_at    :datetime
 #

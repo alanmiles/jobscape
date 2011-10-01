@@ -19,8 +19,16 @@
 <br />
 
 <div class = "display_box beige round">
-  <strong>VACANCIES</strong> <br />
-   0 <br />
-   <%= link_to "Adjust", "#" %>
+  <strong>CURRENT VACANCIES</strong> <br />
+   <% unless @plan.complete? %>
+     <%= @count_vacancies %> <br />
+     <% if Vacancy.zero_for?(@job) %>
+       <%= link_to "Add a vacancy", new_vacancy_path %>
+     <% else %>
+       <%= link_to "Details", @vacancy %>
+     <% end %>
+   <% else %>
+     <span style = "color: crimson">First complete the A-Plan.</span>
+   <% end %>
 </div>
 
