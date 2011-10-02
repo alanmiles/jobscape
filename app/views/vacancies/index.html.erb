@@ -1,2 +1,32 @@
-<h1>Vacancies#index</h1>
-<p>Find me in app/views/vacancies/index.html.erb</p>
+<div class = "r-float">
+  <%= link_to "Menu for this job", @job %>
+</div>
+
+<h1><%= @title %></h1>
+<table>
+  <tr>
+    <th></th>
+    <th>Created</th>
+    <th class="centralize">No. reqd</th>
+    <th>Contact</th>
+    <th>Close-date</th>
+    <th class="centralize">Applctns</th>
+    <th></th>
+  </tr>
+  <% @vacancies.each do |vacancy| %>
+  <tr>
+    <td><%= link_to(image_tag("select.png", :size => "15x15"), vacancy) %></td>
+    <td><%= vacancy.created_at.strftime("%b-%d-%y") %></td>
+    <td class="centralize"><%= vacancy.quantity %></td>
+    <td><%= vacancy.contact_person %></td>
+    <td><%= vacancy.close_date.strftime("%b-%d-%y") %></td>
+    <td class="centralize">0</td>
+    <td><%= link_to(image_tag("cancel.png", :size => "15x15"), vacancy, 
+                   	:method => :delete, 
+                   	:confirm => "You sure?",
+                   	:title => "Delete this vacancy") %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+  

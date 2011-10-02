@@ -8,27 +8,31 @@
    <small style = "font-size:0.85em"><%= link_to "(change)", edit_job_path(@job) %></small>
 </p>
 
-<div class = "display_box grun round rightpos">
+<div class = "display_box grayborder round rightpos">
   <strong>EMPLOYEES</strong>
 </div>
 
-<div class = "display_box pink round">
+<div class = "display_box grayborder round">
   <strong>ACHIEVEMENT PLAN</strong> <br />
    <span id = "status"><%= link_to plan_status, plan_path(@plan) %></span>
 </div>
 <br />
 
-<div class = "display_box beige round">
+<div class = "display_box grayborder round">
   <strong>CURRENT VACANCIES</strong> <br />
-   <% unless @plan.complete? %>
+   <% if @plan.complete? %>
      <%= @count_vacancies %> <br />
      <% if Vacancy.zero_for?(@job) %>
        <%= link_to "Add a vacancy", new_vacancy_path %>
      <% else %>
-       <%= link_to "Details", @vacancy %>
+       <% if @job.vacancy_record_count > 1 %>
+         <%= link_to "Details", vacancies_path %>
+       <% else %>
+         <%= link_to "Details", @vacancy %>
+       <% end %>
      <% end %>
    <% else %>
-     <span style = "color: crimson">First complete the A-Plan.</span>
+     <span class="highlt">First complete the A-Plan.</span>
    <% end %>
 </div>
 

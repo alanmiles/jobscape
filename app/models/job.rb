@@ -36,6 +36,18 @@ class Job < ActiveRecord::Base
     "#{self.job_title} - #{self.business.name}, #{self.business.city}"
   end
   
+  def unfilled_vacancies
+    self.vacancies.where("vacancies.filled = ?", false)
+  end
+  
+  def vacancy_record_count
+    self.unfilled_vacancies.count
+  end
+  
+  def has_vacancies?
+    vacancy_record_count > 0
+  end
+  
   private
   
     def build_plan

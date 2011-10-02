@@ -41,12 +41,16 @@ class Vacancy < ActiveRecord::Base
   validates :hourly_rate, :numericality		=> { :allow_nil => true }
   
   def self.sum_for(job)
-   self.where("job_id = ? and close_date >=? and filled = ?", job.id, Date.today, false).sum(:quantity)
+   self.where("job_id = ? and filled = ?", job.id, false).sum(:quantity)
   end
-  0
+  
   def self.zero_for?(job)
     self.sum_for(job) == 0
   end
+  
+  #def self.history_sum_for(job)
+  #  self.where("job_id = ?", job.id)
+  #end
   
   def salary_set?
     self.annual_salary != nil || self.hourly_rate != nil

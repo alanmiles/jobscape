@@ -26,6 +26,9 @@
   <div class="field">
     <%= f.label :close_date, "Closing-date for applications" %> &nbsp;
     <%= f.date_select :close_date %>
+    <% if @vacancy.close_date < Date.today %>
+      <small class="highlt">&nbsp; Saved close-date has now passed!&nbsp;</small>
+    <% end %>
   </div>
   <div class="field">
     <%= f.label :notes %> <small>(e.g. special working hours, length of engagement)</small><br />

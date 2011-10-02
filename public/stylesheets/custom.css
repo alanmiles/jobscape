@@ -162,6 +162,12 @@ li .handle {
   background: #FE9A2E;
 }
 
+.grayborder  {
+  border-style: solid;
+  border-color: #CCC;
+  border-width: medium
+}
+
 .rightpos {
   float:right;
 }
@@ -183,6 +189,12 @@ li .handle {
 .col-indent {
   position:absolute;
   left:220px;
+}
+
+.highlt {
+  background-color: yellow;
+  font-weight: bold;
+  color: red;
 }
 
 /* Sign up button */
@@ -247,6 +259,10 @@ th.control {
   font-size: 0.8em;
 }
 
+th.centralize {
+  text-align: center;
+}
+
 td.main {
   width: 70%;
   padding: 1em;
@@ -266,6 +282,7 @@ td.control {
 td.centralize {
   text-align: center;
 }
+
 td.at_top {
   vertical-align: top;
 }

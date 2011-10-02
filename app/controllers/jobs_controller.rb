@@ -16,7 +16,7 @@ class JobsController < ApplicationController
     @title = @job.job_title
     @plan = Plan.find_by_job_id(@job)
     @count_vacancies = Vacancy.sum_for(@job)
-    @vacancy = Vacancy.find_by_job_id(@job) if @count_vacancies > 0
+    @vacancy = Vacancy.find_by_job_id(@job) if @job.vacancy_record_count == 1
   end
   
   def new

@@ -5,6 +5,9 @@ class VacanciesController < ApplicationController
   before_filter :correct_officer
   
   def index
+    @job = Job.find(session[:jobid])
+    @vacancies = @job.unfilled_vacancies
+    @title = "Vacancies for #{@job.job_title}"
   end
 
   def new
@@ -21,7 +24,7 @@ class VacanciesController < ApplicationController
   def create
     @vacancy = Vacancy.new(params[:vacancy])
     if @vacancy.save
-      flash[:success] = "The vacancy has been added.  This is the summary applicants will see."
+      flash[:success] = "The vacancy has been added.  This is the summary jobseekers will see."
       redirect_to @vacancy
     else
       @title = "New vacancy"
@@ -56,6 +59,24 @@ class VacanciesController < ApplicationController
       @title = "Edit vacancy"
       @job = Job.find(session[:jobid])
       render 'edit'
+    end
+  end
+  
+  def destroy
+    @vacancy = Vacancy.find(params[:id])
+    @job = Job.find(@vacancy.job_id)
+    #ADD EXCLUSION iF VACANCY HAS APPLICANTS
+    if @vacancy.filled?
+      flash[:error] = "You can't delete a vacancy that's been filled - it's stored in history."
+      redirect_to @vacancy
+    else
+      @vacancy.destroy
+      flash[:success] = "#Vacancy for #{@job.job_title} deleted."
+      if @job.has_vacancies?
+        redirect_to vacancies_path
+      else
+        redirect_to @job
+      end
     end
   end
 end
