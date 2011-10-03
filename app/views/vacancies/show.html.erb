@@ -11,26 +11,6 @@
 
 <h1><%= @title %></h1>
 <br /><br />
-<div class="display_wider grayborder round">
-  <strong><%= vacant_position %> for <%= @vacancy.sector.sector %> business, <%= @vacancy.job.business.city %>.</strong>
-  <br />
-  <% unless @vacancy.full_time? %>
-    Part-time.
-  <% end %>
-  <% if @vacancy.voluntary? %>
-    This is a voluntary position.
-  <% elsif @vacancy.annual_salary.nil? %>
-    Hourly rate: £<%= @vacancy.hourly_rate %>.
-  <% else %>
-    Annual salary: £<%= @vacancy.annual_salary %>.
-  <% end %>
-  <br />
-  <%= @vacancy.notes unless @vacancy.notes.empty? %> <%= link_to "(Full details)", "#" %>
-  <br />
-  <small>Posted <%= time_ago_in_words(@vacancy.created_at) %> ago.  Apply to <%= @vacancy.contact_person %>
-     by <%= @vacancy.close_date.strftime("%a %b %d, %Y") %>.
-     <% if @vacancy.close_date < Date.today %>
-       <span class="highlt">&nbsp; Close-date has now passed!&nbsp;</span>
-     <% end %>
-  </small>        
-</div>
+<%= render 'brief' %>
+
+

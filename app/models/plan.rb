@@ -134,6 +134,18 @@ class Plan < ActiveRecord::Base
     return score
   end
   
+  def top_five_responsibilities
+    self.responsibilities.order("responsibilities.rating DESC").limit(5)
+  end
+  
+  def top_five_attributes
+    self.jobqualities.order("position").limit(5)
+  end
+  
+  def top_five_requirements
+    self.requirements.order("position").limit(5)
+  end
+  
   private
   
     def build_outline

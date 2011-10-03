@@ -9,10 +9,4 @@
 </h1> 
 <h4>for <%= @job.title_location %></h4>
 
-<div class = "display_wider">
-  <%= @outline.role %><br /><br />
- 
-  <%= @outline.qualities %><br /><br />
-
-  <%= @outline.importance %>
-</div>
+<%= render 'fields' %>

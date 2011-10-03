@@ -1,5 +1,9 @@
 Jobscape::Application.routes.draw do
 
+  get "vacancy_details/show"
+
+  get "vacancy/show"
+
   get "vacancies/index"
 
   get "vacancies/new"
@@ -40,6 +44,7 @@ Jobscape::Application.routes.draw do
   resources :vacancies
   namespace :officer do
     resources :businesses, :only => :destroy
+    resources :vacancy_details,  :only => :show
   end
   #resources :hiring_requirements
   

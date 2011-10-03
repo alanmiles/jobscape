@@ -42,6 +42,7 @@ class VacanciesController < ApplicationController
     @vacancy = Vacancy.find(params[:id])
     @title = "Vacancy announcement"
     @job = Job.find(@vacancy.job_id)
+    @details_link = true
   end
   
   def edit
