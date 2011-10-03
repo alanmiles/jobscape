@@ -54,9 +54,9 @@ class JobqualitiesController < ApplicationController
       @jobquality = @plan.jobqualities.new(params[:jobquality])
       if @jobquality.save
         if @plan.count_attributes == 10
-          flash[:notice] = "You've now set the maximum number of attributes for the job" 
+          flash[:notice] = "'#{@jobquality.quality.quality}' added.  You've now set the maximum number of attributes for the job" 
         else
-          flash[:success] = "Attribute added."
+          flash[:success] = "'#{@jobquality.quality.quality}' added."
         end
         redirect_to plan_jobqualities_path(@plan)
       else
@@ -72,7 +72,7 @@ class JobqualitiesController < ApplicationController
     @jobquality = Jobquality.find(params[:id])
     @plan = Plan.find(@jobquality.plan_id)
     @jobquality.destroy
-    flash[:success] = "#{@jobquality.quality.quality} no longer listed for this job."
+    flash[:success] = "'#{@jobquality.quality.quality}' no longer listed for this job."
     redirect_to plan_jobqualities_path(@plan)
   end
 end

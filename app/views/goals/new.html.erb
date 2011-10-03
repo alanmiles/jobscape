@@ -5,8 +5,9 @@
 <h1>New goal</h1>
 
 <h4><%= @job.title_location %></h4>
-<h4><strong>Responsibility: <br /></strong><%= @responsibility.definition %></h4>
 
+<p class = "display_text grayborder round"><%= @responsibility.definition %>
+</p>
 <%= form_for([@responsibility, @goal]) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class = "field">

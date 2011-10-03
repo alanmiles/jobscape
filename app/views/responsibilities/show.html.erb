@@ -5,7 +5,7 @@
 <h1>Responsibility</h1>
 <h4>for <%= @job.title_location %></h4>
 
-<p class = "display_text beige round"><%= @responsibility.definition %>
+<p class = "display_text grayborder round"><%= @responsibility.definition %>
            &nbsp; <span style = "font-weight: normal">
              <%= link_to "(Edit)", edit_responsibility_path(@responsibility) %>
            </span>
@@ -13,7 +13,7 @@
 
 <div class = "r-float">
   <% if @responsibility.maximum_goals? %>
-     <u>3 goals is the maximum</u>
+     <small class="highlt">&nbsp; 3 goals is the maximum &nbsp;</small>
   <% else %>
     <%= link_to "Add a goal", new_responsibility_goal_path(@responsibility) %>
   <% end %>
@@ -22,9 +22,9 @@
 <table>
   <% @goals.each do |goal| %>
     <tr>
-      <td><%= goal.objective %></td>
-      <td class = "control at_top"><%= link_to "Edit", edit_goal_path(goal) %></td> 
-      <td class = "control at_top"><%= link_to "Remove", goal, 
+      <td class = "grayline"><%= goal.objective %></td>
+      <td class = "control at_top grayline"><%= link_to "Edit", edit_goal_path(goal) %></td> 
+      <td class = "control at_top grayline"><%= link_to "Remove", goal, 
                    :method => :delete, 
                    :confirm => "You sure?",
                    :title => "Remove goal." %>

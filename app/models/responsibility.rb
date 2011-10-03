@@ -51,6 +51,10 @@ class Responsibility < ActiveRecord::Base
     end
   end
   
+  def has_rating?
+    rating > 0
+  end
+  
   def count_current_goals
     self.goals.count(:conditions => ["removed =?", false])
   end

@@ -7,11 +7,31 @@
 <%= link_to "Back to A-Plan menu", @plan %>
 </div>
 
-<h1>Responsibilities:</h1> 
+<h1>Responsibilities:
+  <% if @plan.responsibilities_ready? && @plan.goals_complete?  && @plan.ratings_complete? %>
+    &nbsp;<span class="success_marker round">ready to use</span>
+  <% end %>
+</h1> 
 <h4>for <%= @job.title_location %></h4>
 <p><em>Click on <%= image_tag("select.png", :size => "15x15") %> 
        to edit responsibility OR view/edit/add/delete goals
-       OR set the rating.</em></p>
+       OR set the rating.</em><br />
+    <%= @plan.count_responsibilities %> responsibilities set 
+    <% if ! @plan.responsibilities_ready? %>
+      <span class = "highlt round"> - you need at least 10 ... and up to 20.</span>
+    <% elsif @plan.responsibilities_ready? %>
+      <span style = "color:green"> - enough to use the plan, but you can set up to 20.</span>
+    <% elsif @plan.max_responsibilities? %>
+      <span class="highlt"> - the maximum for this job.</span>
+    <% end %>
+    <% if !@plan.goals_complete? && !@plan.ratings_complete? %>
+      <span class="highlt round">Goals & ratings are incomplete.</span>
+    <% elsif ! @plan.goals_complete? %>
+      <span class="highlt round">Goals are incomplete.</span>
+    <% elsif ! @plan.ratings_complete? %>
+      <span class="highlt round">Ratings are incomplete.</span>
+    <% end %>
+</p>
 <table>
   <tr>
    <th></th>
@@ -25,8 +45,16 @@
     <tr>
       <td><%= link_to(image_tag("select.png", :size => "15x15"), responsibility) %>
       <td><%= responsibility.definition %></td>
-      <td class = "numeric"><%= responsibility.count_current_goals %></td>
-      <td class = "numeric"><%= responsibility.display_rating %></td>
+      <% if responsibility.has_goals? %>
+        <td class = "numeric"><%= responsibility.count_current_goals %></td>
+      <% else %>
+        <td class = "numeric texthl"><%= responsibility.count_current_goals %></td>
+      <% end %>
+      <% if responsibility.has_rating? %>
+        <td class = "numeric"><%= responsibility.display_rating %></td>
+      <% else %>
+        <td class = "numeric texthl"><%= responsibility.display_rating %></td>
+      <% end %>
       <td class = "control"><%= link_to "Remove", responsibility, 
                    :method => :delete, 
                    :confirm => "You sure?",

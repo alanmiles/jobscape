@@ -2,7 +2,11 @@
   <%= link_to "Back to A-Plan menu", @plan %><br />
   <%= link_to "Modify the summary", edit_outline_path(@outline) %>
 </div>
-<h1><%= @title %></h1> 
+<h1><%= @title %>
+  <% if @outline.complete? %>
+    &nbsp;<span class="success_marker round">ready to use</span>
+  <% end %>
+</h1> 
 <h4>for <%= @job.title_location %></h4>
 
 <div class = "display_wider">

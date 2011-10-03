@@ -87,7 +87,7 @@ describe GoalsController do
         
           it "should mention the responsibility" do
             get 'new', :responsibility_id => @responsibility.id
-            response.should have_selector("h4", 
+            response.should have_selector("p.display_text", 
                   :content => @responsibility.definition)
           end
         

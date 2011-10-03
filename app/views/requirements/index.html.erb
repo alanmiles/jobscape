@@ -3,16 +3,27 @@
   <%= link_to "Back to A-Plan menu", @plan %>
 </div>
 
-<h1><%= @title %></h1>
+<h1><%= @title %>
+  <% if @plan.has_requirements? %>
+    &nbsp;<span class="success_marker round">ready to use</span>
+  <% end %>
+</h1>
 <h4>for <%= @job.title_location %></h4>
-<div class = "display_wider" style = "padding-top:0px"> 
-  <i>As you build your list, arrange the requirements in order of priority with the most
-     important at the top.  Click on a requirement and drag it up or down to its new position.<br /><br />
-     Select <%= image_tag("select.png", :size => "15x15") %> to edit and 
-     <%= image_tag("cancel.png", :size => "15x15") %> to remove the requirement. 
+<div class = "display_wider" style = "padding-top:0px">
+ 
+  <i>Add at least 1, and up to 10 hiring requirements.
+     <% if @plan.count_requirements >= 2 %>
+       <span class="highlt">IMPORTANT!</span> As you build your list, arrange the requirements in order of priority with the most
+       important at the top.  Click on a requirement and drag it up or down to its new position.
+     <% end %>
+     <% if @plan.has_requirements? %>
+         <br /><br />
+         Select <%= image_tag("select.png", :size => "15x15") %> to edit and 
+         <%= image_tag("cancel.png", :size => "15x15") %> to remove the requirement.
+     <% end %> 
    </i>
 </div>
-    
+<hr />
 <ul id="req" style="cursor: move"> 
   <% @requirements.each do |f| %>
     <li id="item_<%= f.id %>">

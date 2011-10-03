@@ -22,7 +22,7 @@ class QualitiesController < ApplicationController
         @quality.update_attributes(:approved => true,
                  :seen => true)
       end
-      flash[:success] = "#{@quality.quality} added. Now set the 5 PAMs."
+      flash[:success] = "'#{@quality.quality}' added. Now set the 5 PAMs."
       redirect_to @quality
     else
       @title = "New Personal Attribute"
@@ -67,7 +67,7 @@ class QualitiesController < ApplicationController
       redirect_to root_path
     else
       @quality.destroy
-      flash[:success] = "#{@quality.quality} successfully deleted."
+      flash[:success] = "'#{@quality.quality}' successfully deleted."
       redirect_to qualities_path
     end
   

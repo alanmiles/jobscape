@@ -188,7 +188,7 @@ describe QualitiesController do
         it "should generate a flash guidance message" do
           post :create, :quality => @attr
           @quality = assigns(:quality)
-          flash[:success].should == "#{@quality.quality} added. Now set the 5 PAMs."
+          flash[:success].should == "'#{@quality.quality}' added. Now set the 5 PAMs."
         end
           
         it "should set 'approved' to false" do
@@ -428,7 +428,7 @@ describe QualitiesController do
         it "should generate a flash guidance message" do
           post :create, :quality => @attr
           @quality = assigns(:quality)
-          flash[:success].should == "#{@quality.quality} added. Now set the 5 PAMs."
+          flash[:success].should == "'#{@quality.quality}' added. Now set the 5 PAMs."
         end
           
         it "should set 'approved' to true" do
@@ -719,7 +719,7 @@ describe QualitiesController do
         
         it "should have a success message" do
           delete :destroy, :id => @quality1
-          flash[:success].should == "#{@quality1.quality} successfully deleted."
+          flash[:success].should == "'#{@quality1.quality}' successfully deleted."
         end
         
         it "should redirect to the qualities list" do

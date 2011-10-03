@@ -2,49 +2,105 @@
 <%= link_to "#{@job.job_title} menu", @job %> <br />
 <%= link_to "All jobs in business", business_jobs_path(@business) %>
 </div>
-<h1>Achievement Plan</h1>
+<h1>Achievement Plan 
+  <% if @plan.complete? %>
+    &nbsp;<span class="success_marker round">ready to use</span>
+  <% end %>
+</h1>
 <h4><%= @job.title_location %></h4>
-<p><em>Click the links to build the A-PLAN, a powerful tool for recruitment, appraisal, training
+<p><em>
+  <% unless @plan.complete? %>
+       Click the links to build the A-PLAN, a powerful tool for recruitment, appraisal, training
        needs analysis, and succession planning.  Best of all, everyone in the job will be 
-       focused on achievement!
- </em></p>
+       focused on achievement!  The A-Plan is ready to use when all items in the right-hand
+       column below are <span style = "color: green">green</span>. 
+  <% else %> 
+       Now the A-Plan is complete, use it to drive achievement - for recruitment, appraisal, training
+       needs analysis, succession planning.  Get people into the habit of reviewing their own performance
+       monthly. And remember that the Plan should change as the business changes: involve jobholders  
+       in updating their responsibilities and goals. Aim to keep setting the bar higher. 
+  <% end %>  
+</em></p>
 <table>
   <tr>
     <td><strong><%= link_to "Responsibilities", plan_responsibilities_path(@plan) %></strong></td>
     <td>10-20 key activities</td>
-    <td><span id = "responsibilities"><%= @plan.count_responsibilities %> entered</span></td>
+    <td>
+      <% if @plan.responsibilities_ready? %>
+        <span id = "responsibilities" style = "color:green"><%= @plan.count_responsibilities %> entered</span>
+      <% else %>
+        <span id = "responsibilities"><%= @plan.count_responsibilities %> entered</span>
+      <% end %>
+    </td>
   </tr>
   <tr>
     <td><strong>Goals</strong> <small>(set via Responsibilities)</small></td>
     <td>1-3 measurable outcomes for each responsibility</td>
-    <td><span id = "goals"><%= @plan.responsibilities_with_goals %> / <%= @plan.count_responsibilities %>
+    <td>
+      <% if @plan.responsibilities_ready? && @plan.goals_complete? %>
+        <span id = "responsibilities" style = "color:green">
+          <%= @plan.responsibilities_with_goals %> / <%= @plan.count_responsibilities %>
         </span> 
+      <% else %>
+        <span id = "goals"><%= @plan.responsibilities_with_goals %> / <%= @plan.count_responsibilities %></span> 
+      <% end %>
     </td>
   </tr>
   <tr>
     <td><strong>Ratings</strong> <small>(set via Responsibilities)</small></td>
     <td>The importance of each responsibility to the business</td>
-    <td><span id = "goals"><%= @plan.responsibilities_with_ratings %> / <%= @plan.count_responsibilities %>
+    <td>
+      <% if @plan.responsibilities_ready? && @plan.ratings_complete? %>
+        <span id = "goals" style = "color:green">
+          <%= @plan.responsibilities_with_ratings %> / <%= @plan.count_responsibilities %>
         </span>
+      <% else %>
+        <span id = "goals"><%= @plan.responsibilities_with_ratings %> / <%= @plan.count_responsibilities %></span>
+      <% end %>
     </td> 
   </tr>
   <tr>
     <td><strong><%= link_to "Personal Attributes", plan_jobqualities_path(@plan) %></strong></td>
     <td>10 key qualities for jobholders</td>
-    <td><span id = "attribs"><%= @plan.count_attributes %> selected</span></td>
+    <td>
+      <% if @plan.max_attributes? %>
+        <span id = "attribs" style = "color:green""><%= @plan.count_attributes %> selected</span>
+      <% else %>
+        <span id = "attribs"><%= @plan.count_attributes %> selected</span>
+      <% end %>
+    </td>
   </tr>
   <tr>
     <td><strong><%= link_to "Hiring Requirements", plan_requirements_path(@plan) %></strong></td>
     <td>Preferred qualifications, experience, background</td>
-    <td><%= @plan.count_requirements %> entered</td>
+    <td>
+      <% if @plan.has_requirements? %>
+        <span style = "color:green"><%= @plan.count_requirements %> entered</span>
+      <% else %>
+       <%= @plan.count_requirements %> entered
+      <% end %>
+    </td>
   </tr>
   <tr>
     <td><strong><%= link_to "Summary", @outline %></strong></td>
     <td>3-paragraph description of job</td>
-    <td><%= outline_status %></td>
+    <td>
+      <% if @plan.outline_complete? %>
+        <span style = "color:green">
+          <%= outline_status %>
+        </span>
+      <% else %>
+        <%= outline_status %>  
+      <% end %>
+    </td>
   </tr>
-</table>
-<h4>Overall Job Rating: <%= job_valuation %> &nbsp;
+</table> 
+<% if @plan.job_value.nil? || @plan.job_value == 0 %>
+  <h4>
+<% else %>
+  <h4 class="success">
+<% end %>
+  Overall Job Rating: <%= job_valuation %> &nbsp;
     <small style = "font-size: 0.65em">(based on the 10 highest-rated responsibilities)</small>
 </h4>
 

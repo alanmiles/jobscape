@@ -1,7 +1,7 @@
 <div style ="min-height: 20em">
 <div class = "r-float">
 <% if @plan.max_attributes? %>
-  <u>No more attributes can be added</u>
+  <u>No more attributes can be added</u><br />
 <% else %>
   <%= link_to "Select a new attribute", new_plan_jobquality_path(@plan) %><br />
 <% end %>
@@ -10,7 +10,11 @@
      
 </div>
 
-<h1>Personal Attributes:</h1> 
+<h1>Personal Attributes:
+  <% if @plan.max_attributes? %>
+    &nbsp;<span class="success_marker round">ready to use</span>
+  <% end %>
+</h1> 
 <h4>for <%= @job.title_location %></h4>
 
 <div class = "info_box r-float">
@@ -19,7 +23,11 @@
   <li> Select the 10 key attributes for this job.</li>
   <li> Click on <%= image_tag("select.png", :size => "12x12") %> for a detailed understanding of the attribute.</li>
   <li> If you change your mind, delete a selection using <%= image_tag("cancel.png", :size => "12x12") %>.</li>
-  <li> Click and drag your selections till the most important are at the top of the list.</li>
+  <li> 
+     <% if @plan.max_attributes? %>
+       <span class="highlt">DON'T FORGET! </span>
+     <% end %> 
+     Click and drag your selections till the most important are at the top of the list.</li>
   </ol>
 </div>
 

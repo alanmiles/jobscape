@@ -43,6 +43,10 @@ class Plan < ActiveRecord::Base
     count_responsibilities >= 20
   end
   
+  def responsibilities_ready?
+    count_responsibilities >= 10
+  end
+  
   def count_attributes
     self.jobqualities.count(:all)
   end
@@ -89,7 +93,7 @@ class Plan < ActiveRecord::Base
         tot = tot + 1
       end
     end
-    return tot.to_s
+    return tot
   end
   
   def goals_complete?
@@ -110,6 +114,12 @@ class Plan < ActiveRecord::Base
   
   def ratings_complete?
     responsibilities_with_ratings == count_responsibilities  
+  end
+  
+  def outline_complete?
+    @job = Job.find(self.job_id)
+    @outline = Outline.find_by_job_id(@job.id)
+    @outline.complete?
   end
   
   def top_ten_ratings

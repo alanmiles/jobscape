@@ -384,7 +384,7 @@ describe JobqualitiesController do
       
           it "should have a success message" do
             post :create, :plan_id => @plan.id, :jobquality => @attr
-            flash[:success].should == "Attribute added."
+            flash[:success].should == "'#{@new_quality.quality}' added."
           end    
        
           it "should be connected to the correct plan" do
@@ -415,7 +415,7 @@ describe JobqualitiesController do
               
             it "should have a flash message explaining no more can be created" do  
               post :create, :plan_id => @plan.id, :jobquality => @attr
-              flash[:notice].should == "You've now set the maximum number of attributes for the job"   
+              flash[:notice].should =~ /You've now set the maximum number of attributes for the job/i   
             end
           end
       
@@ -439,7 +439,7 @@ describe JobqualitiesController do
         
       it "should have a success message" do
         delete :destroy, :id => @jobquality
-        flash[:success].should == "#{@jobquality.quality.quality} no longer listed for this job."
+        flash[:success].should == "'#{@jobquality.quality.quality}' no longer listed for this job."
       end
     
     end

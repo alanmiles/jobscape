@@ -5,7 +5,7 @@
 <h1><%= @title %>  <small style = "font-size:0.6em"><%= link_to "(change)", edit_job_path(@job) %></small></h1>
 <p><strong><%= @job.business.name %></strong></p>
 <p><strong>Category:</strong> <%= @job.occupation.name %> &nbsp;
-   <small style = "font-size:0.85em"><%= link_to "(change)", edit_job_path(@job) %></small>
+   <%= link_to "(change)", edit_job_path(@job) %>
 </p>
 
 <div class = "display_box grayborder round rightpos">
@@ -32,6 +32,7 @@
        <% end %>
      <% end %>
    <% else %>
+     <br />
      <span class="highlt">First complete the A-Plan.</span>
    <% end %>
 </div>

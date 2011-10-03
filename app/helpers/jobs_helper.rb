@@ -2,7 +2,7 @@ module JobsHelper
 
   def plan_status
     if @plan.complete?
-      "Complete - view/edit?"
+      "Ready to use - view/edit?"
     elsif @plan.has_responsibilities?
       "Incomplete - continue building"
     else

@@ -26,6 +26,7 @@ section {
 
 section h1 {
   font-size: 150%;
+  color: #A33519;
 }
 
 section h2 {
@@ -34,6 +35,14 @@ section h2 {
 
 section h3 {
   font-size: 130%;
+}
+
+section h4 {
+  color: #A33519;
+}
+
+h4.success {
+  color: green;
 }
 
 /* Links */
@@ -165,7 +174,7 @@ li .handle {
 .grayborder  {
   border-style: solid;
   border-color: #CCC;
-  border-width: medium
+  border-width: medium;
 }
 
 .rightpos {
@@ -192,9 +201,22 @@ li .handle {
 }
 
 .highlt {
-  background-color: yellow;
+  background-color: #FFD685;
+  color: #B80000;
+  padding: 0 5px;
+}
+
+.texthl {
+  color: #B80000;
+}
+
+.success_marker {
+  text-align: center;
+  color: #fff;
+  background: #4FB24F;
+  font-size: 80%;
   font-weight: bold;
-  color: red;
+  padding: 5px;
 }
 
 /* Sign up button */
@@ -253,6 +275,10 @@ table.profile {
 
 .extend_more {
   width: 65%;
+}
+
+td.grayline {
+  border-bottom: 1px solid #CCC;
 }
 
 th.control {
