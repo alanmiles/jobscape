@@ -14,5 +14,9 @@ module ApplicationHelper
     end
   end
   
+  def two_dec(field)
+    sprintf("%.2f", field)
+  end
+  
 end
 

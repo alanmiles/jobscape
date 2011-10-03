@@ -1,0 +1,15 @@
+<h1><%= @title %></h1>
+
+<div class = "display_wider">
+   Listed below are just the 10 latest HYGWIT jobs.  <%= link_to "Log in", signin_path %> or <%= link_to "sign up for a free account", signup_path %> to 
+   apply - or search for the ideal job in your area.
+  <br /><br />
+  <span class="highlt">Employers</span> - you can <%= link_to "get started with a free account", signup_path %> too, to post job 
+    announcements just like these, and find out how HYGWIT can transform your business.
+</div>
+<ul class="no_dec">
+  <% @vacancies.each do |vacancy| %>
+    <li><%= render 'brief', :vacancy => vacancy %></li>
+  
+  <% end %>
+</ul>

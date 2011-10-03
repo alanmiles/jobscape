@@ -103,6 +103,11 @@ li .handle {
   font-size: 12px;
 }
 
+ul.no_dec {
+  list-style:none;
+  padding-left: 0px;
+}
+
 .display_text {
   margin-left: 75px;
   margin-right: 75px;
@@ -182,7 +187,7 @@ li .handle {
 .grayborder  {
   border-style: solid;
   border-color: #CCC;
-  border-width: medium;
+  border-width: 1px medium medium 1px;
 }
 
 .rightpos {
@@ -234,10 +239,10 @@ a.signup_button {
   margin-right: auto;
   display: block;
   text-align: center;
-  width: 190px;
+  width: 150px;
   color: #fff;
-  background: #006400;
-  font-size: 150%;
+  background: #4FB24F;
+  font-size: 120%;
   font-weight: bold;
   padding: 20px;
 }

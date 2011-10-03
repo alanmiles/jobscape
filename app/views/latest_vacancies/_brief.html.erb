@@ -1,0 +1,31 @@
+      <div class="display_wider grayborder round">
+        <strong>
+          <% if vacancy.quantity == 1 %>
+            <%= vacancy.job.job_title %>
+          <% else %>
+            <%= "#{vacancy.quantity} #{vacancy.job.job_title.pluralize}" %>
+          <% end %>
+           for <%= vacancy.sector.sector %> business, <%= vacancy.job.business.city %>.
+        </strong>
+        <br />
+        <% if vacancy.full_time? %>
+          Full-time.  
+        <% else %>
+          Part-time. 
+        <% end %>
+        <% if vacancy.voluntary? %>
+          This is a voluntary position.
+        <% elsif vacancy.annual_salary.nil? %>
+          Hourly rate: £<%= two_dec(vacancy.hourly_rate) %>.
+        <% else %>
+          Annual salary: £<%= vacancy.annual_salary %>.
+        <% end %>
+        <br />
+        <%= vacancy.notes unless vacancy.notes.empty? %> <%= link_to "(Full details)", latest_vacancy_path(vacancy) if @details_link == true %>
+        <br />
+        <small>Posted <%= time_ago_in_words(vacancy.created_at) %> ago.  Apply to <%= vacancy.contact_person %>
+           by <%= vacancy.close_date.strftime("%a %b %d, %Y") %>.
+        </small>        
+      </div>
+   
+  

@@ -7,7 +7,7 @@
   <% if @vacancy.voluntary? %>
     This is a voluntary position.
   <% elsif @vacancy.annual_salary.nil? %>
-    Hourly rate: £<%= @vacancy.hourly_rate %>.
+    Hourly rate: £<%= two_dec(@vacancy.hourly_rate) %>.
   <% else %>
     Annual salary: £<%= @vacancy.annual_salary %>.
   <% end %>

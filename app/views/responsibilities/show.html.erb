@@ -1,9 +1,10 @@
 <div class = "r-float">
-<%= link_to "All responsibilities for job", plan_responsibilities_path(@responsibility.plan_id) %>
+  <%= link_to "All responsibilities for job", plan_responsibilities_path(@plan.id) %><br />
+  <%= link_to "Add another responsibility", new_plan_responsibility_path(@plan.id) unless @plan.max_responsibilities? %>
 </div>
 
 <h1>Responsibility</h1>
-<h4>for <%= @job.title_location %></h4>
+<h4>for <%= @job.job_title %></h4>
 
 <p class = "display_text grayborder round"><%= @responsibility.definition %>
            &nbsp; <span style = "font-weight: normal">

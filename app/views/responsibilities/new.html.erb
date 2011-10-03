@@ -2,7 +2,7 @@
 <%= link_to "Cancel", plan_responsibilities_path(@plan) %>
 </div>
 <h1>New responsibility</h1>
-<h4>for <%= @job.title_location %></h4>
+<h4>for <%= @job.job_title %></h4>
 
 <%= form_for([@plan, @responsibility]) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>

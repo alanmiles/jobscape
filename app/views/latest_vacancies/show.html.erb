@@ -1,12 +1,12 @@
 <div class = "r-float">
-  <%= link_to "Back", @vacancy %><br />
+  <%= link_to "Back", latest_vacancies_path %><br />
 </div>
 
 <h1><%= @title %></h1>
 <br />
-<%= render "/vacancies/brief" %> 
+<%= render "brief", :vacancy => @vacancy %> 
 <br />
 <h4 style = "margin-bottom: 0px">Job summary</h4>
 <%= render "/outlines/fields" %>
 <br />
-<%= render "/latest_vacancies/specs" %>
+<%= render "specs" %>

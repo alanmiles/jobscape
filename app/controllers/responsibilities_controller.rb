@@ -15,6 +15,7 @@ class ResponsibilitiesController < ApplicationController
     @responsibility = Responsibility.find(params[:id])
     session[:responid] = @responsibility.id
     @job = Job.find(session[:jobid])
+    @plan = Plan.find_by_job_id(@job.id)
     @title = "Responsibility for #{@job.job_title}"
     @goals = @responsibility.goals.all
     @evaluation = Evaluation.find_by_responsibility_id(@responsibility.id)

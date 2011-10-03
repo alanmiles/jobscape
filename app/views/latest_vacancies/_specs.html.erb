@@ -1,0 +1,28 @@
+<h4>We're looking for ... </h4>
+
+<strong>Someone who can:</strong>
+<div class="display_wider">
+  <ul>
+    <% @responsibilities.each do |responsibility| %>
+      <li><%= responsibility.definition %></li>
+    <% end %>
+  </ul>
+</div>
+
+<strong>... with these qualities:</strong>
+<div class="display_wider">
+  <ul>
+    <% @qualities.each do |q| %>
+      <li><%= q.quality.quality %></li>
+    <% end %>
+  </ul>
+</div>
+
+<strong>... and meeting these requirements:</strong>
+<div class="display_wider">
+  <ul>
+    <% @requirements.each do |requirement| %>
+      <li><%= requirement.requirement %></li>
+    <% end %>
+  </ul>
+</div>

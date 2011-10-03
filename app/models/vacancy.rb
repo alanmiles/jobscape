@@ -64,4 +64,7 @@ class Vacancy < ActiveRecord::Base
     self.hourly_rate != nil
   end
   
+  def self.latest
+    self.order("created_at DESC").limit(10)
+  end
 end
