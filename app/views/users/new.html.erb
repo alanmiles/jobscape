@@ -1,7 +1,31 @@
 <h1>Sign up</h1>
 
+<div class="info_box grayborder rightpos">
+  <br />
+  <strong>ACCOUNT-TYPES</strong><br /><br />
+  <strong>Individual: </strong>You're employed and you want to be the very best at your job. 
+    Maybe you're looking for a new opportunity too. <%= link_to "(more)", "#" %>
+    <br /><br />
+  <strong>Jobseeker: </strong>Not employed at present. We've teamed up with businesses keen
+    to give people a chance to get started or re-started. <%= link_to "(more)", "#" %>
+  <br /><br />
+  <strong>Business: </strong>Create an achievement culture throughout your business - and
+     make HR one of your key profit-drivers. <%= link_to "(more)", "#" %>
+  <br /><br />
+  <strong>Invitee: </strong>Someone in your business has given you a PIN to start using HYGWIT. 
+     So let's go! <%= link_to "(more)", "#" %>
+  <br /><br />
+</div>
+
 <%= form_for(@user) do |f| %>
+
   <%= render 'fields', :f => f %>
+  
+  <div class="field">
+    I have read and agree to <%= link_to "the HYGWIT terms", "#" %>.
+    <%= f.check_box :terms %>
+  </div>
+  <br />
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

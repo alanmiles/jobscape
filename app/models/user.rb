@@ -2,18 +2,45 @@
 #
 # Table name: users
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
+#  id                 :integer         not null, primary key
+#  name               :string(255)
+#  email              :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  encrypted_password :string(255)
+#  salt               :string(255)
+#  admin              :boolean         default(FALSE)
+#  account            :integer         default(1)
+#  terms              :boolean         default(FALSE)
+#  latitude           :float
+#  longitude          :float
+#  address            :string(255)
+#  city               :string(255)
+#  country            :string(255)
+
+
+
 require 'digest'
 class User < ActiveRecord::Base
   attr_accessor   :password
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmation, :account, :terms, :latitude, :longitude, :address
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  
+  ACCOUNT_TYPES = [
+    ["Individual", 1],
+    ["Jobseeker", 2],
+    ["Business", 3],
+    ["Invitee", 4]
+  ]
+  
+  geocoded_by :address
+  reverse_geocoded_by :latitude, :longitude do |obj, results|
+    if geo = results.first
+      obj.city = geo.city
+      obj.country = geo.country
+    end
+  end
   
   has_many :employees, :dependent => :destroy
   has_many :businesses, :through => :employees
@@ -22,7 +49,9 @@ class User < ActiveRecord::Base
   			:length		=> { :maximum => 50 }
   validates :email,	:presence	=> true,
   			:format 	=> { :with => email_regex },
-  			:uniqueness 	=> { :case_sensitive => false } 
+  			:uniqueness 	=> { :case_sensitive => false }
+  validates :account,	:presence 	=> true,
+  			:numericality	=> { :integer => true } 
   			
   # Automatically create the virtual attribute 'password_confirmation'.
   validates :password, 	:presence    	=> true,
@@ -30,6 +59,8 @@ class User < ActiveRecord::Base
                        	:length       	=> { :within => 6..40 }
                        	
   before_save :encrypt_password
+  after_validation :geocode, :if => :address_changed?
+  after_validation :reverse_geocode, :if => :address_changed?
 
   def belongs_to_business?
     businesses.count > 0
@@ -80,18 +111,4 @@ class User < ActiveRecord::Base
       Digest::SHA2.hexdigest(string)
     end
 end
-
-# == Schema Information
-#
-# Table name: users
-#
-#  id                 :integer         not null, primary key
-#  name               :string(255)
-#  email              :string(255)
-#  created_at         :datetime
-#  updated_at         :datetime
-#  encrypted_password :string(255)
-#  salt               :string(255)
-#  admin              :boolean         default(FALSE)
-#
 

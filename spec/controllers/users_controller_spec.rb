@@ -144,7 +144,7 @@ describe UsersController do
 
       before(:each) do
         @attr = { :name => "", :email => "", :password => "",
-                  :password_confirmation => "" }
+                  :password_confirmation => "", :account => 1 }
       end
 
       it "should not create a user" do
@@ -169,7 +169,8 @@ describe UsersController do
 
       before(:each) do
         @attr = { :name => "New User", :email => "user@example.com",
-                  :password => "foobar", :password_confirmation => "foobar" }
+                  :password => "foobar", :password_confirmation => "foobar",
+                  :account => 1, :terms => true }
       end
 
       it "should create a user" do
@@ -190,7 +191,7 @@ describe UsersController do
       
       it "should have a welcome message" do
         post :create, :user => @attr
-        flash[:success].should =~ /welcome to JobScape/i
+        flash[:success].should =~ /welcome to HYGWIT/i
       end    
     end
   end

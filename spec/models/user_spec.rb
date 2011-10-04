@@ -10,6 +10,13 @@
 #  encrypted_password :string(255)
 #  salt               :string(255)
 #  admin              :boolean         default(FALSE)
+#  account            :integer         default(1)
+#  terms              :boolean         default(FALSE)
+#  latitude           :float
+#  longitude          :float
+#  address            :string(255)
+#  city               :string(255)
+#  country            :string(255)
 #
 
 require 'spec_helper'

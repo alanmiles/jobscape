@@ -17,24 +17,43 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @title = "Sign up"
+    @accounts = User::ACCOUNT_TYPES
   end
 
   def create
     @user = User.new(params[:user])
-    if @user.save
-      sign_in @user
-      flash[:success] = "Welcome to JobScape!"
-      redirect_to @user
+    @ip_address = request.remote_ip
+    if @ip_address == "127.0.0.1" || @ip_address == nil
+      @user.address = "82.44.3.178"
     else
+      @user.address = @ip_address
+    end
+    if @user.terms?
+      if @user.save
+        sign_in @user
+        flash[:success] = "Welcome to HYGWIT - Have You Got What It Takes?"
+        redirect_to @user
+      else
+        @user.password = nil
+        @user.password_confirmation = nil
+        @title = "Sign up"
+        @accounts = User::ACCOUNT_TYPES
+        render 'new'
+      end
+    else
+      flash[:error] = "You need to check the 'Accept terms' box before you can continue."
       @user.password = nil
       @user.password_confirmation = nil
       @title = "Sign up"
+      @accounts = User::ACCOUNT_TYPES
       render 'new'
     end
   end
   
   def edit
     @title = "Edit user"
+    @user = User.find(params[:id])
+    @accounts = User::ACCOUNT_TYPES
   end
   
   def update
@@ -43,6 +62,7 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       @title = "Edit user"
+      @accounts = User::ACCOUNT_TYPES
       render 'edit'
     end
   end

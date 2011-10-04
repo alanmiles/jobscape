@@ -1,6 +1,6 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :name %><br />
+  <%= f.label :name %> <small>(Your normal first name and family name)</small><br />
   <%= f.text_field :name %>
 </div>
 <div class="field">
@@ -8,11 +8,15 @@
   <%= f.text_field :email %>
 </div>
 <div class="field">
-  <%= f.label :password %><br />
+  <%= f.label :password %> <small>(at least 6 characters/numbers)</small><br />
   <%= f.password_field :password %>
 </div>
 <div class="field">
-  <%= f.label :password_confirmation, "Confirmation" %><br />
+  <%= f.label :password_confirmation, "Confirmation" %> <small>(repeat password)</small><br />
   <%= f.password_field :password_confirmation %>
+</div>
+<div class="field">
+  <%= f.label :account, "Account-type" %> <small>(see panel right)</small> &nbsp;
+  <%= select( :user, :account, @accounts ) %>
 </div>
 
