@@ -1,14 +1,26 @@
-<table class="profile" summary="Profile information">
-  <tr>
-    <td class="main">
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
-    </td>
-    <td class="sidebar round">
-      <strong>Name</strong> <%= @user.name %><br />
-      <strong>URL</strong>  <%= link_to user_path(@user), @user %>
-    </td>
-  </tr>
-</table>
+<div class = "r-float">
+  <%= render 'home_redirection' %> <br />
+  <%= link_to "Re-edit account details", edit_user_path(@user) %>
+</div>
+
+<h1><%= @user.name %></h1>
+
+<div class="display_box_left rightpos">
+  
+
+</div>
+
+<div class="display_box_left">
+  <strong>Account-type:</strong> <%= @user.account_type.upcase %>
+  <br /><br />
+  <em><%= account_explanation %></em>
+  <br /><br />
+  <strong>Email:</strong> <%= @user.email %>
+  <% if @user.account == 2 %>
+    <br /><br />  
+    <strong>Location: </strong><%= @user.city %>, <%= @user.country %>
+  <% end %>
+</div>
+
+
+    

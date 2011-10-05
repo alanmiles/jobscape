@@ -128,7 +128,7 @@ describe PagesController do
         
         it "should state that there are no business connections" do
           get :user_home
-          response.should have_selector("p", 
+          response.should have_selector("h4", 
               :content => "WHERE DO YOU WANT TO START?")
         end
         
@@ -140,6 +140,7 @@ describe PagesController do
       end
     
       describe "when user is connected to one business as an officer" do
+      #THE FOLLOWING MAY NOW BE IRRELEVANT  
         
         before(:each) do
           @business = Factory(:business)
@@ -148,15 +149,15 @@ describe PagesController do
                                        :officer =>  true )            
         end
         
-        it "should not display the 'User Home' page" do
-          get :user_home
-          response.should_not be_success
-        end
+        it "should not display the 'User Home' page" 
+          #get :user_home
+          #response.should_not be_success
+        #end
         
-        it "should redirect to the Officer Home page" do
-          get :user_home
-          response.should redirect_to officer_home_path
-        end
+        it "should redirect to the Officer Home page"
+        #  get :user_home
+        #  response.should redirect_to officer_home_path
+        #end
         
         it "should display the 'Officer Home' page" do
           session[:biz] = @business.id
@@ -192,11 +193,11 @@ describe PagesController do
                                        :officer => false)
         end
         
-        it "should display the business" do
-          get :user_home
-          response.should have_selector("h4", 
-            :content => "EMPLOYEE MENU: #{@business.name}, #{@business.city}")
-        end
+        it "should display the business" 
+        #  get :user_home
+        #  response.should have_selector("h4", 
+        #    :content => "EMPLOYEE MENU: #{@business.name}, #{@business.city}")
+        #end
         
       end
        

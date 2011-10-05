@@ -15,8 +15,14 @@ class SessionsController < ApplicationController
       sign_in user
       if current_user.admin?
         redirect_back_or admin_path
-      else
+      elsif current_user.account == 1
         redirect_back_or user_home_path
+      elsif current_user.account == 2
+        redirect_back_or jobseeker_home_path
+      elsif current_user.account == 3
+        redirect_back_or officer_home_path
+      else
+        redirect_back_or employee_home_path
       end
     end
   end

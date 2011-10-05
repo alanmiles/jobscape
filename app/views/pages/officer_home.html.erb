@@ -5,13 +5,25 @@
 <% end %>
 
 <h1>
-  <%= gravatar_for @user %>
-  <%= @user.name %>
+  Home - <%= @user.name %>
 </h1>
-<h4>OFFICER MENU: <%= @business.name %>, <%= @business.city %></h4>
+
+<% if @no_business == true %>
+  <div class = "display_medium">
+    <h4 class="highlt">BUSINESS DETAILS REQUIRED</h4>
+    You've signed up for a Business account, but you haven't entered the details of your business yet.<br /><br/>
+    You now have two options:<br /><br />
+    <ol>
+      <li><%= link_to "Add your business now", new_business_path %></li>
+      <li><% link_to "Go to Settings", edit_user_path(@user) %> and change to one of the other HYGWIT account-types</li>
+    </ol>
+  </div>
+<% else %>
+  <h4>OFFICER MENU: <%= @business.name %>, <%= @business.city %></h4>
   <ul>
     <li><%= link_to "Business details", @business %></li>
     <li><%= link_to "Jobs", business_jobs_path(@business.id) %></li>
     <li>Employees</li>
   </ul>
+<% end %>
   

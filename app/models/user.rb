@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
   			
   # Automatically create the virtual attribute 'password_confirmation'.
   validates :password, 	:presence    	=> true,
-                       	:confirmation 	=> true,
+                      	:confirmation 	=> true,
                        	:length       	=> { :within => 6..40 }
                        	
   before_save :encrypt_password
@@ -90,6 +90,18 @@ class User < ActiveRecord::Base
   def has_attribute_submissions?
     total = Quality.find_all_by_created_by(self.id).count
     return true if total > 0 
+  end
+  
+  def account_type
+    if account == 2
+      return "Jobseeker"
+    elsif account == 3
+      return "Business"
+    elsif account == 4
+      return "Invitee"
+    else
+      return "Individual"
+    end
   end
   
   private

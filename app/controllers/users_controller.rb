@@ -32,7 +32,13 @@ class UsersController < ApplicationController
       if @user.save
         sign_in @user
         flash[:success] = "Welcome to HYGWIT - Have You Got What It Takes?"
-        redirect_to @user
+        if @user.account == 2
+          redirect_to jobseeker_home_path
+        elsif @user.account == 3
+          redirect_to new_business_path
+        else
+          redirect_to @user
+        end
       else
         @user.password = nil
         @user.password_confirmation = nil
@@ -51,17 +57,17 @@ class UsersController < ApplicationController
   end
   
   def edit
-    @title = "Edit user"
+    @title = "Edit account settings"
     @user = User.find(params[:id])
     @accounts = User::ACCOUNT_TYPES
   end
   
   def update
     if @user.update_attributes(params[:user])
-      flash[:success] = "Profile updated."
+      flash[:success] = "Profile updated. Check that the details are correct."
       redirect_to @user
     else
-      @title = "Edit user"
+      @title = "Edit account settings"
       @accounts = User::ACCOUNT_TYPES
       render 'edit'
     end

@@ -8,6 +8,8 @@ class PagesController < ApplicationController
     if signed_in?
       if current_user.admin?
         redirect_to admin_path
+      elsif current_user.account == 2
+        redirect_to jobseeker_home_path
       else
         redirect_to user_home_path
       end
@@ -45,30 +47,69 @@ class PagesController < ApplicationController
     redirect_to officer_home_path 
   end
   
+  def jobseeker_home
+    @title = "Jobseeker Home"
+    @user = current_user
+    session[:jobid] = nil
+  end
+  
   def officer_home
     @title = "Officer Home"
-    @business = Business.find(session[:biz])
     @user = current_user
-    @employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
-    session[:jobid] = nil
+    @no_business = false
+    if session[:biz] != nil
+      @business = Business.find(session[:biz])
+      @employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
+      session[:jobid] = nil
+    else
+      if @user.belongs_to_business?
+        if @user.single_business?
+          @business = @user.businesses.first
+          @employee = Employee.find_by_user_id(@user)
+          session[:biz] = @business.id
+        else
+          redirect_to select_business_path
+          session[:biz] = nil
+        end
+      else
+        session[:biz] = nil
+        @no_business = true
+      end
+    end
+    #@business = Business.find(session[:biz])
+    #@user = current_user
+    #@employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
+    #session[:jobid] = nil
   end
   
   def user_home
     @title = "User Home"
     @user = current_user
     if @user.belongs_to_business?
-      if @user.single_business?
-        @business = @user.businesses.first
-        @employee = Employee.find_by_user_id(@user)
-        session[:biz] = @business.id
-        if @employee.officer?
-          redirect_to officer_home_path
-        end
-      else
-        #@employees = Employee.find_all_by_user_id(@user)
-        redirect_to select_business_path
-      end
+      @business = @user.businesses.first
+      session[:biz] = @business.id
+    else
+      #HAVE A RESCUE OPERATION TO BUILD A BUSINESS"
     end
+    
+    #if @user.belongs_to_business?
+    #  if @user.single_business?
+    #    @business = @user.businesses.first
+    #    @employee = Employee.find_by_user_id(@user)
+    #    session[:biz] = @business.id
+    #    if @employee.officer?
+    #      redirect_to officer_home_path
+    #    end
+    #  else
+    #    #@employees = Employee.find_all_by_user_id(@user)
+    #    redirect_to select_business_path
+    #  end
+    #end
+  end
+  
+  def employee_home
+    @title = "Employee Home"
+    @user = current_user
   end
   
   private

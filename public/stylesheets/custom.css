@@ -4,7 +4,6 @@
 
 body {
   background: #E0E6F8;
-  
 }
 
 header {
@@ -22,6 +21,8 @@ section {
   padding: 20px;
   background: #fff;
   min-height: 24em;
+  overflow: auto;
+  /*width: 710px; */
 }
 
 section h1 {
@@ -142,6 +143,14 @@ ul.no_dec {
   font-size: 100%;
 }
 
+.display_box_left {
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 290px;
+  padding: 15px;
+  font-size: 100%;
+}
+
 .info_box {
   margin-left: 15px;
   margin-right: 15px;
@@ -149,7 +158,7 @@ ul.no_dec {
   width: 240px;
   min-height: 18em;
   padding: 0px 15px;
-  font-size: 85%;
+  font-size: 90%;
   overflow: auto;
 }
 
@@ -160,7 +169,7 @@ ul.no_dec {
   width: 60%;
   height: 18em;
   padding: 0px 15px;
-  font-size: 85%;
+  font-size: 90%;
   overflow: auto;
 }
 

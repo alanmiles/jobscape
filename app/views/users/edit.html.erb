@@ -1,14 +1,43 @@
-<h1>Edit user</h1>
+<div class = "r-float">
+  <%= render 'home_redirection' %>
+</div>
+
+<h1>Edit your account settings</h1>
+
+<div class="info_box grayborder rightpos">
+  <br />
+  <%= render "/shared/account_types" %> 
+  <br /><br />
+</div>
 
 <%= form_for(@user) do |f| %>
-  <%= render 'fields', :f => f %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :name %> <small>(Your normal first name and family name)</small><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :email %> <br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :account, "Account-type" %> <small>(see panel right)</small> &nbsp;
+    <%= select( :user, :account, @accounts ) %>
+  </div>
+  <% if @user.account == 2 %>
+    <div class="field" style = "width:300px">
+      <strong>Location</strong> <br />
+      <%= @user.city %>, <%= @user.country %>.
+      <br /><br />
+      <small>If the location's wrong, replace your IP address below with your post-code or address. (Max 50 characters)</small> 
+      <%= f.text_field :address %>
+    </div>
+  <% end %>
+  <div class="field">
+     <strong>Re-enter password</strong> &nbsp; <%= f.password_field :password, :size => 16 %><br />
+     <strong>Confirm password </strong> &nbsp; <%= f.password_field :password_confirmation, :size => 16 %> 
+  </div>
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
 <% end %>
-
-<div>
-  <%= gravatar_for @user %>
-  <a href="http://gravatar.com/emails" target = "_blank">change</a>
-</div>
-

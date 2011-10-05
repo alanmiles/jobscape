@@ -49,7 +49,9 @@ Jobscape::Application.routes.draw do
   match '/help',    		:to => 'pages#help'
   match '/admin',   		:to => 'pages#admin_home'
   match '/user_home', 		:to => 'pages#user_home'
+  match 'jobseeker_home',	:to => 'pages#jobseeker_home'
   match '/officer_home',	:to => 'pages#officer_home'
+  match '/employee_home',	:to => 'pages#employee_home'
   match '/select_business', 	:to => 'pages#select_business' 
   match '/biz_selection',	:to => 'pages#biz_selection'
   
