@@ -61,17 +61,28 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   after_validation :geocode, :if => :address_changed?
   after_validation :reverse_geocode, :if => :address_changed?
+  after_save :create_user_business
+  before_destroy :remove_private_business
 
   def belongs_to_business?
-    businesses.count > 0
+    #businesses.count > 0
+    businesses.where("businesses.name != ?", "Biz_#{self.id}").count > 0
   end
   
   def single_business?
     if belongs_to_business?
-      businesses.count == 1
+      businesses.where("businesses.name != ?", "Biz_#{self.id}").count == 1
     end
   end
-
+   
+  def private_business
+    @business = Business.find_by_name("Biz_#{self.id}")
+  end
+  
+  def has_private_business?
+    businesses.where("businesses.name = ?", "Biz_#{self.id}").count == 1
+  end
+  
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
   end
@@ -93,14 +104,18 @@ class User < ActiveRecord::Base
   end
   
   def account_type
-    if account == 2
-      return "Jobseeker"
-    elsif account == 3
-      return "Business"
-    elsif account == 4
-      return "Invitee"
+    if self.admin? 
+      return "Admin"
     else
-      return "Individual"
+      if account == 2
+        return "Jobseeker"
+      elsif account == 3
+        return "Business"
+      elsif account == 4
+        return "Invitee"
+      else
+        return "Individual"
+      end
     end
   end
   
@@ -114,6 +129,31 @@ class User < ActiveRecord::Base
     def encrypt(string)
       secure_hash("#{salt}--#{string}")
     end
+    
+    def create_user_business
+      if self.account == 1
+        @business = Business.find_by_name("Biz_#{self.id.to_s}")
+        if @business == nil
+          @sector = Sector.first
+          @business = Business.new(:name => "Biz_#{self.id.to_s}",
+        		:address => self.address,
+        		:sector_id => @sector.id)
+          @business.save
+          @employee = Employee.new(:business_id => @business.id,
+        		:user_id => self.id,
+        		:officer => true)
+          @employee.save
+        end
+      end
+    end
+    
+    def remove_private_business
+      @business = Business.find_by_name("Biz_#{self.id.to_s}")
+      unless @business == nil
+        @business.destroy
+      end
+    end
+    
 
     def make_salt
       secure_hash("#{Time.now.utc}--#{password}")

@@ -5,6 +5,7 @@ describe QualitiesController do
   render_views
   
   before(:each) do
+    @sector = Factory(:sector)
     @quality1 = Factory(:quality, :approved => true)
     @quality2 = Factory(:quality, :quality => "Second quality", :approved => true) 
     @quality3 = Factory(:quality, :quality => "Third quality", :approved => true)
@@ -81,7 +82,7 @@ describe QualitiesController do
   describe "for signed-in non-admin users" do
   
     before(:each) do
-      @business = Factory(:business)
+      @business = Factory(:business, :sector_id => @sector.id)
       session[:biz] = @business.id
       @user = Factory(:user)
       @employee = Factory(:employee, :business_id => @business.id,
@@ -293,7 +294,7 @@ describe QualitiesController do
         
           before(:each) do
             @occupation = Factory(:occupation)
-            @business = Factory(:business)
+            @business = Factory(:business, :sector_id => @sector.id)
             @job_1 = Factory(:job, :business_id => @business.id, 
             			:occupation_id => @occupation.id)
             @job_2 = Factory(:job, :business_id => @business.id, 
@@ -679,7 +680,7 @@ describe QualitiesController do
       
         before(:each) do
           @occupation = Factory(:occupation)
-          @business = Factory(:business)
+          @business = Factory(:business, :sector_id => @sector.id)
           @job = Factory(:job, :business_id => @business.id, 
           			:occupation_id => @occupation.id)
           @plan = Plan.find_by_job_id(@job.id)

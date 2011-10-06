@@ -32,5 +32,19 @@ class Employee < ActiveRecord::Base
   def business_location
     "#{self.business.name}, #{self.business.city}"
   end
+  
+  def self.only_private(user)
+    @biz = 0
+    @business = Business.find_by_name("Biz_#{user.id.to_s}")
+    @biz = @business.id unless @business == nil
+    self.where("business_id = ? and user_id = ?", @biz, user.id)
+  end
+  
+  def self.all_except_private(user)
+    @biz = 0
+    @private_biz = Business.find_by_name("Biz_#{user.id.to_s}")
+    @biz = @private_biz.id unless @private_biz == nil
+    self.where("business_id != ? and user_id = ?", @biz, user.id)
+  end
 
 end

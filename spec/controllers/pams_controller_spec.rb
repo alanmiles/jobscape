@@ -7,6 +7,7 @@ describe PamsController do
   before(:each) do
     @quality = Factory(:quality)
     @pam = Pam.find(:first, :conditions => ["quality_id = ? and grade = ?", @quality.id, "A"])
+    @sector = Factory(:sector)
   end
   
   describe "for non-signed_in users" do

@@ -118,6 +118,14 @@ ul.no_dec {
   font-weight: bold;
 }
 
+.menu_box {
+  margin-left: 75px;
+  margin-right: 75px;
+  width: 450px;
+  padding: 15px;
+  font-size: 100%;
+}
+
 .display_wider {
   margin-left: 25px;
   margin-right: 25px;

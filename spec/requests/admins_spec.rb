@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Admins" do
   before(:each) do
+    @sector = Factory(:sector)
     @user = Factory(:user, :admin => true)
     visit signin_path
     fill_in :email,    :with => @user.email

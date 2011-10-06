@@ -11,6 +11,7 @@ class Officer::BusinessesController < ApplicationController
         flash[:error] = "Cannot delete business while associated jobs, vacancies or employees exist"
       else
         @business.destroy
+        session[:biz] = nil
         flash[:success] = "#{@business.name} removed."
       end
       redirect_to select_business_path

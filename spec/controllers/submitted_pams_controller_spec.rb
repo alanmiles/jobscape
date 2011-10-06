@@ -5,6 +5,7 @@ describe SubmittedPamsController do
   render_views
   
   before(:each) do
+    @sector = Factory(:sector)
     @user = Factory(:user)
     @user2 = Factory(:user, :email => "user2@example.com")
     @admin = Factory(:user, :email => "admin@example.com", :admin => true)

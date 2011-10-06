@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe SectorsController do
 
+  before(:each) do
+    @sector = Factory(:sector, :sector => "Sector")
+  end
+  
   describe "for non-signed-in users" do
   
     describe "GET 'index'" do

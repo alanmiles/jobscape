@@ -3,6 +3,10 @@ require 'spec_helper'
 describe OccupationsController do
   render_views
   
+  before(:each) do
+    @sector = Factory(:sector)
+  end
+  
   describe "for non-signed-in users" do
     
     describe "GET 'index'" do
@@ -274,7 +278,7 @@ describe OccupationsController do
         describe "when the occupation is linked to existing jobs" do
        
           before(:each) do
-            @business = Factory(:business)
+            @business = Factory(:business, :sector_id => @sector.id)
             @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
           end
           

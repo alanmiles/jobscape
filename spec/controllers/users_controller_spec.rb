@@ -3,8 +3,23 @@ require 'spec_helper'
 describe UsersController do
   render_views
 
+  before(:each) do
+    @sector = Factory(:sector)
+  end
+  
   describe "GET 'index'" do
+    
+    before(:each) do
+      @user = (Factory(:user))
+      second = Factory(:user, :name => "Bob", :email => "another@example.com")
+      third  = Factory(:user, :name => "Ben", :email => "another@example.net")
 
+      @users = [@user, second, third]
+      30.times do
+        @users << Factory(:user, :email => Factory.next(:email))
+      end
+    end
+      
     describe "for non-signed-in users" do
       it "should deny access" do
         get :index
@@ -16,21 +31,28 @@ describe UsersController do
     describe "for signed-in users" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
-        second = Factory(:user, :name => "Bob", :email => "another@example.com")
-        third  = Factory(:user, :name => "Ben", :email => "another@example.net")
+        test_sign_in(@user)
+      end
+      
+      it "should not be successful" do
+        get :index
+        response.should_not be_success
+      end
+      
+    end
 
-        @users = [@user, second, third]
-        30.times do
-          @users << Factory(:user, :email => Factory.next(:email))
-        end
+    describe "for signed-in admins" do
+      
+      before(:each) do
+        @admin = Factory(:user, :name => "Admin", :email => "admin@example.com", :admin => true)
+        test_sign_in(@admin)
       end
 
       it "should be successful" do
         get :index
         response.should be_success
       end
-
+      
       it "should have the right title" do
         get :index
         response.should have_selector("title", :content => "All users")
@@ -43,16 +65,7 @@ describe UsersController do
         end
       end
       
-      it "should not include a 'delete' control for non-admin users" do
-        get :index
-        @users[0..2].each do |user|
-          response.should_not have_selector("a", 
-                :title => "Delete #{user.name}")
-        end
-      end
-      
-      it "should include a 'delete' control for admin users" do
-        @user.admin = true
+      it "should include a 'delete' control" do
         get :index
         @users[0..2].each do |user|
           response.should have_selector("a", :title => "Delete #{user.name}")
@@ -181,7 +194,7 @@ describe UsersController do
 
       it "should redirect to the user show page" do
         post :create, :user => @attr
-        response.should redirect_to(user_path(assigns(:user)))
+        response.should redirect_to user_home_path
       end
       
       it "should have a welcome message" do
@@ -364,7 +377,6 @@ describe UsersController do
       end
       
       before(:each) do
-        @sector = Factory(:sector)
         @business_1 = Factory(:business, :sector_id => @sector.id)
         @business_2 = Factory(:business, :address => "TN9 1SP", :sector_id => @sector.id)
         @employee_1 = Factory(:employee, :user_id => @user.id, 

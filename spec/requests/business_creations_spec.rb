@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "BusinessCreations" do
   
   before(:each) do
-    @user = Factory(:user)
     @sector = Factory(:sector)
+    @user = Factory(:user)
     integration_sign_in(@user)
   end
   

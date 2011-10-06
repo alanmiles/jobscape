@@ -1,15 +1,17 @@
-<% if @user.single_business? %>
-  <div class = "r-float">
-    <%= link_to "Add a new business", new_business_path %>
-  </div>
-<% end %>
+<div class = "r-float">
+  <%= link_to "Add a new business", new_business_path %><br />
+  <% if @user.belongs_to_business? %>
+    <%= link_to "Switch business", select_business_path unless @user.single_business? %>
+  <% end %>
+</div>
+
 
 <h1>
   Home - <%= @user.name %>
 </h1>
 
 <% if @no_business == true %>
-  <div class = "display_medium">
+  <div class = "display_medium round grayborder">
     <h4 class="highlt">BUSINESS DETAILS REQUIRED</h4>
     You've signed up for a Business account, but you haven't entered the details of your business yet.<br /><br/>
     You now have two options:<br /><br />
@@ -19,11 +21,13 @@
     </ol>
   </div>
 <% else %>
-  <h4>OFFICER MENU: <%= @business.name %>, <%= @business.city %></h4>
-  <ul>
-    <li><%= link_to "Business details", @business %></li>
-    <li><%= link_to "Jobs", business_jobs_path(@business.id) %></li>
-    <li>Employees</li>
-  </ul>
+  <h4><%= @business.name %>, <%= @business.city %></h4>
+  <div class="menu_box round grayborder">
+    <ul>
+      <li><%= link_to "Business details", @business %></li>
+      <li><%= link_to "Jobs", business_jobs_path(@business.id) %></li>
+      <li>Employees</li>
+    </ul>
+  </div>
 <% end %>
-  
+

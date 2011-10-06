@@ -19,6 +19,7 @@ require 'spec_helper'
 describe Quality do
   
   before(:each) do
+    @sector = Factory(:sector)
     @user = Factory(:user)
     @attr = { :quality => "Quality", :created_by => @user.id }
   end

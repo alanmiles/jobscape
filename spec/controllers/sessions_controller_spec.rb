@@ -43,6 +43,7 @@ describe SessionsController do
     describe "with valid email and password" do
 
       before(:each) do
+        @sector = Factory(:sector)
         @user = Factory(:user)
         @attr = { :email => @user.email, :password => @user.password }
       end
@@ -63,6 +64,7 @@ describe SessionsController do
   describe "DELETE 'destroy'" do
 
     it "should sign a user out" do
+      @sector = Factory(:sector)
       test_sign_in(Factory(:user))
       delete :destroy
       controller.should_not be_signed_in

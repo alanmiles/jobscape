@@ -2,14 +2,19 @@ class PagesController < ApplicationController
   before_filter :authenticate, :only => [:user_home, :admin_home, :select_business]
   before_filter :admin_user, :only => :admin_home
   before_filter :not_admin_user, :only => :select_business
-  before_filter :not_with_single_business, :only => :select_business
+  #before_filter :not_with_single_business, :only => :select_business
   
   def home
+    session[:biz] = nil
     if signed_in?
       if current_user.admin?
         redirect_to admin_path
       elsif current_user.account == 2
         redirect_to jobseeker_home_path
+      elsif current_user.account == 3
+        redirect_to officer_home_path
+      elsif current_user.account == 4
+        redirect_to employee_home_path
       else
         redirect_to user_home_path
       end
@@ -37,8 +42,12 @@ class PagesController < ApplicationController
   def select_business
     @title = "Select business"
     @user = current_user
-    @employees = Employee.find_all_by_user_id(@user)
-    session[:biz] = nil
+    if @user.single_business?
+      redirect_to officer_home_path
+    else
+      @employees = Employee.all_except_private(@user)
+      session[:biz] = nil
+    end
   end
   
   def biz_selection
@@ -85,11 +94,13 @@ class PagesController < ApplicationController
   def user_home
     @title = "User Home"
     @user = current_user
-    if @user.belongs_to_business?
-      @business = @user.businesses.first
+    if @user.has_private_business?
+      @business = @user.private_business
       session[:biz] = @business.id
     else
-      #HAVE A RESCUE OPERATION TO BUILD A BUSINESS"
+      flash[:notice] = "Sorry, something appears to be missing.  To solve the problem, make sure everything 
+           on this page is correct, enter your password and password confirmation again, and hit the 'Confirm' button."
+      redirect_to edit_user_path(@user)
     end
     
     #if @user.belongs_to_business?
@@ -114,10 +125,10 @@ class PagesController < ApplicationController
   
   private
   
-    def not_with_single_business
-      if current_user.single_business?
-        redirect_to user_home_path, :message => "Not available if you belong to only one business"  
-      end
-    end
+    #def not_with_single_business
+    #  if current_user.single_business?
+    #    redirect_to user_home_path, :message => "Not available if you belong to only one business"  
+    #  end
+    #end
 
 end

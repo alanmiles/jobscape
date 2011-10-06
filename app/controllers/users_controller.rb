@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_filter :authenticate, :only => [:index, :edit, :update, :show, :destroy]
   before_filter :correct_user, :only => [:edit, :update]
-  before_filter :admin_user,   :only => :destroy
+  before_filter :admin_user,   :only => [:index, :destroy]
   before_filter :signedin,     :only => [:new, :create]
   
    def index
@@ -32,12 +32,14 @@ class UsersController < ApplicationController
       if @user.save
         sign_in @user
         flash[:success] = "Welcome to HYGWIT - Have You Got What It Takes?"
-        if @user.account == 2
+        if @user.account == 1
+          redirect_to user_home_path
+        elsif @user.account == 2
           redirect_to jobseeker_home_path
         elsif @user.account == 3
           redirect_to new_business_path
-        else
-          redirect_to @user
+        elsif @user.account == 4
+          redirect_to employee_home_path
         end
       else
         @user.password = nil
@@ -65,6 +67,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated. Check that the details are correct."
+      session[:biz] = nil
       redirect_to @user
     else
       @title = "Edit account settings"

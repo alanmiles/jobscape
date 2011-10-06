@@ -24,11 +24,13 @@ require 'spec_helper'
 describe User do
 
   before(:each) do
+    @sector = Factory(:sector)
     @attr = { 
       :name => "Example User", 
       :email => "user@example.com",
       :password => "foobar",
-      :password_confirmation => "foobar"
+      :password_confirmation => "foobar",
+      :account => 1
     }
   end
 

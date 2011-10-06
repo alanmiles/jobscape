@@ -52,7 +52,8 @@ describe "LayoutLinks" do
   describe "when signed in" do
 
     before(:each) do
-      @user = Factory(:user)
+      @sector = Factory(:sector)
+      @user = Factory(:user, :address => "Tonbridge")
       visit signin_path
       fill_in :email,    :with => @user.email
       fill_in :password, :with => @user.password
@@ -80,6 +81,7 @@ describe "LayoutLinks" do
   describe "when signed in as an administrator" do
   
     before(:each) do
+      @sector = Factory(:sector)
       @user = Factory(:user, :admin => true)
       visit signin_path
       fill_in :email,    :with => @user.email

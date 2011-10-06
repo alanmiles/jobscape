@@ -4,7 +4,14 @@
 
 <ul class="users">
   <% @users.each do |user| %>
-    <%= render @users %>
+    <li><%= user.id %>
+        | <%= link_to user.name, user %> 
+        | <%= user.city %>
+  	| <%= user.account_type %>
+  	| <%= link_to "delete", user, :method => :delete, :confirm => "You sure?",
+                                :title => "Delete #{user.name}" %>
+
+    </li>
   <% end %>
 </ul>
 

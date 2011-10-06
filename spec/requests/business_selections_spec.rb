@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "BusinessSelections" do
   
   before(:each) do
-    @user = Factory(:user)
     @sector = Factory(:sector)
+    @user = Factory(:user)
     @business1 = Factory(:business, :sector_id => @sector.id)
     @business2 = Factory(:business, :name => "Not Cambiz",
                          :sector_id => @sector.id)

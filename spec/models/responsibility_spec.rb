@@ -19,8 +19,9 @@ require 'spec_helper'
 describe Responsibility do
   
   before(:each) do
+    @sector = Factory(:sector)
     @user = Factory(:user)
-    @business = Factory(:business)
+    @business = Factory(:business, :sector_id => @sector.id)
     @occupation = Factory(:occupation)
     @job = Factory(:job, 
               :occupation_id => @occupation.id,

@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe "Users" do
+  before(:each) do
+    @sector = Factory(:sector)
+  end
   
   describe "signup" do
     
@@ -13,6 +16,7 @@ describe "Users" do
           fill_in "Email",        :with => ""
           fill_in "Password",     :with => ""
           fill_in "Confirmation", :with => ""
+          
           check "user[terms]"
           click_button
           response.should render_template('users/new')
@@ -30,11 +34,13 @@ describe "Users" do
           fill_in "Email",        :with => "user@example.com"
           fill_in "Password",     :with => "foobar"
           fill_in "Confirmation", :with => "foobar"
+          select "Individual", :from => 'user_account'
           check "user[terms]"
           click_button
           response.should have_selector("div.flash.success",
                                         :content => "Welcome")
-          response.should render_template('users/show')
+          #response.should render_template('users/show')
+          response.should render_template('pages/user_home')
         end.should change(User, :count).by(1)
       end
     end

@@ -15,8 +15,9 @@ require 'spec_helper'
 describe Employee do
  
   before(:each) do
+    @sector = Factory(:sector)
     @user = Factory(:user)
-    @business = Factory(:business)
+    @business = Factory(:business, :sector_id => @sector.id)
     @attr = { :user_id => @user.id, :business_id => @business.id }
   end
   

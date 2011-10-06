@@ -5,6 +5,7 @@ describe SubmittedQualitiesController do
   render_views
   
   before(:each) do
+    @sector = Factory(:sector)
     @user = Factory(:user)
     @user2 = Factory(:user, :email => "user2@example.com")
     @quality1 = Factory(:quality, :approved => true)
@@ -53,7 +54,7 @@ describe SubmittedQualitiesController do
     describe "GET 'new'" do
     
       before(:each) do
-        @business = Factory(:business)
+        @business = Factory(:business, :sector_id => @sector.id)
         @occupation = Factory(:occupation)
         @job = Factory(:job, :business_id => @business.id, 
         		:occupation_id => @occupation.id)
@@ -103,7 +104,7 @@ describe SubmittedQualitiesController do
     describe "POST 'create'" do
       
       before(:each) do
-        @business = Factory(:business)
+        @business = Factory(:business, :sector_id => @sector.id)
         @occupation = Factory(:occupation)
         @job = Factory(:job, :business_id => @business.id, 
         		:occupation_id => @occupation.id)
@@ -195,7 +196,7 @@ describe SubmittedQualitiesController do
     describe "GET 'show'" do
       
       before(:each) do
-        @business = Factory(:business)
+        @business = Factory(:business, :sector_id => @sector.id)
         @occupation = Factory(:occupation)
         @job = Factory(:job, :business_id => @business.id, 
         		:occupation_id => @occupation.id)

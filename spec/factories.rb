@@ -5,6 +5,7 @@ Factory.define :user do |user|
   user.password              "foobar"
   user.password_confirmation "foobar"
   user.account		      1
+  #user.address               "82.44.3.178"
 end
 
 Factory.define :occupation do |occupation|
