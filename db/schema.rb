@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111004080415) do
+ActiveRecord::Schema.define(:version => 20111007225500) do
+
+  create_table "achievements", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "achievement"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -114,6 +122,16 @@ ActiveRecord::Schema.define(:version => 20111004080415) do
     t.boolean  "evaluation",          :default => false
     t.integer  "job_value"
     t.integer  "updated_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "portraits", :force => true do |t|
+    t.integer  "user_id"
+    t.boolean  "worked_before", :default => false
+    t.boolean  "right_to_work", :default => false
+    t.string   "notes"
+    t.boolean  "public",        :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

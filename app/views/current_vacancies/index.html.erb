@@ -1,0 +1,27 @@
+<div class = "r-float">
+  <%= link_to "Job-search menu", jobsearch_menu_path if signed_in? %>
+</div>
+
+<h1><%= @title %></h1>
+
+<%= will_paginate @vacancies %>
+<table>
+  <tr>
+    <th>Job</th>
+    <th>Sector</th>
+    <th>Location</th>
+    <th>Pay</th>
+    <th>Apply by</th>
+  </tr>
+  <% @vacancies.each do |vacancy| %>
+  <tr> 
+    <td><%= vacancy.job.job_title %></td>
+    <td><%= vacancy.sector.sector %></td> 
+    <td><%= vacancy.job.business.city %></td>
+    <td><%= vacancy.annual_salary %></td>
+    <td><%= vacancy.close_date.strftime("%b %d") %></td>
+  </tr>
+  <% end %>
+</table>
+<%= will_paginate @vacancies %>
+

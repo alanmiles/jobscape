@@ -71,10 +71,10 @@ describe "LayoutLinks" do
                                          :content => "Log off")
     end
 
-    it "should have a profile link" do
+    it "should have a self-portrait link" do
       visit root_path
-      response.should have_selector("a", :href => user_path(@user),
-                                         :content => "Profile")
+      response.should have_selector("a", :href => user_portrait_path(@user),
+                                         :content => "Self-Portrait")
     end
   end
   

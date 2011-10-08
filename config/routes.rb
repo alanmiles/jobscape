@@ -1,6 +1,13 @@
 Jobscape::Application.routes.draw do
 
-  resources :users
+  resources :users do
+    resource :portrait, :shallow => true
+    resources :achievements, :shallow => true do
+      collection do
+        post :sort
+      end
+    end
+  end
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
   resources :sectors
@@ -39,6 +46,7 @@ Jobscape::Application.routes.draw do
     resources :vacancy_details,  :only => :show
   end
   resources :latest_vacancies, :only => [:index, :show]
+  resources :current_vacancies, :only => :index
   
   match '/signup',  		:to => 'users#new'
   match '/signin',  		:to => 'sessions#new'
@@ -49,12 +57,13 @@ Jobscape::Application.routes.draw do
   match '/help',    		:to => 'pages#help'
   match '/admin',   		:to => 'pages#admin_home'
   match '/user_home', 		:to => 'pages#user_home'
-  match 'jobseeker_home',	:to => 'pages#jobseeker_home'
+  match '/jobseeker_home',	:to => 'pages#jobseeker_home'
+  match '/jobsearch_menu',	:to => 'pages#jobsearch_menu'
   match '/officer_home',	:to => 'pages#officer_home'
   match '/employee_home',	:to => 'pages#employee_home'
   match '/select_business', 	:to => 'pages#select_business' 
   match '/biz_selection',	:to => 'pages#biz_selection'
-  
+
   root :to => 'pages#home'
 
   # The priority is based upon order of creation:

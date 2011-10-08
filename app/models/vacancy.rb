@@ -67,4 +67,8 @@ class Vacancy < ActiveRecord::Base
   def self.latest
     self.order("created_at DESC").limit(10)
   end
+  
+  def self.all_current
+    self.where("close_date > ? and filled = ?", Date.today, false).order("created_at DESC")
+  end
 end

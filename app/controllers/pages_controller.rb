@@ -62,6 +62,11 @@ class PagesController < ApplicationController
     session[:jobid] = nil
   end
   
+  def jobsearch_menu
+    @title = "Job-Search menu"
+    @user = current_user
+  end
+  
   def officer_home
     @title = "Officer Home"
     @user = current_user

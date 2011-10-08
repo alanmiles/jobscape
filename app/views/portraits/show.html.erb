@@ -1,0 +1,14 @@
+<div class = "r-float">
+  <%= link_to "Home", jobseeker_home_path %>
+</div>
+
+<h1><%= @title %></h1>
+<h4><%= @user.name %></h4>
+
+<h4>Achievements  &nbsp;<small><%= link_to "(Update)", user_achievements_path(@user) %></small></h4>
+  <ul>
+  <% @achievements.each do |achievement| %>
+    <li><%= achievement.achievement %></li>
+  
+  <% end %>
+  </ul>

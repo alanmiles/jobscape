@@ -17,6 +17,7 @@
 #  address            :string(255)
 #  city               :string(255)
 #  country            :string(255)
+#
 
 
 
@@ -44,6 +45,8 @@ class User < ActiveRecord::Base
   
   has_many :employees, :dependent => :destroy
   has_many :businesses, :through => :employees
+  has_one :portrait, :dependent => :destroy
+  has_many :achievements, :dependent => :destroy
   
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }
@@ -61,6 +64,7 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   after_validation :geocode, :if => :address_changed?
   after_validation :reverse_geocode, :if => :address_changed?
+  after_save :create_portrait
   after_save :create_user_business
   before_destroy :remove_private_business
 
@@ -103,6 +107,18 @@ class User < ActiveRecord::Base
     return true if total > 0 
   end
   
+  def count_achievements
+    self.achievements.count
+  end
+  
+  def has_achievements?
+    count_achievements > 0
+  end
+  
+  def max_achievements?
+    count_achievements >= 3  
+  end
+  
   def account_type
     if self.admin? 
       return "Admin"
@@ -128,6 +144,11 @@ class User < ActiveRecord::Base
 
     def encrypt(string)
       secure_hash("#{salt}--#{string}")
+    end
+    
+    def create_portrait
+      @portrait = self.build_portrait
+      @portrait.save
     end
     
     def create_user_business

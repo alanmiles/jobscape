@@ -109,6 +109,11 @@ ul.no_dec {
   padding-left: 0px;
 }
 
+ul li.no_bullet {
+  list-style-type: none;
+  padding-bottom: 10px;
+}
+
 .display_text {
   margin-left: 75px;
   margin-right: 75px;
@@ -122,7 +127,7 @@ ul.no_dec {
   margin-left: 75px;
   margin-right: 75px;
   width: 450px;
-  padding: 15px;
+  padding: 10px 15px;
   font-size: 100%;
 }
 
@@ -179,6 +184,10 @@ ul.no_dec {
   padding: 0px 15px;
   font-size: 90%;
   overflow: auto;
+}
+
+.shift_center {
+  margin-left: 100px;
 }
 
 .pink {
@@ -247,6 +256,19 @@ ul.no_dec {
   font-size: 80%;
   font-weight: bold;
   padding: 5px;
+}
+
+a.action_button {
+  display: block;
+  text-align: center;
+  width: 100px;
+  color: #fff;
+  background: #1943BF;
+  font-size: 120%;
+  font-weight: bold;
+  padding: 15px 20px;
+  margin-left: 30px;
+  margin-bottom: 30px
 }
 
 /* Sign up button */

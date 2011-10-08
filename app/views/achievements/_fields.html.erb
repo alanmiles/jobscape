@@ -1,0 +1,6 @@
+<%= render 'shared/error_messages', :object => f.object %>
+<div class="field">
+  <%= f.label :achievement, "Mention an achievement you're proud of" %><br />
+  <small> ... not necessarily at work - anything in your life (max 140 characters)</small><br />
+  <%= f.text_area :achievement, :cols => 60, :rows => 3 %>
+</div>
