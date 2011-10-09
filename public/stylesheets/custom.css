@@ -46,6 +46,10 @@ h4.success {
   color: green;
 }
 
+h4.shallow {
+  margin-bottom: 5px; 
+}
+
 /* Links */
 
 a {

@@ -18,6 +18,7 @@ class Achievement < ActiveRecord::Base
   
   acts_as_list :scope => :user
   
-  validates :user_id,	:presence 	=> true
-  validates :achievement,	:length		=> { :maximum => 140 }
+  validates :user_id,		:presence 	=> true
+  validates :achievement,	:length		=> { :maximum => 140 },
+  				:uniqueness	=> { :scope => :user_id, :message => "is already in the list" }
 end

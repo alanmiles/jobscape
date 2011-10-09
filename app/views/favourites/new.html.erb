@@ -1,11 +1,11 @@
 <div class = "r-float">
-  <%= link_to "Cancel", user_achievements_path(@user) %>
+  <%= link_to "Cancel", user_favourites_path(@user) %>
 </div>
 
 <h1><%= @title %></h1> 
 <br /><br />
 <div class="shift_center">
-  <%= form_for([@user,@achievement]) do |f| %>
+  <%= form_for([@user,@favourite]) do |f| %>
     <%= render 'fields', :f => f %> 
     <div class="actions">
       <%= f.submit "Create" %>

@@ -47,6 +47,13 @@ class User < ActiveRecord::Base
   has_many :businesses, :through => :employees
   has_one :portrait, :dependent => :destroy
   has_many :achievements, :dependent => :destroy
+  has_many :characteristics, :dependent => :destroy
+  has_many :favourites, :dependent => :destroy
+  has_many :dislikes, :dependent => :destroy
+  has_many :qualifications, :dependent => :destroy
+  has_many :strengths, :dependent => :destroy
+  has_many :limitations, :dependent => :destroy
+  has_many :aims, :dependent => :destroy
   
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }
@@ -117,6 +124,90 @@ class User < ActiveRecord::Base
   
   def max_achievements?
     count_achievements >= 3  
+  end
+  
+  def count_characteristics
+    self.characteristics.count
+  end
+  
+  def has_characteristics?
+    count_characteristics > 0
+  end
+  
+  def max_characteristics?
+    count_characteristics >= 5  
+  end
+  
+  def count_favourites
+    self.favourites.count
+  end
+  
+  def has_favourites?
+    count_favourites > 0
+  end
+  
+  def max_favourites?
+    count_favourites >= 5  
+  end
+  
+  def count_dislikes
+    self.dislikes.count
+  end
+  
+  def has_dislikes?
+    count_dislikes > 0
+  end
+  
+  def max_dislikes?
+    count_dislikes >= 5  
+  end
+  
+  def count_qualifications
+    self.qualifications.count
+  end
+  
+  def has_qualifications?
+    count_qualifications > 0
+  end
+  
+  def max_qualifications?
+    count_qualifications >= 3  
+  end
+  
+  def count_strengths
+    self.strengths.count
+  end
+  
+  def has_strengths?
+    count_strengths > 0
+  end
+  
+  def max_strengths?
+    count_strengths >= 5  
+  end
+  
+  def count_limitations
+    self.limitations.count
+  end
+  
+  def has_limitations?
+    count_limitations > 0
+  end
+  
+  def max_limitations?
+    count_limitations >= 3  
+  end
+  
+  def count_aims
+    self.aims.count
+  end
+  
+  def has_aims?
+    count_aims > 0
+  end
+  
+  def max_aims?
+    count_aims >= 3  
   end
   
   def account_type

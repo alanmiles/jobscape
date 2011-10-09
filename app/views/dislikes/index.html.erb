@@ -1,0 +1,47 @@
+<div class = "r-float">
+  <% unless @user.max_dislikes? %>
+    <%= link_to "Add a dislike", new_user_dislike_path(@user) %><br /> 
+  <% end %>
+  <%= link_to "Full Portrait", user_portrait_path(@user) %>
+</div>
+
+<h1>Things that annoy <%= @user.name %></h1>
+<div class="display_wider">
+  <em>
+    <% if @user.has_dislikes? %>   
+      Click on <%= image_tag("cancel.png", :size => "15x15") %> to delete 
+      and <%= image_tag("select.png", :size => "15x15") %> to modify a dislike.
+      <br /><br />
+      <% if @user.count_dislikes > 1 %>
+        Then click and drag the list-items until your top dislikes are at the top.
+      <% end %>
+    <% end %>
+    You can add up to 5 dislikes.
+  </em>
+</div>
+<hr />
+<ul id="dislike" style="cursor: move">
+  <% @dislikes.each do |f| %>
+  <li id="item_<%= f.id %>" class="no_bullet">
+    <span style="vertical-align:top">
+       <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+                   	:method => :delete, 
+                   	:confirm => "You sure?",
+                   	:title => "Remove this dislike") %>
+    </span> &nbsp;
+    <span style="vertical-align:top"> 
+       <%= link_to(image_tag("select.png", :size => "15x15"), 
+    			edit_dislike_path(f), 
+    			:title => "Edit this dislike") %> 
+    </span>&nbsp;    
+    <span style = "display:inline-block; width:80%"><%= f.dislike %></span>
+   
+   </li>
+  <% end %>
+</ul>
+
+<%= sortable_element('dislike', 
+    :url => { :action => "sort", :id => @user }, 
+    
+    :complete => visual_effect(:highlight, "dislike")) %>
+

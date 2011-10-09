@@ -1,0 +1,9 @@
+<%= render 'shared/error_messages', :object => f.object %>
+<div class="field">
+  <%= f.label :limitation, "Limitations that employers need to know about" %><br />
+  <small>Perhaps a physical disability may prevent you from taking on some jobs,<br />
+         or perhaps you have commitments which mean you can only work certain times and days.<br />
+         Best to tell potential employers now - declaring it may actually help to get a job.
+  </small><br />
+  <%= f.text_field :limitation, :size => 40 %>
+</div>

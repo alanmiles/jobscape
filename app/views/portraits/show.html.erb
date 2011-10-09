@@ -3,12 +3,76 @@
 </div>
 
 <h1><%= @title %></h1>
-<h4><%= @user.name %></h4>
+<h4><%= @user.name.upcase %></h4>
 
-<h4>Achievements  &nbsp;<small><%= link_to "(Update)", user_achievements_path(@user) %></small></h4>
-  <ul>
+<h4 class="shallow">Achievements  &nbsp;<small><%= link_to "(Update)", user_achievements_path(@user) %></small></h4>
+
+<ul>
   <% @achievements.each do |achievement| %>
     <li><%= achievement.achievement %></li>
-  
   <% end %>
-  </ul>
+</ul>
+
+<h4 class="shallow">What they say about me  &nbsp;<small><%= link_to "(Update)", user_characteristics_path(@user) %></small></h4>
+
+<ul>
+  <% @characteristics.each do |characteristic| %>
+    <li><%= characteristic.characteristic %></li>
+  <% end %>
+</ul>
+
+<h4 class="shallow">My favourite things  &nbsp;<small><%= link_to "(Update)", user_favourites_path(@user) %></small></h4>
+
+<ul>
+  <% @favourites.each do |favourite| %>
+    <li><%= favourite.favourite %></li>
+  <% end %>
+</ul>
+
+<h4 class="shallow">It drives me mad when ...  &nbsp;<small><%= link_to "(Update)", user_dislikes_path(@user) %></small></h4>
+
+<ul>
+  <% @dislikes.each do |dislike| %>
+    <li><%= dislike.dislike %></li>
+  <% end %>
+</ul>
+
+<h4 class="shallow">My qualifications &nbsp;<small><%= link_to "(Update)", user_qualifications_path(@user) %></small></h4>
+
+<ul>
+  <% @qualifications.each do |qualification| %>
+    <li><%= qualification.qualification %></li>
+  <% end %>
+</ul>
+
+<h4 class="shallow">My strengths &nbsp;<small><%= link_to "(Update)", user_strengths_path(@user) %></small></h4>
+
+<ul>
+  <% @strengths.each do |strength| %>
+    <li><%= strength.strength %></li>
+  <% end %>
+</ul>
+
+<h4 class="shallow">Possible limitations &nbsp;<small><%= link_to "(Update)", user_limitations_path(@user) %></small></h4>
+
+<ul>
+  <% if @user.count_limitations == 0 %>
+    <li>None</li>
+  <% else %>
+    <% @limitations.each do |limitation| %>
+      <li><%= limitation.limitation %></li>
+    <% end %>
+  <% end %>
+</ul>
+
+<h4 class="shallow">In my sights &nbsp;<small><%= link_to "(Update)", user_aims_path(@user) %></small></h4>
+
+<ul>
+  <% if @user.count_aims == 0 %>
+    <li>None</li>
+  <% else %>
+    <% @aims.each do |aim| %>
+      <li><%= aim.aim %></li>
+    <% end %>
+  <% end %>
+</ul>

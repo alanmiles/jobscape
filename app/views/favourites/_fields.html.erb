@@ -1,0 +1,7 @@
+<%= render 'shared/error_messages', :object => f.object %>
+<div class="field">
+  <%= f.label :favourite, "List one of your favourite things or activities" %><br />
+  <small>What makes life seem good or brings a smile to your face? (max 50 characters)<br />
+         Why would an employer want to know? Because happy people make better workers.</small><br />
+  <%= f.text_field :favourite, :size => 40 %>
+</div>

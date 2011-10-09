@@ -1,0 +1,47 @@
+<div class = "r-float">
+  <% unless @user.max_qualifications? %>
+    <%= link_to "Add a qualification", new_user_qualification_path(@user) %><br /> 
+  <% end %>
+  <%= link_to "Full Portrait", user_portrait_path(@user) %>
+</div>
+
+<h1><%= @user.name %>'s qualifications</h1>
+<div class="display_wider">
+  <em>
+    <% if @user.has_qualifications? %>   
+      Click on <%= image_tag("cancel.png", :size => "15x15") %> to delete 
+      and <%= image_tag("select.png", :size => "15x15") %> to modify a favourite.
+      <br /><br />
+      <% if @user.count_qualifications > 1 %>
+        Then click and drag to arrange your qualifications with the most important first.
+      <% end %>
+    <% end %>
+    You can add up to 3 qualifications.
+  </em>
+</div>
+<hr />
+<ul id="qualification" style="cursor: move">
+  <% @qualifications.each do |f| %>
+  <li id="item_<%= f.id %>" class="no_bullet">
+    <span style="vertical-align:top">
+       <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+                   	:method => :delete, 
+                   	:confirm => "You sure?",
+                   	:title => "Remove this qualification") %>
+    </span> &nbsp;
+    <span style="vertical-align:top"> 
+       <%= link_to(image_tag("select.png", :size => "15x15"), 
+    			edit_qualification_path(f), 
+    			:title => "Edit this qualification") %> 
+    </span>&nbsp;    
+    <span style = "display:inline-block; width:80%"><%= f.qualification %></span>
+   
+   </li>
+  <% end %>
+</ul>
+
+<%= sortable_element('qualification', 
+    :url => { :action => "sort", :id => @user }, 
+    
+    :complete => visual_effect(:highlight, "qualification")) %>
+

@@ -1,0 +1,14 @@
+<div class = "r-float">
+  <%= link_to "Cancel", user_limitations_path(@limitation.user_id) %>
+</div>
+
+<h1><%= @title %></h1>
+<br /><br />
+<div class="shift_center">
+  <%= form_for @limitation do |f| %>
+    <%= render 'fields', :f => f %> 
+    <div class="actions">
+      <%= f.submit "Confirm changes" %>
+    </div>
+  <% end %>
+</div>

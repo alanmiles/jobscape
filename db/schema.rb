@@ -10,11 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111007225500) do
+ActiveRecord::Schema.define(:version => 20111009171830) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
     t.string   "achievement"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "aims", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "aim"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -30,6 +38,22 @@ ActiveRecord::Schema.define(:version => 20111007225500) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sector_id"
+  end
+
+  create_table "characteristics", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "characteristic"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "dislikes", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "dislike"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "employees", :force => true do |t|
@@ -50,6 +74,14 @@ ActiveRecord::Schema.define(:version => 20111007225500) do
     t.integer  "customers",         :default => 0
     t.integer  "staff",             :default => 0
     t.integer  "processes",         :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "favourites", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "favourite"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -81,6 +113,14 @@ ActiveRecord::Schema.define(:version => 20111007225500) do
     t.string   "job_title"
     t.integer  "business_id"
     t.integer  "occupation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "limitations", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "limitation"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -136,6 +176,14 @@ ActiveRecord::Schema.define(:version => 20111007225500) do
     t.datetime "updated_at"
   end
 
+  create_table "qualifications", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "qualification"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "qualities", :force => true do |t|
     t.string   "quality"
     t.boolean  "approved",     :default => false
@@ -170,6 +218,14 @@ ActiveRecord::Schema.define(:version => 20111007225500) do
 
   create_table "sectors", :force => true do |t|
     t.string   "sector"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "strengths", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "strength"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

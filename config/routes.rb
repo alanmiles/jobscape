@@ -1,8 +1,55 @@
 Jobscape::Application.routes.draw do
 
+  get "aims/index"
+
+  get "aims/new"
+
+  get "aims/edit"
+
+  get "limitations/index"
+
+  get "limitations/new"
+
+  get "limitations/edit"
+
   resources :users do
     resource :portrait, :shallow => true
     resources :achievements, :shallow => true do
+      collection do
+        post :sort
+      end
+    end
+    resources :characteristics, :shallow => true do
+      collection do
+        post :sort
+      end
+    end
+    resources :favourites, :shallow => true do
+      collection do
+        post :sort
+      end
+    end
+    resources :dislikes, :shallow => true do
+      collection do
+        post :sort
+      end
+    end
+    resources :qualifications, :shallow => true do
+      collection do
+        post :sort
+      end
+    end
+    resources :strengths, :shallow => true do
+      collection do
+        post :sort
+      end
+    end
+    resources :limitations, :shallow => true do
+      collection do
+        post :sort
+      end
+    end
+    resources :aims, :shallow => true do
       collection do
         post :sort
       end

@@ -1,0 +1,47 @@
+<div class = "r-float">
+  <% unless @user.max_favourites? %>
+    <%= link_to "Add a favourite", new_user_favourite_path(@user) %><br /> 
+  <% end %>
+  <%= link_to "Full Portrait", user_portrait_path(@user) %>
+</div>
+
+<h1><%= @user.name %>'s favourite things</h1>
+<div class="display_wider">
+  <em>
+    <% if @user.has_favourites? %>   
+      Click on <%= image_tag("cancel.png", :size => "15x15") %> to delete 
+      and <%= image_tag("select.png", :size => "15x15") %> to modify a favourite.
+      <br /><br />
+      <% if @user.count_favourites > 1 %>
+        Then click and drag the list-items until your top-favourites are at the top.
+      <% end %>
+    <% end %>
+    You can add up to 5 favourites.
+  </em>
+</div>
+<hr />
+<ul id="favourite" style="cursor: move">
+  <% @favourites.each do |f| %>
+  <li id="item_<%= f.id %>" class="no_bullet">
+    <span style="vertical-align:top">
+       <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+                   	:method => :delete, 
+                   	:confirm => "You sure?",
+                   	:title => "Remove this favourite") %>
+    </span> &nbsp;
+    <span style="vertical-align:top"> 
+       <%= link_to(image_tag("select.png", :size => "15x15"), 
+    			edit_favourite_path(f), 
+    			:title => "Edit this favourite") %> 
+    </span>&nbsp;    
+    <span style = "display:inline-block; width:80%"><%= f.favourite %></span>
+   
+   </li>
+  <% end %>
+</ul>
+
+<%= sortable_element('favourite', 
+    :url => { :action => "sort", :id => @user }, 
+    
+    :complete => visual_effect(:highlight, "achieve")) %>
+

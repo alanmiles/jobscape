@@ -1,0 +1,7 @@
+<%= render 'shared/error_messages', :object => f.object %>
+<div class="field">
+  <%= f.label :strength, "Your greatest strengths" %><br />
+  <small>Not necessarily your qualifications.  When it comes right down to it, in which areas <br />
+         do you feel you can make the biggest contribution to a team effort? (max 50 characters).</small><br />
+  <%= f.text_field :strength, :size => 40 %>
+</div>

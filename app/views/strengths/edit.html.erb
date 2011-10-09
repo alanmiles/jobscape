@@ -1,14 +1,14 @@
 <div class = "r-float">
-  <%= link_to "Cancel", user_achievements_path(@user) %>
+  <%= link_to "Cancel", user_strengths_path(@strength.user_id) %>
 </div>
 
-<h1><%= @title %></h1> 
+<h1><%= @title %></h1>
 <br /><br />
 <div class="shift_center">
-  <%= form_for([@user,@achievement]) do |f| %>
+  <%= form_for @strength do |f| %>
     <%= render 'fields', :f => f %> 
     <div class="actions">
-      <%= f.submit "Create" %>
+      <%= f.submit "Confirm changes" %>
     </div>
   <% end %>
 </div>
