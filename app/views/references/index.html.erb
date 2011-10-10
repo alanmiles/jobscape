@@ -1,0 +1,57 @@
+<div class = "r-float">
+  <% unless @user.max_references? %>
+    <%= link_to "Add a reference", new_user_reference_path(@user) %><br /> 
+  <% end %>
+  <%= link_to "Full Portrait", user_portrait_path(@user) %>
+</div>
+
+<h1><%= @user.name %>'s references</h1>
+<div class="display_wider">
+  <em>
+    You can add up to 3 references. 
+    <% if @user.has_references? %>   
+      Click on <%= image_tag("cancel.png", :size => "15x15") %> to delete 
+      and <%= image_tag("select.png", :size => "15x15") %> to modify a record.
+    <% end %>
+  </em>
+</div>
+<ul>
+  <% @references.each do |reference| %>
+    <li class="no_bullet">
+       <span style="vertical-align:top">
+       <%= link_to(image_tag("cancel.png", :size => "15x15"), reference, 
+                   	:method => :delete, 
+                   	:confirm => "You sure?",
+                   	:title => "Remove this reference") %>
+       </span> &nbsp;
+       <span style="vertical-align:top"> 
+         <%= link_to(image_tag("select.png", :size => "15x15"), 
+    			edit_reference_path(reference), 
+    			:title => "Edit this reference") %> 
+       </span>&nbsp;   
+       <strong><%= reference.name %></strong> <em>(<%= reference.what_relation %>)</em><br />
+       <div style = "font-size:90%; margin-left:25px">
+         <% unless reference.role.empty? && reference.location.empty? %>
+           <% unless reference.role.empty? %>
+             <%= reference.role %>
+             <% unless reference.location.empty? %>
+               at <%= reference.location %>
+             <% end %>
+           <% else %>
+             <%= reference.location %>
+           <% end %>
+           <br />
+         <% end %>
+         <% unless reference.address.empty? %>
+           <em>Address: </em><%= reference.address %><br />
+         <% end %>
+         <% unless reference.phone.empty? %>
+           <em>Phone: </em><%= reference.phone %><br />
+         <% end %>
+         <em>Email: </em><%= reference.email %>
+       <div>
+    </li>
+  
+  
+  <% end %>
+</ul>

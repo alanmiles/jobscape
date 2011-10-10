@@ -19,7 +19,8 @@ class Characteristic < ActiveRecord::Base
   acts_as_list :scope => :user
   
   validates :user_id,		:presence 	=> true
-  validates :characteristic,	:length		=> { :maximum => 140 },
+  validates :characteristic,	:presence 	=> true,
+  				:length		=> { :maximum => 140 },
   				:uniqueness	=> { :scope => :user_id, :message => "is already in the list" }
 
 end

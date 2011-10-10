@@ -1,0 +1,51 @@
+<div class = "two_column rightpos"> 
+   <em>
+     You need to add 2-3 references, preferably one from someone senior (a former manager, 
+     or if you're just starting your career, a teacher), a colleague or classmate, and perhaps
+     a friend.
+     <br /><br />
+     When you decide to make your Self-Portrait public, an email will automatically be sent to
+     your references, asking them to verify that the picture you've created shows the real you - so 
+     you'd better make sure it does!
+     <br /><br />
+     You'll see on your profile whether they've responded - but not what they've said of course! If 
+     they haven't responded, ask them to check their email inbox (check the spam filter, just in case), 
+     and tell them it'll only take a couple of minutes of their time.
+     <br /><br />
+     If that doesn't work, delete the record and create it again ... or get yourself another reference.
+   </em>
+</div>
+
+<%= render 'shared/error_messages', :object => f.object %>
+<div class="field">
+  <%= f.label :name %><br />
+  <%= f.text_field :name %>
+</div>
+<div class="field">
+  <%= f.label :relationship, "How connected with you?" %>
+  <%= select( :reference, :relationship, @relationships ) %>
+</div>
+<div class="field">
+  <%= f.label :role, "Job title" %> <small>(optional if a friend)</small><br />
+  <%= f.text_field :role %>
+</div>
+<div class="field">
+  <%= f.label :location, "Working for" %> <small>(optional if a friend)</small><br />
+  <%= f.text_field :location %>
+</div>
+<div class="field">
+  <%= f.label :address, "Full postal address" %> <small>(recommended)</small><br />
+  <%= f.text_area :address, :cols => 40, :rows => 2 %> 
+</div>
+<div class="field">
+  <%= f.label :phone %> <small>(recommended)</small>
+  <%= f.text_field :phone, :size => 16 %>
+</div>
+<div class="field">
+  <%= f.label :email %> <small class = "highlt">(required)</small>
+  <%= f.text_field :email, :size => 19 %>
+</div>
+<%= f.hidden_field :portrait_rating %>
+
+
+

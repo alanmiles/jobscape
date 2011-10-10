@@ -1,0 +1,12 @@
+<div class = "r-float">
+  <%= link_to "Cancel", user_references_path(@user) %>
+</div>
+
+<h1><%= @title %></h1> 
+  <%= form_for([@user,@reference]) do |f| %>
+    <%= render 'fields', :f => f %> 
+    <div class="actions">
+      <%= f.submit "Create" %>
+    </div>
+  <% end %>
+

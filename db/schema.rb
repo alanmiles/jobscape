@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111009171830) do
+ActiveRecord::Schema.define(:version => 20111010215511) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -176,6 +176,15 @@ ActiveRecord::Schema.define(:version => 20111009171830) do
     t.datetime "updated_at"
   end
 
+  create_table "previousjobs", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "job"
+    t.integer  "years",      :default => 0
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "qualifications", :force => true do |t|
     t.integer  "user_id"
     t.string   "qualification"
@@ -192,6 +201,20 @@ ActiveRecord::Schema.define(:version => 20111009171830) do
     t.boolean  "seen",         :default => false
     t.boolean  "removed",      :default => false
     t.date     "removal_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "references", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.integer  "relationship",    :default => 4
+    t.string   "role"
+    t.string   "location"
+    t.string   "address"
+    t.string   "phone"
+    t.string   "email"
+    t.integer  "portrait_rating", :default => 7
     t.datetime "created_at"
     t.datetime "updated_at"
   end

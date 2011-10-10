@@ -2,7 +2,34 @@
   <%= link_to "Cancel", user_portrait_path(@user) %>
 </div>
 
-<h1>Self-Portrait</h1>
+<h1>Self-Portrait: final steps</h1>
 <h4><%= @user.name %></h4>
+
+<%= form_for([@user, @portrait]) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :notes, "Portrait notes" %> <br /><small>Is there anything important you'd like to add? (max 140 characters)</small><br />
+    <%= f.text_area :notes, :cols => 50, :rows => 3 %>
+  </div>
+  <em class = "highlt">Check the boxes below if your answer is 'Yes':</em>
+
+  <div class="field" style = "margin-top:10px">
+    Have you worked before?
+    <%= f.check_box :worked_before %>
+  </div>
+  <div class="field">
+    Do you have the legal right to work in this country?
+    <%= f.check_box :right_to_work %>
+  </div>
+  <div class="field">
+    Can we make your Portrait public, so that potential employers can see it?
+    <%= f.check_box :public %> <br />
+    <small><em><u>You need to enter at least two references</u> before the Portrait can be public.</em></small>
+  </div>
+  <br />
+  <div class="actions">
+    <%= f.submit "Confirm changes" %>
+  </div>
+<% end %>
 
 

@@ -19,7 +19,8 @@ class Aim < ActiveRecord::Base
   acts_as_list :scope => :user
   
   validates :user_id,		:presence 	=> true
-  validates :aim,		:length		=> { :maximum => 50 },
+  validates :aim,		:presence	=> true,
+  				:length		=> { :maximum => 50 },
   				:uniqueness	=> { :scope => :user_id, :message => "is already in the list" }
 
 end

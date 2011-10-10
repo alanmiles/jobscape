@@ -54,6 +54,8 @@ class User < ActiveRecord::Base
   has_many :strengths, :dependent => :destroy
   has_many :limitations, :dependent => :destroy
   has_many :aims, :dependent => :destroy
+  has_many :references, :dependent => :destroy
+  has_many :previousjobs, :dependent => :destroy
   
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }
@@ -208,6 +210,30 @@ class User < ActiveRecord::Base
   
   def max_aims?
     count_aims >= 3  
+  end
+  
+  def count_references
+    self.references.count
+  end
+  
+  def has_references?
+    count_references > 0
+  end
+  
+  def max_references?
+    count_references >= 3
+  end
+  
+  def count_previousjobs
+    self.previousjobs.count
+  end
+  
+  def has_previousjobs?
+    count_previousjobs > 0
+  end
+  
+  def max_previousjobs?
+    count_previousjobs >= 5
   end
   
   def account_type

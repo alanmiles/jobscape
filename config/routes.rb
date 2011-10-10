@@ -1,16 +1,10 @@
 Jobscape::Application.routes.draw do
 
-  get "aims/index"
+  get "previousjobs/index"
 
-  get "aims/new"
+  get "previousjobs/new"
 
-  get "aims/edit"
-
-  get "limitations/index"
-
-  get "limitations/new"
-
-  get "limitations/edit"
+  get "previousjobs/edit"
 
   resources :users do
     resource :portrait, :shallow => true
@@ -54,6 +48,12 @@ Jobscape::Application.routes.draw do
         post :sort
       end
     end
+    resources :previousjobs, :shallow => true do
+      collection do
+        post :sort
+      end
+    end
+    resources :references, :shallow => true
   end
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]

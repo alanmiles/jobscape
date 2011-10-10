@@ -1,0 +1,12 @@
+<%= render 'shared/error_messages', :object => f.object %>
+<div class="field">
+  <%= f.label :job, "Previous or current job" %><br />  
+  <small>You can add the name of the employer if you want to - max 50 characters in total.</small><br />
+  <%= f.text_field :job, :size => 40 %>
+</div>
+<div class="field">
+  <%= f.label :years, "Number of years in job" %><br />  
+  <small>(Round to the nearest year: so less than 6 months would be 0)</small><br />
+  <%= f.text_field :years, :size => 3 %>
+</div>
+

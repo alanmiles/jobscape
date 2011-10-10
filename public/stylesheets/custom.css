@@ -190,8 +190,30 @@ ul li.no_bullet {
   overflow: auto;
 }
 
+.two_column {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 0px;
+  width: 45%;
+  font-size: 90%;
+  overflow: auto;
+  clear: all;
+}
+
+.wide_65 {
+  width: 65%;
+}
+
+.wide_85 {
+  width: 85%;
+}
+
 .shift_center {
   margin-left: 100px;
+}
+
+.shift_center_200 {
+  margin-left: 200px;
 }
 
 .pink {

@@ -19,7 +19,8 @@ class Favourite < ActiveRecord::Base
   acts_as_list :scope => :user
   
   validates :user_id,		:presence 	=> true
-  validates :favourite,		:length		=> { :maximum => 50 },
+  validates :favourite,		:presence 	=> true,
+  				:length		=> { :maximum => 50 },
   				:uniqueness	=> { :scope => :user_id, :message => "is already in the list" }
 
 end
