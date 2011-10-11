@@ -7,7 +7,7 @@ class PamsController < ApplicationController
     @title = "Edit PAM"
     @pam.updated_by = current_user.id
     @quality = Quality.find(@pam.quality_id)
-    @pams = @quality.pams.all
+    @pams = @quality.pams.order("pams.grade")
   end
   
   def update
