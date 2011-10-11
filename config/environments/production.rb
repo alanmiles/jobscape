@@ -8,7 +8,7 @@ Jobscape::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  ENV["REDISTOGO_URL"] = 'redis://redistogo:b25a7e8d58af60f403ed0145988ddf7b@herring.redistogo.com:9004/' 
+  #ENV["REDISTOGO_URL"] = 'redis://redistogo:b25a7e8d58af60f403ed0145988ddf7b@herring.redistogo.com:9004/' 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
