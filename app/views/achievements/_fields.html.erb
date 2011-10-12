@@ -1,9 +1,21 @@
 <%= render 'shared/error_messages', :object => f.object %>
-Event.observe('achievement_achievement', 'keyup', textChanged);
-Event.observe('achievement_achievement', 'keydown', textChanged);
 
 <div class="field">
   <%= f.label :achievement, "Mention an achievement you're proud of" %><br />
   <small> ... not necessarily at work - anything in your life (max 140 characters)</small><br />
-  <%= f.text_area :achievement, :cols => 60, :rows => 3 %>
+  <%= f.text_area :achievement, :cols => 60, :maxlength => 200, :rows => 5 %>
+  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
 </div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#achievement_achievement').live('keyup keydown', function(e) {
+    var maxLen = 200;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
+<% end %>

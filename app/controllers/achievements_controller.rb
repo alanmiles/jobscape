@@ -9,8 +9,9 @@ class AchievementsController < ApplicationController
 
   def sort
     @user = current_user
-    @user.achievements.each do |f|
-      f.position = params["achieve"].index(f.id.to_s)+1
+    @achievements = @user.achievements
+    @achievements.each do |f|
+      f.position = params['achievement'].index(f.id.to_s)+1
       f.save
     end
     render :nothing => true  
@@ -20,6 +21,7 @@ class AchievementsController < ApplicationController
     @user = current_user
     @achievement = @user.achievements.new
     @title = "Add an achievement"
+    @characters_left = 200
   end
   
   def create
@@ -34,6 +36,8 @@ class AchievementsController < ApplicationController
       redirect_to user_achievements_path(@user)
     else
       @title = "Add an achievement"
+      @characters_left = 200 - @achievement.achievement.length
+      @user = current_user
       render 'new'
     end
   end
@@ -41,6 +45,7 @@ class AchievementsController < ApplicationController
   def edit
     @achievement = Achievement.find(params[:id])
     @title = "Edit achievement"
+    @characters_left = 200 - @achievement.achievement.length
   end
   
   def update
@@ -50,6 +55,8 @@ class AchievementsController < ApplicationController
       redirect_to user_achievements_path(@achievement.user_id)
     else
       @title = "Edit achievement"
+      @characters_left = 200 - @achievement.achievement.length
+      @user = current_user
       render 'edit'
     end
   end

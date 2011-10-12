@@ -22,9 +22,9 @@
   </em>
 </div>
 <hr />
-<ul id="character" style="cursor: move">
+<ul id="characteristics-list" style="cursor: move">
   <% @characteristics.each do |f| %>
-  <li id="item_<%= f.id %>" class="no_bullet">
+  <li id="characteristic_<%= f.id %>" class="no_bullet">
     <span style="vertical-align:top">
        <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
                    	:method => :delete, 
@@ -36,14 +36,36 @@
     			edit_characteristic_path(f), 
     			:title => "Edit this characteristic") %> 
     </span>&nbsp;    
-    <span style = "display:inline-block; width:80%"><%= f.characteristic %></span>
+    <span class="handle" style = "display:inline-block; width:80%"><%= f.characteristic %></span>
    
    </li>
   <% end %>
 </ul>
 
-<%= sortable_element('character', 
-    :url => { :action => "sort", :id => @user }, 
-    
-    :complete => visual_effect(:highlight, "character")) %>
+<% content_for :javascript do %>
 
+  <%= javascript_tag do %>
+ 
+    $('#characteristics-list').sortable(
+     {
+       	axis: 'y',
+	dropOnEmpty: false,
+	handle: '.handle',
+	cursor: 'crosshair',
+	items: 'li',
+	opacity: 0.4,
+	scroll: true,
+	update: function(){
+	  $.ajax({
+	    type: 'post',
+	    data: $('#characteristics-list').sortable('serialize')+ '&id=<%=@user.id %>' + '&id=<%=@user.id %>',
+	dataType: 'script',
+	complete: function(request){
+	  $('#characteristics-list').effect('highlight');
+	},
+	url: 'characteristics/sort'})
+      }
+     })
+
+   <% end %>
+<% end %>

@@ -20,9 +20,9 @@
   </em>
 </div>
 <hr />
-<ul id="qualification" style="cursor: move">
+<ul id="qualifications-list">
   <% @qualifications.each do |f| %>
-  <li id="item_<%= f.id %>" class="no_bullet">
+  <li id="qualification_<%= f.id %>" class="no_bullet">
     <span style="vertical-align:top">
        <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
                    	:method => :delete, 
@@ -34,14 +34,36 @@
     			edit_qualification_path(f), 
     			:title => "Edit this qualification") %> 
     </span>&nbsp;    
-    <span style = "display:inline-block; width:80%"><%= f.qualification %></span>
+    <span class="handle" style = "display:inline-block; width:80%"><%= f.qualification %></span>
    
    </li>
   <% end %>
 </ul>
 
-<%= sortable_element('qualification', 
-    :url => { :action => "sort", :id => @user }, 
-    
-    :complete => visual_effect(:highlight, "qualification")) %>
+<% content_for :javascript do %>
 
+  <%= javascript_tag do %>
+ 
+    $('#qualifications-list').sortable(
+     {
+       	axis: 'y',
+	dropOnEmpty: false,
+	handle: '.handle',
+	cursor: 'crosshair',
+	items: 'li',
+	opacity: 0.4,
+	scroll: true,
+	update: function(){
+	  $.ajax({
+	    type: 'post',
+	    data: $('#qualifications-list').sortable('serialize') + '&id=<%=@user.id %>',
+	dataType: 'script',
+	complete: function(request){
+	  $('#qualifications-list').effect('highlight');
+	},
+	url: 'qualifications/sort'})
+      }
+     })
+
+   <% end %>
+<% end %>

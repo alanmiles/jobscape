@@ -19,6 +19,7 @@ class StrengthsController < ApplicationController
     @user = current_user
     @strength = @user.strengths.new
     @title = "Add one of your strengths"
+    @characters_left = 50
   end
   
   def create
@@ -33,6 +34,8 @@ class StrengthsController < ApplicationController
       redirect_to user_strengths_path(@user)
     else
       @title = "Add one of your strengths"
+      @characters_left = 50 - @strength.strength.length
+      @user = current_user
       render 'new'
     end
   end
@@ -41,6 +44,7 @@ class StrengthsController < ApplicationController
     @user = current_user
     @strength = Strength.find(params[:id])
     @title = "Edit strength"
+    @characters_left = 50 - @strength.strength.length
   end
   
   def update
@@ -50,6 +54,8 @@ class StrengthsController < ApplicationController
       redirect_to user_strengths_path(@strength.user_id)
     else
       @title = "Edit strength"
+      @characters_left = 50 - @strength.strength.length
+      @user = current_user
       render 'edit'
     end
   end

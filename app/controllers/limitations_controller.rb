@@ -20,6 +20,7 @@ class LimitationsController < ApplicationController
     @user = current_user
     @limitation = @user.limitations.new
     @title = "Limitations"
+    @characters_left = 50
   end
   
   def create
@@ -34,6 +35,8 @@ class LimitationsController < ApplicationController
       redirect_to user_limitations_path(@user)
     else
       @title = "Limitations"
+      @characters_left = 50 - @limitation.limitation.length
+      @user = current_user
       render 'new'
     end
   end
@@ -42,6 +45,7 @@ class LimitationsController < ApplicationController
     @user = current_user
     @limitation = Limitation.find(params[:id])
     @title = "Edit limitation"
+    @characters_left = 50 - @limitation.limitation.length
   end
   
   def update
@@ -51,6 +55,8 @@ class LimitationsController < ApplicationController
       redirect_to user_limitations_path(@limitation.user_id)
     else
       @title = "Edit limitation"
+      @characters_left = 50 - @limitation.limitation.length
+      @user = current_user
       render 'edit'
     end
   end

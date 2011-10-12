@@ -1,7 +1,21 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
   <%= f.label :favourite, "List one of your favourite things or activities" %><br />
-  <small>What makes life seem good or brings a smile to your face? (max 50 characters)<br />
+  <small>What makes life seem good or brings a smile to your face? <br />
          Why would an employer want to know? Because happy people make better workers.</small><br />
-  <%= f.text_field :favourite, :size => 40 %>
+  <%= f.text_field :favourite, :maxlength => 50, :size => 40 %>
+  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
 </div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#favourite_favourite').live('keyup keydown', function(e) {
+    var maxLen = 50;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
+<% end %>

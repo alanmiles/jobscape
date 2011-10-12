@@ -2,11 +2,23 @@
 <div class="field">
   <%= f.label :job, "Previous or current job" %><br />  
   <small>You can add the name of the employer if you want to - max 50 characters in total.</small><br />
-  <%= f.text_field :job, :size => 40 %>
+  <%= f.text_field :job, :maxlength => 50, :size => 40 %>
+  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
 </div>
 <div class="field">
   <%= f.label :years, "Number of years in job" %><br />  
-  <small>(Round to the nearest year: so less than 6 months would be 0)</small><br />
   <%= f.text_field :years, :size => 3 %>
 </div>
 
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#previousjob_job').live('keyup keydown', function(e) {
+    var maxLen = 50;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
+<% end %>

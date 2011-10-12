@@ -19,6 +19,7 @@ class AimsController < ApplicationController
     @user = current_user
     @aim = @user.aims.new
     @title = "Add an aim"
+    @characters_left = 50
   end
   
   def create
@@ -33,6 +34,8 @@ class AimsController < ApplicationController
       redirect_to user_aims_path(@user)
     else
       @title = "Add an aim"
+      @characters_left = 50 - @aim.aim.length
+      @user = current_user
       render 'new'
     end
   end
@@ -41,6 +44,7 @@ class AimsController < ApplicationController
     @user = current_user
     @aim = Aim.find(params[:id])
     @title = "Edit aim"
+    @characters_left = 50 - @aim.aim.length
   end
   
   def update
@@ -50,6 +54,8 @@ class AimsController < ApplicationController
       redirect_to user_aims_path(@aim.user_id)
     else
       @title = "Edit aim"
+      @characters_left = 50 - @aim.aim.length
+      @user = current_user
       render 'edit'
     end
   end

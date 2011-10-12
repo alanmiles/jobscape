@@ -19,6 +19,7 @@ class FavouritesController < ApplicationController
     @user = current_user
     @favourite = @user.favourites.new
     @title = "Add a favourite"
+    @characters_left = 50
   end
   
   def create
@@ -33,6 +34,8 @@ class FavouritesController < ApplicationController
       redirect_to user_favourites_path(@user)
     else
       @title = "Add a favourite"
+      @characters_left = 50 - @favourite.favourite.length
+      @user = current_user
       render 'new'
     end
   end
@@ -41,6 +44,7 @@ class FavouritesController < ApplicationController
     @user = current_user
     @favourite = Favourite.find(params[:id])
     @title = "Edit favourite"
+    @characters_left = 50 - @favourite.favourite.length
   end
   
   def update
@@ -50,6 +54,8 @@ class FavouritesController < ApplicationController
       redirect_to user_favourites_path(@favourite.user_id)
     else
       @title = "Edit favourite"
+      @characters_left = 50 - @favourite.favourite.length
+      @user = current_user
       render 'edit'
     end
   end

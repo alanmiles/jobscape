@@ -20,9 +20,9 @@
   </em>
 </div>
 <hr />
-<ul id="strength" style="cursor: move">
+<ul id="strengths-list" style="cursor: move">
   <% @strengths.each do |f| %>
-  <li id="item_<%= f.id %>" class="no_bullet">
+  <li id="strength_<%= f.id %>" class="no_bullet">
     <span style="vertical-align:top">
        <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
                    	:method => :delete, 
@@ -34,14 +34,36 @@
     			edit_strength_path(f), 
     			:title => "Edit this strength") %> 
     </span>&nbsp;    
-    <span style = "display:inline-block; width:80%"><%= f.strength %></span>
+    <span class="handle" style = "display:inline-block; width:80%"><%= f.strength %></span>
    
    </li>
   <% end %>
 </ul>
 
-<%= sortable_element('strength', 
-    :url => { :action => "sort", :id => @user }, 
-    
-    :complete => visual_effect(:highlight, "strength")) %>
+<% content_for :javascript do %>
 
+  <%= javascript_tag do %>
+ 
+    $('#strengths-list').sortable(
+     {
+       	axis: 'y',
+	dropOnEmpty: false,
+	handle: '.handle',
+	cursor: 'crosshair',
+	items: 'li',
+	opacity: 0.4,
+	scroll: true,
+	update: function(){
+	  $.ajax({
+	    type: 'post',
+	    data: $('#strengths-list').sortable('serialize') + '&id=<%=@user.id %>',
+	dataType: 'script',
+	complete: function(request){
+	  $('#strengths-list').effect('highlight');
+	},
+	url: 'strengths/sort'})
+      }
+     })
+
+   <% end %>
+<% end %>

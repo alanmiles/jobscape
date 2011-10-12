@@ -8,8 +8,9 @@ class CharacteristicsController < ApplicationController
 
   def sort
     @user = current_user
-    @user.characteristics.each do |f|
-      f.position = params["character"].index(f.id.to_s)+1
+    @characteristics = @user.characteristics
+    @characteristics.each do |f|
+      f.position = params["characteristic"].index(f.id.to_s)+1
       f.save
     end
     render :nothing => true  
@@ -19,6 +20,7 @@ class CharacteristicsController < ApplicationController
     @user = current_user
     @characteristic = @user.characteristics.new
     @title = "Add a characteristic"
+    @characters_left = 50
   end
   
   def create
@@ -33,6 +35,7 @@ class CharacteristicsController < ApplicationController
       redirect_to user_characteristics_path(@user)
     else
       @title = "Add a characteristic"
+      @characters_left = 50 - @characteristic.characteristic.length
       render 'new'
     end
   end
@@ -41,6 +44,7 @@ class CharacteristicsController < ApplicationController
     @user = current_user
     @characteristic = Characteristic.find(params[:id])
     @title = "Edit characteristic"
+    @characters_left = 50 - @characteristic.characteristic.length
   end
   
   def update
@@ -50,6 +54,8 @@ class CharacteristicsController < ApplicationController
       redirect_to user_characteristics_path(@characteristic.user_id)
     else
       @title = "Edit characteristic"
+      @user = current_user
+      @characters_left = 50 - @characteristic.characteristic.length
       render 'edit'
     end
   end

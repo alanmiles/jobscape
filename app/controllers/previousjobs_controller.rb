@@ -19,6 +19,7 @@ class PreviousjobsController < ApplicationController
     @user = current_user
     @previousjob = @user.previousjobs.new
     @title = "Add a previous job"
+    @characters_left = 50
   end
   
   def create
@@ -33,6 +34,8 @@ class PreviousjobsController < ApplicationController
       redirect_to user_previousjobs_path(@user)
     else
       @title = "Add a previous job"
+      @characters_left = 50 - @previousjob.job.length
+      @user = current_user
       render 'new'
     end
   end
@@ -41,6 +44,7 @@ class PreviousjobsController < ApplicationController
     @user = current_user
     @previousjob = Previousjob.find(params[:id])
     @title = "Edit job"
+    @characters_left = 50 - @previousjob.job.length
   end
   
   def update
@@ -50,6 +54,8 @@ class PreviousjobsController < ApplicationController
       redirect_to user_previousjobs_path(@previousjob.user_id)
     else
       @title = "Edit job"
+      @characters_left = 50 - @previousjob.job.length
+      @user = current_user
       render 'edit'
     end
   end

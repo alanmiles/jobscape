@@ -5,6 +5,11 @@ class PortraitsController < ApplicationController
     @user = current_user
     @portrait = @user.portrait
     @title = "Edit self-portrait"
+    if @portrait.notes == nil
+      @characters_left = 200
+    else
+      @characters_left = 200 - @portrait.notes.length
+    end
   end
   
   def update

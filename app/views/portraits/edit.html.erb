@@ -9,7 +9,8 @@
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
     <%= f.label :notes, "Portrait notes" %> <br /><small>Is there anything important you'd like to add? (max 140 characters)</small><br />
-    <%= f.text_area :notes, :cols => 50, :rows => 3 %>
+    <%= f.text_area :notes, :maxlength => 200, :cols => 60, :rows => 4 %>
+    <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
   </div>
   <em class = "highlt">Check the boxes below if your answer is 'Yes':</em>
 
@@ -32,4 +33,15 @@
   </div>
 <% end %>
 
+<% content_for :javascript do %>
 
+  <%= javascript_tag do %>
+
+    $('#portrait_notes').live('keyup keydown', function(e) {
+    var maxLen = 50;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
+<% end %>

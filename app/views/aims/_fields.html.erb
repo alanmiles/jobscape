@@ -3,5 +3,19 @@
   <%= f.label :aim, "What would you like to achieve in the next 2-3 years" %><br />
   <small>Give us a view of what you'd like to accomplish - whether at work, perhaps a course<br />
          of study, or in your personal life. (max 50 characters)</small><br />
-  <%= f.text_field :aim, :size => 40 %>
+  <%= f.text_field :aim, :maxlength => 50, :size => 40 %>
+  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
 </div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#aim_aim').live('keyup keydown', function(e) {
+    var maxLen = 50;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
+<% end %>

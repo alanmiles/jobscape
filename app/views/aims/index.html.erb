@@ -20,9 +20,9 @@
   </em>
 </div>
 <hr />
-<ul id="aim" style="cursor: move">
+<ul id="aims-list" style="cursor: move">
   <% @aims.each do |f| %>
-  <li id="item_<%= f.id %>" class="no_bullet">
+  <li id="aim_<%= f.id %>" class="no_bullet">
     <span style="vertical-align:top">
        <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
                    	:method => :delete, 
@@ -34,14 +34,36 @@
     			edit_aim_path(f), 
     			:title => "Edit this aim") %> 
     </span>&nbsp;    
-    <span style = "display:inline-block; width:80%"><%= f.aim %></span>
+    <span class="handle" style = "display:inline-block; width:80%"><%= f.aim %></span>
    
    </li>
   <% end %>
 </ul>
 
-<%= sortable_element('aim', 
-    :url => { :action => "sort", :id => @user }, 
-    
-    :complete => visual_effect(:highlight, "aim")) %>
+<% content_for :javascript do %>
 
+  <%= javascript_tag do %>
+ 
+    $('#aims-list').sortable(
+     {
+       	axis: 'y',
+	dropOnEmpty: false,
+	handle: '.handle',
+	cursor: 'crosshair',
+	items: 'li',
+	opacity: 0.4,
+	scroll: true,
+	update: function(){
+	  $.ajax({
+	    type: 'post',
+	    data: $('#aims-list').sortable('serialize') + '&id=<%=@user.id %>',
+	dataType: 'script',
+	complete: function(request){
+	  $('#aims-list').effect('highlight');
+	},
+	url: 'aims/sort'})
+      }
+     })
+
+   <% end %>
+<% end %>

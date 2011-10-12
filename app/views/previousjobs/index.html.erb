@@ -20,9 +20,9 @@
   </em>
 </div>
 <hr />
-<ul id="previousjob" style="cursor: move">
+<ul id="previousjobs-list" style="cursor: move">
   <% @previousjobs.each do |f| %>
-  <li id="item_<%= f.id %>" class="no_bullet">
+  <li id="previousjob_<%= f.id %>" class="no_bullet">
     <span style="vertical-align:top">
        <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
                    	:method => :delete, 
@@ -34,14 +34,36 @@
     			edit_previousjob_path(f), 
     			:title => "Edit this job") %> 
     </span>&nbsp;    
-    <span style = "display:inline-block; width:80%"><%= f.job %></span>
+    <span class="handle" style = "display:inline-block; width:80%"><%= f.job %></span>
    
    </li>
   <% end %>
 </ul>
 
-<%= sortable_element('previousjob', 
-    :url => { :action => "sort", :id => @user }, 
-    
-    :complete => visual_effect(:highlight, "previousjob")) %>
+<% content_for :javascript do %>
 
+  <%= javascript_tag do %>
+ 
+    $('#previousjobs-list').sortable(
+     {
+       	axis: 'y',
+	dropOnEmpty: false,
+	handle: '.handle',
+	cursor: 'crosshair',
+	items: 'li',
+	opacity: 0.4,
+	scroll: true,
+	update: function(){
+	  $.ajax({
+	    type: 'post',
+	    data: $('#previousjobs-list').sortable('serialize') + '&id=<%=@user.id %>',
+	dataType: 'script',
+	complete: function(request){
+	  $('#previousjobs-list').effect('highlight');
+	},
+	url: 'previousjobs/sort'})
+      }
+     })
+
+   <% end %>
+<% end %>

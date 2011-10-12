@@ -19,6 +19,6 @@ class Portrait < ActiveRecord::Base
   belongs_to :user
   
   validates :user_id,			:presence	=> true
-  validates :notes,			:length		=> { :maximum => 140, :allow_blank => true }
+  validates :notes,			:length		=> { :maximum => 200, :allow_blank => true }
   
 end

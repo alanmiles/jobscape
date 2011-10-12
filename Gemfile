@@ -7,6 +7,7 @@ gem 'will_paginate', '3.0.pre2'
 gem 'geocoder', '1.0.2'
 gem 'redis', '2.2.2'
 gem 'acts_as_list', '0.1.4'
+gem 'jquery-rails', '1.0.14'
 
 group :development do
   gem 'rspec-rails', '2.6.1'

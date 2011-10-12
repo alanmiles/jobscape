@@ -2,14 +2,15 @@ class QualificationsController < ApplicationController
   
   def index
     @user = current_user
-    @qualifications = @user.qualifications.order("qualifications.position")
+    @qualifications = @user.qualifications.order("qualifications.position ASC")
     @title = "My qualifications"
   end
 
   def sort
     @user = current_user
-    @user.qualifications.each do |f|
-      f.position = params["qualification"].index(f.id.to_s)+1
+    @qualifications = @user.qualifications
+    @qualifications.each do |f|
+      f.position = params['qualification'].index(f.id.to_s)+1
       f.save
     end
     render :nothing => true  
@@ -19,6 +20,7 @@ class QualificationsController < ApplicationController
     @user = current_user
     @qualification = @user.qualifications.new
     @title = "Add a qualification"
+    @characters_left = 50
   end
   
   def create
@@ -33,6 +35,8 @@ class QualificationsController < ApplicationController
       redirect_to user_qualifications_path(@user)
     else
       @title = "Add a qualification"
+      @characters_left = 50 - @qualification.qualification.length
+      @user = current_user
       render 'new'
     end
   end
@@ -41,6 +45,7 @@ class QualificationsController < ApplicationController
     @user = current_user
     @qualification = Qualification.find(params[:id])
     @title = "Edit qualification"
+    @characters_left = 50 - @qualification.qualification.length
   end
   
   def update
@@ -50,6 +55,8 @@ class QualificationsController < ApplicationController
       redirect_to user_qualifications_path(@qualification.user_id)
     else
       @title = "Edit qualification"
+      @characters_left = 50 - @qualification.qualification.length
+      @user = current_user
       render 'edit'
     end
   end

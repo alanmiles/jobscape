@@ -102,11 +102,11 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 
-li .handle {
+/*li .handle {
   color: #777;
   cursor: move;
   font-size: 12px;
-}
+} */
 
 ul.no_dec {
   list-style:none;
@@ -116,6 +116,10 @@ ul.no_dec {
 ul li.no_bullet {
   list-style-type: none;
   padding-bottom: 10px;
+}
+
+.handle:hover {
+  cursor: move;
 }
 
 .display_text {

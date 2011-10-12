@@ -19,6 +19,7 @@ class DislikesController < ApplicationController
     @user = current_user
     @dislike = @user.dislikes.new
     @title = "Add something that annoys you"
+    @characters_left = 50
   end
   
   def create
@@ -33,6 +34,8 @@ class DislikesController < ApplicationController
       redirect_to user_dislikes_path(@user)
     else
       @title = "Add something that annoys you"
+      @characters_left = 50 - @dislike.dislike.length
+      @user = current_user
       render 'new'
     end
   end
@@ -40,6 +43,7 @@ class DislikesController < ApplicationController
   def edit
     @user = current_user
     @dislike = Dislike.find(params[:id])
+    @characters_left = 50 - @dislike.dislike.length
     @title = "Edit dislike"
   end
   
@@ -50,6 +54,8 @@ class DislikesController < ApplicationController
       redirect_to user_dislikes_path(@dislike.user_id)
     else
       @title = "Edit dislike"
+      @characters_left = 50 - @dislike.dislike.length
+      @user = current_user
       render 'edit'
     end
   end

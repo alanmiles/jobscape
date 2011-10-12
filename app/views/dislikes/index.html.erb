@@ -20,9 +20,9 @@
   </em>
 </div>
 <hr />
-<ul id="dislike" style="cursor: move">
+<ul id="dislikes-list" style="cursor: move">
   <% @dislikes.each do |f| %>
-  <li id="item_<%= f.id %>" class="no_bullet">
+  <li id="dislike_<%= f.id %>" class="no_bullet">
     <span style="vertical-align:top">
        <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
                    	:method => :delete, 
@@ -34,14 +34,36 @@
     			edit_dislike_path(f), 
     			:title => "Edit this dislike") %> 
     </span>&nbsp;    
-    <span style = "display:inline-block; width:80%"><%= f.dislike %></span>
+    <span class="handle" style = "display:inline-block; width:80%"><%= f.dislike %></span>
    
    </li>
   <% end %>
 </ul>
 
-<%= sortable_element('dislike', 
-    :url => { :action => "sort", :id => @user }, 
-    
-    :complete => visual_effect(:highlight, "dislike")) %>
+<% content_for :javascript do %>
 
+  <%= javascript_tag do %>
+ 
+    $('#dislikes-list').sortable(
+     {
+       	axis: 'y',
+	dropOnEmpty: false,
+	handle: '.handle',
+	cursor: 'crosshair',
+	items: 'li',
+	opacity: 0.4,
+	scroll: true,
+	update: function(){
+	  $.ajax({
+	    type: 'post',
+	    data: $('#dislikes-list').sortable('serialize') + '&id=<%=@user.id %>',
+	dataType: 'script',
+	complete: function(request){
+	  $('#dislikes-list').effect('highlight');
+	},
+	url: 'dislikes/sort'})
+      }
+     })
+
+   <% end %>
+<% end %>
