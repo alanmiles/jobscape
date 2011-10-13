@@ -1,10 +1,26 @@
+<br />
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
   <%= f.label :job_title %><br />
-  <%= f.text_field :job_title %>
+  <%= f.text_field :job_title, :maxlength => 50, :size => 40 %>
+  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
 </div>
 <div class="field">
   <%= f.label :occupation_id, "Category" %><br />
   <%= collection_select(:job, :occupation_id, Occupation.all, :id, 
                         :name, :prompt => true) %>
 </div>
+<br />
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#job_job_title').live('keyup keydown', function(e) {
+    var maxLen = 50;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
+<% end %>

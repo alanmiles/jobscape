@@ -1,10 +1,25 @@
 <div class = "r-float">
-  <%= link_to "Home", jobseeker_home_path %>
+  <% if @user.account == 2 %>
+    <%= link_to "Home", jobseeker_home_path %>
+  <% elsif @user.account == 1 %>
+    <%= link_to "Home", user_home_path %>
+  <% end %>
 </div>
 
 <h1><%= @title %></h1>
-<h4><%= @user.name.upcase %></h4>
-
+<h4 class= "shallow"><%= @user.name.upcase %></h4>
+<% unless @user.count_qualifications >=2 || @user.count_characteristics >= 2 %>
+  <div class = "display_wider">
+    <small><i>
+      Update each of the sections until you've created an all-round picture of your capabilities and aspirations.<br />
+      Tell the truth!  We'll be asking your references to verify that this is a fair and reasonable portrait.<br />
+      When you've finished, your portrait can be attached to any application you send through HYGWIT.<br />
+      Potential employers can also search through the portraits when they're head-hunting.<br />
+      You can keep your portrait private if you want to, until the time comes when it might be useful.
+    </i></small>
+  </div>
+  <hr />
+<% end %>
 <div class="two_column rightpos">
   <h4 class="shallow">What they say about me  &nbsp;<small><%= link_to "(Update)", user_characteristics_path(@user) %></small></h4>
   <ul>
@@ -182,9 +197,3 @@
     <% end %>
   </ul>
 </div>
-  
-  
-  
-  
-
-

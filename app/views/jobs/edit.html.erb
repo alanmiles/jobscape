@@ -5,9 +5,10 @@
 <h1><%= @title %></h1>
 
 <%= form_for(@job) do |f| %>
-  <%= render 'fields', :f => f %>
-  <div class="actions">
-    <%= f.submit "Confirm" %>
+  <div class="shift_center">
+    <%= render 'fields', :f => f %>
+    <div class="actions">
+      <%= f.submit "Confirm" %>
+    </div>
   </div>
-  
 <% end %>

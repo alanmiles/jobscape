@@ -24,6 +24,7 @@ class JobsController < ApplicationController
     @title = "New job: #{@business.name}"
     @job = @business.jobs.new
     @occupations = Occupation.find(:all, :order => "name")
+    @characters_left = 50
   end
   
   def create
@@ -34,6 +35,8 @@ class JobsController < ApplicationController
       redirect_to business_jobs_path(@business)
     else
       @title = "New job: #{@business.name}"
+      @characters_left = 50 - @job.job_title.length
+      @occupations = Occupation.find(:all, :order => "name")
       render 'new'
     end
   end
@@ -42,6 +45,8 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
     @business = Business.find_by_id(@job.business_id)
     @title = "Edit job: #{@job.business.name}"
+    @occupations = Occupation.find(:all, :order => "name")
+    @characters_left = 50 - @job.job_title.length
   end
   
   def update
@@ -51,6 +56,9 @@ class JobsController < ApplicationController
       redirect_to job_path(@job)
     else
       @title = "Edit job: #{@job.business.name}"
+      @business = Business.find_by_id(@job.business_id)
+      @characters_left = 50 - @job.job_title.length
+      @occupations = Occupation.find(:all, :order => "name")
       render 'edit'
     end 
   
