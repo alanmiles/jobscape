@@ -31,4 +31,8 @@ class Jobquality < ActiveRecord::Base
   def self.attribute_used?(quality)
     self.count_attribute(quality) > 0
   end
+  
+  def quality_content
+    quality.quality
+  end
 end

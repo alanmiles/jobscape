@@ -6,14 +6,14 @@ class JobqualitiesController < ApplicationController
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
     @title = "Attributes: #{@job.job_title}"
-    @jobqualities = @plan.jobqualities.order(:position)
+    @jobqualities = @plan.jobqualities.order("jobqualities.position")
   end
 
   def sort
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
     @plan.jobqualities.each do |f|
-      f.position = params["a-plan"].index(f.id.to_s)+1
+      f.position = params["jobquality"].index(f.id.to_s)+1
       f.save
     end
     render :nothing => true  

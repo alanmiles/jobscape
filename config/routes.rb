@@ -1,11 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "previousjobs/index"
-
-  get "previousjobs/new"
-
-  get "previousjobs/edit"
-
   resources :users do
     resource :portrait, :shallow => true
     resources :achievements, :shallow => true do

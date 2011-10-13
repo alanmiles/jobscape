@@ -1,7 +1,7 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :qualification %><br />
-  <small>Academic or career-based.</small><br />
+  <%= f.label :qualification %> &nbsp;
+  <small>(Add your most important academic or career-based awards)</small><br />
   <%= f.text_field :qualification, :maxlength => 50, :size => 40 %>
   <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
 </div>

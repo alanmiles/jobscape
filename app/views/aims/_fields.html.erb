@@ -1,8 +1,8 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
   <%= f.label :aim, "What would you like to achieve in the next 2-3 years" %><br />
-  <small>Give us a view of what you'd like to accomplish - whether at work, perhaps a course<br />
-         of study, or in your personal life. (max 50 characters)</small><br />
+  <small>Give us a view of what you'd like to accomplish - whether at work, <br />
+         perhaps a course of study, or in your personal life.</small><br />
   <%= f.text_field :aim, :maxlength => 50, :size => 40 %>
   <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
 </div>

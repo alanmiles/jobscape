@@ -15,7 +15,7 @@ class RequirementsController < ApplicationController
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
     @plan.requirements.each do |f|
-      f.position = params["req"].index(f.id.to_s)+1
+      f.position = params["requirement"].index(f.id.to_s)+1
       f.save
     end
     render :nothing => true  

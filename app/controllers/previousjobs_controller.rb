@@ -18,6 +18,7 @@ class PreviousjobsController < ApplicationController
   def new
     @user = current_user
     @previousjob = @user.previousjobs.new
+    @periods = Previousjob::SERVICE_TYPES
     @title = "Add a previous job"
     @characters_left = 50
   end
@@ -36,6 +37,7 @@ class PreviousjobsController < ApplicationController
       @title = "Add a previous job"
       @characters_left = 50 - @previousjob.job.length
       @user = current_user
+      @periods = Previousjob::SERVICE_TYPES
       render 'new'
     end
   end
@@ -45,6 +47,7 @@ class PreviousjobsController < ApplicationController
     @previousjob = Previousjob.find(params[:id])
     @title = "Edit job"
     @characters_left = 50 - @previousjob.job.length
+    @periods = Previousjob::SERVICE_TYPES
   end
   
   def update
@@ -56,6 +59,7 @@ class PreviousjobsController < ApplicationController
       @title = "Edit job"
       @characters_left = 50 - @previousjob.job.length
       @user = current_user
+      @periods = Previousjob::SERVICE_TYPES
       render 'edit'
     end
   end

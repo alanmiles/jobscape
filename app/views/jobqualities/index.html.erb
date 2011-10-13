@@ -31,27 +31,48 @@
   </ol>
 </div>
 
-  
-<ul id="a-plan" style="cursor: move">
+<ul id="jobqualities-list">
   <% @jobqualities.each do |f| %>
-    <li id="item_<%= f.id %>">
-      
-      <%= f.quality.quality %>
-      <span class = "col-indent">
-      <%= link_to(image_tag("select.png", :size => "15x15"), f,
-              :title => "Level descriptors for #{f.quality.quality}") %> &nbsp;
+    <li id="jobquality_<%= f.id %>" class="no_bullet">
+   
       <%= link_to(image_tag("cancel.png", :size => "15x15"), f,
       		:method => :delete, 
 		:confirm => "You sure?",
-		:title => "Remove #{f.quality.quality}") %>
-      
-      </span>
+		:title => "Remove #{f.quality.quality}") %> &nbsp;
+   
+      <%= link_to(image_tag("select.png", :size => "15x15"), f,
+              :title => "Level descriptors for #{f.quality.quality}") %> &nbsp;
+     
+      <span class="handle"><%= f.quality_content %></span>
     </li>
   <% end %>
 </ul>
 
-<%= sortable_element('a-plan', 
-    :url => { :action => "sort", :id => @plan }, 
-    
-    :complete => visual_effect(:highlight, "a-plan")) %>
-</div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+ 
+    $('#jobqualities-list').sortable(
+     {
+       	axis: 'y',
+	dropOnEmpty: false,
+	handle: '.handle',
+	cursor: 'crosshair',
+	items: 'li',
+	opacity: 0.4,
+	scroll: true,
+	update: function(){
+	  $.ajax({
+	    type: 'post',
+	    data: $('#jobqualities-list').sortable('serialize') + '&id=<%=@plan.id %>',
+	dataType: 'script',
+	complete: function(request){
+	  $('#jobqualities-list').effect('highlight');
+	},
+	url: 'jobqualities/sort'})
+      }
+     })
+
+   <% end %>
+<% end %>

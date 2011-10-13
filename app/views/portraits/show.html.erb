@@ -113,7 +113,7 @@
       None
     <% else %>
       <% @previousjobs.each do |previousjob| %>
-        <li><%= previousjob.job %> <em> - for <%= previousjob.years %> years</em></li>
+        <li><%= previousjob.job %> <em> - <%= previousjob.service_length %></em></li>
       <% end %>
     <% end %>
   </ul>
