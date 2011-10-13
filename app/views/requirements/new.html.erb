@@ -5,17 +5,11 @@
 
 <h4>for <%= @job.title_location %></h4>
 
-<div class="display_wider">
-  <i>What qualifications, background, experience do you want job applicants to have?</i>
+<div class = "shift_center">
+  <%= form_for([@plan, @requirement]) do |f| %>
+    <%= render @requirement, :f => f %>
+    <div class="actions">
+      <%= f.submit "Create" %>
+    </div>
+  <% end %>
 </div>
-<%= form_for([@plan, @requirement]) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  
-  <div class = "field">
-    <%= f.label :requirement %> <small>(Max 50 characters)</small><br />
-    <%= f.text_field :requirement %>
-  </div> 
-  <div class="actions">
-    <%= f.submit "Create" %>
-  </div>
-<% end %>

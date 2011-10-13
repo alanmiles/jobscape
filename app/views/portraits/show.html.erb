@@ -8,8 +8,12 @@
 <div class="two_column rightpos">
   <h4 class="shallow">What they say about me  &nbsp;<small><%= link_to "(Update)", user_characteristics_path(@user) %></small></h4>
   <ul>
-    <% @characteristics.each do |characteristic| %>
-      <li><%= characteristic.characteristic %></li>
+    <% if @user.count_characteristics == 0 %>
+      Nothing
+    <% else %>
+      <% @characteristics.each do |characteristic| %>
+        <li><%= characteristic.characteristic %></li>
+      <% end %>
     <% end %>
   </ul>
 </div>
@@ -18,8 +22,12 @@
   <h4 class="shallow">Achievements  &nbsp;<small><%= link_to "(Update)", user_achievements_path(@user) %></small></h4>
 
   <ul>
-    <% @achievements.each do |achievement| %>
-      <li><%= achievement.achievement %></li>
+    <% if @user.count_achievements == 0 %>
+      None
+    <% else %>
+      <% @achievements.each do |achievement| %>
+        <li><%= achievement.achievement %></li>
+      <% end %>
     <% end %>
   </ul>
 </div>  
@@ -27,8 +35,12 @@
 <div class="two_column rightpos">  
   <h4 class="shallow">My favourite things  &nbsp;<small><%= link_to "(Update)", user_favourites_path(@user) %></small></h4>
   <ul>
-    <% @favourites.each do |favourite| %>
-      <li><%= favourite.favourite %></li>
+    <% if @user.count_favourites == 0 %>
+      None
+    <% else %>
+      <% @favourites.each do |favourite| %>
+        <li><%= favourite.favourite %></li>
+      <% end %>
     <% end %>
   </ul>
 </div>
@@ -36,8 +48,12 @@
 <div class="two_column">
   <h4 class="shallow">My qualifications &nbsp;<small><%= link_to "(Update)", user_qualifications_path(@user) %></small></h4>
   <ul>
-    <% @qualifications.each do |qualification| %>
-      <li><%= qualification.qualification %></li>
+    <% if @user.count_qualifications == 0 %>
+      None
+    <% else %>
+      <% @qualifications.each do |qualification| %>
+        <li><%= qualification.qualification %></li>
+      <% end %>
     <% end %>
   </ul>
 </div>
@@ -46,8 +62,12 @@
 <div class="two_column rightpos"> 
   <h4 class="shallow">It drives me mad when ...  &nbsp;<small><%= link_to "(Update)", user_dislikes_path(@user) %></small></h4>
   <ul>
-    <% @dislikes.each do |dislike| %>
-      <li><%= dislike.dislike %></li>
+    <% if @user.count_dislikes == 0 %>
+      Nothing drives me mad
+    <% else %>
+      <% @dislikes.each do |dislike| %>
+        <li><%= dislike.dislike %></li>
+      <% end %>
     <% end %>
   </ul>
 </div>
@@ -55,8 +75,12 @@
 <div class="two_column"> 
   <h4 class="shallow">My strengths &nbsp;<small><%= link_to "(Update)", user_strengths_path(@user) %></small></h4>
   <ul>
-    <% @strengths.each do |strength| %>
-      <li><%= strength.strength %></li>
+    <% if @user.count_strengths == 0 %>
+      None
+    <% else %>
+      <% @strengths.each do |strength| %>
+        <li><%= strength.strength %></li>
+      <% end %>
     <% end %>
   </ul>
 </div>

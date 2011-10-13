@@ -38,7 +38,7 @@
   <%= javascript_tag do %>
 
     $('#portrait_notes').live('keyup keydown', function(e) {
-    var maxLen = 50;
+    var maxLen = 200;
     var left = maxLen - $(this).val().length;
     $('#char-count').html(left);
     });

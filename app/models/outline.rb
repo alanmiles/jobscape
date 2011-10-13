@@ -19,17 +19,24 @@ class Outline < ActiveRecord::Base
   
   validates	:job_id,  	:presence 		=> true,
                                 :uniqueness		=> true
+  validates	:role,		:presence		=> true,
+  				:length			=> { :maximum => 500 }
+  validates	:qualities,	:presence		=> true,
+  				:length			=> { :maximum => 500 }
+  validates	:importance,	:presence		=> true,
+  				:length			=> { :maximum => 500 }				
+  
 
   def role_updated?
-    role != "Your role is to "
+    role.length >= 25
   end
   
   def qualities_updated?
-    qualities != "To do this job well, you need "
+    qualities.length >= 25
   end
   
   def importance_updated?
-    importance != "The job is important to the organization because "
+    importance != "The job is important to the organization because " && importance.length >= 25
   end
   
   def complete?

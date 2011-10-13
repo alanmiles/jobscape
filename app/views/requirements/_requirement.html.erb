@@ -1,0 +1,21 @@
+<%= render 'shared/error_messages', :object => f.object %>
+  
+<div class = "field">
+  <%= f.label :requirement %> <br />
+  <small>What qualifications, background, experience will job applicants need?</small><br />
+  <%= f.text_field :requirement, :maxlength => 50, :size => 40 %>
+  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+</div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#requirement_requirement').live('keyup keydown', function(e) {
+    var maxLen = 50;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
+<% end %>

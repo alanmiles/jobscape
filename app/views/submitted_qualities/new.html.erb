@@ -4,23 +4,24 @@
 
 <h1>Suggest a new Personal Attribute</h1> 
 
+<%= render 'explanation' %>
+
+<div>
+<br />
 <%= form_for(@quality, :url => submitted_qualities_path) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   
-  <div class = "info_box">
+  <div class = "info_box" style ="margin-bottom:0px">
     Enter your suggested attribute here.  After you click the 'Suggest' button, we'll also
     ask you to propose 5 PAMs (= Personal Attribute Measurements).<br /><br />
     Your suggestion will be reviewed by our team - if it's modified or not accepted, we'll
     advise you by email.
   </div>
-  
-<div class="field">
-  <%= f.label :quality, "Your suggestion" %> <small> ( max 25 characters )  </small><br />
-  <%= f.text_field :quality %>
-</div>
-  <%= f.hidden_field :created_by %>
-
+  <br />
+  <%= render 'fields', :f => f %>
   <div class="actions">
     <%= f.submit "Suggest now" %>
   </div>
 <% end %>
+</div>
+

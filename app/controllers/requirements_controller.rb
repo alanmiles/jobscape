@@ -25,7 +25,8 @@ class RequirementsController < ApplicationController
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
     @requirement = @plan.requirements.new
-    @title = "New requirement"
+    @title = "New applicant requirement"
+    @characters_left = 50
   end
   
   def create
@@ -36,7 +37,10 @@ class RequirementsController < ApplicationController
       flash[:success] = "Requirement added"
       redirect_to plan_requirements_path(@plan)
     else
-      @title = "New requirement"
+      @title = "New applicant requirement"
+      @characters_left = 50 - @requirement.requirement.length
+      @job = Job.find(session[:jobid])
+      @plan = Plan.find_by_job_id(@job.id)
       render 'new'
     end
   end
@@ -45,7 +49,8 @@ class RequirementsController < ApplicationController
     @requirement = Requirement.find(params[:id])
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
-    @title = "Edit requirement"
+    @title = "Edit applicant requirement"
+    @characters_left = 50 - @requirement.requirement.length
   end
   
   def update
@@ -54,9 +59,10 @@ class RequirementsController < ApplicationController
       flash[:success] = "Requirement updated."
       redirect_to plan_requirements_path(@requirement.plan_id)
     else
-      @title = "Edit requirement"
+      @title = "Edit applicant requirement"
       @job = Job.find(session[:jobid])
       @plan = Plan.find_by_job_id(@job.id)
+      @characters_left = 50 - @requirement.requirement.length
       render 'edit'
     end
   end

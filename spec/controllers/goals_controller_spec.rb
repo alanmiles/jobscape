@@ -159,7 +159,7 @@ describe GoalsController do
           
             before(:each) do
               @obj = ""
-              @attr = { :definition => @obj }
+              @attr = { :objective => @obj }
             end
 
             it "should not create a goal" do

@@ -4,14 +4,11 @@
 
 <h1><%= "Edit attribute" %></h1>
 
+<%= render 'explanation' %>
+
 <%= form_for(@quality, :url => submitted_quality_path(@quality)) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :quality, "Attribute" %> <small> (- a 1 or 2-word label)  </small><br />
-    <%= f.text_field :quality %>
-  </div>
-  <%= f.hidden_field :created_by %>
-  <%= f.hidden_field :updated_by %>
+  <%= render 'fields', :f => f %>
   <div class="actions">
     <%= f.submit "Confirm" %>
   </div>

@@ -1,0 +1,21 @@
+<div class="field">
+  <%= f.label :quality, "Your suggestion" %> <small> ( max 25 characters )  </small><br />
+  <%= f.text_field :quality, :maxlength => 25 %>
+  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+</div>
+<%= f.hidden_field :created_by %>
+<%= f.hidden_field :updated_by %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#quality_quality').live('keyup keydown', function(e) {
+    var maxLen = 25;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
+<% end %>
+

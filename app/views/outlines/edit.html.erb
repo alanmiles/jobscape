@@ -2,23 +2,52 @@
   <%= link_to "Cancel", @outline %>
 </div>
 <h1><%= @title %></h1> 
-<h4>for <%= @job.title_location %></h4>
-
+<h4 class="shallow">for <%= @job.title_location %></h4>
+<small>Minimum of 25 and maximum of 500 characters in each box - but try to keep it brief and to the point.</small>
+<br />
 <%= form_for(@outline) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
 <div class="field" style = "margin-left: 40px">
   <%= f.label :role %><br />
-  <%= f.text_area :role, :cols => 75, :rows => 4 %>
+  <%= f.text_area :role, :maxlength => 500, :cols => 75, :rows => 4 %>
+  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @role_left %></span>
 </div>
 <div class="field" style = "margin-left: 40px">
   <%= f.label :qualities %><br />
-  <%= f.text_area :qualities, :cols => 75, :rows => 4  %>
+  <%= f.text_area :qualities, :maxlength => 500, :cols => 75, :rows => 4  %>
+  <span id="char-count2" style = "color:blue; padding-left: 5px"><%= @qualities_left %></span>
 </div>
 <div class="field" style = "margin-left: 40px">
   <%= f.label :importance %><br />
-  <%= f.text_area :importance, :cols => 75, :rows => 4  %>
+  <%= f.text_area :importance, :maxlength => 500, :cols => 75, :rows => 4  %>
+  <span id="char-count3" style = "color:blue; padding-left: 5px"><%= @importance_left %></span>
 </div>
   <div class="actions">
     <%= f.submit "Confirm" %>
   </div>
+<% end %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#outline_role').live('keyup keydown', function(e) {
+    var maxLen = 500;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+    $('#outline_qualities').live('keyup keydown', function(e) {
+    var maxLen = 500;
+    var left = maxLen - $(this).val().length;
+    $('#char-count2').html(left);
+    });
+  
+    $('#outline_importance').live('keyup keydown', function(e) {
+    var maxLen = 500;
+    var left = maxLen - $(this).val().length;
+    $('#char-count3').html(left);
+    });
+    
+  <% end %>
 <% end %>

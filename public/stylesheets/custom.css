@@ -177,7 +177,7 @@ ul li.no_bullet {
   margin-right: 15px;
   margin-bottom: 10px;
   width: 240px;
-  min-height: 18em;
+ /* min-height: 18em; */
   padding: 0px 15px;
   font-size: 90%;
   overflow: auto;

@@ -8,17 +8,34 @@
 
 <p class = "display_text grayborder round"><%= @responsibility.definition %>
 </p>
-<%= form_for([@responsibility, @goal]) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  <div class = "field">
-    <%= f.label :objective, "Set a MEASURABLE objective" %><br />
-    <em><small>140 characters or less.  
+
+<div class="shift_center">
+  <%= form_for([@responsibility, @goal]) do |f| %>
+    <%= render 'shared/error_messages', :object => f.object %>
+    <div class = "field">
+      <%= f.label :objective, "Set a MEASURABLE objective" %><br />
+      <em><small>140 characters or less.  
                You can set up to 3 goals for each responsibility.
-    </small></em>
-    <%= f.text_area :objective, :cols => 50, :rows => 4 %>
-  </div> 
-    <%= f.hidden_field :created_by %>
-  <div class="actions">
-    <%= f.submit "Create" %>
-  </div>
+      </small></em>
+      <%= f.text_area :objective, :maxlength => 140, :cols => 50, :rows => 4 %>
+      <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+    </div> 
+      <%= f.hidden_field :created_by %>
+    <div class="actions">
+      <%= f.submit "Create" %>
+    </div>
+  <% end %>
+</div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#goal_objective').live('keyup keydown', function(e) {
+    var maxLen = 140;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
 <% end %>

@@ -20,11 +20,25 @@
 
   <div class = "field">
     <span class="label_large"><%= f.label :descriptor, "Edit PAM: Grade " + @pam.grade %></span><br />
-    <%= f.text_area :descriptor, :cols => 40, :rows => 10 %>
+    <%= f.text_area :descriptor, :maxlength => 255, :cols => 40, :rows => 10 %>
+    <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
   </div>
   <%= f.hidden_field :updated_by %>
   <br />
   <div class="actions">
     <%= f.submit "Confirm changes" %>
   </div>
+<% end %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#pam_descriptor').live('keyup keydown', function(e) {
+    var maxLen = 255;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
 <% end %>

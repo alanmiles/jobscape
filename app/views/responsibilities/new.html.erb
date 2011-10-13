@@ -4,16 +4,31 @@
 <h1>New responsibility</h1>
 <h4>for <%= @job.job_title %></h4>
 
-<%= form_for([@plan, @responsibility]) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  <div class = "field">
-    <%= f.label :definition, "What needs to get done?" %><br />
-    <em><small>Make your statement precise and concise - 140 characters or less</small></em>
-    <%= f.text_area :definition, :cols => 50, :rows => 4 %>
-  </div> 
-    <%= f.hidden_field :created_by %>
-  <div class="actions">
-    <%= f.submit "Create" %>
-  </div>
-<% end %>
+<div class = "shift_center">
+  <%= form_for([@plan, @responsibility]) do |f| %>
+    <%= render 'shared/error_messages', :object => f.object %>
+    <div class = "field">
+      <%= f.label :definition, "What needs to get done?" %><br />
+      <em><small>Make your statement precise and concise - 140 characters or less</small></em>
+      <%= f.text_area :definition, :maxlength => 140, :cols => 50, :rows => 4 %>
+      <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+    </div> 
+      <%= f.hidden_field :created_by %>
+    <div class="actions">
+      <%= f.submit "Create" %>
+    </div>
+  <% end %>
+</div>
 
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#responsibility_definition').live('keyup keydown', function(e) {
+    var maxLen = 140;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
+<% end %>

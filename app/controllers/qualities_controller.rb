@@ -13,6 +13,7 @@ class QualitiesController < ApplicationController
     @title = "New Personal Attribute"
     @quality = Quality.new
     @quality.created_by = current_user.id
+    @characters_left = 25
   end
   
   def create
@@ -26,6 +27,8 @@ class QualitiesController < ApplicationController
       redirect_to @quality
     else
       @title = "New Personal Attribute"
+      @characters_left = 25 - @quality.quality.length
+      @quality.created_by = current_user.id
       render 'new'
     end
   end
@@ -39,6 +42,7 @@ class QualitiesController < ApplicationController
   def edit
     @quality = Quality.find(params[:id])
     @title = "Edit attribute"
+    @characters_left = 25 - @quality.quality.length
   end
   
   def update
@@ -54,6 +58,7 @@ class QualitiesController < ApplicationController
       end
     else
       @title = "Edit attribute"
+      @characters_left = 25 - @quality.quality.length
       render 'edit'
     end
   end

@@ -5,14 +5,11 @@
 
 <h4>for <%= @job.title_location %></h4>
 
-<%= form_for @requirement do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  
-  <div class = "field">
-    <%= f.label :requirement %> <small>(Max 50 characters)</small><br />
-    <%= f.text_field :requirement %>
-  </div> 
-  <div class="actions">
-    <%= f.submit "Confirm changes" %>
-  </div>
-<% end %>
+<div class="shift_center">
+  <%= form_for @requirement do |f| %>
+    <%= render @requirement, :f => f %>
+    <div class="actions">
+      <%= f.submit "Confirm changes" %>
+    </div>
+  <% end %>
+</div>

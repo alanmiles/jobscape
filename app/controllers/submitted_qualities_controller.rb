@@ -16,6 +16,7 @@ class SubmittedQualitiesController < ApplicationController
     @quality.created_by = current_user.id
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job)
+    @characters_left = 25
   end
   
   def create
@@ -27,6 +28,8 @@ class SubmittedQualitiesController < ApplicationController
       @title = "New attribute submissions"
       @job = Job.find(session[:jobid])
       @plan = Plan.find_by_job_id(@job)
+      @quality.created_by = current_user.id
+      @characters_left = 25 - @quality.quality.length
       render 'new'
     end
   end
@@ -43,6 +46,7 @@ class SubmittedQualitiesController < ApplicationController
     @quality = Quality.find(params[:id])
     @title = "Edit attribute submission"
     @quality.updated_by = current_user.id
+    @characters_left = 25 - @quality.quality.length
   end
   
   def update
@@ -55,6 +59,7 @@ class SubmittedQualitiesController < ApplicationController
     else
       @title = "Edit attribute submission"
       @quality.updated_by = current_user.id
+      @characters_left = 25 - @quality.quality.length
       render 'edit'
     end
     

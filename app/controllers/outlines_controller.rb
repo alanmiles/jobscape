@@ -15,6 +15,9 @@ class OutlinesController < ApplicationController
     @outline = Outline.find(params[:id])
     @title = "Edit job summary"
     @job = Job.find(@outline.job_id)
+    @role_left = 500 - @outline.role.length
+    @qualities_left = 500 - @outline.qualities.length
+    @importance_left = 500 - @outline.importance.length
   end
   
   def update
@@ -29,6 +32,9 @@ class OutlinesController < ApplicationController
     else
       @title = "Edit job summary"
       @job = Job.find(@outline.job_id)
+      @role_left = 500 - @outline.role.length
+      @qualities_left = 500 - @outline.qualities.length
+      @importance_left = 500 - @outline.importance.length
       render 'edit'
     end
   end

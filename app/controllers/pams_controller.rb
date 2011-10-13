@@ -8,6 +8,7 @@ class PamsController < ApplicationController
     @pam.updated_by = current_user.id
     @quality = Quality.find(@pam.quality_id)
     @pams = @quality.pams.order("pams.grade")
+    @characters_left = 255 - @pam.descriptor.length
   end
   
   def update
@@ -24,6 +25,7 @@ class PamsController < ApplicationController
       @pam.updated_by = current_user.id
       @quality = Quality.find(@pam.quality_id)
       @pams = @quality.pams.all
+      @characters_left = 255 - @pam.descriptor.length
       render 'edit'
     end
   

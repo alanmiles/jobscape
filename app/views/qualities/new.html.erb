@@ -3,14 +3,18 @@
 </div>
 
 <h1><%= @title %></h1>
-<%= form_for(@quality) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :quality, "Attribute" %> <small> (- a 1 or 2-word label)  </small><br />
-    <%= f.text_field :quality %>
-  </div>
-  <%= f.hidden_field :created_by %>
-  <div class="actions">
-    <%= f.submit "Create" %>
-  </div>
-<% end %>
+<p>
+  <em>Personal attributes: those aspects of our personalities and natural abilities that we find so difficult to change - 
+      although sometimes training or mentoring can make a difference over time.  If people just don't have the right attributes for a 
+      job, it's unlikely they'll make a success of it ... even if they have the required knowledge and skills.
+    </em>
+</p>
+
+<div class="shift_center">
+  <%= form_for(@quality) do |f| %>
+    <%= render @quality, :f => f %>
+    <div class="actions">
+      <%= f.submit "Create" %>
+    </div>
+  <% end %>
+</div>
