@@ -17,7 +17,6 @@
 #  address            :string(255)
 #  city               :string(255)
 #  country            :string(255)
-#  job_id             :integer
 #
 
 
@@ -57,6 +56,8 @@ class User < ActiveRecord::Base
   has_many :aims, :dependent => :destroy
   has_many :references, :dependent => :destroy
   has_many :previousjobs, :dependent => :destroy
+  has_many :placements, :dependent => :destroy
+  has_many :jobs, :through => :placements
   
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }
@@ -253,6 +254,9 @@ class User < ActiveRecord::Base
     end
   end
   
+  def no_job?
+    placements.count == 0
+  end
   private
 
     def encrypt_password

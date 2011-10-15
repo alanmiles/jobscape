@@ -136,7 +136,7 @@ describe ResponsibilitiesController do
         it "should have a 'remove' button for each element" do
           get :index, :plan_id => @plan.id
           @responsibilities.each do |responsibility|
-            response.should have_selector("a", :title => "Remove responsibility.")
+            response.should have_selector("a", :title => "Remove this responsibility.")
             
             
           end
@@ -325,7 +325,7 @@ describe ResponsibilitiesController do
       
             it "should have a success message" do
               post :create, :plan_id => @plan.id, :responsibility => @attr
-              flash[:success].should == "Responsibility added - now add up to 3 goals."
+              flash[:success].should == "Responsibility added - now add up to 3 goals, and then set the Rating."
             end    
        
             it "should be connected to the correct plan" do

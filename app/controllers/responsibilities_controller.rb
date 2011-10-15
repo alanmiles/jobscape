@@ -50,7 +50,7 @@ class ResponsibilitiesController < ApplicationController
         if @plan.count_responsibilities == 20
           flash[:notice] = "You've now set the maximum number of responsibilities for the job" 
         else
-          flash[:success] = "Responsibility added - now add up to 3 goals."
+          flash[:success] = "Responsibility added - now add up to 3 goals, and then set the Rating."
         end
         redirect_to @responsibility
       else

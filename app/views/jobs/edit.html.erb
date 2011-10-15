@@ -3,6 +3,7 @@
 </div>
 
 <h1><%= @title %></h1>
+<h4><%= @business.name unless @user.account == 1 %></h4>
 
 <%= form_for(@job) do |f| %>
   <div class="shift_center">

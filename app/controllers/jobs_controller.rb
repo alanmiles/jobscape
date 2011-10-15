@@ -21,20 +21,26 @@ class JobsController < ApplicationController
   
   def new
     @business = Business.find(session[:biz])
-    @title = "New job: #{@business.name}"
+    @title = "Add a job"
     @job = @business.jobs.new
     @occupations = Occupation.find(:all, :order => "name")
     @characters_left = 50
   end
   
   def create
+    @user = current_user
     @business = Business.find(session[:biz])
     @job = @business.jobs.new(params[:job])
     if @job.save
       flash[:success] = "#{@job.job_title} added."
-      redirect_to business_jobs_path(@business)
+      if @user.account == 1
+        Placement.individual_make(@user, @job)
+        redirect_to my_job_path
+      else
+        redirect_to business_jobs_path(@business)
+      end
     else
-      @title = "New job: #{@business.name}"
+      @title = "Add a job"
       @characters_left = 50 - @job.job_title.length
       @occupations = Occupation.find(:all, :order => "name")
       render 'new'
@@ -44,7 +50,7 @@ class JobsController < ApplicationController
   def edit
     @job = Job.find(params[:id])
     @business = Business.find_by_id(@job.business_id)
-    @title = "Edit job: #{@job.business.name}"
+    @title = "Edit job"
     @occupations = Occupation.find(:all, :order => "name")
     @characters_left = 50 - @job.job_title.length
   end
@@ -55,7 +61,7 @@ class JobsController < ApplicationController
       flash[:success] = "Successfully updated."
       redirect_to job_path(@job)
     else
-      @title = "Edit job: #{@job.business.name}"
+      @title = "Edit job"
       @business = Business.find_by_id(@job.business_id)
       @characters_left = 50 - @job.job_title.length
       @occupations = Occupation.find(:all, :order => "name")

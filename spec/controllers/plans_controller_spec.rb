@@ -5,14 +5,18 @@ describe PlansController do
   render_views
   
   before(:each) do
-    @business = Factory(:business)
+    @sector = Factory(:sector)
+    @business = Factory(:business, :sector_id => @sector.id)
     session[:biz] = @business.id
+    
+    @user = Factory(:user)
     @occupation = Factory(:occupation)
     @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
     @plan = Plan.find_by_job_id(@job)
     @job2 = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id,
     				:job_title => "Another job")
     @plan2 = Plan.find_by_job_id(@job2)
+    test_sign_in(@user)
   end
   
   describe "GET 'show'" do
@@ -44,18 +48,18 @@ describe PlansController do
     it "should display the job and business name" do
       get 'show', :id => @plan.id
       response.should have_selector("h4", 
-             	:content => "#{@job.job_title} - #{@business.name}, #{@business.city}")
+             	:content => @job.job_title)
     end
     
     it "should have a link back to the jobs 'show' page" do
       get 'show', :id => @plan.id
-      response.should have_selector("a", :href => job_path(@job))
+      response.should have_selector("a", :href => my_job_path)
     end
     
-    it "should have a link to 'all jobs' for the business" do
-      get 'show', :id => @plan.id
-      response.should have_selector("a", :href => business_jobs_path(@business))
-    end
+    it "should have a link to 'all jobs' for the business"
+    #  response.should have_selector("a", :href => business_jobs_path(@business))
+    #end
+    #SEPARATE TESTS NEEDED FOR BUSINESS AS OPPOSED TO INDIVIDUAL USER
     
     it "should have a link to 'responsibilities'" do
       get 'show', :id => @plan.id

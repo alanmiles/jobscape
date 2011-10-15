@@ -1,10 +1,17 @@
 <div class = "r-float">
-  <%= link_to "Cancel", business_jobs_path(@business) %>
+  <% if @user.account == 1 %>
+    <%= link_to "Cancel", user_home_path %>
+  <% else %>
+    <%= link_to "Cancel", business_jobs_path(@business) %>
+  <% end %>
 </div>
 
 <h1><%= @title %></h1>
+<h4><%= @business.name unless @user.account == 1 %></h4>
+
 <%= form_for([@business, @job]) do |f| %>
   <div class="shift_center">
+
     <%= render 'fields', :f => f %>
 
     <div class="actions">

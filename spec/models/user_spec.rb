@@ -17,7 +17,6 @@
 #  address            :string(255)
 #  city               :string(255)
 #  country            :string(255)
-#  job_id             :integer
 #
 
 require 'spec_helper'

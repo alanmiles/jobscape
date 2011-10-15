@@ -1,0 +1,14 @@
+<div class = "r-float">
+<%= link_to "Your home page", user_home_path %>
+</div>
+<h1><%= @title %></hi>
+<h4><%= @job.job_title %></h4>
+
+<div class="menu_box grayborder round">
+  <br /> 
+  <ul>
+    <li class="no_bullet"><%= link_to "Create / update", plan_path(@plan) %> your Achievement Plan</li>
+    <li class="no_bullet">View the complete Achievement Plan</li>
+    <li class="no_bullet">Appraise your own performance</li>
+  </ul>
+</div>

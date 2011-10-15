@@ -90,10 +90,6 @@ class PagesController < ApplicationController
         @no_business = true
       end
     end
-    #@business = Business.find(session[:biz])
-    #@user = current_user
-    #@employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
-    #session[:jobid] = nil
   end
   
   def user_home
@@ -107,20 +103,22 @@ class PagesController < ApplicationController
            on this page is correct, enter your password and password confirmation again, and hit the 'Confirm' button."
       redirect_to edit_user_path(@user)
     end
+  end
     
-    #if @user.belongs_to_business?
-    #  if @user.single_business?
-    #    @business = @user.businesses.first
-    #    @employee = Employee.find_by_user_id(@user)
-    #    session[:biz] = @business.id
-    #    if @employee.officer?
-    #      redirect_to officer_home_path
-    #    end
-    #  else
-    #    #@employees = Employee.find_all_by_user_id(@user)
-    #    redirect_to select_business_path
-    #  end
-    #end
+  def my_job
+    @title = "My Job"
+    @user = current_user
+    @business = Business.find(session[:biz])
+    @business.remove_disconnected_jobs
+    if @user.no_job?
+      flash[:notice] = "You haven't entered your job-title yet, so let's get started with that ..."
+      redirect_to new_business_job_path(@business)
+    else
+      @placement = Placement.where("user_id = ? and current = ?", @user.id, true).first
+      @job = Job.where("id = ?", @placement.job_id).first
+      session[:jobid] = @job.id
+      @plan = Plan.find_by_job_id(@job)
+    end
   end
   
   def employee_home

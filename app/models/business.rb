@@ -53,5 +53,16 @@ class Business < ActiveRecord::Base
     self.no_jobs? && self.no_vacancies?
     #MODIFY LATER TO ADD NO EMPLOYEES
   end
+  
+  def remove_disconnected_jobs
+    if self.jobs.count > 0
+      self.jobs.each do |job|
+        @placement = Placement.find_by_job_id(job.id)
+        if @placement == nil
+          job.destroy
+        end
+      end
+    end
+  end
   		
 end

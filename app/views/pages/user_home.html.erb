@@ -3,14 +3,16 @@
 
   
     <h4>WHERE DO YOU WANT TO START?</h4>
-    <ul>
-      <li>Look for a great job</li>
-      <li><%= link_to "Build a Self-Portrait", user_portrait_path(@user) %> to improve your job-search prospects</li>
-      <li>Turn your routine job into a career opportunity</li>
-      <li><%= link_to "Transform your business", new_business_path %> with powerful achievement tools</li>
+    
+    <div class = "display_wider grayborder round">
+      <ul>
+        <li class="no_bullet">Look for a great job</li>
+        <li class="no_bullet"><%= link_to "Build a Self-Portrait", user_portrait_path(@user) %> to improve your job-search prospects</li>
+        <li class="no_bullet">Work with <%= link_to "HYGWIT's Job-Tools", my_job_path %> to turn your routine job into a career opportunity</li>
+        <li class="no_bullet"><%= link_to "Transform your business", new_business_path %> with powerful achievement tools</li>
   
-    </ul>
-
+      </ul>
+    </div>
 
 
   

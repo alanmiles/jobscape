@@ -326,7 +326,7 @@ describe JobsController do
       it "should have the right title" do
         get :new, :business_id => @business.id
         response.should have_selector("title", 
-                            :content => "New job: #{@business.name}")
+                            :content => "Add a job")
       end
         
       it "should be the right business" do
@@ -375,7 +375,7 @@ describe JobsController do
 
         it "should have the right title" do
           post :create, :business_id => @business.id, :job => @attr
-          response.should have_selector("title", :content => "New job: #{@business.name}")
+          response.should have_selector("title", :content => "Add a job")
         end
 
         it "should render the 'new' page" do
@@ -400,7 +400,8 @@ describe JobsController do
 
         it "should redirect to the jobs list" do
           post :create, :business_id => @business.id, :job => @attr
-          response.should redirect_to business_jobs_path(@business)
+          response.should redirect_to my_job_path
+          #ADD A DIFFERENT ROUTE FOR BUSINESS USERS
         end
       
         it "should have a success message" do
@@ -427,7 +428,7 @@ describe JobsController do
       
       it "should have the right title" do
         get :edit, :id => @job
-        response.should have_selector("title", :content => "Edit job: #{@business.name}")
+        response.should have_selector("title", :content => "Edit job")
       end
       
       it "should have a 'change' button" do
@@ -457,7 +458,7 @@ describe JobsController do
 
         it "should have the right title" do
           put :update, :id => @job, :job => @attr
-          response.should have_selector("title", :content => "Edit job: #{@business.name}")
+          response.should have_selector("title", :content => "Edit job")
         end
         
         it "should not change the job's attributes" do

@@ -82,7 +82,7 @@ describe GoalsController do
           it "should mention the job and business" do
             get 'new', :responsibility_id => @responsibility.id
             response.should have_selector("h4", 
-                  :content => "#{@job.job_title} - #{@business.name}, #{@business.city}")
+                  :content => @job.job_title)
           end
         
           it "should mention the responsibility" do

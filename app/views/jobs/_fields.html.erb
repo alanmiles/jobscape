@@ -1,7 +1,12 @@
-<br />
+
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :job_title %><br />
+  <% if @user.account == 1 %>
+    <%= f.label :job_title, "Enter your job title" %>
+  <% else %>
+    <%= f.label :job_title %>
+  <% end %>
+  <br />
   <%= f.text_field :job_title, :maxlength => 50, :size => 40 %>
   <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
 </div>

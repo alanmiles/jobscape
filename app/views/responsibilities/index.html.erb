@@ -13,10 +13,16 @@
   <% end %>
 </h1> 
 <h4>for <%= @job.job_title %></h4>
-<p><em>Click on <%= image_tag("select.png", :size => "15x15") %> 
+<p><em>
+    <% if @plan.has_responsibilities? %>
+       Click on <%= image_tag("select.png", :size => "15x15") %> 
        to edit responsibility OR view/edit/add/delete goals
-       OR set the rating.</em><br />
-    <%= @plan.count_responsibilities %> responsibilities set 
+       OR set the rating.
+    <% else %>
+       Get started by clicking on 'Add a new responsibility'.
+    <% end %>   
+    <br />
+    <%= pluralize(@plan.count_responsibilities, 'responsibility') %> set 
     <% if ! @plan.responsibilities_ready? %>
       <span class = "highlt round"> - you need at least 10 ... and up to 20.</span>
     <% elsif @plan.responsibilities_ready? %>
@@ -31,7 +37,7 @@
     <% elsif ! @plan.ratings_complete? %>
       <span class="highlt round">Ratings are incomplete.</span>
     <% end %>
-</p>
+</em></p>
 <table>
   <tr>
    <th></th>
@@ -55,10 +61,10 @@
       <% else %>
         <td class = "numeric texthl"><%= responsibility.display_rating %></td>
       <% end %>
-      <td class = "control"><%= link_to "Remove", responsibility, 
+      <td class = "control"><%= link_to image_tag("cancel.png", :size => "15x15"), responsibility, 
                    :method => :delete, 
                    :confirm => "You sure?",
-                   :title => "Remove responsibility." %>
+                   :title => "Remove this responsibility." %>
       </td>
     </tr>
   <% end %>

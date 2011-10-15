@@ -22,6 +22,8 @@ class Job < ActiveRecord::Base
   has_one :plan, :dependent => :destroy
   has_one :outline, :dependent => :destroy
   has_many :vacancies, :dependent => :destroy
+  has_many :placements, :dependent => :destroy
+  has_many :users, :through => :placements
   
   validates :job_title, :presence 	=> true,
   			:length		=> { :maximum => 50 },

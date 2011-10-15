@@ -1,24 +1,42 @@
 <div class = "r-float">
-  <%= link_to "#{@job.job_title} menu", @job %> <br />
-  <%= link_to "All jobs in business", business_jobs_path(@business) %>
+  <% if current_user.account == 1 %>
+    <%= link_to "#{@job.job_title} menu", my_job_path %>
+  <% else %>
+    <%= link_to "#{@job.job_title} menu", @job %> <br />
+    <%= link_to "All jobs in business", business_jobs_path(@business) unless current_user.account == 1 %>
+  <% end %>
 </div>
 <h1>Achievement Plan 
   <% if @plan.complete? %>
     &nbsp;<span class="success_marker round">ready to use</span>
   <% end %>
 </h1>
-<h4><%= @job.title_location %></h4>
+<h4><%= @job.job_title %></h4>
 <p><em>
-  <% unless @plan.complete? %>
+  <% if current_user.account == 1 %>
+    <% unless @plan.complete? %>
+       Click the links to build your A-PLAN, a document that describes not only what you're
+       supposed to do, but what you're supposed to <em><u>achieve</u></em>.  If possible, get 
+       your direct manager involved: make sure you agree on priorities. The A-Plan is ready to use 
+       when all items in the right-hand column below are <span style = "color: green">green</span>.
+    <% else %>
+       Now your A-Plan is complete, use it to make yourself a high-value employee.  Get people into the habit 
+       of reviewing your own performance monthly, and make sure you're hitting your targets.  If you're not, 
+       take the initiative to change things until you are.  It's all down to you!  And remember that your Plan 
+       should change as the business changes: revise it when you need to, and aim to keep setting the bar higher. 
+    <% end %>
+  <% else %>
+    <% unless @plan.complete? %>
        Click the links to build the A-PLAN, a powerful tool for recruitment, appraisal, training
        needs analysis, and succession planning.  Best of all, everyone in the job will be 
        focused on achievement!  The A-Plan is ready to use when all items in the right-hand
        column below are <span style = "color: green">green</span>. 
-  <% else %> 
+    <% else %> 
        Now the A-Plan is complete, use it to drive achievement - for recruitment, appraisal, training
        needs analysis, succession planning.  Get people into the habit of reviewing their own performance
        monthly. And remember that the Plan should change as the business changes: involve jobholders  
        in updating their responsibilities and goals. Aim to keep setting the bar higher. 
+    <% end %>
   <% end %>  
 </em></p>
 <table>
@@ -102,5 +120,5 @@
 <% end %>
   Overall Job Rating: <%= job_valuation %> &nbsp;
     <small style = "font-size: 0.65em">(based on the 10 highest-rated responsibilities)</small>
-</h4>
+  </h4>
 

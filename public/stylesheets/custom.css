@@ -188,8 +188,8 @@ ul li.no_bullet {
   margin-right: 15px;
   margin-bottom: 10px;
   width: 60%;
-  height: 18em;
-  padding: 0px 15px;
+  /* height: 18em; */
+  padding: 10px 15px;
   font-size: 90%;
   overflow: auto;
 }
@@ -216,18 +216,22 @@ ul li.no_bullet {
   margin-left: 100px;
 }
 
+.shift_center_125 {
+  margin-left: 125px;
+}
+
 .shift_center_200 {
   margin-left: 200px;
 }
 
 .pink {
-  color: #660033;
+  color: #32312F
   background: #cc9999;
 }
 
 .beige {
   color: #666633;
-  background: #cccc99;
+  background: #F8F4EB;
 }
 
 .grun {
