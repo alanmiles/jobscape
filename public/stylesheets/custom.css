@@ -204,6 +204,10 @@ ul li.no_bullet {
   clear: all;
 }
 
+.height_screen {
+  height: 20em;
+}
+
 .wide_65 {
   width: 65%;
 }
