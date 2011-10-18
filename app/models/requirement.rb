@@ -13,6 +13,7 @@
 class Requirement < ActiveRecord::Base
 
   belongs_to :plan
+  has_many :applicrequirements
   
   acts_as_list :scope => :plan
   

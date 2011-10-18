@@ -30,6 +30,12 @@ section h1 {
   color: #A33519;
 }
 
+.smallnote {
+  padding-left: 15px;
+  font-size: 70%;
+  color: gray;
+}
+
 section h2 {
   font-size: 140%;
 }
@@ -204,6 +210,17 @@ ul li.no_bullet {
   clear: all;
 }
 
+.completed_label {
+  text-align: center;
+  /* color: #fff;
+  background: #1943BF; */
+  font-size: 80%;
+  font-weight: bold;
+  padding: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px
+}
+
 .height_screen {
   height: 20em;
 }
@@ -294,6 +311,19 @@ ul li.no_bullet {
   font-size: 80%;
   font-weight: bold;
   padding: 5px;
+}
+
+.action_label {
+  /* display: block; */
+  text-align: center;
+  /* width: 100px; */
+  color: #fff;
+  background: #1943BF;
+  font-size: 120%;
+  font-weight: bold;
+  padding: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px
 }
 
 a.action_button {

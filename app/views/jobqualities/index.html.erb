@@ -10,9 +10,11 @@
      
 </div>
 
-<h1>Personal Attributes:
+<h1>Personal Attributes
   <% if @plan.max_attributes? %>
     &nbsp;<span class="success_marker round">ready to use</span>
+  <% else %>
+    <span class="smallnote">( <%= @plan.count_attributes %>/10 selected )</span>
   <% end %>
 </h1> 
 <h4>for <%= @job.title_location %></h4>

@@ -24,6 +24,7 @@ class Responsibility < ActiveRecord::Base
   belongs_to :plan
   has_many :goals, :dependent => :destroy
   has_one :evaluation, :dependent => :destroy
+  has_many :applicresponsibilities
   
   validates	:plan_id,	:presence 	=> true
   validates	:definition,	:presence 	=> true,

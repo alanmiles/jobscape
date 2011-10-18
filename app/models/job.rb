@@ -22,6 +22,7 @@ class Job < ActiveRecord::Base
   has_one :plan, :dependent => :destroy
   has_one :outline, :dependent => :destroy
   has_many :vacancies, :dependent => :destroy
+  has_many :applications, :through => :vacancies
   has_many :placements, :dependent => :destroy
   has_many :users, :through => :placements
   

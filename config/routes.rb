@@ -81,12 +81,19 @@ Jobscape::Application.routes.draw do
   resources :my_submissions
   resources :attribute_submissions
   resources :attribute_rejections
-  resources :vacancies
+  resources :vacancies do
+    resources :applications, :shallow => true
+  end
+  resources :applications do
+    resources :applicqualities, :shallow => true
+    resources :applicresponsibilities, :shallow => true
+    resources :applicrequirements, :shallow => true
+  end
   namespace :officer do
     resources :businesses, :only => :destroy
     resources :vacancy_details,  :only => :show
   end
-  resources :latest_vacancies, :only => [:index, :show]
+  resources :latest_vacancies, :only => :index
   resources :current_vacancies, :only => :index
   
   match '/signup',  		:to => 'users#new'

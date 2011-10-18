@@ -25,6 +25,7 @@ class Vacancy < ActiveRecord::Base
   
   belongs_to :job
   belongs_to :sector
+  has_many :applications
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
@@ -65,10 +66,22 @@ class Vacancy < ActiveRecord::Base
   end
   
   def self.latest
-    self.order("created_at DESC").limit(10)
+    self.where("close_date >= ?", Date.today).order("created_at DESC").limit(10)
   end
   
   def self.all_current
     self.where("close_date > ? and filled = ?", Date.today, false).order("created_at DESC")
+  end
+  
+  def interest_from?(user)
+    self.applications.where("user_id = ?", user.id).count > 0
+  end
+  
+  def application_from(user)
+    Application.where("vacancy_id = ? and user_id = ?", self.id, user.id).first
+  end
+   
+  def headline
+    @headline = "#{self.job.job_title} / #{self.sector.sector} / #{self.job.business.city}"
   end
 end

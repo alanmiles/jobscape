@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
   has_many :previousjobs, :dependent => :destroy
   has_many :placements, :dependent => :destroy
   has_many :jobs, :through => :placements
+  has_many :applications, :dependent => :destroy
   
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }

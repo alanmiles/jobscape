@@ -6,7 +6,7 @@
 
 <div class = "display_wider">
   <% if signed_in? %>
-    To apply for one of these jobs, click on 'Full details'
+    To bookmark or apply for one of these jobs, click on 'Full details'
   <% else %>
     Listed below are just the 10 latest HYGWIT jobs.  <%= link_to "Log in", signin_path %> or <%= link_to "sign up for a free account", signup_path %> to 
     apply - or search for the ideal job in your area.
@@ -19,6 +19,5 @@
 <ul class="no_dec">
   <% @vacancies.each do |vacancy| %>
     <li><%= render 'brief', :vacancy => vacancy %></li>
-  
   <% end %>
 </ul>

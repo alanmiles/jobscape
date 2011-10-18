@@ -22,6 +22,8 @@ class Quality < ActiveRecord::Base
   
   has_many :pams, :dependent => :destroy
   has_many :jobqualities
+  has_many :applicqualities
+  
   
   validates	:quality,	:presence 	=> true,
                 		:length		=> { :maximum => 25 },

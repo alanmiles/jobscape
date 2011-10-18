@@ -21,11 +21,17 @@
           Annual salary: £<%= vacancy.annual_salary %>.
         <% end %>
         <br />
-        <%= vacancy.notes unless vacancy.notes.empty? %> <%= link_to "(Full details)", latest_vacancy_path(vacancy) if @details_link == true %>
+        <%= vacancy.notes unless vacancy.notes.empty? %> <%= link_to "(Full details)", new_vacancy_application_path(vacancy) if @details_link == true %>
         <br />
-        <small>Posted <%= time_ago_in_words(vacancy.created_at) %> ago.  Apply to <%= vacancy.contact_person %>
+        <small>
+           Ref: <%= vacancy.id %> -  
+           Posted <%= time_ago_in_words(vacancy.created_at) %> ago.  Apply
            by <%= vacancy.close_date.strftime("%a %b %d, %Y") %>.
-        </small>        
+        </small>
+        <% if vacancy.interest_from?(current_user) %>
+          <% @vac = vacancy %>
+          <br /><span class="completed_label grun round"><%= your_application_status %></span>
+        <% end %>        
       </div>
    
   

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111014113455) do
+ActiveRecord::Schema.define(:version => 20111016173557) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -24,6 +24,47 @@ ActiveRecord::Schema.define(:version => 20111014113455) do
     t.integer  "user_id"
     t.string   "aim"
     t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "applications", :force => true do |t|
+    t.integer  "vacancy_id"
+    t.integer  "user_id"
+    t.integer  "next_action",        :default => 0
+    t.boolean  "submitted",          :default => false
+    t.date     "submission_date"
+    t.integer  "requirements_score", :default => 0
+    t.integer  "qualities_score",    :default => 0
+    t.integer  "portrait_score",     :default => 0
+    t.boolean  "employer_shortlist", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "applicqualities", :force => true do |t|
+    t.integer  "application_id"
+    t.integer  "quality_id"
+    t.integer  "position"
+    t.integer  "applicant_score", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "applicrequirements", :force => true do |t|
+    t.integer  "application_id"
+    t.integer  "requirement_id"
+    t.integer  "position"
+    t.integer  "applicant_score", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "applicresponsibilities", :force => true do |t|
+    t.integer  "application_id"
+    t.integer  "responsibility_id"
+    t.integer  "position"
+    t.integer  "applicant_score",   :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
