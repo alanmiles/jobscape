@@ -1,0 +1,42 @@
+  <h4 class = "shallow" style="margin-left:25px">Are you the right kind of person for this job?</h4>
+
+  <ul class="no_dec" style="margin-left:50px">
+    <%= f.fields_for :applicqualities do |builder2| %>  
+      <li>
+        <span class="expand" data-id="<%= builder2.object.id %>" style = "cursor:help"><%= image_tag("expand.png", :size => "15x15") %></span>
+        <span style="display:inline-block; width:55%">
+          <%= builder2.object.quality.quality %>
+        </span>
+         
+        <%= builder2.select :applicant_score, @q_scores %> <br /> 
+        
+        <div class="div<%= builder2.object.id %> info_box_wide shift_center_50 beige round" style = "display:none">
+          <%= builder2.object.quality.pams.first.descriptor %>
+          &nbsp; <span class = "conceal" data-id="<%= builder2.object.id %>" style="color:#09c; cursor:n-resize">(Hide)</span>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+  $(document).ready(function(){
+   
+   $(".no_dec li .expand").click(function(event){
+     var myVal = $(this).attr("data-id");
+     $(".div" + myVal).show();
+     $(this).html("<img src= '/images/hide.png' width='15' height='15' alt='Hide' />");
+   });
+  
+   $('.no_dec li .conceal').click(function(event) {
+      var myVal = $(this).attr("data-id");
+      $(".no_dec li .div" + myVal).hide();
+      $(".no_dec li .expand").html("<img src= '/images/expand.png' width='15' height='15' alt='Expand' />");
+    });
+  
+  });
+    
+  <% end %>
+<% end %>

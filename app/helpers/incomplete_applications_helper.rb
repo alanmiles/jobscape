@@ -1,0 +1,2 @@
+module IncompleteApplicationsHelper
+end

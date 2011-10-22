@@ -14,6 +14,7 @@
 #  employer_shortlist :boolean         default(FALSE)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  personal_statement :string(255)
 #
 
 require 'spec_helper'

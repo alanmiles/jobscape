@@ -9,7 +9,7 @@
   <% elsif @vacancy.annual_salary.nil? %>
     Hourly rate: £<%= two_dec(@vacancy.hourly_rate) %>.
   <% else %>
-    Annual salary: £<%= @vacancy.annual_salary %>.
+    Annual salary: £<%= number_with_delimiter(@vacancy.annual_salary, :delimiter => ",") %>.
   <% end %>
   <br />
   <%= @vacancy.notes unless @vacancy.notes.empty? %> <%= link_to "(Full details)", officer_vacancy_detail_path(@vacancy) if @details_link == true %>

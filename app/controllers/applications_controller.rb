@@ -31,7 +31,7 @@ class ApplicationsController < ApplicationController
           redirect_to latest_vacancies_path
         else
           flash[:notice] = "Now complete this questionnaire to complete your application."
-          redirect_to edit_application_path(@application)
+          redirect_to edit_my_application_path(@application)
         end   
       else
         @user = current_user
@@ -57,6 +57,13 @@ class ApplicationsController < ApplicationController
   
   def edit
     @application = Application.find(params[:id])
-    @title = "Complete application details"
+    @title = "Finalize application details"
+    @vacancy = Vacancy.find(@application.vacancy_id)
+    if @application.personal_statement.empty?
+      @characters_left = 255
+    else
+      @characters_left = 255 - @application.personal_statement.length
+    end
+    
   end
 end

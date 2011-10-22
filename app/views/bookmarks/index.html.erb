@@ -1,0 +1,36 @@
+<div class = "r-float">
+  <%= link_to "Job-search menu", jobsearch_menu_path %>
+</div>
+
+<h1><%= @title %></h1>
+
+<% if Application.no_bookmarks?(@user) %>
+  <div class="no_data round">
+    You have no bookmarked jobs - if you created some, then the application deadlines have now passed.
+  </div>
+<% else %>
+  <%= will_paginate @bookmarks %>
+  <table class= "smaller_font">
+    <tr>
+      <th>Ref</th>
+      <th>Job</th>
+      <th>Pay</th>
+      <th>Apply by</th>
+      <th></th>
+    </tr>
+    <% @bookmarks.each do |bookmark| %>
+    <tr> 
+      <td class="at_top grayline"><%= bookmark.vacancy.id %></td>
+      <td class="grayline"><%= bookmark.vacancy.headline %></td>
+      <td class="at_top grayline">£<%= number_with_delimiter(bookmark.vacancy.remuneration, :delimiter => ",") %><%= bookmark.vacancy.remuneration_rate %></td>
+      <td class="at_top grayline"><%= bookmark.vacancy.close_date.strftime("%b %d") %></td>
+      <td class="at_top grayline"><%= link_to image_tag("cancel.png", :size => "15x15"), bookmark_path(bookmark), 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Delete this bookmark" %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @bookmarks %>
+<% end %>

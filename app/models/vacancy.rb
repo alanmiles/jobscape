@@ -66,11 +66,20 @@ class Vacancy < ActiveRecord::Base
   end
   
   def self.latest
-    self.where("close_date >= ?", Date.today).order("created_at DESC").limit(10)
+    self.where("close_date >= ? and filled = ?", Date.today, false).order("created_at DESC").limit(10)
   end
   
   def self.all_current
     self.where("close_date > ? and filled = ?", Date.today, false).order("created_at DESC")
+  end
+  
+  def self.has_current?
+    @current = self.where("close_date > ? and filled = ?", Date.today, false).count
+    @current > 0
+  end
+  
+  def all_completed_applications
+    applications.where("next_action = ? and submitted = ?", 2, true)
   end
   
   def interest_from?(user)
@@ -80,8 +89,24 @@ class Vacancy < ActiveRecord::Base
   def application_from(user)
     Application.where("vacancy_id = ? and user_id = ?", self.id, user.id).first
   end
-   
+  
   def headline
     @headline = "#{self.job.job_title} / #{self.sector.sector} / #{self.job.business.city}"
+  end
+  
+  def remuneration
+    if annual_salary == nil
+      sprintf("%.2f", self.hourly_rate)
+    else
+      self.annual_salary
+    end
+  end
+  
+  def remuneration_rate
+    if annual_salary == nil
+      return "/hour"
+    else
+      return "/year"
+    end
   end
 end

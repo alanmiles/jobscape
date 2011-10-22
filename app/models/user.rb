@@ -239,6 +239,11 @@ class User < ActiveRecord::Base
     count_previousjobs >= 5
   end
   
+  def has_public_portrait?
+    @portrait = Portrait.where("user_id = ?", self.id).first
+    @portrait.public == true
+  end
+  
   def account_type
     if self.admin? 
       return "Admin"

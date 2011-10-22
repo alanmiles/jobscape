@@ -14,17 +14,23 @@
 #  employer_shortlist :boolean         default(FALSE)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  personal_statement :string(255)
 #
 
 class Application < ActiveRecord::Base
 
-  attr_accessible :submitted, :next_action, :submission_date, :employer_shortlist, :user_id
   
   belongs_to :vacancy
   belongs_to :user
   has_many :applicqualities, :dependent => :destroy
   has_many :applicresponsibilities, :dependent => :destroy
   has_many :applicrequirements, :dependent => :destroy
+  accepts_nested_attributes_for :applicqualities
+  accepts_nested_attributes_for :applicresponsibilities
+  accepts_nested_attributes_for :applicrequirements
+  
+  attr_accessible :submitted, :next_action, :submission_date, :employer_shortlist, :user_id, :personal_statement, :applicresponsibilities_attributes,
+                  :applicqualities_attributes, :applicrequirements_attributes
   
   ACTION_TYPES = [
     ["It's not for me, thanks.", 0],
@@ -50,6 +56,33 @@ class Application < ActiveRecord::Base
   
   def has_applicrequirements?
     self.applicrequirements.count > 0
+  end
+  
+  def self.bookmarks(user)
+    self.where("user_id = ? and next_action = ?", user.id, 1)
+  end
+  
+  def self.no_bookmarks?(user)
+    result = self.where("user_id = ? and next_action = ?", user.id, 1).count
+    result == 0
+  end
+  
+  def self.completed(user)
+    self.where("user_id = ? and next_action = ? and submitted = ?", user.id, 2, true)
+  end
+  
+  def self.none_made?(user)
+    result = self.completed(user).count
+    result == 0
+  end
+  
+  def self.incomplete(user)
+    self.where("user_id = ? and next_action = ? and submitted = ?", user.id, 2, false)
+  end
+  
+  def self.incomplete?(user)
+    result = self.incomplete(user).count
+    result == 0
   end
   
   private

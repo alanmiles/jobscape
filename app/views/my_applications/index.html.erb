@@ -1,0 +1,30 @@
+<div class = "r-float">
+  <%= link_to "Job-search menu", jobsearch_menu_path %>
+</div>
+
+<h1><%= @title %></h1>
+
+<% if Application.none_made?(@user) %>
+  <div class="no_data round">
+    You haven't applied for any jobs yet.
+  </div>
+<% else %>
+  <%= will_paginate @applications %>
+  <table class= "smaller_font">
+    <tr>
+      <th>Job</th>
+      <th>Submitted</th>
+    </tr>
+    <% @applications.each do |application| %>
+    <tr>
+      <td class="grayline">
+          <%= application.vacancy.headline %>. &nbsp;<i>(Ref #<%= application.vacancy.id %>)</i><br />
+          Salary: £<%= number_with_delimiter(application.vacancy.remuneration, :delimiter => ",") %><%= application.vacancy.remuneration_rate %>.<br />
+          Deadline: <%= application.vacancy.close_date.strftime("%b %d, %Y") %>.
+      </td>
+      <td class="at_top grayline"><%= application.submission_date.strftime("%b %d, %Y") %></td>
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @applications %>
+<% end %>

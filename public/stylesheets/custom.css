@@ -128,6 +128,17 @@ ul li.no_bullet {
   cursor: move;
 }
 
+.no_data {
+  margin: 75px 150px 0 150px;
+  padding: 50px;
+  font-size: 100%;
+  font-weight: bold;
+  color: #A33519;
+  border-style: solid;
+  border-color: #A33519;
+  border-width: 1px medium medium 1px; 
+}
+
 .display_text {
   margin-left: 75px;
   margin-right: 75px;
@@ -237,12 +248,20 @@ ul li.no_bullet {
   margin-left: 100px;
 }
 
+.shift_center_50 {
+  margin-left: 50px;
+}
+
 .shift_center_125 {
   margin-left: 125px;
 }
 
 .shift_center_200 {
   margin-left: 200px;
+}
+
+.shift_center_400 {
+  margin-left: 400px;
 }
 
 .pink {
@@ -395,6 +414,10 @@ table.profile {
 
 .extend_more {
   width: 65%;
+}
+
+.smaller_font {
+  font-size: 85%;
 }
 
 td.grayline {

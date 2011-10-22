@@ -16,7 +16,6 @@
 
 class Responsibility < ActiveRecord::Base
 
-  attr_accessible :definition, :removed, :created_by, :rating
   
   after_create :build_evaluation
   after_destroy :reset_job_value
@@ -25,6 +24,8 @@ class Responsibility < ActiveRecord::Base
   has_many :goals, :dependent => :destroy
   has_one :evaluation, :dependent => :destroy
   has_many :applicresponsibilities
+  
+  attr_accessible :definition, :removed, :created_by, :rating
   
   validates	:plan_id,	:presence 	=> true
   validates	:definition,	:presence 	=> true,

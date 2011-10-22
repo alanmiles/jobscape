@@ -1,4 +1,4 @@
-      <div class="display_wider grayborder round">
+<div class="display_wider grayborder round">
         <strong>
           <% if vacancy.quantity == 1 %>
             <%= vacancy.job.job_title %>
@@ -7,6 +7,7 @@
           <% end %>
            for <%= vacancy.sector.sector %> business, <%= vacancy.job.business.city %>.
         </strong>
+  
         <br />
         <% if vacancy.full_time? %>
           Full-time.  
@@ -44,10 +45,38 @@
            by <%= vacancy.close_date.strftime("%a %b %d, %Y") %>.
            &nbsp;<em>(<%= pluralize(vacancy.all_completed_applications.count, "application") %>)</em>
         </small>
-        <% if vacancy.interest_from?(current_user) %>
-          <% @vac = vacancy %>
-          <br /><span class="completed_label grun round"><%= your_application_status %></span>
-        <% end %>        
+        <br />
+        <span id="info", style ="cursor:help; color:#09c; font-size:85%">View job summary</span>
+        
+        <div id ="infotext" class="info_box_wide shift_center_50 beige round" style = "display:none; margin-top: 10px; width: 75%">
+          <%= @outline.role %><br /><br />
+          <%= @outline.qualities %><br /><br />
+          <%= @outline.importance %>
+          &nbsp; <span id = "no-info" style="color:#09c; cursor:n-resize">(Hide)</span>
+        </div>
+        
       </div>
    
+      
+      
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#info').click(function() {
+      $('#infotext').show('fast', function() {
+      // Animation complete.
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#infotext').hide('fast', function() {
+      // Animation complete.
+      });
+    });
+   }); 
+  <% end %>
+<% end %>
   

@@ -13,10 +13,17 @@
 
 class Applicresponsibility < ActiveRecord::Base
 
-  attr_accessible :applicant_score, :position
-  
   belongs_to :application
   belongs_to :responsibility
+  
+  attr_accessible :applicant_score, :position
+  
+  RESPONSIBILITY_SCORES = [
+    ["No training or experience", 0],
+    ["Trained but no experience", 1],
+    ["Some experience", 2],
+    ["Lots of experience", 3]
+  ]
   
   validates	:application_id,		:presence	=> true
   validates	:responsibility_id,		:presence 	=> true

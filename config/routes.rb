@@ -1,5 +1,11 @@
 Jobscape::Application.routes.draw do
 
+  get "incomplete_applications/index"
+
+  get "my_applications/index"
+
+  get "bookmarks/index"
+
   resources :users do
     resource :portrait, :shallow => true
     resources :achievements, :shallow => true do
@@ -89,6 +95,9 @@ Jobscape::Application.routes.draw do
     resources :applicresponsibilities, :shallow => true
     resources :applicrequirements, :shallow => true
   end
+  resources :bookmarks
+  resources :my_applications
+  resources :incomplete_applications
   namespace :officer do
     resources :businesses, :only => :destroy
     resources :vacancy_details,  :only => :show

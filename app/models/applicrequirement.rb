@@ -16,6 +16,12 @@ class Applicrequirement < ActiveRecord::Base
   attr_accessible :applicant_score, :position
   
   belongs_to :application
+  belongs_to :requirement
+  
+  REQUIREMENT_SCORES = [
+    ["No", 0],
+    ["Yes", 3]
+  ]
   
   validates	:application_id,		:presence	=> true
   validates	:requirement_id,		:presence 	=> true

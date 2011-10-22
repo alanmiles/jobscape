@@ -1,0 +1,67 @@
+<div class = "r-float">
+  <%= link_to "All incomplete applications", incomplete_applications_path %>
+</div>
+<h1><%= @title %></h1>
+
+
+<%= form_for(@application, :url => my_application_path(@application)) do |f| %>
+  <%= render 'brief_without_status', :vacancy => @vacancy %>
+  <br />
+  
+  <h4 class = "shallow" style="margin-left:25px">How would you cope with the job's key responsibilities?</h4>
+  <ul class="no_dec" style="margin-left:50px">
+    <%= f.fields_for :applicresponsibilities do |builder| %>  
+      <li style= "border-bottom: 1px solid #eee">
+        <span style="display:inline-block; width:60%">
+          <%= builder.object.responsibility.definition %>
+        </span>
+        <%= builder.select :applicant_score, @r_scores %>    
+      </li>
+    <% end %>
+  </ul>
+
+  <%= render "qualities", :f => f %>
+
+  <h4 class = "shallow" style="margin-left:25px">Can you meet these requirements?</h4>
+  <ul class="no_dec" style="margin-left:50px">
+    <%= f.fields_for :applicrequirements do |builder3| %> 
+      <li style= "border-bottom: 1px solid #eee">
+        <span style="display:inline-block; width:85%"><%= builder3.object.requirement.requirement %></span>
+        <%= builder3.select :applicant_score, @req_scores %>  
+      </li>
+    <% end %>
+  </ul>
+
+  <h4 class = "shallow" style="margin-left:25px">What makes you a great candidate for this job?</h4>
+  
+  <div class="field" style = "margin-left: 50px">
+    <%= f.text_area :personal_statement, :maxlength => 255, :cols => 60, :rows => 4 %>
+    <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  </div>
+  <%= f.hidden_field :submission_date %>
+  <div class="field shift_center_50" style="width: 70%">
+    <small>If you're happy with all your changes, check the 'Ready to submit' box, and your application will be
+    sent directly to the recruiting business, together with your self-portrait.</small><br /><br />
+    <%= f.label :submitted, "Ready to submit" %>
+    <%= f.check_box :submitted %>
+  </div>
+  <br />
+  <div class="actions" style= "margin-left: 50px">
+    <%= f.submit "Save your application" %>
+  </div>  
+<% end %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+   
+    $('#application_personal_statement').live('keyup keydown', function(e) {
+    var maxLen = 255;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+   }); 
+  <% end %>
+<% end %>
