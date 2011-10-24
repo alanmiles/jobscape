@@ -70,7 +70,7 @@ class Vacancy < ActiveRecord::Base
   end
   
   def self.all_current
-    self.where("close_date > ? and filled = ?", Date.today, false).order("created_at DESC")
+    self.where("close_date >= ? and filled = ?", Date.today, false).order("created_at DESC")
   end
   
   def self.has_current?

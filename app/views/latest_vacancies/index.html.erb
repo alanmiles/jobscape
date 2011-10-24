@@ -11,7 +11,13 @@
     </div>
   <% else %>
     <% if signed_in? %>
-      To bookmark or apply for one of these jobs, click on 'Full details'
+      <% if current_user.has_public_portrait? %>
+        To bookmark or apply for one of these jobs, click on 'Full details'
+      <% else %>
+        <i>Before you can apply for any of these vacancies, you need to complete 
+         your <%= link_to "Self-Portrait", user_portrait_path(current_user) %> and then make it public 
+       - the Portrait is the HYGWIT equivalent of a CV.</i>
+      <% end %>
     <% else %>
       Listed below are just the 10 latest HYGWIT jobs.  <%= link_to "Log in", signin_path %> or <%= link_to "sign up for a free account", signup_path %> to 
       apply - or search for the ideal job in your area.

@@ -15,7 +15,7 @@
   <%= @vacancy.notes unless @vacancy.notes.empty? %> <%= link_to "(Full details)", officer_vacancy_detail_path(@vacancy) if @details_link == true %>
   <br />
   <small>
-     Ref: <%= vacancy.id %> -  
+     Ref #<%= @vacancy.id %> -  
      Posted <%= time_ago_in_words(@vacancy.created_at) %> ago.  Apply by <%= @vacancy.close_date.strftime("%a %b %d, %Y") %>.
      <% if @vacancy.close_date < Date.today %>
        <span class="highlt">&nbsp; Close-date has now passed!&nbsp;</span>

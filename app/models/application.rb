@@ -2,19 +2,20 @@
 #
 # Table name: applications
 #
-#  id                 :integer         not null, primary key
-#  vacancy_id         :integer
-#  user_id            :integer
-#  next_action        :integer         default(0)
-#  submitted          :boolean         default(FALSE)
-#  submission_date    :date
-#  requirements_score :integer         default(0)
-#  qualities_score    :integer         default(0)
-#  portrait_score     :integer         default(0)
-#  employer_shortlist :boolean         default(FALSE)
-#  created_at         :datetime
-#  updated_at         :datetime
-#  personal_statement :string(255)
+#  id                     :integer         not null, primary key
+#  vacancy_id             :integer
+#  user_id                :integer
+#  next_action            :integer         default(0)
+#  submitted              :boolean         default(FALSE)
+#  submission_date        :date
+#  requirements_score     :integer         default(0)
+#  qualities_score        :integer         default(0)
+#  portrait_score         :integer         default(0)
+#  employer_shortlist     :boolean         default(FALSE)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  personal_statement     :string(255)
+#  responsibilities_score :integer         default(0)
 #
 
 class Application < ActiveRecord::Base
@@ -29,8 +30,9 @@ class Application < ActiveRecord::Base
   accepts_nested_attributes_for :applicresponsibilities
   accepts_nested_attributes_for :applicrequirements
   
-  attr_accessible :submitted, :next_action, :submission_date, :employer_shortlist, :user_id, :personal_statement, :applicresponsibilities_attributes,
-                  :applicqualities_attributes, :applicrequirements_attributes
+  attr_accessible :submitted, :next_action, :submission_date, :requirements_score, :qualities_score, :responsibilities_score, 
+  			:portrait_score, :employer_shortlist, :user_id, :personal_statement, :applicresponsibilities_attributes,
+                  	:applicqualities_attributes, :applicrequirements_attributes
   
   ACTION_TYPES = [
     ["It's not for me, thanks.", 0],
@@ -38,7 +40,13 @@ class Application < ActiveRecord::Base
     ["Yes, I'd like to apply now.", 2]
   ]
   
+  BOOKMARK_TYPES = [
+    ["Not applying yet - but leave bookmark in place.", 1],
+    ["Yes, I'd like to apply now.", 2]
+  ]
+  
   after_save :build_associated_tables
+  #after_save :calculate_scores
   
   validates	:vacancy_id,		:presence	=> true,
   					:uniqueness	=> { :scope => :user_id }
@@ -59,11 +67,11 @@ class Application < ActiveRecord::Base
   end
   
   def self.bookmarks(user)
-    self.where("user_id = ? and next_action = ?", user.id, 1)
+    self.joins(:vacancy).where("user_id = ? and next_action = ? and vacancies.close_date >= ?", user.id, 1, Date.today)
   end
   
   def self.no_bookmarks?(user)
-    result = self.where("user_id = ? and next_action = ?", user.id, 1).count
+    result = self.bookmarks(user).count
     result == 0
   end
   
@@ -77,12 +85,24 @@ class Application < ActiveRecord::Base
   end
   
   def self.incomplete(user)
-    self.where("user_id = ? and next_action = ? and submitted = ?", user.id, 2, false)
+    self.joins(:vacancy).where("user_id = ? and next_action = ? and submitted = ? and vacancies.close_date >= ?", user.id, 2, false, Date.today)
   end
   
   def self.incomplete?(user)
     result = self.incomplete(user).count
     result == 0
+  end
+  
+  def sum_of_qualities
+    self.applicqualities.sum(:applicant_score)
+  end
+  
+  def sum_of_requirements
+    self.applicrequirements.sum(:applicant_score)
+  end
+  
+  def sum_of_responsibilities
+    self.applicresponsibilities.sum(:applicant_score)
   end
   
   private
@@ -130,4 +150,19 @@ class Application < ActiveRecord::Base
         end  
       end
     end
+    
+    #def calculate_scores
+    #  if submitted == true
+    #    self.qualities_score = self.applicqualities.sum(:applicant_score)
+    #    self.requirements_score = self.applicrequirements.sum(:applicant_score)
+    #    self.save
+    #  else
+    #    if self.requirements_score > 0 || self.qualities_score > 0
+    #      self.requirements_score = 0
+    #      self.qualities_score = 0
+    #      self.save
+    #    end
+    #  end
+    
+    #end
 end

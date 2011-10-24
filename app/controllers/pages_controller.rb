@@ -63,6 +63,7 @@ class PagesController < ApplicationController
   end
   
   def jobsearch_menu
+    clear_return_to
     @title = "Job-Search menu"
     @user = current_user
   end

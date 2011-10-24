@@ -10,7 +10,13 @@
   </div>
 <% else %>
   <div class="display_wider">
-    To bookmark or apply for one of these jobs, click on 'Full details'
+    <% if current_user.has_public_portrait? %>
+      <i>To bookmark or apply for one of these jobs, click on 'Full details'.</i>
+    <% else %>
+      <i>Before you can apply for any of these vacancies, you need to complete 
+         your <%= link_to "Self-Portrait", user_portrait_path(current_user) %> and then make it public 
+       - the Portrait is the HYGWIT equivalent of a CV.</i> 
+    <% end %>
   </div>
   <%= will_paginate @vacancies %>
     <ul class="no_dec">

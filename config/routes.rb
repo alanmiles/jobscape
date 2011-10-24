@@ -1,11 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "incomplete_applications/index"
-
-  get "my_applications/index"
-
-  get "bookmarks/index"
-
   resources :users do
     resource :portrait, :shallow => true
     resources :achievements, :shallow => true do

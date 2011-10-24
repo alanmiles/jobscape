@@ -4,7 +4,7 @@ class ApplicationsController < ApplicationController
     @vacancy = Vacancy.find(params[:vacancy_id])
     @user = current_user
     @application = @vacancy.applications.build
-    @application.user_id = @user.id
+    @application.user_id = @user.id if signed_in?
     @actions = Application::ACTION_TYPES
     @job = Job.find(@vacancy.job_id)
     @outline = Outline.find_by_job_id(@job.id)
@@ -63,7 +63,7 @@ class ApplicationsController < ApplicationController
       @characters_left = 255
     else
       @characters_left = 255 - @application.personal_statement.length
-    end
-    
+    end   
   end
+  
 end

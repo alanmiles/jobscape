@@ -13,30 +13,6 @@
   Click on <%= image_tag("select.png", :size => "15x15") %> to complete your application or <%= image_tag("cancel.png", :size => "15x15") %> to remove it.<br />
   Incomplete applications are not shown if the submission deadline has passed.
   
-  <%= will_paginate @applications %>
-  <table class= "smaller_font">
-    <tr>
-      <th>Job</th>
-      <th>Submission<br />deadline</th>
-      <th></th>
-      <th></th>
-    </tr>
-    <% @applications.each do |application| %>
-    <tr>
-      <td class="grayline">
-          <%= application.vacancy.headline %>. &nbsp;<i>(Ref #<%= application.vacancy.id %>)</i><br />
-          Salary: £<%= number_with_delimiter(application.vacancy.remuneration, :delimiter => ",") %><%= application.vacancy.remuneration_rate %>.<br />
-      </td>
-      <td class="at_top grayline"><%= application.vacancy.close_date.strftime("%b %d, %Y") %></td>
-      <td class="at_top grayline"><%= link_to image_tag("select.png", :size => "15x15"), edit_my_application_path(application) %>
-      <td class="at_top grayline"><%= link_to image_tag("cancel.png", :size => "15x15"), incomplete_application_path(application), 
-                   :method => :delete, 
-                   :confirm => "You sure?",
-                   :title => "Delete this application" %>
-      </td>
-      
-    </tr>
-    <% end %>
-  </table>
-  <%= will_paginate @applications %>
+  <%= render "/applications/applications_list" %>
+
 <% end %>

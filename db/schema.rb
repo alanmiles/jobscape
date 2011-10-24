@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111019130006) do
+ActiveRecord::Schema.define(:version => 20111024110450) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -31,16 +31,17 @@ ActiveRecord::Schema.define(:version => 20111019130006) do
   create_table "applications", :force => true do |t|
     t.integer  "vacancy_id"
     t.integer  "user_id"
-    t.integer  "next_action",        :default => 0
-    t.boolean  "submitted",          :default => false
+    t.integer  "next_action",            :default => 0
+    t.boolean  "submitted",              :default => false
     t.date     "submission_date"
-    t.integer  "requirements_score", :default => 0
-    t.integer  "qualities_score",    :default => 0
-    t.integer  "portrait_score",     :default => 0
-    t.boolean  "employer_shortlist", :default => false
+    t.integer  "requirements_score",     :default => 0
+    t.integer  "qualities_score",        :default => 0
+    t.integer  "portrait_score",         :default => 0
+    t.boolean  "employer_shortlist",     :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "personal_statement"
+    t.integer  "responsibilities_score", :default => 0
   end
 
   create_table "applicqualities", :force => true do |t|

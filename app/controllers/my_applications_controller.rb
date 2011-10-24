@@ -22,6 +22,10 @@ class MyApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     if @application.update_attributes(params[:application])
       if @application.submitted?
+        @q_score = @application.sum_of_qualities
+        @r_score = @application.sum_of_requirements
+        @b_score = @application.sum_of_responsibilities
+        @application.update_attributes(:qualities_score => @q_score, :requirements_score => @r_score, :responsibilities_score => @b_score)
         flash[:success] = "Your application for job ref ##{@application.vacancy_id} has now been sent."
         redirect_to my_applications_path
       else

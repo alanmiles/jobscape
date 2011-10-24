@@ -1,0 +1,26 @@
+<div class = "r-float">
+  <%= link_to "All your bookmarked jobs", bookmarks_path %>
+</div>
+
+
+<h1><%= @title %></h1>
+<span class="highlt">Use the button at the bottom of the page if you want to apply for the job</span>
+<br /><br />
+<%= render "/vacancies/brief", :vacancy => @vacancy %>
+<br />
+<h4 style = "margin-bottom: 0px">Summary</h4>
+<%= render "/outlines/fields" %>
+<br />
+<%= render "/applications/specs" %>
+<hr />
+
+  <%= form_for(@application, :url => bookmark_path(@application)) do |f| %>
+    <span class= "action_label round">Want to apply for this job?</span>&nbsp;
+    <%= select :application, :next_action, @actions %>
+    <%= f.hidden_field :user_id %>
+    <br /><br />
+    <div class="actions rightpos" style = "margin-right:100px">
+      <%= f.submit "Continue" %>
+    </div>
+  
+  <% end %>  
