@@ -3,8 +3,9 @@ class IncompleteApplicationsController < ApplicationController
   def index
     @user = current_user
     @applications = Application.joins(:vacancy).where("user_id = ? and next_action = ? and 
-      submitted = ? and vacancies.close_date >= ?", @user, 2, false, Date.today).order("created_at DESC").paginate(:page => params[:page]) 
+      submitted = ? and vacancies.close_date >= ?", @user, 2, false, Date.today).order("updated_at DESC").paginate(:page => params[:page]) 
     @title = "Incomplete applications"
+    store_location
   end
   
   def destroy

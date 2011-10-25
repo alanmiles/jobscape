@@ -1,23 +1,3 @@
-# == Schema Information
-#
-# Table name: applications
-#
-#  id                     :integer         not null, primary key
-#  vacancy_id             :integer
-#  user_id                :integer
-#  next_action            :integer         default(0)
-#  submitted              :boolean         default(FALSE)
-#  submission_date        :date
-#  requirements_score     :integer         default(0)
-#  qualities_score        :integer         default(0)
-#  portrait_score         :integer         default(0)
-#  employer_shortlist     :boolean         default(FALSE)
-#  created_at             :datetime
-#  updated_at             :datetime
-#  personal_statement     :string(255)
-#  responsibilities_score :integer         default(0)
-#
-
 class Application < ActiveRecord::Base
 
   
@@ -46,13 +26,11 @@ class Application < ActiveRecord::Base
   ]
   
   after_save :build_associated_tables
-  #after_save :calculate_scores
   
   validates	:vacancy_id,		:presence	=> true,
   					:uniqueness	=> { :scope => :user_id }
   validates	:user_id,		:presence	=> true
   validates 	:next_action,		:presence	=> true
-  #					:inclusion	=> { :in => [0..2] }
   
   def has_applicqualities?
     self.applicqualities.count > 0
@@ -151,18 +129,25 @@ class Application < ActiveRecord::Base
       end
     end
     
-    #def calculate_scores
-    #  if submitted == true
-    #    self.qualities_score = self.applicqualities.sum(:applicant_score)
-    #    self.requirements_score = self.applicrequirements.sum(:applicant_score)
-    #    self.save
-    #  else
-    #    if self.requirements_score > 0 || self.qualities_score > 0
-    #      self.requirements_score = 0
-    #      self.qualities_score = 0
-    #      self.save
-    #    end
-    #  end
-    
-    #end
 end
+
+# == Schema Information
+#
+# Table name: applications
+#
+#  id                     :integer         not null, primary key
+#  vacancy_id             :integer
+#  user_id                :integer
+#  next_action            :integer         default(0)
+#  submitted              :boolean         default(FALSE)
+#  submission_date        :datetime
+#  requirements_score     :integer         default(0)
+#  qualities_score        :integer         default(0)
+#  portrait_score         :integer         default(0)
+#  employer_shortlist     :boolean         default(FALSE)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  personal_statement     :string(255)
+#  responsibilities_score :integer         default(0)
+#
+

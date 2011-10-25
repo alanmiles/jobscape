@@ -9,8 +9,8 @@
     <% @applications.each do |application| %>
     <tr>
       <td class="grayline">
-          <%= application.vacancy.headline %>. &nbsp;<i>(Ref #<%= application.vacancy.id %>)</i><br />
-          Salary: £<%= number_with_delimiter(application.vacancy.remuneration, :delimiter => ",") %><%= application.vacancy.remuneration_rate %>.<br />
+         <%= render '/applications/detail', :application => application %>
+         <em>(<%= pluralize(application.vacancy.all_completed_applications.count, "application") %>)</em>
       </td>
       <td class="at_top grayline"><%= application.vacancy.close_date.strftime("%b %d, %Y") %></td>
       <td class="at_top grayline">

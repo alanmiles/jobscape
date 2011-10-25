@@ -3,7 +3,7 @@
           <% if vacancy.quantity == 1 %>
             <%= vacancy.job.job_title %>
           <% else %>
-            <%= "#{vacancy.quantity} #{vacancy.job.job_title.pluralize}" %>
+            <%= "#{vacancy.quantity.to_s} #{vacancy.job.job_title.pluralize}" %>
           <% end %>
            for <%= vacancy.sector.sector %> business, <%= vacancy.job.business.city %>.
         </strong>

@@ -22,11 +22,23 @@ class Applicquality < ActiveRecord::Base
     ["It doesn't sound like me", 0],
     ["I'll be OK with experience", 1],
     ["I'm pretty good", 2],
-    ["One of my key strengths", 3]
+    ["One of my biggest strengths", 3]
   ]
   
   validates	:application_id,		:presence	=> true
   validates	:quality_id,			:presence 	=> true
   validates	:applicant_score,		:presence	=> true
-  						
+
+
+  def rating
+    if applicant_score == 0
+      return "It doesn't sound like me."
+    elsif applicant_score == 1
+      return "I'll be OK with experience."
+    elsif applicant_score == 2
+      return "I'm pretty good."
+    else
+      return "That's one of my biggest strengths."
+    end
+  end  						
 end

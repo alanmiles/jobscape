@@ -1,0 +1,58 @@
+<span id="show-guidance", style ="cursor:help; color:#09c; font-size:100%">Click to view GUIDANCE NOTES</span>
+
+       <div id ="guidance" class="info_box_wide shift_center_50 beige round" style = "display:none; margin-top: 10px; width: 75%">
+          Don't try to be someone who you're not.  If you get to interview, you'll be asked closely about the 
+          information you've provided here, and recruiters will quickly get a feel for the truth.  If you claim to
+          have had certain experience, you need to be able to back it up with hard evidence.  If you say that an
+          attribute is one of your key strengths, you can be sure that recruiters will check thoroughly before they hire.
+          (Make sure your Portrait shows a real likeness of you too; remember that's exactly the question we're going to
+          put first to the people you mentioned as references.)
+          <br /><br />
+          So doesn't this leave you in a difficult position?  How can you hope to be great at everything the business
+          is asking for?  The answer is that you DON'T need to be perfect in every way.  Probably most other applicants
+          won't be perfect either.  What the recruiter really wants to see is an applicant who's got the basic qualities
+          required, and who will be up and running in the job as quickly as possible.  But they also want to
+          see people who are clearly ready to learn and develop.  What nobody wants are fakes, or people who think they're
+          better than they really are.
+          <br /><br />
+          Most recruiters are busy people, and we've often heard them say that they only spend around a minute on each
+          application to decide which to keep and which to discard.  So you have to make a good first impression.  Make sure
+          that the <em>'Achievements'</em> section of your portrait is as strong as you can make it; remember that achievements in
+          your personal life can be included too.  Also important is the section at the end of the application: 
+          <em>What makes you a great candidate?</em>  Keep it short; don't brag too much, but tell them something that'll make them
+          remember you from all the other applications they see.
+          <br /><br />
+          One final tip worth trying.  If you have a good LinkedIn profile, or Facebook, Twitter, or any of the other social 
+          media sites - where you think your strengths and interests are clearly on view, and perhaps where people praise you 
+          for the good job you've done, then include a link in your Portrait ... in the notes in the <em>'And finally ...'</em> section.
+          <br /><br />
+          Best of luck with your application.  Don't expect answers too soon.  Remember that most recruiters will wait till
+          the close-date till they start looking closely at applications. But you should hear eventually: interview or not?
+          We try to may it a rule for that recruiting businesses let you know one way or the other - and if they haven't 
+          a reasonable time after the close-date, we'll keep bugging them to get back to all applicants.  We'll know!
+          <br /><br />
+          But in the meantime, while you're waiting, what's stopping you from running a new search for that great job you want?
+          Right now!
+          
+          &nbsp; <span id = "no-guidance" style="color:#09c; cursor:n-resize">(Hide)</span>
+        </div>
+        
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#show-guidance').click(function() {
+      $('#guidance').show('fast', function() {
+      });
+    });
+    
+    $('#no-guidance').click(function() {
+      $('#guidance').hide('fast', function() {
+      });
+    });
+   }); 
+  <% end %>
+<% end %>
+  

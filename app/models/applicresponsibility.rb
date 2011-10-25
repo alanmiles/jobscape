@@ -28,5 +28,18 @@ class Applicresponsibility < ActiveRecord::Base
   validates	:application_id,		:presence	=> true
   validates	:responsibility_id,		:presence 	=> true
   validates	:applicant_score,		:presence	=> true
+  
+  
+  def rating
+    if applicant_score == 0
+      return "I have no training or experience."
+    elsif applicant_score == 1
+      return "I'm trained but have no experience."
+    elsif applicant_score == 2
+      return "I've had some experience."
+    else
+      return "I'm very experienced."
+    end
+  end
   						
 end

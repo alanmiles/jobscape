@@ -9,20 +9,32 @@
     You haven't applied for any jobs yet.
   </div>
 <% else %>
+  <div class="display_wider">
+    <em>Click on <%= image_tag("select.png", :size => "15x15") %> to review or edit your application
+        or <%= image_tag("cancel.png", :size => "15x15") %> to remove it.</em>
+  </div>
   <%= will_paginate @applications %>
   <table class= "smaller_font">
     <tr>
       <th>Job</th>
       <th>Submitted</th>
+      <th></th>
+      <th></th>
     </tr>
     <% @applications.each do |application| %>
     <tr>
       <td class="grayline">
-          <%= application.vacancy.headline %>. &nbsp;<i>(Ref #<%= application.vacancy.id %>)</i><br />
-          Salary: £<%= number_with_delimiter(application.vacancy.remuneration, :delimiter => ",") %><%= application.vacancy.remuneration_rate %>.<br />
-          Deadline: <%= application.vacancy.close_date.strftime("%b %d, %Y") %>.
+          <%= render "/applications/detail", :application => application %>
+          <em>(<%= pluralize(application.vacancy.all_completed_applications.count, "application") %> - 
+          Deadline: <%= application.vacancy.close_date.strftime("%b %d, %Y") %>.)</em>
       </td>
       <td class="at_top grayline"><%= application.submission_date.strftime("%b %d, %Y") %></td>
+      <td class="at_top grayline"><%= link_to image_tag("select.png", :size => "15x15"), my_application_path(application) %></td>
+      <td class="at_top grayline"><%= link_to image_tag("cancel.png", :size => "15x15"), my_application_path(application), 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Cancel your application." %>
+      </td>
     </tr>
     <% end %>
   </table>

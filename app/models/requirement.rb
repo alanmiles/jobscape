@@ -24,5 +24,5 @@ class Requirement < ActiveRecord::Base
   				:uniqueness	=> { :scope => :plan_id },
   				:length 	=> { :maximum => 50 } 				
   
-  
+ 
 end

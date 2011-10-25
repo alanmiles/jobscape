@@ -32,7 +32,7 @@
                 <%= link_to "(Review job details & apply)", edit_bookmark_path(vacancy.application_from(current_user)) %>
               <% else %>
                 <% if vacancy.application_from(current_user).submitted? %>
-                  <%= link_to "(Review your application)", "#" %>
+                  <%= link_to "(Review your application)", my_application_path(vacancy.application_from(current_user)) %>
                 <% else %>
                   <%= link_to "(Continue with application)", edit_my_application_path(vacancy.application_from(current_user)) %>
                 <% end %>
@@ -46,7 +46,7 @@
         
         <small>
            Ref #<%= vacancy.id %> -  
-           Posted <%= time_ago_in_words(vacancy.created_at) %> ago.  Apply
+           Posted <%= local_time_ago_in_words(vacancy.created_at) %>.  Apply
            by <%= vacancy.close_date.strftime("%a %b %d, %Y") %>.
            &nbsp;<em>(<%= pluralize(vacancy.all_completed_applications.count, "application") %>)</em>
         </small>

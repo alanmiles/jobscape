@@ -2,7 +2,7 @@ class BookmarksController < ApplicationController
   
   def index
     @user = current_user
-    @applications = Application.bookmarks(@user).paginate(:page => params[:page]) 
+    @applications = Application.bookmarks(@user).order("updated_at DESC").paginate(:page => params[:page]) 
     @title = "Your bookmarked jobs"
   end
 

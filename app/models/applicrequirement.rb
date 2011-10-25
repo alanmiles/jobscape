@@ -26,5 +26,12 @@ class Applicrequirement < ActiveRecord::Base
   validates	:application_id,		:presence	=> true
   validates	:requirement_id,		:presence 	=> true
   validates	:applicant_score,		:presence	=> true
-  						
+  	
+  def rating
+    if applicant_score == 0
+      return "No"
+    else
+      return "Yes"
+    end
+  end					
 end

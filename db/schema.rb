@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20111024110450) do
     t.integer  "user_id"
     t.integer  "next_action",            :default => 0
     t.boolean  "submitted",              :default => false
-    t.date     "submission_date"
+    t.datetime "submission_date"
     t.integer  "requirements_score",     :default => 0
     t.integer  "qualities_score",        :default => 0
     t.integer  "portrait_score",         :default => 0

@@ -1,0 +1,16 @@
+          <%= application.vacancy.headline %>. &nbsp;<i>(Ref #<%= application.vacancy.id %>)</i><br />
+          <% if application.vacancy.full_time? %>
+            Full-time.  
+          <% else %>
+            Part-time. 
+          <% end %>
+          <% if application.vacancy.voluntary? %>
+            Voluntary work.
+          <% else %>
+            Salary: £<%= number_with_delimiter(application.vacancy.remuneration, :delimiter => ",") %><%= application.vacancy.remuneration_rate %>.
+          <% end %>
+          <br />
+          <% unless application.vacancy.notes.empty? %> 
+            <%= application.vacancy.notes %>
+            <br />
+          <% end %> 

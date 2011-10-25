@@ -211,6 +211,25 @@ ul li.no_bullet {
   overflow: auto;
 }
 
+.info_box_screen {
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 10px;
+  /* width: 60%; */
+  /* height: 18em; */
+  padding: 10px 15px;
+  font-size: 90%;
+ /* overflow: auto;*/
+
+}
+
+.wide_label {
+  width: 60%; 
+  padding: 5px 90px 5px 5px; 
+  font-size: 85%; 
+  font-weight: bold;
+}
+
 .two_column {
   margin-left: 15px;
   margin-right: 15px;
@@ -454,6 +473,10 @@ td.centralize {
 
 td.at_top {
   vertical-align: top;
+}
+
+td.width_65 {
+  width: 65%;
 }
 
 .numeric {

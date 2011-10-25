@@ -1,1 +1,1 @@
-#Geocoder::Configuration.cache = Redis.new
+Geocoder::Configuration.cache = Redis.new

@@ -60,6 +60,7 @@ class PagesController < ApplicationController
     @title = "Jobseeker Home"
     @user = current_user
     session[:jobid] = nil
+    clear_return_to
   end
   
   def jobsearch_menu
@@ -96,6 +97,7 @@ class PagesController < ApplicationController
   def user_home
     @title = "User Home"
     @user = current_user
+    clear_return_to
     if @user.has_private_business?
       @business = @user.private_business
       session[:biz] = @business.id
