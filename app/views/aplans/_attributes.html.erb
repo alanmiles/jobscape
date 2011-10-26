@@ -1,0 +1,33 @@
+<strong>KEY ATTRIBUTES</strong> (most important at the top)</em></small>
+&nbsp; <span class="show_pams" style = "cursor:help; color: #09c">(Show / Hide Grades)</span>
+
+<div class= "display_wider" >
+  <ol>
+    <% @jobqualities.each do |jobquality| %>
+      <li class= "no_bullet"><%= jobquality.quality.quality %></li>
+    
+        <ul class="pamtext" style="display: none">
+          <% jobquality.quality.pams.each do |pam| %>
+            <li style = "font-size: 12px"><%= pam.grade %> &nbsp; <%= pam.descriptor %></li>
+          <% end %>
+        </ul>
+    <% end %>
+    <span class="show_pams shift_center_400" style = "cursor:help; color: #09c">(Show / Hide Grades)</span>
+  </ol>
+</div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+   
+   $(document).ready(function(){
+   
+    $('.show_pams').click(function() {
+      $('.pamtext').toggle('fast', function() {
+      });
+    });
+   
+   });
+    
+  <% end %>
+<% end %>

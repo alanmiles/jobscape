@@ -109,7 +109,7 @@ class PagesController < ApplicationController
   end
     
   def my_job
-    @title = "My Job"
+    @title = "Your Job"
     @user = current_user
     @business = Business.find(session[:biz])
     @business.remove_disconnected_jobs

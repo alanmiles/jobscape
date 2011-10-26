@@ -22,7 +22,11 @@
                For example, for the responsibility 'Preparing the monthly payroll', goals might include:- <br />
                 "Signed off at least 4 working days before month-end."<br />
                 "No more than 3 errors or justifiable complaints in any month" <br /><br />
-               You can set up to 3 goals for each responsibility. &nbsp; <span id = "no-info" style="color:blue; cursor:n-resize">(Hide)</span>
+               You can set up to 3 goals for each responsibility. 
+               <br /><br />
+               Don't forget, it's best if employee and direct manager work together to build the A-Plan,
+               reaching agreement about the priorities and the standard of performance expected. &nbsp;
+               &nbsp; <span id = "no-info" class="hide_link">(Hide)</span>
       </div>
       <%= f.text_area :objective, :maxlength => 140, :cols => 50, :rows => 4 %>
       <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
@@ -38,6 +42,8 @@
 
   <%= javascript_tag do %>
 
+   $(document).ready(function(){
+   
     $('#goal_objective').live('keyup keydown', function(e) {
     var maxLen = 140;
     var left = maxLen - $(this).val().length;
@@ -55,6 +61,6 @@
       // Animation complete.
       });
     });
-    
+   }); 
   <% end %>
 <% end %>

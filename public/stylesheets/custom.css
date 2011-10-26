@@ -74,6 +74,11 @@ a:visited {
 
 /* Navigation */
 
+.hide_link {
+  color:#09c; 
+  cursor:n-resize;
+}
+
 nav {
   float: right;
 }

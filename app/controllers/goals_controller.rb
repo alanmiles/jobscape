@@ -59,7 +59,7 @@ class GoalsController < ApplicationController
     else
       if @goal.update_attributes(params[:goal])
         @goal.update_attribute(:updated_by, current_user.id)
-        flash[:success] = "Successfully updated."
+        flash[:success] = "Goal successfully updated."
         redirect_to @responsibility
       else
         @title = "Edit goal"

@@ -1,0 +1,23 @@
+<div class = "r-float">
+  <% if current_user.account == 1 %>
+    <%= link_to "#{@job.job_title} menu", my_job_path %>
+  <% else %>
+    <%= link_to "#{@job.job_title} menu", @job %> <br />
+    <%= link_to "All jobs in business", business_jobs_path(@business) unless current_user.account == 1 %>
+  <% end %>
+</div>
+
+<h1><%= @title %></h1>
+<h4><%= @job.job_title %></h4>
+
+<strong>SUMMARY</strong>
+<%= render "/outlines/fields" %>
+
+<hr />
+<%= render "responsibilities" %>
+
+<hr />
+<%= render "attributes" %>
+<hr />
+
+<%= render "requirements" %>

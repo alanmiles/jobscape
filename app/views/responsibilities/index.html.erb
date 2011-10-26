@@ -7,7 +7,7 @@
 <%= link_to "Back to A-Plan menu", @plan %>
 </div>
 
-<h1>Responsibilities:
+<h1>Responsibilities
   <% if @plan.responsibilities_ready? && @plan.goals_complete?  && @plan.ratings_complete? %>
     &nbsp;<span class="success_marker round">ready to use</span>
   <% end %>

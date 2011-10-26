@@ -203,6 +203,8 @@
 
   <%= javascript_tag do %>
     
+   $(document).ready(function(){
+    
     $('#info').click(function() {
       $('#infotext').show('fast', function() {
       });
@@ -212,6 +214,7 @@
       $('#infotext').hide('fast', function() {
       });
     });
-    
+   });
+   
   <% end %>
 <% end %>

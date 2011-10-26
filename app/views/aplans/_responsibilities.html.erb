@@ -1,0 +1,35 @@
+<strong>MAIN RESPONSIBILITIES</strong>
+&nbsp; <span class="show_goals" style = "cursor:help; color: #09c">(Show / Hide Goals)</span>
+
+
+<div class= "display_wider" >
+  <ol>
+    <% @responsibilities.each do |responsibility| %>
+      <li class= "no_bullet"><%= responsibility.definition %> (<%= responsibility.rating %>)</li>
+ 
+        <ul class="goaltext" style="display: none">
+          <% responsibility.goals.each do |goal| %>
+            <li style = "font-size: 12px" ><%= goal.objective %></li>
+          <% end %>
+        </ul>
+    <% end %>
+    <span class="show_goals shift_center_400" style = "cursor:help; color: #09c">(Show / Hide Goals)</span>
+  </ol>
+  
+</div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+   
+   $(document).ready(function(){
+   
+    $('.show_goals').click(function() {
+      $('.goaltext').toggle('fast', function() {
+      });
+    });
+   
+   });
+    
+  <% end %>
+<% end %>

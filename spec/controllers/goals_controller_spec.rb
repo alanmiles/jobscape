@@ -364,7 +364,7 @@ describe GoalsController do
 
             it "should have a flash message" do
               put :update, :id => @goal, :goal => @attr
-              flash[:success].should == "Successfully updated."
+              flash[:success].should == "Goal successfully updated."
             end
           end
         

@@ -1,0 +1,2 @@
+module AplansHelper
+end

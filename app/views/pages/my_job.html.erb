@@ -7,8 +7,15 @@
 <div class="menu_box grayborder round">
   <br /> 
   <ul>
-    <li class="no_bullet"><%= link_to "Create / update", plan_path(@plan) %> your Achievement Plan</li>
-    <li class="no_bullet">View the complete Achievement Plan</li>
-    <li class="no_bullet">Appraise your own performance</li>
+    <% if @plan.complete? %>
+      <li class="no_bullet"><%= link_to "Update your Achievement Plan", plan_path(@plan) %></li>
+      <li class="no_bullet"><%= link_to "View the complete Achievement Plan", aplan_path(@plan) %></li>
+      <li class="no_bullet">Appraise your own performance</li>
+      <li class="no_bullet">Your appraisal history</li>
+    <% else %>
+      <li class="no_bullet"><%= link_to "Build", plan_path(@plan) %> your Achievement Plan</li>
+      <li class="no_bullet" style ="color:#BBB">View the complete Achievement Plan <small><em>(when A-Plan is complete)</em></small></li>
+      <li class="no_bullet" style ="color:#BBB">Appraise your own performance <small><em>(when A-Plan is complete)</em></small></li>
+    <% end %>
   </ul>
 </div>

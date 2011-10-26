@@ -50,7 +50,7 @@ class ResponsibilitiesController < ApplicationController
         if @plan.count_responsibilities == 20
           flash[:notice] = "You've now set the maximum number of responsibilities for the job" 
         else
-          flash[:success] = "Responsibility added - now add up to 3 goals, and then set the Rating."
+          flash[:success] = "Responsibility added - #{@plan.count_responsibilities} in total so far.  Now add up to 3 goals, and then set the Rating."
         end
         redirect_to @responsibility
       else
@@ -95,7 +95,7 @@ class ResponsibilitiesController < ApplicationController
     @plan = Plan.find_by_job_id(@job.id)
     #Add condition to hide not delete if previous used in appraisal
     @responsibility.destroy
-    flash[:success] = "Responsibility successfully deleted."
+    flash[:success] = "Responsibility successfully deleted - #{@plan.count_responsibilities} now listed."
     redirect_to plan_responsibilities_path(@plan)
   end
   

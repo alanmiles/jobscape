@@ -69,7 +69,7 @@ describe JobqualitiesController do
       it "should refer to the job title and business" do
         get :index, :plan_id => @plan.id
         response.should have_selector("h4", 
-           :content => "for #{@job.job_title} - #{@business.name}, #{@business.city}")  
+           :content => "for #{@job.job_title}")  
       end
         
       it "should have an 'add an attribute' link (if < 10 attributes)" do

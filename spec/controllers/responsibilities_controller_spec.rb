@@ -325,7 +325,7 @@ describe ResponsibilitiesController do
       
             it "should have a success message" do
               post :create, :plan_id => @plan.id, :responsibility => @attr
-              flash[:success].should == "Responsibility added - now add up to 3 goals, and then set the Rating."
+              flash[:success].should =~ /now add up to 3 goals, and then set the Rating./i
             end    
        
             it "should be connected to the correct plan" do
@@ -633,7 +633,7 @@ describe ResponsibilitiesController do
         
             it "should have a success message" do
               delete :destroy, :id => @responsibility
-              flash[:success].should == "Responsibility successfully deleted."
+              flash[:success].should =~ /Responsibility successfully deleted/i
             end
           end
         end

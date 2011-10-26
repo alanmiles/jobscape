@@ -146,6 +146,10 @@ class Plan < ActiveRecord::Base
     self.requirements.order("position").limit(5)
   end
   
+  def current_responsibilities
+    self.responsibilities.where("responsibilities.removed = ?", false).order("responsibilities.rating DESC")
+  end
+  
   private
   
     def build_outline

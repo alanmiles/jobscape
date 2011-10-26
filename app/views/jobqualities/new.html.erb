@@ -3,7 +3,7 @@
 <%= link_to "Cancel", plan_jobqualities_path(@plan) %>
 </div>
 <h1>Select a Personal Attribute</h1>
-<h4>for <%= @job.title_location %></h4>
+<h4>for <%= @job.job_title %></h4>
 
 <%= form_for([@plan, @jobquality]) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
