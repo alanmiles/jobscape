@@ -60,6 +60,11 @@ class User < ActiveRecord::Base
   has_many :jobs, :through => :placements
   has_many :applications, :dependent => :destroy
   
+  has_many :reviewed_sessions, :foreign_key => "reviewee_id", :class_name => "Review", :dependent => :destroy
+  has_many :reviewees, :through => :reviewed_sessions
+  has_many :reviewer_sessions, :foreign_key => "reviewer_id", :class_name => "Review"
+  has_many :reviewers, :through => :reviewer_sessions
+  
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }
   validates :email,	:presence	=> true,

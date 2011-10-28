@@ -1,0 +1,143 @@
+<div class = "r-float">
+  <%= link_to "#{@job.job_title} menu", my_job_path %>
+</div>
+
+<h1><%= @title %></h1>
+
+<p class = "display_text grayborder round cntr">
+  <%= @user.name %> - 
+  <%= @job.job_title %>
+</p>
+<div class="infotext">
+  <div id="reason" class="info_box_wide beige round rightpos" style = "display:none">
+    The HYGWIT performance review mirrors your Achievement Plan.  It's
+    now that we find out whether you've got what it takes to make
+    a success of your job.  Are you hitting the targets that you and your
+    manager set?  If not, then what are you going to do about it?  The review has two parts.
+    First, there's scoring: which targets did you hit?  Second, there's planning: what needs to change
+    if you're going to achieve more next time?
+  </div>
+  <div id="often" class="info_box_wide beige round rightpos" style = "display:none">
+    Frequently!  Commonly, businesses have annual performance reviews.  But a
+    year is much too long to wait if targets aren't being hit. The damage will have been
+    done. HYGWIT makes reviews easy - and there's no paperwork.  So make it a habit to
+    review every three months - or less if you're new in the job, or the job has changed.
+  </div>
+  <div id="reviewers" class="info_box_wide beige round rightpos" style = "display:none">
+    The scoring phase of a HYGWIT review is relatively easy.  You're dealing with objective facts. 
+    Have you hit the targets in the A-Plan or not? Yes or no? So it's easy to score your own performance. 
+    But in the planning phase, it's useful to have a second opinion as you work out how you can best
+    improve the results next time.  That's why it's useful to ask your manager or a trusted colleague 
+    to join you in a review session from time to time. 
+  </div>
+  <div id="time" class="info_box_wide beige round rightpos" style = "display:none">
+    For a first-timer, scoring the review might take around 20 minutes, but with practice you'll
+    be doing it in half the time.  Remember though that scoring is just the starting-point.
+    In a good review session, you'll spend just as long - or longer - thinking about the results and
+    planning the next few weeks' work.  If you're hitting the targets easily, is it time to set new
+    goals and aim higher? Are there new responsibilities you need to add to the A-Plan or old ones
+    you need to remove?  And how will you fix the areas where you're failing?
+  </div>
+</div>
+<div class="questions" style = "font-size: 90%; color: #09c; margin-left: 10px; padding-top:10px">
+  <span id="why", style ="cursor:help">Why review performance?</span><br />
+  <span id="frequency", style ="cursor:help">How often should it happen?</span><br />
+  <span id="who", style ="cursor:help">Who should review?</span><br />
+  <span id="length", style ="cursor:help">How long does it take?</span><br />
+</div>
+<br />
+
+<%= form_for(@review, :url => self_appraisals_path(@review)) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :reviewer_name %> <br />
+    <small>Change the name if someone else is reviewing your performance this time.</small><br />
+    <%= f.text_field :reviewer_name, :size => 40 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :reviewer_email %> <small><br />
+    If added, we'll direct your reviewer to a special HYGWIT page for the review.<br />
+    Not necessary if this is a self-appraisal.</small><br />
+    <%= f.text_field :reviewer_email, :size => 40 %>
+  </div>
+  <%= f.hidden_field :job_id %>
+  <%= f.hidden_field :reviewee_id %>
+  <%= f.hidden_field :reviewer_id %>
+
+    <div class="actions">
+      <%= f.submit "Continue" %>
+    </div>
+ 
+<% end %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#why').click(function() {
+      $('#frequency').css("font-weight","normal");
+      $('#who').css("font-weight","normal");
+      $('#length').css("font-weight","normal");
+      $('#why').css("font-weight","bold");
+      $('#often').hide('fast', function() {
+        $('#reviewers').hide('fast', function() {
+          $('#time').hide('fast', function() {
+            $('#reason').show('fast', function() {
+            });
+          });
+        });
+      });
+    });
+    
+    $('#frequency').click(function() {
+      $('#why').css("font-weight","normal");
+      $('#who').css("font-weight","normal");
+      $('#length').css("font-weight","normal");
+      $('#frequency').css("font-weight","bold");
+      $('#reason').hide('fast', function() {
+        $('#reviewers').hide('fast', function() {
+          $('#time').hide('fast', function() {
+            $('#often').show('fast', function() {
+            });
+          });
+        });  
+      });
+    });
+    
+    $('#who').click(function() {
+      $('#why').css("font-weight","normal");
+      $('#frequency').css("font-weight","normal");
+      $('#length').css("font-weight","normal");
+      $('#who').css("font-weight","bold");
+      $('#reason').hide('fast', function() {
+        $('#often').hide('fast', function() {
+          $('#time').hide('fast', function() {
+            $('#reviewers').show('fast', function() {
+            });
+          });   
+        });  
+      });
+    });
+    
+    $('#length').click(function() {
+      $('#why').css("font-weight","normal");
+      $('#frequency').css("font-weight","normal");
+      $('#who').css("font-weight","normal");
+      $('#length').css("font-weight","bold");
+      $('#reason').hide('fast', function() {
+        $('#often').hide('fast', function() {
+          $('#reviewers').hide('fast', function() {
+            $('#time').show('fast', function() {
+            });
+          });
+        });  
+      });
+    });
+    
+   });
+   
+  <% end %>
+<% end %>

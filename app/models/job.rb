@@ -25,6 +25,8 @@ class Job < ActiveRecord::Base
   has_many :applications, :through => :vacancies
   has_many :placements, :dependent => :destroy
   has_many :users, :through => :placements
+  has_many :jobqualities, :through => :plan
+  has_many :responsibilities, :through => :plan
   
   validates :job_title, :presence 	=> true,
   			:length		=> { :maximum => 50 },

@@ -18,6 +18,7 @@ class Goal < ActiveRecord::Base
   attr_accessible :objective, :removed, :created_by
   
   belongs_to :responsibility
+  has_many :reviewgoals
   
   validates	:responsibility_id,	:presence 	=> true
   validates	:objective,		:presence 	=> true,

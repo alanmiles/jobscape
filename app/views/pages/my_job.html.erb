@@ -10,7 +10,7 @@
     <% if @plan.complete? %>
       <li class="no_bullet"><%= link_to "Update your Achievement Plan", plan_path(@plan) %></li>
       <li class="no_bullet"><%= link_to "View the complete Achievement Plan", aplan_path(@plan) %></li>
-      <li class="no_bullet">Appraise your own performance</li>
+      <li class="no_bullet"><%= link_to "Appraise your own performance", new_self_appraisal_path %></li>
       <li class="no_bullet">Your appraisal history</li>
     <% else %>
       <li class="no_bullet"><%= link_to "Build", plan_path(@plan) %> your Achievement Plan</li>

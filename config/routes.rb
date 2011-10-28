@@ -1,7 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "aplans/show"
-
   resources :users do
     resource :portrait, :shallow => true
     resources :achievements, :shallow => true do
@@ -101,6 +99,8 @@ Jobscape::Application.routes.draw do
   resources :latest_vacancies, :only => :index
   resources :current_vacancies, :only => :index
   resources :aplans
+  resources :reviews
+  resources :self_appraisals
   
   match '/signup',  		:to => 'users#new'
   match '/signin',  		:to => 'sessions#new'

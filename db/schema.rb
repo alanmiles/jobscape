@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111024110450) do
+ActiveRecord::Schema.define(:version => 20111028115925) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -289,6 +289,61 @@ ActiveRecord::Schema.define(:version => 20111024110450) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "reviewgoals", :force => true do |t|
+    t.integer  "reviewresponsibility_id"
+    t.integer  "goal_id"
+    t.boolean  "achieved",                :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reviewqualities", :force => true do |t|
+    t.integer  "review_id"
+    t.integer  "quality_id"
+    t.integer  "position"
+    t.integer  "reviewer_score", :default => 0
+    t.integer  "adjusted_score", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reviewresponsibilities", :force => true do |t|
+    t.integer  "review_id"
+    t.integer  "responsibility_id"
+    t.integer  "position"
+    t.integer  "rating_value"
+    t.integer  "total_goals"
+    t.integer  "achieved_goals",    :default => 0
+    t.float    "achievement_score", :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reviews", :force => true do |t|
+    t.integer  "reviewee_id"
+    t.integer  "reviewer_id"
+    t.string   "reviewer_name"
+    t.string   "reviewer_email"
+    t.string   "secret_code"
+    t.integer  "job_id"
+    t.integer  "responsibilities_score",  :default => 0
+    t.integer  "attributes_score",        :default => 0
+    t.string   "achievements"
+    t.string   "problems"
+    t.string   "observations"
+    t.string   "change_responsibilities"
+    t.string   "change_goals"
+    t.string   "change_attributes"
+    t.string   "plan"
+    t.boolean  "completed",               :default => false
+    t.datetime "completion_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reviews", ["reviewee_id"], :name => "index_reviews_on_reviewee_id"
+  add_index "reviews", ["reviewer_id"], :name => "index_reviews_on_reviewer_id"
 
   create_table "sectors", :force => true do |t|
     t.string   "sector"

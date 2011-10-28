@@ -24,6 +24,7 @@ class Responsibility < ActiveRecord::Base
   has_many :goals, :dependent => :destroy
   has_one :evaluation, :dependent => :destroy
   has_many :applicresponsibilities
+  has_many :reviewresponsibilities
   
   attr_accessible :definition, :removed, :created_by, :rating
   
@@ -58,7 +59,7 @@ class Responsibility < ActiveRecord::Base
   end
   
   def count_current_goals
-    self.goals.count(:conditions => ["removed =?", false])
+    self.goals.where("goals.removed = ?", false).count
   end
   
   def has_goals?
