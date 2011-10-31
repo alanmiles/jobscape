@@ -2,26 +2,29 @@
 #
 # Table name: reviews
 #
-#  id                      :integer         not null, primary key
-#  reviewee_id             :integer
-#  reviewer_id             :integer
-#  reviewer_name           :string(255)
-#  reviewer_email          :string(255)
-#  secret_code             :string(255)
-#  job_id                  :integer
-#  responsibilities_score  :integer         default(0)
-#  attributes_score        :integer         default(0)
-#  achievements            :string(255)
-#  problems                :string(255)
-#  observations            :string(255)
-#  change_responsibilities :string(255)
-#  change_goals            :string(255)
-#  change_attributes       :string(255)
-#  plan                    :string(255)
-#  completed               :boolean         default(FALSE)
-#  completion_date         :datetime
-#  created_at              :datetime
-#  updated_at              :datetime
+#  id                        :integer         not null, primary key
+#  reviewee_id               :integer
+#  reviewer_id               :integer
+#  reviewer_name             :string(255)
+#  reviewer_email            :string(255)
+#  secret_code               :string(255)
+#  job_id                    :integer
+#  responsibilities_score    :integer         default(0)
+#  attributes_score          :integer         default(0)
+#  achievements              :string(255)
+#  problems                  :string(255)
+#  observations              :string(255)
+#  change_responsibilities   :string(255)
+#  change_goals              :string(255)
+#  change_attributes         :string(255)
+#  plan                      :string(255)
+#  responsibilities_complete :boolean         default(FALSE)
+#  qualities_complete        :boolean         default(FALSE)
+#  comments_complete         :boolean         default(FALSE)
+#  completed                 :boolean         default(FALSE)
+#  completion_date           :datetime
+#  created_at                :datetime
+#  updated_at                :datetime
 #
 
 class Review < ActiveRecord::Base
@@ -38,8 +41,8 @@ class Review < ActiveRecord::Base
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
-  attr_accessible :reviewee_id, :reviewer_id, :reviewer_name, :job_id, :completion_date, :reviewer_email, :secret_code, 
-  		 :reviewresponsibilities_attributes, :reviewqualities_attributes
+  attr_accessible :reviewee_id, :reviewer_id, :reviewer_name, :job_id, :completion_date, :reviewer_email, :secret_code, :comments_complete,
+  		 :reviewresponsibilities_attributes, :reviewqualities_attributes, :responsibilities_complete, :qualities_complete
   
   after_save :build_review_tables
   
@@ -78,6 +81,14 @@ class Review < ActiveRecord::Base
   
     def build_review_tables
       @job = Job.find(self.job_id)
+      @user = User.find(self.reviewee_id)
+      
+      if @user.has_outdated_reviews?
+        @old_reviews = @user.outdated_reviews
+        @old_reviews.each do |old|
+          old.destroy
+        end
+      end
       
       unless self.has_reviewqualities?
         @jobqualities = @job.jobqualities.order("jobqualities.position")

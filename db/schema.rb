@@ -327,8 +327,8 @@ ActiveRecord::Schema.define(:version => 20111028115925) do
     t.string   "reviewer_email"
     t.string   "secret_code"
     t.integer  "job_id"
-    t.integer  "responsibilities_score",  :default => 0
-    t.integer  "attributes_score",        :default => 0
+    t.integer  "responsibilities_score",    :default => 0
+    t.integer  "attributes_score",          :default => 0
     t.string   "achievements"
     t.string   "problems"
     t.string   "observations"
@@ -336,7 +336,10 @@ ActiveRecord::Schema.define(:version => 20111028115925) do
     t.string   "change_goals"
     t.string   "change_attributes"
     t.string   "plan"
-    t.boolean  "completed",               :default => false
+    t.boolean  "responsibilities_complete", :default => false
+    t.boolean  "qualities_complete",        :default => false
+    t.boolean  "comments_complete",         :default => false
+    t.boolean  "completed",                 :default => false
     t.datetime "completion_date"
     t.datetime "created_at"
     t.datetime "updated_at"

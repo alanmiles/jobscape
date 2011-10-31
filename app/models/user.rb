@@ -268,6 +268,25 @@ class User < ActiveRecord::Base
   def no_job?
     placements.count == 0
   end
+  
+  def outdated_reviews
+    self.reviewed_sessions.where("reviews.completed = ? and created_at <?", false, Date.today - 14)
+  end
+  
+  def has_outdated_reviews?
+    cnt = self.outdated_reviews.count
+    cnt > 0
+  end
+  
+  def incomplete_review
+    self.reviewed_sessions.where("reviews.completed = ? and created_at >=?", false, Date.today - 14).limit(1)
+  end
+  
+  def has_incomplete_review?
+    cnt = self.incomplete_review.count
+    cnt > 0
+  end
+  
   private
 
     def encrypt_password

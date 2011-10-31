@@ -16,6 +16,9 @@ class CreateReviews < ActiveRecord::Migration
       t.string :change_goals
       t.string :change_attributes
       t.string :plan
+      t.boolean :responsibilities_complete, :default => false
+      t.boolean	:qualities_complete, :default => false
+      t.boolean :comments_complete, :default => false
       t.boolean :completed, :default => false
       t.datetime :completion_date
 

@@ -121,6 +121,9 @@ class PagesController < ApplicationController
       @job = Job.where("id = ?", @placement.job_id).first
       session[:jobid] = @job.id
       @plan = Plan.find_by_job_id(@job)
+      if @user.has_incomplete_review?
+        @review = @user.incomplete_review.first
+      end
     end
   end
   

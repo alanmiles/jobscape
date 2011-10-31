@@ -10,12 +10,18 @@
     <% if @plan.complete? %>
       <li class="no_bullet"><%= link_to "Update your Achievement Plan", plan_path(@plan) %></li>
       <li class="no_bullet"><%= link_to "View the complete Achievement Plan", aplan_path(@plan) %></li>
-      <li class="no_bullet"><%= link_to "Appraise your own performance", new_self_appraisal_path %></li>
-      <li class="no_bullet">Your appraisal history</li>
+      <li class="no_bullet">
+        <% if current_user.has_incomplete_review? %>        
+          <%= link_to "Continue your performance review", edit_self_appraisal_path(@review) %>
+        <% else %>
+          <%= link_to "Set up a performance review", new_self_appraisal_path %>
+        <% end %>
+      </li>
+      <li class="no_bullet">Your performance review history</li>
     <% else %>
       <li class="no_bullet"><%= link_to "Build", plan_path(@plan) %> your Achievement Plan</li>
       <li class="no_bullet" style ="color:#BBB">View the complete Achievement Plan <small><em>(when A-Plan is complete)</em></small></li>
-      <li class="no_bullet" style ="color:#BBB">Appraise your own performance <small><em>(when A-Plan is complete)</em></small></li>
+      <li class="no_bullet" style ="color:#BBB">Set up a performance review <small><em>(when A-Plan is complete)</em></small></li>
     <% end %>
   </ul>
 </div>

@@ -23,6 +23,7 @@ class Quality < ActiveRecord::Base
   has_many :pams, :dependent => :destroy
   has_many :jobqualities
   has_many :applicqualities
+  has_many :reviewqualities
   
   
   validates	:quality,	:presence 	=> true,

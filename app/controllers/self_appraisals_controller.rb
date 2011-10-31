@@ -24,6 +24,9 @@ class SelfAppraisalsController < ApplicationController
   
   def edit
     @review = Review.find(params[:id])
+    @qualities = @review.reviewqualities.order("reviewqualities.position")
+    @job = Job.find(@review.job_id)
+    @grades = Reviewquality::PAM_SCORES
     if @review.self_appraisal?
       @title = "Self-appraisal for #{current_user.name}"
     else

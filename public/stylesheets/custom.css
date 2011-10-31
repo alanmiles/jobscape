@@ -366,7 +366,32 @@ ul li.no_bullet {
   font-weight: bold;
   padding: 10px;
   margin-left: 10px;
-  margin-bottom: 10px
+  margin-bottom: 10px;
+}
+
+.small_action_label {
+  display: block;
+  text-align: center;
+  color: #fff;
+  background: #5F9EA0;
+  font-size: 100%;
+  font-weight: bold;
+  width: 175px;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+}
+
+a.small_action_button {
+  display: block;
+  text-align: center;
+  color: #fff;
+  background: #5F9EA0;
+  font-size: 100%;
+  font-weight: bold;
+  width: 175px;
+  padding: 5px 10px;
+  margin-left: 5px;
+  margin-bottom: 5px;
 }
 
 a.action_button {

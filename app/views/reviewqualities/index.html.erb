@@ -1,0 +1,23 @@
+<h1><%= @title %></h1>
+<h4>
+  <%= @review.reviewee.name %> reviewed by <%= @review.reviewer.name %>
+</h4>
+
+<ol>
+  <% @qualities.each do |q| %>
+    <li>
+      <strong><%= q.quality.quality %></strong>
+      <ul>
+        <% @pams = q.quality.pams.order("pams.grade") %>
+        <% @pams.each do |p| %>
+          <li>
+            <small>
+              <%= p.grade %>
+              <%= p.descriptor %>
+            </small>
+          </li><br />
+        <% end %>
+      </ul>
+    </li><br />
+  <% end %>
+</ol>
