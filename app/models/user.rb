@@ -287,6 +287,19 @@ class User < ActiveRecord::Base
     cnt > 0
   end
   
+  def completed_reviews
+    self.reviewed_sessions.where("reviews.completed = ?", true).order("reviews.completion_date DESC")
+  end
+  
+  def has_completed_reviews?
+    nmbr = self.completed_reviews.count
+    nmbr > 0
+  end
+  
+  def last_review
+    self.reviewed_sessions.where("reviews.completed = ?", true).last
+  end
+  
   private
 
     def encrypt_password

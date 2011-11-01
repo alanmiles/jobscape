@@ -1,0 +1,17 @@
+<h4>OVERALL ACHIEVEMENT</h4>
+<div class="info_box" style= "border-bottom: 1px solid #eee">
+  <table>
+    <tr>
+      <td><strong>Responsibilities:</strong></td> 
+      <td><%= @review.responsibilities_score %> / 50 </td>
+    </tr>
+    <tr>
+      <td style = "background-color: white"><strong>Attributes:</strong></td>
+      <td style = "background-color: white"><%= @review.attributes_score %> / 50 </td>
+    </tr>
+    <tr>
+      <td><strong>OVERALL</strong></td>
+      <td><%= @review.total_score %>%</td>
+    </tr>
+  </table>
+</div>

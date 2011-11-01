@@ -41,8 +41,10 @@ class Review < ActiveRecord::Base
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
-  attr_accessible :reviewee_id, :reviewer_id, :reviewer_name, :job_id, :completion_date, :reviewer_email, :secret_code, :comments_complete,
-  		 :reviewresponsibilities_attributes, :reviewqualities_attributes, :responsibilities_complete, :qualities_complete
+  attr_accessible :reviewee_id, :reviewer_id, :reviewer_name, :job_id, :completed, :completion_date, :reviewer_email, :secret_code, :comments_complete,
+  		 :reviewresponsibilities_attributes, :reviewqualities_attributes, :responsibilities_complete, :qualities_complete, :achievements,
+  		 :problems, :observations, :change_responsibilities, :change_goals, :change_attributes, :plan, :responsibilities_score, 
+  		 :attributes_score
   
   after_save :build_review_tables
   
@@ -77,6 +79,65 @@ class Review < ActiveRecord::Base
     reviewer_id == reviewee_id && reviewer_email.blank?
   end
   
+  def elements_complete?
+    responsibilities_complete? && qualities_complete? && comments_complete?
+  end
+  
+  def gather_achieved_goals
+    @responsibilities = self.reviewresponsibilities
+    @responsibilities.each do |r|
+      @achieved = r.reviewgoals.where("reviewgoals.achieved = ?", true).count
+      r.update_attribute(:achieved_goals, @achieved) 
+    end
+  end
+  
+  def calculate_achievement_scores
+    @responsibilities = self.reviewresponsibilities
+    @responsibilities.each do |r|
+      @score = sprintf("%.2f", (r.rating_value.to_f * r.achieved_goals.to_f / r.total_goals.to_f))
+      r.update_attribute(:achievement_score, @score)
+    end
+  end
+  
+  def score_for_responsibilities
+    @achieved = self.reviewresponsibilities.sum("achievement_score")
+    @possible = self.reviewresponsibilities.sum("rating_value")
+    @score = sprintf("%.0f", (@achieved.to_f/@possible.to_f * 50))
+  end
+  
+  def adjust_attribute_scores
+    @qualities = self.reviewqualities
+    @qualities.each do |q|
+      if q.position > 5
+        @multiplier = 2
+      else
+      	@multiplier = 3
+      end
+      @score = q.reviewer_score * @multiplier
+      q.update_attribute(:adjusted_score, @score)      
+    end
+  end
+  
+  def score_for_qualities
+    @total = (self.reviewqualities.sum("adjusted_score") / 2)
+  end
+
+  def total_score
+    responsibilities_score + attributes_score
+  end 
+  
+  def editable_date
+    if completion_date == nil
+      created_at + 7.days
+    else
+      completion_date + 7.days
+    end
+  end
+  
+  def self.completed_for(user)
+    self.where("reviewee_id = ? and completed = ?", user.id, true).order("completion_date DESC")
+  end
+   
   private
   
     def build_review_tables

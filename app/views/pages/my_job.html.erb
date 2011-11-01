@@ -17,7 +17,10 @@
           <%= link_to "Set up a performance review", new_self_appraisal_path %>
         <% end %>
       </li>
-      <li class="no_bullet">Your performance review history</li>
+      <% if current_user.has_completed_reviews? %>
+        <li class="no_bullet"><%= link_to "Your most recent review & current development plan", my_review_path(@last_review) %></li>
+        <li class="no_bullet"><%= link_to "Your performance review history", my_reviews_path %></li>
+      <% end %>
     <% else %>
       <li class="no_bullet"><%= link_to "Build", plan_path(@plan) %> your Achievement Plan</li>
       <li class="no_bullet" style ="color:#BBB">View the complete Achievement Plan <small><em>(when A-Plan is complete)</em></small></li>

@@ -1,0 +1,17 @@
+<h4 class="shallow">ATTRIBUTES</h4>
+<div class= "info_box_screen round" style ="background-color: #EEE">
+  Attributes are listed in order of importance to the job. The grade achieved - from A (Excellent) to
+  E (Poor) is shown <span class="grade_highlight">highlighted</span>. 
+</div>
+
+<ol>
+  <% @qualities.each do |q| %>
+    <li class = "display_wider" style= "border-bottom: 1px solid #eee">
+      <em><%= q.quality.quality %></em>
+      <div class= "info_box_screen" style="margin-left:0px; margin-bottom: 0px">
+        <span class="grade_highlight"><%= q.reviewer_pam.grade %></span> &nbsp; 
+        <%= q.reviewer_pam.descriptor %>
+      </div>
+    </li>
+  <% end %>
+</ol>

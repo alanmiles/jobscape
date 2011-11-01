@@ -343,6 +343,13 @@ ul li.no_bullet {
   padding: 0 5px;
 }
 
+.grade_highlight {
+  background:#2E742E;
+  color: white; 
+  padding: 2px; 
+  font-weight: bold;
+}
+
 .texthl {
   color: #B80000;
 }

@@ -1,0 +1,50 @@
+<h4 class="shallow">COMMENTS & PLANS</h4>
+<div class= "info_box_screen round" style ="background-color: #EEE">
+  This section should detail post-review follow-up plans.
+</div>
+
+<div class="info_box_screen">
+  
+  <% unless @review.achievements.empty? %>
+    <strong>Achievements</strong><br />
+    <%= @review.achievements %>
+    <br /><br />
+  <% end %>
+
+  <% unless @review.problems.empty? %>
+    <strong>Problems</strong><br />
+    <%= @review.problems %>
+    <br /><br />
+  <% end %>
+  
+  <% unless @review.observations.empty? %>
+    <strong>Observations</strong><br />
+    <%= @review.observations %>
+    <br /><br />
+  <% end %>
+  
+  <% unless @review.change_responsibilities.empty? %>
+    <strong>Responsibilities that need to change</strong><br />
+    <%= @review.change_responsibilities %>
+    <br /><br />
+  <% end %>
+  
+  <% unless @review.change_goals.empty? %>
+    <strong>Goals that need to change</strong><br />
+    <%= @review.change_goals %>
+    <br /><br />
+  <% end %>
+  
+  <% unless @review.change_attributes.empty? %>
+    <strong>Attributes that need to change</strong><br />
+    <%= @review.change_attributes %>
+    <br /><br />
+  <% end %>
+  
+  <% unless @review.plan.empty? %>
+    <strong>Plan to enhance achievement</strong><br />
+    <%= @review.plan %>
+    <br /><br />
+  <% end %>
+</div>
+

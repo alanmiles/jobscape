@@ -11,7 +11,7 @@
     
 </div> 
 <br />
-<%= form_for(@review, :url => self_appraisals_path(@review)) do |f| %>
+<%= form_for(@review, :url => self_appraisal_path(@review)) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
 
   <div class="small_action_label round">RESPONSIBILITIES</div>
@@ -21,11 +21,11 @@
       No excuses!  No almosts!  Each statement is either true ... or it isn't.
   </div> 
    
-  <ul>
+  <ol>
     <%= f.fields_for :reviewresponsibilities do |resp| %>
       <%= render "/reviews/responsibilities", :f => resp %>
     <% end %>
-  </ul>
+  </ol>
   
   <div class="field shift_center_50">
     <strong>CHECK WHEN YOU'VE FINISHED SCORING RESPONSIBILITIES</strong>

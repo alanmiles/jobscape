@@ -1,0 +1,24 @@
+<div class = "r-float"> 
+  <% if @review.self_appraisal? && @review.editable_date > Date.today %>
+    <%= link_to "Edit results (till #{display_date(@review.editable_date)} only)", edit_self_appraisal_path(@review) %>
+    <br />
+  <% end %>
+  <%= link_to "Your review history", my_reviews_path %>
+</div>
+
+<h1 style = "margin-bottom: 0px"><%= @title %></h1>
+<% if @review.completion_date == nil %>
+  <%= display_date(@review.created_at) %>
+<% else %>
+  <%= display_date(@review.completion_date) %>
+<% end %>
+
+<br /><br />
+
+<%= render "/reviews/overall_result" %>
+
+<%= render "/reviews/result_responsibilities" %>
+
+<%= render "/reviews/result_attributes" %>
+
+<%= render "/reviews/result_plan" %>

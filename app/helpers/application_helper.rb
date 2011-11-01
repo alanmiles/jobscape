@@ -23,5 +23,12 @@ module ApplicationHelper
     "#{time_ago_in_words(time)} ago"
   end
   
+  def display_date(field)
+    field.strftime("%b %d, %Y")
+  end
+  
+  def display_daydate(field)
+    field.strftime("%a %b %d, %Y")
+  end
 end
 

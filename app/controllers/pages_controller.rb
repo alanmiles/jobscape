@@ -113,6 +113,11 @@ class PagesController < ApplicationController
     @user = current_user
     @business = Business.find(session[:biz])
     @business.remove_disconnected_jobs
+    
+    if @user.has_completed_reviews?
+      @last_review = @user.last_review
+    end
+    
     if @user.no_job?
       flash[:notice] = "You haven't entered your job-title yet, so let's get started with that ..."
       redirect_to new_business_job_path(@business)

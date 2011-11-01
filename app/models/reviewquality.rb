@@ -41,4 +41,19 @@ class Reviewquality < ActiveRecord::Base
     cnt > 0
   end
   
+  def reviewer_pam
+    if reviewer_score == 4
+      @grade = "A"
+    elsif reviewer_score == 3
+      @grade = "B"
+    elsif reviewer_score == 2
+      @grade = "C"
+    elsif reviewer_score == 1
+      @grade = "D"
+    else
+      @grade = "E"
+    end
+    @quality = Quality.find(self.quality_id)
+    @pam = Pam.where("quality_id = ? and grade = ?", @quality.id, @grade).first  
+  end
 end
