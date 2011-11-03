@@ -279,7 +279,9 @@ describe OccupationsController do
        
           before(:each) do
             @business = Factory(:business, :sector_id => @sector.id)
-            @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+            @department = Factory(:department, :business_id => @business.id)
+            @job = Factory(:job, :business_id => @business.id, 
+                           :department_id => @department.id, :occupation_id => @occupation.id)
           end
           
           it "should not delete an occupation that's linked to a job" do

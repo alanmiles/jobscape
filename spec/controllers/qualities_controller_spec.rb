@@ -295,9 +295,12 @@ describe QualitiesController do
           before(:each) do
             @occupation = Factory(:occupation)
             @business = Factory(:business, :sector_id => @sector.id)
-            @job_1 = Factory(:job, :business_id => @business.id, 
+            @department = Factory(:department, :business_id => @business.id)
+            @job_1 = Factory(:job, :business_id => @business.id,
+                                :department_id => @department.id, 
             			:occupation_id => @occupation.id)
-            @job_2 = Factory(:job, :business_id => @business.id, 
+            @job_2 = Factory(:job, :business_id => @business.id,
+                                :department_id => @department.id, 
             			:occupation_id => @occupation.id,
             			:job_title => "Another job")
             @plan_1 = Plan.find_by_job_id(@job_1.id)
@@ -681,7 +684,9 @@ describe QualitiesController do
         before(:each) do
           @occupation = Factory(:occupation)
           @business = Factory(:business, :sector_id => @sector.id)
-          @job = Factory(:job, :business_id => @business.id, 
+          @department = Factory(:department, :business_id => @business.id)
+          @job = Factory(:job, :business_id => @business.id,
+                                :department_id => @department.id, 
           			:occupation_id => @occupation.id)
           @plan = Plan.find_by_job_id(@job.id)
           @jobquality = Factory(:jobquality, :plan_id => @plan.id, :quality_id => @quality1.id)     

@@ -11,10 +11,11 @@ describe PlansController do
     
     @user = Factory(:user)
     @occupation = Factory(:occupation)
-    @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+    @department = Factory(:department, :business_id => @business.id)
+    @job = Factory(:job, :business_id => @business.id, :department_id => @department.id, :occupation_id => @occupation.id)
     @plan = Plan.find_by_job_id(@job)
     @job2 = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id,
-    				:job_title => "Another job")
+    			:department_id => @department.id, :job_title => "Another job")
     @plan2 = Plan.find_by_job_id(@job2)
     test_sign_in(@user)
   end

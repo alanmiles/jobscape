@@ -8,8 +8,10 @@ describe OutlinesController do
     @sector = Factory(:sector)
     @user = Factory(:user)
     @business = Factory(:business, :sector_id => @sector.id)
+    @department = Factory(:department, :business_id => @business.id)
     @occupation = Factory(:occupation)
-    @job = Factory(:job, :occupation_id => @occupation.id, :business_id => @business.id)
+    @job = Factory(:job, :occupation_id => @occupation.id, 
+    			:department_id => @department.id, :business_id => @business.id)
     @employee = Factory(:employee, :user_id => @user.id, :business_id => @business.id)
     session[:jobid] = @job.id
     @plan = Plan.find_by_job_id(@job.id)

@@ -6,8 +6,9 @@ describe GoalsController do
   
   before(:each) do
     @business = Factory(:business)
+    @department = Factory(:department, :business_id => @business.id)
     @occupation = Factory(:occupation)
-    @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+    @job = Factory(:job, :business_id => @business.id, :department_id => @department.id, :occupation_id => @occupation.id)
     session[:jobid] = @job.id
     @plan = Plan.find_by_job_id(@job.id)
     @responsibility = Factory(:responsibility, :plan_id => @plan.id)

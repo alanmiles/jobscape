@@ -65,6 +65,11 @@ class User < ActiveRecord::Base
   has_many :reviewer_sessions, :foreign_key => "reviewer_id", :class_name => "Review"
   has_many :reviewers, :through => :reviewer_sessions
   
+  has_many :manager_jobs, :foreign_key => "manager_id", :class_name => "Department"
+  has_many :managers, :through => :manager_jobs
+  has_many :deputy_jobs, :foreign_key => "deputy_id", :class_name => "Department"
+  has_many :deputies, :through => :deputy_jobs
+  
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }
   validates :email,	:presence	=> true,
@@ -329,6 +334,8 @@ class User < ActiveRecord::Base
         		:user_id => self.id,
         		:officer => true)
           @employee.save
+          @department = @business.departments.build(:name => "Unknown")
+          @department.save
         end
       end
     end

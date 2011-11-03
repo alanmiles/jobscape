@@ -16,11 +16,12 @@ describe Jobquality do
 
   before(:each) do
     @business = Factory(:business)
+    @department = Factory(:department, :business_id => @business.id)
     @occupation = Factory(:occupation)
-    @job = Factory(:job, :business_id => @business.id, 
+    @job = Factory(:job, :business_id => @business.id, :department_id => @department.id,
     			:occupation_id => @occupation.id)  
     @job2 = Factory(:job, :job_title => "Another job", 
-                          :business_id => @business.id,
+                          :business_id => @business.id, :department_id => @department.id,
                           :occupation_id => @occupation.id)
     @plan = Plan.find_by_job_id(@job.id)
     @plan2 = Plan.find_by_job_id(@job2.id) 

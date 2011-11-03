@@ -8,17 +8,19 @@
 #  occupation_id :integer
 #  created_at    :datetime
 #  updated_at    :datetime
+#  department_id :integer
 #
 
 class Job < ActiveRecord::Base
 
-  attr_accessible :job_title, :occupation_id, :vacancy
+  attr_accessible :job_title, :occupation_id, :vacancy, :department_id
   
   after_create :build_plan
   after_create :build_outline
   
   belongs_to :business
   belongs_to :occupation
+  belongs_to :department
   has_one :plan, :dependent => :destroy
   has_one :outline, :dependent => :destroy
   has_many :vacancies, :dependent => :destroy

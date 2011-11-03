@@ -1,0 +1,18 @@
+<div class = "r-float">
+  <%= link_to "Cancel", @department %>
+</div>
+
+<h1><%= @title %></h1>
+<h4><%= @business.name %></h4>
+
+<%= form_for @department do |f| %>
+  <div class="shift_center">
+
+    <%= render 'fields', :f => f %>
+
+    <div class="actions">
+      <%= f.submit "Confirm changes" %>
+    </div>
+  </div>
+<% end %>
+

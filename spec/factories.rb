@@ -12,9 +12,15 @@ Factory.define :occupation do |occupation|
   occupation.name	     "Sales"
 end
 
+Factory.define :department do |department|
+  department.association :business
+  department.name	     "Admin"
+end
+
 Factory.define :job do |job|
   job.job_title		     "Sales Manager"
   job.association :business
+  job.association :department
   job.association :occupation
 end
 

@@ -2,10 +2,10 @@
 <%= link_to "All jobs", business_jobs_path(@business) %>
 </div>
 
-<h1><%= @title %>  <small style = "font-size:0.6em"><%= link_to "(change)", edit_job_path(@job) %></small></h1>
+<h1><%= @title %>  <small style = "font-size:0.7em"><%= link_to "(Edit job details)", edit_job_path(@job) %></small></h1>
 <p><strong><%= @job.business.name %></strong></p>
-<p><strong>Category:</strong> <%= @job.occupation.name %> &nbsp;
-   <%= link_to "(change)", edit_job_path(@job) %>
+<p><strong>Department:</strong> <%= @job.department.name unless @job.department_id == nil %><br />
+   <strong>Category:</strong> <%= @job.occupation.name %>
 </p>
 
 <div class = "display_box grayborder round rightpos">

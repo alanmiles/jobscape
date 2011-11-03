@@ -55,8 +55,9 @@ describe SubmittedQualitiesController do
     
       before(:each) do
         @business = Factory(:business, :sector_id => @sector.id)
+        @department = Factory(:department, :business_id => @business.id)
         @occupation = Factory(:occupation)
-        @job = Factory(:job, :business_id => @business.id, 
+        @job = Factory(:job, :business_id => @business.id, :department_id => @department.id, 
         		:occupation_id => @occupation.id)
         session[:jobid] = @job.id		
         @plan = Plan.find_by_job_id(@job.id)
@@ -105,8 +106,9 @@ describe SubmittedQualitiesController do
       
       before(:each) do
         @business = Factory(:business, :sector_id => @sector.id)
+        @department = Factory(:department, :business_id => @business.id)
         @occupation = Factory(:occupation)
-        @job = Factory(:job, :business_id => @business.id, 
+        @job = Factory(:job, :business_id => @business.id, :department_id => @department.id, 
         		:occupation_id => @occupation.id)
         session[:jobid] = @job.id		
         @plan = Plan.find_by_job_id(@job.id)
@@ -197,8 +199,9 @@ describe SubmittedQualitiesController do
       
       before(:each) do
         @business = Factory(:business, :sector_id => @sector.id)
+        @department = Factory(:department, :business_id => @business.id)
         @occupation = Factory(:occupation)
-        @job = Factory(:job, :business_id => @business.id, 
+        @job = Factory(:job, :business_id => @business.id, :department_id => @department.id,
         		:occupation_id => @occupation.id)
         session[:jobid] = @job.id		
         @plan = Plan.find_by_job_id(@job.id)

@@ -29,9 +29,11 @@ class Business < ActiveRecord::Base
   after_validation :reverse_geocode, :if => :address_changed?
 
   belongs_to :sector
-  has_many :employees, 	:dependent => :destroy 
+  has_many :employees, 	:dependent => :destroy
+  has_many :departments, :dependent => :destroy 
   has_many :jobs, 	:dependent => :destroy
   has_many :vacancies,  :through => :jobs
+  has_many :users, :through => :employees
   
   validates :sector_id, :presence 	=> true
   validates :name, 	:presence 	=> true,

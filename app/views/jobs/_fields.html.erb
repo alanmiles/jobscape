@@ -10,6 +10,17 @@
   <%= f.text_field :job_title, :maxlength => 50, :size => 40 %>
   <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
 </div>
+
+<% if current_user.account == 1 %>
+  <%= f.hidden_field :department_id %>
+<% else %>
+  <div class="field">
+    <%= f.label :department_id, %><br />
+    <%= collection_select(:job, :department_id, @departments, :id, 
+                        :name, :prompt => true) %>
+  </div>
+<% end %>
+
 <div class="field">
   <%= f.label :occupation_id, "Category" %><br />
   <%= collection_select(:job, :occupation_id, Occupation.all, :id, 

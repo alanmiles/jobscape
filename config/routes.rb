@@ -1,5 +1,13 @@
 Jobscape::Application.routes.draw do
 
+  get "departments/index"
+
+  get "departments/new"
+
+  get "departments/show"
+
+  get "departments/edit"
+
   resources :users do
     resource :portrait, :shallow => true
     resources :achievements, :shallow => true do
@@ -54,6 +62,7 @@ Jobscape::Application.routes.draw do
   resources :sectors
   resources :businesses do
     resources :jobs, :shallow => true
+    resources :departments, :shallow => true
   end
   resources :plans do
     resources :responsibilities, :shallow => true

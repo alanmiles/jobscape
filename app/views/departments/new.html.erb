@@ -1,0 +1,48 @@
+<div class = "r-float">
+  <%= link_to "Cancel", business_departments_path(@business) %>
+</div>
+
+<h1><%= @title %> <span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span></h1>
+<h4><%= @business.name unless @user.account == 1 %></h4>
+
+<div id="infotext" class="info_box_screen" style = "display:none">
+  We use departments in HYGWIT to make records easier to organize and find. As you enter the jobs
+  in your business, you'll need to connect each to its department.<br /><br />
+  Optionally, you can also enter the names of the department head and deputy head.  On their versions of HYGWIT,
+  the people you name will be able to monitor the progress of people in their department, and see the 
+  list of applicants for their vacant jobs.  But before anyone can be selected, they'll first need to be
+  entered as employees of the business, so perhaps you'll need to come back and add the department head and
+  deputy later.
+  &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
+</div>
+
+<%= form_for([@business, @department]) do |f| %>
+  <div class="shift_center">
+
+    <%= render 'fields', :f => f %>
+
+    <div class="actions">
+      <%= f.submit "Create" %>
+    </div>
+  </div>
+<% end %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#info').click(function() {
+      $('#infotext').show('fast', function() {
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#infotext').hide('fast', function() {
+      });
+    });
+   });
+   
+  <% end %>
+<% end %>

@@ -1,0 +1,47 @@
+<div class = "r-float">
+<%= link_to "Add a new department", new_business_department_path(@department) %><br />
+<%= link_to "Menu for this business", officer_home_path %>
+</div>
+
+<h1><%= @title %></h1>
+
+<% unless @departments.empty? %>
+  <%= will_paginate @departments %>
+  <table class="smaller_font">
+    <tr>
+      <th>Name</th>
+      <th>Head</th>
+      <th>Deputy</th>
+      <th class="centralize">Team</th>
+      <th class="centralize">Positions</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% @departments.each do |department| %>
+    <tr>
+      <td><%= link_to department.name, department %>
+      <td><%= department.manager.name unless department.manager_id == nil %> </td>
+      <td><%= department.deputy.name unless department.deputy_id == nil %> </td>
+      <td class="centralize">
+        0
+      </td>
+      <td class="centralize">
+        0
+      </td>
+      <td class="centralize">
+        <%= link_to image_tag("select.png", :size => "15x15"), department %>
+      </td>
+      <td class = "control"><%= link_to image_tag("cancel.png", :size => "15x15"), department, 
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Delete #{department.name}" %>
+      </td> 
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @departments %>
+<% else %>
+  <div class="no_data round">
+    You haven't added any departments yet.  You need to - because jobs will be linked to their departments.
+  </div>
+<% end %>

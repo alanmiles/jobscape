@@ -22,9 +22,11 @@ describe Plan do
   
   before(:each) do
     @business = Factory(:business)
+    @department = Factory(:department, :business_id => @business.id)
     @occupation = Factory(:occupation)
     @job = Factory(:job, 
               :occupation_id => @occupation.id,
+              :department_id => @department.id,
               :business_id => @business.id )
     @plan = Plan.find_by_job_id(@job.id)
     @attr = { :job_id => @job.id }

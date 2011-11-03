@@ -96,6 +96,8 @@ module SessionsHelper
     self.current_user = nil
   end
   
+  
+  
   private
 
     def user_from_remember_token
@@ -113,5 +115,23 @@ module SessionsHelper
     def clear_return_to
       session[:return_to] = nil
     end
+    
+    def started_business_session
+      unless business_session?
+        flash[:notice] = "First a business needs to be selected."
+        redirect_to root_path
+      end
+    end
+  
+    def correct_business
+      @user = current_user
+      @business = Business.find(session[:biz])
+      total = Employee.where("user_id = ? and business_id = ?", @user, @business).count
+      if total == 0
+        flash[:error] = "Illegal procedure. You can only access jobs in your own business."
+        redirect_to root_path
+      end
+    end
+    
 end
 

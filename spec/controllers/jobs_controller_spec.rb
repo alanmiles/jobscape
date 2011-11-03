@@ -7,6 +7,7 @@ describe JobsController do
   before(:each) do
     @sector = Factory(:sector)
     @business = Factory(:business, :sector_id => @sector.id)
+    @department = Factory(:department, :business_id => @business.id)
     session[:biz] = @business.id
   end
 
@@ -50,7 +51,8 @@ describe JobsController do
     
       before(:each) do
         @occupation = Factory(:occupation)
-        @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+        @job = Factory(:job, :business_id => @business.id, 
+                  :department_id => @department.id, :occupation_id => @occupation.id)
       end
      
       it "should not be successful" do
@@ -64,7 +66,8 @@ describe JobsController do
     
       before(:each) do
         @occupation = Factory(:occupation)
-        @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+        @job = Factory(:job, :business_id => @business.id, 
+                      :department_id => @department.id, :occupation_id => @occupation.id)
       end
       
       it "should not be successful" do
@@ -78,7 +81,8 @@ describe JobsController do
     
       before(:each) do
         @occupation = Factory(:occupation)
-        @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+        @job = Factory(:job, :business_id => @business.id, 
+                       :department_id => @department.id, :occupation_id => @occupation.id)
         @attr = { :job_title => "Another job" }
       end
       
@@ -98,7 +102,8 @@ describe JobsController do
     
       before(:each) do
         @occupation = Factory(:occupation)
-        @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+        @job = Factory(:job, :business_id => @business.id, 
+                      :department_id => @department.id, :occupation_id => @occupation.id)
       end
       
       it "should not destroy the job" do
@@ -131,7 +136,7 @@ describe JobsController do
       @employee = Factory(:employee, :user_id => @user.id,
       				:business_id => @business.id)
       @occupation = Factory(:occupation)
-      @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+      @job = Factory(:job, :business_id => @business.id, :department_id => @department.id, :occupation_id => @occupation.id)
       @plan = Plan.find_by_job_id(@job.id)
       test_sign_in(@user)
         
@@ -141,9 +146,9 @@ describe JobsController do
       
       before(:each) do
         @job2 = Factory(:job, :job_title => "Merchandiser", :occupation_id => @occupation.id,
-        						    :business_id => @business.id)
+        					:department_id => @department.id, :business_id => @business.id)
         @job3 = Factory(:job, :job_title => "Sales Assistant", :occupation_id => @occupation.id,
-        						    :business_id => @business.id)
+        					:department_id => @department.id, :business_id => @business.id)
         @jobs = [@job, @job2, @job3]						    
       end
       
@@ -167,9 +172,10 @@ describe JobsController do
       
       it "should not display jobs from another business" do
         @business2 = Factory(:business, :name => "Not Cambiz", :sector_id => @sector.id)
+        @department2 = Factory(:department, :business_id => @business2.id, :name => "Admin")
         @employee2 = Factory(:employee, :user_id => @user.id, :business_id => @business2.id)
         @job_99 = Factory(:job, :job_title => "Another job", :business_id => @business2.id,
-                                                    :occupation_id => @occupation.id)
+                                               :department_id => @department2.id, :occupation_id => @occupation.id)
         @jobs << @job_99
         get :index, :business_id => @business.id
         response.should_not have_selector("td", :content => @job_99.job_title)
@@ -189,6 +195,8 @@ describe JobsController do
         end
       end
       
+      it "should display the department"
+      
       it "should show how many employees in the job"
       
       it "should show whether there's an A-plan"
@@ -207,6 +215,7 @@ describe JobsController do
         30.times do
           @jobs << Factory(:job, :job_title => Factory.next(:job_title), 
                                  :business_id => @business.id,
+                                 :department_id => @department.id,
                                  :occupation_id => @occupation.id)
         end	
         get :index, :business_id => @business.id
@@ -241,6 +250,8 @@ describe JobsController do
         get :show, :id => @job
         response.should have_selector("p", :content => @job.occupation.name)
       end
+      
+      it "should include the department"
       
       it "should have a link to the 'edit' form" do
         get :show, :id => @job
@@ -364,7 +375,7 @@ describe JobsController do
       
         before(:each) do
           @title = ""
-          @attr = { :job_title => @title }
+          @attr = { :job_title => @title, :occupation_id => @occupation.id, :department_id => @department.id }
         end
 
         it "should not create a job" do
@@ -389,7 +400,7 @@ describe JobsController do
        
         before(:each) do
           @title = "Sales Assistant"
-          @attr = { :job_title => @title, :occupation_id => @occupation.id }
+          @attr = { :job_title => @title, :occupation_id => @occupation.id, :department_id => @department.id }
         end
         
         it "should create a job" do
@@ -535,10 +546,11 @@ describe JobsController do
     before(:each) do
       @user = Factory(:user)
       @business2 = Factory(:business, :name => "Not Cambiz", :sector_id => @sector.id)
+      @department2 = Factory(:department, :business_id => @business2.id, :name => "Admin")
       @employee = Factory(:employee, :user_id => @user.id,
       				:business_id => @business2.id)
       @occupation = Factory(:occupation)
-      @job = Factory(:job, :business_id => @business.id, 
+      @job = Factory(:job, :business_id => @business.id, :department_id => @department.id,
                            :occupation_id => @occupation.id)
       test_sign_in(@user)
     end
@@ -563,7 +575,7 @@ describe JobsController do
       
       before(:each) do
         @title = "Sales Assistant"
-        @attr = { :job_title => @title, :occupation_id => @occupation.id }
+        @attr = { :job_title => @title, :department_id => @department.id, :occupation_id => @occupation.id }
       end
         
       it "should redirect to the home page with an error message" do

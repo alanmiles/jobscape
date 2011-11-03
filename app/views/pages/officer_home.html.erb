@@ -25,6 +25,7 @@
   <div class="menu_box round grayborder">
     <ul>
       <li><%= link_to "Business details", @business %></li>
+      <li><%= link_to "Departments", business_departments_path(@business.id) %></li>
       <li><%= link_to "Jobs", business_jobs_path(@business.id) %></li>
       <li>Employees</li>
     </ul>

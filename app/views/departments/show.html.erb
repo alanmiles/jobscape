@@ -1,0 +1,25 @@
+<div class = "r-float">
+  <%= link_to "Department list", business_departments_path(@business) %>
+</div>
+
+<h1>Department</h=1>
+<h4><%= @business.name %></h4>
+
+<div class="display_wider grayborder round">
+  <div class="rightpos">
+    <%= link_to "Edit department details", edit_department_path(@department) %>
+  </div>
+  
+  <strong><%= @department.name %></strong><br />
+  <% unless @department.manager_id == nil %>
+    Dept Head: <%= @department.manager.name %>
+    ( <%= @department.manager.email %> )
+    <br />
+  <% end %>
+  <% unless @department.deputy_id == nil %>
+    Deputy: <%= @department.deputy.name %>
+    ( <%= @department.deputy.email %> )
+    <br />
+  <% end %>
+</div>
+

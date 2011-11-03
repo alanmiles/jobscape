@@ -1,0 +1,33 @@
+<%= render 'shared/error_messages', :object => f.object %>
+<div class="field">
+  <%= f.label :name %><br />
+  <%= f.text_field :name, :maxlength => 50, :size => 40 %>
+  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+</div>
+<div class="field">
+  <%= f.label :manager_id, "Department head" %><br />
+  <%= collection_select(:department, :manager_id, @people, :id, 
+                        :name, :prompt => true) %>
+</div>
+<div class="field">
+  <%= f.label :deputy_id, "Deputy department head" %><br />
+  <%= collection_select(:department, :deputy_id, @people, :id, 
+                        :name, :prompt => true) %>
+</div>
+<br />
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+   $(document).ready(function(){
+   
+    $('#department_name').live('keyup keydown', function(e) {
+    var maxLen = 50;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+   });
+   
+  <% end %>
+<% end %>

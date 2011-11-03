@@ -6,8 +6,10 @@ describe ResponsibilitiesController do
   
   before(:each) do
     @business = Factory(:business)
+    @department = Factory(:department, :business_id => @business.id)
     @occupation = Factory(:occupation)
-    @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+    @job = Factory(:job, :business_id => @business.id, 
+                   :department_id => @department.id, :occupation_id => @occupation.id)
     session[:jobid] = @job.id
     @plan = Plan.find_by_job_id(@job.id)
     @responsibility = Factory(:responsibility, :plan_id => @plan.id)
@@ -173,7 +175,8 @@ describe ResponsibilitiesController do
         
         it "should not show responsibilities for other jobs" do
           @job2 = Factory(:job, :job_title => "Other job",
-          			:business_id => @business.id, 
+          			:business_id => @business.id,
+          			:department_id => @department.id, 
           			:occupation_id => @occupation.id)
     	  @plan2 = Plan.find_by_job_id(@job2.id)
     	  @responsibility5 = Factory(:responsibility, :plan_id => @plan2.id,

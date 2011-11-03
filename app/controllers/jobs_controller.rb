@@ -23,6 +23,12 @@ class JobsController < ApplicationController
     @business = Business.find(session[:biz])
     @title = "Add a job"
     @job = @business.jobs.new
+    @user = current_user
+    if @user.account == 1
+      @dept = @business.departments.first
+      @job.department_id = @dept.id
+    end
+    @departments = @business.departments.order("name")
     @occupations = Occupation.find(:all, :order => "name")
     @characters_left = 50
   end
@@ -42,6 +48,12 @@ class JobsController < ApplicationController
     else
       @title = "Add a job"
       @characters_left = 50 - @job.job_title.length
+      @user = current_user
+      if @user.account == 1
+        @dept = @business.departments.first
+        @job.department_id = @dept.id
+      end
+      @departments = @business.departments.order("name")
       @occupations = Occupation.find(:all, :order => "name")
       render 'new'
     end
@@ -51,6 +63,7 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
     @business = Business.find_by_id(@job.business_id)
     @title = "Edit job"
+    @departments = @business.departments.order("name")
     @occupations = Occupation.find(:all, :order => "name")
     @characters_left = 50 - @job.job_title.length
   end
@@ -64,6 +77,7 @@ class JobsController < ApplicationController
       @title = "Edit job"
       @business = Business.find_by_id(@job.business_id)
       @characters_left = 50 - @job.job_title.length
+      @departments = @business.departments.order("name")
       @occupations = Occupation.find(:all, :order => "name")
       render 'edit'
     end 
@@ -78,25 +92,5 @@ class JobsController < ApplicationController
     flash[:success] = "#{@job.job_title} removed."
     redirect_to business_jobs_path(@business)
   end
-  
-  private
-  
-    def started_business_session
-      unless business_session?
-        flash[:notice] = "First a business needs to be selected."
-        redirect_to root_path
-      end
-    end
-  
-    def correct_business
-      @user = current_user
-      @business = Business.find(session[:biz])
-      total = Employee.count(
-          :conditions => ["user_id = ? and business_id = ?", @user, @business])
-      if total == 0
-        flash[:error] = "Illegal procedure. You can only access jobs in your own business."
-        redirect_to root_path
-      end
-    end
 
 end

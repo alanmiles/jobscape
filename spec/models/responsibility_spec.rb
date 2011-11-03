@@ -23,8 +23,10 @@ describe Responsibility do
     @user = Factory(:user)
     @business = Factory(:business, :sector_id => @sector.id)
     @occupation = Factory(:occupation)
+    @department = Factory(:department, :business_id => @business.id)
     @job = Factory(:job, 
               :occupation_id => @occupation.id,
+              :department_id => @department.id,
               :business_id => @business.id )
     @plan = Plan.find_by_job_id(@job.id)
     @attr = { :plan_id => @plan.id, :definition => "Here's an example", 
@@ -74,6 +76,7 @@ describe Responsibility do
     it "can accept a duplicate definition for a different plan" do
       @job2 = Factory(:job, :job_title => "Another job",
               :occupation_id => @occupation.id,
+              :department_id => @department.id,
               :business_id => @business.id )
       @plan2 = Plan.find_by_job_id(@job2.id)
       @attr2 = { :plan_id => @plan2.id, :definition => "Here's an example", 

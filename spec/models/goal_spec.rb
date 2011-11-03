@@ -22,8 +22,10 @@ describe Goal do
     @user = Factory(:user)
     @business = Factory(:business, :sector_id => @sector.id)
     @occupation = Factory(:occupation)
+    @department = Factory(:department, :business_id => @business.id)
     @job = Factory(:job, 
               :occupation_id => @occupation.id,
+              :department_id => @department.id,
               :business_id => @business.id )
     @plan = Plan.find_by_job_id(@job.id)
     @responsibility = Factory(:responsibility, :plan_id => @plan.id)

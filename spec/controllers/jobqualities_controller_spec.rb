@@ -6,8 +6,10 @@ describe JobqualitiesController do
   
   before(:each) do
     @business = Factory(:business)
+    @department = Factory(:department, :business_id => @business.id)
     @occupation = Factory(:occupation)
-    @job = Factory(:job, :business_id => @business.id, :occupation_id => @occupation.id)
+    @job = Factory(:job, :business_id => @business.id, 
+                   :department_id => @department.id, :occupation_id => @occupation.id)
     session[:jobid] = @job.id
     @plan = Plan.find_by_job_id(@job.id)
     @quality = Factory(:quality)
@@ -101,7 +103,8 @@ describe JobqualitiesController do
       end
       
       it "should not list attributes selected for another job" do
-        @job_2 = Factory(:job, :business_id => @business.id, 
+        @job_2 = Factory(:job, :business_id => @business.id,
+        			:department_id => @department.id, 
         			:occupation_id => @occupation.id,
         			:job_title => "Something else")
     	@plan_2 = Plan.find_by_job_id(@job_2.id)
