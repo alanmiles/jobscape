@@ -173,7 +173,7 @@ describe JobsController do
       it "should not display jobs from another business" do
         @business2 = Factory(:business, :name => "Not Cambiz", :sector_id => @sector.id)
         @department2 = Factory(:department, :business_id => @business2.id, :name => "Admin")
-        @employee2 = Factory(:employee, :user_id => @user.id, :business_id => @business2.id, :ref => 2)
+        @employee2 = Factory(:employee, :user_id => @user.id, :business_id => @business2.id, :ref_no => 2)
         @job_99 = Factory(:job, :job_title => "Another job", :business_id => @business2.id,
                                                :department_id => @department2.id, :occupation_id => @occupation.id)
         @jobs << @job_99

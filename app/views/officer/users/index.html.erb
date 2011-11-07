@@ -19,7 +19,7 @@
   </tr>
   <% @users.each do |u| %>
   <tr>
-    <td><%= u.employee_lookup(@business).ref %></td>
+    <td><%= u.employee_lookup(@business).ref_no %></td>
     <td><%= u.name %></td>
     <td>
       <% unless u.no_current_job?(@business) %>

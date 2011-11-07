@@ -39,7 +39,7 @@ describe GoalsController do
     before(:each) do
       @employee = Factory(:employee, :user_id => @user.id, 
       			  :business_id => @business.id,
-      			  :ref => 1,
+      			  :ref_no => 1,
       			  :officer => true)
       test_sign_in(@user)    
     end

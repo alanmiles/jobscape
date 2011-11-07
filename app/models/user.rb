@@ -390,7 +390,7 @@ class User < ActiveRecord::Base
           @employee = Employee.new(:business_id => @business.id,
         		:user_id => self.id,
         		:officer => true, 
-        		:ref => 1)
+        		:ref_no => 1)
           @employee.save
           @department = @business.departments.build(:name => "Unknown")
           @department.save

@@ -8,13 +8,13 @@
 #  officer     :boolean         default(FALSE)
 #  created_at  :datetime
 #  updated_at  :datetime
-#  ref         :integer
+#  ref_no      :integer
 #  left        :boolean         default(FALSE)
 #
 
 class Employee < ActiveRecord::Base
 
-  attr_accessible :user_id, :business_id, :officer, :ref, :left
+  attr_accessible :user_id, :business_id, :officer, :ref_no, :left
   
   belongs_to :user
   belongs_to :business
@@ -24,7 +24,7 @@ class Employee < ActiveRecord::Base
   						     :message => " already belongs to this business - check 'Former Employees' 
   						        if you can't see the record in the employee list" }
   validates :business_id,	:presence 	=> true
-  validates :ref,		:presence 	=> true,
+  validates :ref_no,		:presence 	=> true,
   				:uniqueness	=> { :scope => :business_id }
   				
   def role

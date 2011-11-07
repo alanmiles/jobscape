@@ -37,7 +37,7 @@ class BusinessesController < ApplicationController
         redirect_to @business
       end
       Employee.create!(:user_id => current_user.id, :business_id => @business.id,
-                       :officer => true, :ref => 1)
+                       :officer => true, :ref_no => 1)
       
     else
       @title = "New business"

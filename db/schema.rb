@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(:version => 20111107142318) do
     t.boolean  "officer",     :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "ref"
+    t.integer  "ref_no"
     t.boolean  "left",        :default => false
   end
 
