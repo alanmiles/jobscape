@@ -5,7 +5,7 @@ class AddRefToEmployees < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :employees, :ref
+    remove_column :employees, :ref_no
     remove_column :employees, :left
   end
 end
