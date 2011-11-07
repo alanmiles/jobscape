@@ -116,6 +116,13 @@ module SessionsHelper
       session[:return_to] = nil
     end
     
+    def officer_user
+      unless current_user.account == 3
+        flash[:notice] = "Only available to officers"
+        redirect_to root_path
+      end
+    end
+    
     def started_business_session
       unless business_session?
         flash[:notice] = "First a business needs to be selected."
@@ -128,7 +135,7 @@ module SessionsHelper
       @business = Business.find(session[:biz])
       total = Employee.where("user_id = ? and business_id = ?", @user, @business).count
       if total == 0
-        flash[:error] = "Illegal procedure. You can only access jobs in your own business."
+        flash[:error] = "Illegal procedure. You can only access records in your own business."
         redirect_to root_path
       end
     end

@@ -2,12 +2,13 @@
 #
 # Table name: placements
 #
-#  id         :integer         not null, primary key
-#  user_id    :integer
-#  job_id     :integer
-#  current    :boolean         default(TRUE)
-#  created_at :datetime
-#  updated_at :datetime
+#  id          :integer         not null, primary key
+#  user_id     :integer
+#  job_id      :integer
+#  current     :boolean         default(TRUE)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  started_job :date
 #
 
 require 'spec_helper'

@@ -173,7 +173,7 @@ describe JobsController do
       it "should not display jobs from another business" do
         @business2 = Factory(:business, :name => "Not Cambiz", :sector_id => @sector.id)
         @department2 = Factory(:department, :business_id => @business2.id, :name => "Admin")
-        @employee2 = Factory(:employee, :user_id => @user.id, :business_id => @business2.id)
+        @employee2 = Factory(:employee, :user_id => @user.id, :business_id => @business2.id, :ref => 2)
         @job_99 = Factory(:job, :job_title => "Another job", :business_id => @business2.id,
                                                :department_id => @department2.id, :occupation_id => @occupation.id)
         @jobs << @job_99
@@ -581,7 +581,7 @@ describe JobsController do
       it "should redirect to the home page with an error message" do
         post :create, :business_id => @business.id, :job => @attr
         response.should redirect_to root_path
-        flash[:error].should == "Illegal procedure. You can only access jobs in your own business."
+        flash[:error].should == "Illegal procedure. You can only access records in your own business."
       end
       
       it "should not create a new business" do
@@ -597,7 +597,7 @@ describe JobsController do
       it "should not be successful" do
         get :edit, :id => @job
         response.should_not be_success
-        flash[:error].should == "Illegal procedure. You can only access jobs in your own business."
+        flash[:error].should == "Illegal procedure. You can only access records in your own business."
         
       end
     
@@ -632,7 +632,7 @@ describe JobsController do
       it "should redirect to root with an error message" do
         delete :destroy, :id => @job
         response.should redirect_to root_path
-        flash[:error].should == "Illegal procedure. You can only access jobs in your own business." 
+        flash[:error].should == "Illegal procedure. You can only access records in your own business." 
       end
     end
   end

@@ -17,8 +17,10 @@ describe Job do
   
   before(:each) do
     @business = Factory(:business)
+    @department = Factory(:department, :business_id => @business.id)
     @occupation = Factory(:occupation)
     @attr = { :job_title => "Sales Manager",
+              :department_id => @department.id,
               :occupation_id => @occupation.id }
   end
   

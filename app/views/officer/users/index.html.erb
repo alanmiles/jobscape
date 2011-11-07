@@ -1,0 +1,46 @@
+<div class = "r-float">
+  <%= link_to "Menu for this business", officer_home_path %><br />
+  <%= link_to "HYGWIT invitations", "#" %>
+</div>
+
+<h1><%= @title %></h1>
+<h4><%= @business.name %></h4>
+
+<%= will_paginate @users %>
+
+<table class="smaller_font">
+  <tr>
+    <th>Ref</th>
+    <th>Name</th>
+    <th>Department</th>
+    <th>Job</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @users.each do |u| %>
+  <tr>
+    <td><%= u.employee_lookup(@business).ref %></td>
+    <td><%= u.name %></td>
+    <td>
+      <% unless u.no_current_job?(@business) %>
+        <%= u.current_job(@business).department.name %>
+      <% end %>
+    </td>
+    <td>
+      <% if u.no_current_job?(@business) %>
+       <em>NOT ENTERED</em>
+      <% else %>
+        <%= u.current_job(@business).job_title %>
+      <% end %>
+    </td>
+    <td class="centralize">
+      <%= link_to image_tag("select.png", :size => "15x15"), officer_user_path(u) %>
+    </td>
+    <td class="cenralize">
+      <%= link_to image_tag("cancel.png", :size => "15x15"), "#" %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @users %>

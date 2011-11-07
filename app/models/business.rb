@@ -33,7 +33,9 @@ class Business < ActiveRecord::Base
   has_many :departments, :dependent => :destroy 
   has_many :jobs, 	:dependent => :destroy
   has_many :vacancies,  :through => :jobs
-  has_many :users, :through => :employees
+  has_many :users, :through => :employees, :uniq => true
+  has_many :invitations, :dependent => :destroy
+  
   
   validates :sector_id, :presence 	=> true
   validates :name, 	:presence 	=> true,
@@ -66,5 +68,31 @@ class Business < ActiveRecord::Base
       end
     end
   end
-  		
+  
+  def all_current_employees
+    self.users.joins(:employees).where("employees.left = ?", false).order("users.name")
+  end		
+  
+  def all_former_employees
+    self.users.joins(:employees).where("employees.left = ?", true).order("users.name")
+  end
+  
+  def count_current_employees
+    self.all_current_employees.count
+  end
+  
+  def count_former_employees
+    self.all_former_employees.count
+  end
+  
+  def has_former_employees?
+    cnt = self.count_former_employees
+    cnt > 0
+  end
+  	
+  def needs_an_officer?
+    nmbr = self.employees.where("employees.officer = ? and employees.left = ?", true, false).count
+    nmbr < 2
+  end
+  
 end

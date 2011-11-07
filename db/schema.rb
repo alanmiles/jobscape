@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111102225154) do
+ActiveRecord::Schema.define(:version => 20111107142318) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -114,6 +114,8 @@ ActiveRecord::Schema.define(:version => 20111102225154) do
     t.boolean  "officer",     :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ref"
+    t.boolean  "left",        :default => false
   end
 
   add_index "employees", ["business_id"], :name => "index_employees_on_business_id"
@@ -145,6 +147,17 @@ ActiveRecord::Schema.define(:version => 20111102225154) do
     t.date     "removal_date"
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invitations", :force => true do |t|
+    t.integer  "business_id"
+    t.string   "name"
+    t.string   "email"
+    t.string   "security_code"
+    t.integer  "inviter_id"
+    t.integer  "invitee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -208,9 +221,10 @@ ActiveRecord::Schema.define(:version => 20111102225154) do
   create_table "placements", :force => true do |t|
     t.integer  "user_id"
     t.integer  "job_id"
-    t.boolean  "current",    :default => true
+    t.boolean  "current",     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "started_job"
   end
 
   create_table "plans", :force => true do |t|
@@ -353,6 +367,7 @@ ActiveRecord::Schema.define(:version => 20111102225154) do
     t.datetime "completion_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "placement_id"
   end
 
   add_index "reviews", ["reviewee_id"], :name => "index_reviews_on_reviewee_id"

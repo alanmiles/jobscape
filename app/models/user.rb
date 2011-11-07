@@ -19,12 +19,46 @@
 #  country            :string(255)
 #
 
-
-
 require 'digest'
 class User < ActiveRecord::Base
+ 
+  has_many :employees, :dependent => :destroy
+  has_many :businesses, :through => :employees
+  has_one :portrait, :dependent => :destroy
+  has_many :achievements, :dependent => :destroy
+  has_many :characteristics, :dependent => :destroy
+  has_many :favourites, :dependent => :destroy
+  has_many :dislikes, :dependent => :destroy
+  has_many :qualifications, :dependent => :destroy
+  has_many :strengths, :dependent => :destroy
+  has_many :limitations, :dependent => :destroy
+  has_many :aims, :dependent => :destroy
+  has_many :references, :dependent => :destroy
+  has_many :previousjobs, :dependent => :destroy
+  has_many :placements, :dependent => :destroy
+  has_many :jobs, :through => :placements, :uniq => true
+  has_many :applications, :dependent => :destroy
+  
+  has_many :reviewed_sessions, :foreign_key => "reviewee_id", :class_name => "Review", :dependent => :destroy
+  has_many :reviewees, :through => :reviewed_sessions
+  has_many :reviewer_sessions, :foreign_key => "reviewer_id", :class_name => "Review"
+  has_many :reviewers, :through => :reviewer_sessions
+  
+  has_many :manager_jobs, :foreign_key => "manager_id", :class_name => "Department"
+  has_many :managers, :through => :manager_jobs
+  has_many :deputy_jobs, :foreign_key => "deputy_id", :class_name => "Department"
+  has_many :deputies, :through => :deputy_jobs
+  
+  has_many :invitation_issues, :foreign_key => "inviter_id", :class_name => "Invitation"
+  has_many :issued_invitations, :through => :invitation_issues
+  has_many :invitation_receipts, :foreign_key => "invitee_id", :class_name => "Invitation"
+  has_many :received_invitations, :through => :invitation_receipts
+  
+  accepts_nested_attributes_for :placements
+  
   attr_accessor   :password
-  attr_accessible :name, :email, :password, :password_confirmation, :account, :terms, :latitude, :longitude, :address
+  attr_accessible :name, :email, :password, :password_confirmation, :account, :terms, :latitude, :longitude, :address, :placements_attributes
+
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
@@ -42,33 +76,6 @@ class User < ActiveRecord::Base
       obj.country = geo.country
     end
   end
-  
-  has_many :employees, :dependent => :destroy
-  has_many :businesses, :through => :employees
-  has_one :portrait, :dependent => :destroy
-  has_many :achievements, :dependent => :destroy
-  has_many :characteristics, :dependent => :destroy
-  has_many :favourites, :dependent => :destroy
-  has_many :dislikes, :dependent => :destroy
-  has_many :qualifications, :dependent => :destroy
-  has_many :strengths, :dependent => :destroy
-  has_many :limitations, :dependent => :destroy
-  has_many :aims, :dependent => :destroy
-  has_many :references, :dependent => :destroy
-  has_many :previousjobs, :dependent => :destroy
-  has_many :placements, :dependent => :destroy
-  has_many :jobs, :through => :placements
-  has_many :applications, :dependent => :destroy
-  
-  has_many :reviewed_sessions, :foreign_key => "reviewee_id", :class_name => "Review", :dependent => :destroy
-  has_many :reviewees, :through => :reviewed_sessions
-  has_many :reviewer_sessions, :foreign_key => "reviewer_id", :class_name => "Review"
-  has_many :reviewers, :through => :reviewer_sessions
-  
-  has_many :manager_jobs, :foreign_key => "manager_id", :class_name => "Department"
-  has_many :managers, :through => :manager_jobs
-  has_many :deputy_jobs, :foreign_key => "deputy_id", :class_name => "Department"
-  has_many :deputies, :through => :deputy_jobs
   
   validates :name, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }
@@ -305,6 +312,56 @@ class User < ActiveRecord::Base
     self.reviewed_sessions.where("reviews.completed = ?", true).last
   end
   
+  def formal_reviews(job)
+    self.reviewed_sessions.where("reviews.job_id = ? and reviews.reviewer_id != ? 
+      and reviewer_name = ? and completed = ?", job.id, self.id, nil, true).order("reviews.completion_date DESC")
+  end
+  
+  def has_formal_reviews?(job)
+    cnt = self.formal_reviews(job).count
+    cnt > 0
+  end
+  
+  def employee_lookup(business)
+    @business = Business.find(business)
+    @employee = Employee.find_by_user_id_and_business_id(self.id, @business.id)
+  end
+  
+  def current_job(business)
+    self.jobs.joins(:placements).where("placements.current = ? and jobs.business_id = ?", true, business).first
+  end
+  
+  def current_placement(business)
+    @job = self.current_job(business)
+    @placement = Placement.find_by_user_id_and_job_id_and_current(self.id, @job.id, true)
+  end
+  
+  def no_current_job?(business)
+    self.current_job(business) == nil
+  end
+  
+  def deactivate_old_placements(placement, business)
+    @old_placements = self.placements.where("placements.id != ? and placements.current =?", placement.id, true)
+    @old_placements.each do |o|
+      if o.job.business_id == business.id
+        o.update_attribute(:current, false)
+      end
+    end
+  end
+  
+  def previous_jobs(business)
+    self.jobs.joins(:placements).where("placements.current = ? and jobs.business_id = ?", false, business).order("placements.started_job DESC")
+  end
+  
+  def has_previous_jobs?(business)
+    nmbr = self.previous_jobs(business).count
+    nmbr > 0
+  end
+  
+  def previous_placements
+    self.placements.where("placements.current = ?", false).order("started_job DESC")  
+  end
+  
   private
 
     def encrypt_password
@@ -332,7 +389,8 @@ class User < ActiveRecord::Base
           @business.save
           @employee = Employee.new(:business_id => @business.id,
         		:user_id => self.id,
-        		:officer => true)
+        		:officer => true, 
+        		:ref => 1)
           @employee.save
           @department = @business.departments.build(:name => "Unknown")
           @department.save

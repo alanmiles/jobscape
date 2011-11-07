@@ -9,7 +9,8 @@ class SelfAppraisalsController < ApplicationController
   
   def new
     @user = current_user
-    @job = Job.find(session[:jobid]) 
+    @job = Job.find(session[:jobid])
+    @placement = Placement.find_by_user_id_and_job_id_and_current(@user, @job, true)
     @review = Review.new(:reviewee_id => @user.id, :reviewer_id => @user.id, :reviewer_name => @user.name, :job_id => @job.id)
     @title = "New performance review"    
   end

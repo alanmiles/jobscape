@@ -41,6 +41,7 @@ end
 Factory.define :employee do |employee|
   employee.association :user
   employee.association :business
+  employee.ref			1
 end
 
 #Factory.define :plan do |plan|

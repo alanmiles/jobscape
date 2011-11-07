@@ -25,6 +25,7 @@
 #  completion_date           :datetime
 #  created_at                :datetime
 #  updated_at                :datetime
+#  placement_id              :integer
 #
 
 class Review < ActiveRecord::Base
@@ -32,6 +33,7 @@ class Review < ActiveRecord::Base
   belongs_to :reviewer, :class_name => "User"
   belongs_to :reviewee, :class_name => "User"
   belongs_to :job
+  belongs_to :placement
   has_many :reviewqualities, :dependent => :destroy
   has_many :reviewresponsibilities, :dependent => :destroy
   has_many :reviewgoals, :through => :reviewresponsibilities
@@ -44,13 +46,14 @@ class Review < ActiveRecord::Base
   attr_accessible :reviewee_id, :reviewer_id, :reviewer_name, :job_id, :completed, :completion_date, :reviewer_email, :secret_code, :comments_complete,
   		 :reviewresponsibilities_attributes, :reviewqualities_attributes, :responsibilities_complete, :qualities_complete, :achievements,
   		 :problems, :observations, :change_responsibilities, :change_goals, :change_attributes, :plan, :responsibilities_score, 
-  		 :attributes_score
+  		 :attributes_score, :placement_id
   
   after_save :build_review_tables
   
   validates	:reviewee_id,		:presence 	=> true
   validates	:reviewer_id,		:presence	=> true
   validates	:job_id,		:presence 	=> true
+  validates	:placement_id,		:presence	=> true
   validates	:reviewer_name,		:presence	=> true,
   					:length		=> { :maximum => 50 }
   validates	:responsibilities_score, :presence	=> true

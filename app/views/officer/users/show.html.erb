@@ -1,0 +1,49 @@
+<div class = "r-float">
+  <%= link_to "All users in this business", officer_users_path %>
+</div>
+<h1><%= @title %></h1>
+
+<strong>BUSINESS DETAILS</strong> &nbsp; 
+  <%= link_to "(Change details)", edit_officer_employee_path(@employee) %>
+<div class= "display_wider" style="padding-top: 5px">
+  <strong>Employee #</strong> <%= @employee.ref %><br /> 
+  <strong>Name: </strong> <%= @user.name %><br />
+  <strong>HYGWIT Officer:</strong> <%= officer_status %><br />
+  <strong>Leaver:</strong> <%= leaver_status %>
+</div>
+
+<strong>CURRENT JOB</strong> &nbsp;
+  <%= link_to "(Assign to a new job)", new_user_placement_path(@user) %>
+<div class="display_wider" style = "padding-top: 5px">
+  <% if @user.no_current_job?(@business) %>
+     <em>Not yet assigned</em>
+  <% else %>
+    <%= @job.job_title %> - <%= @job.department.name %> <small><i>(from <%= display_date(@placement.started_job) %> -
+    <%=link_to " edit date", edit_placement_path(@placement) %>)</i></small>
+  <% end %>
+</div>
+
+<% if @user.has_previous_jobs?(@business) %>
+  <strong>PREVIOUS JOBS</strong> <small><i>(Can be removed if no external reviews)</i></small>
+  <div class="display_wider" style = "padding-top: 5px">
+    <ul>
+      <% @user.previous_placements.each do |p| %>
+        <% old_job = Job.find(p.job_id) %>
+        <% if p.job.business_id == @business.id %>
+          <li><%= p.job.job_title %> - <%= p.job.department.name %> 
+            <small><i>(from <%= display_date(p.started_job) %> - 
+                <%=link_to " edit date", edit_placement_path(p) %> 
+                <% unless p.has_completed_formal_reviews? %>
+                  - <%= link_to "remove from list", p,
+                   :url => placement_path(p),
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Delete #{p.job.job_title}" %>)
+                <% end %>
+            </i></small>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

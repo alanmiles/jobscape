@@ -8,6 +8,8 @@
 #  officer     :boolean         default(FALSE)
 #  created_at  :datetime
 #  updated_at  :datetime
+#  ref         :integer
+#  left        :boolean         default(FALSE)
 #
 
 require 'spec_helper'
@@ -18,7 +20,7 @@ describe Employee do
     @sector = Factory(:sector)
     @user = Factory(:user)
     @business = Factory(:business, :sector_id => @sector.id)
-    @attr = { :user_id => @user.id, :business_id => @business.id }
+    @attr = { :user_id => @user.id, :business_id => @business.id, :ref => 1 }
   end
   
   it "should create a new instance given valid attributes" do

@@ -29,18 +29,24 @@ class Job < ActiveRecord::Base
   has_many :users, :through => :placements
   has_many :jobqualities, :through => :plan
   has_many :responsibilities, :through => :plan
+  has_many :reviews
   
   validates :job_title, :presence 	=> true,
   			:length		=> { :maximum => 50 },
-  			:uniqueness 	=> { :scope => :business_id, 
-  			     		     :message => " already exists" }
+  			:uniqueness 	=> { :scope => :department_id, 
+  			     		     :message => " already exists in this department" }
   validates :business_id, :presence	=> true
   validates :occupation_id, :presence	=> true
+  validates :department_id, :presence	=> true
   
   default_scope :order => 'jobs.job_title'			     		     
 
   def title_location
     "#{self.job_title} - #{self.business.name}, #{self.business.city}"
+  end
+  
+  def title_department
+    "#{self.job_title} - #{self.department.name}"
   end
   
   def unfilled_vacancies

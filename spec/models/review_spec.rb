@@ -25,6 +25,7 @@
 #  completion_date           :datetime
 #  created_at                :datetime
 #  updated_at                :datetime
+#  placement_id              :integer
 #
 
 require 'spec_helper'
