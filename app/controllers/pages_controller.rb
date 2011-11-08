@@ -133,7 +133,9 @@ class PagesController < ApplicationController
   end
   
   def employee_home
+    session[:invited] = nil
     @title = "Employee Home"
+    @business = Business.find(session[:biz])
     @user = current_user
   end
   

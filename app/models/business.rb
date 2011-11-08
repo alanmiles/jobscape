@@ -99,4 +99,8 @@ class Business < ActiveRecord::Base
     nmbr < 2
   end
   
+  def next_ref_no
+    @employee = self.employees.order("employees.ref_no DESC").first
+    @employee.ref_no + 1
+  end
 end

@@ -1,7 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "placements/new"
-
   resources :users do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true
@@ -54,6 +52,7 @@ Jobscape::Application.routes.draw do
   end
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
+  resources :invitees
   resources :sectors
   resources :businesses do
     resources :jobs, :shallow => true

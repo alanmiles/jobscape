@@ -17,7 +17,16 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @title = "Sign up"
-    @accounts = User::ACCOUNT_TYPES
+    if session[:invited] == nil
+      @accounts = User::ACCOUNT_TYPES
+    else
+      @invitation = Invitation.find(session[:invited])
+      @user.account = 4
+      @user.name = @invitation.name
+      @user.email = @invitation.email
+      @business = Business.find(@invitation.business_id)
+      session[:biz] = @business.id
+    end
   end
 
   def create
@@ -39,13 +48,28 @@ class UsersController < ApplicationController
         elsif @user.account == 3
           redirect_to new_business_path
         elsif @user.account == 4
+          @business = Business.find(session[:biz])
+          @top_ref = @business.next_ref_no
+          @employee = Employee.new(:business_id => @business.id,
+          		:user_id => @user.id,
+          		:ref_no => @top_ref)
+          @employee.save  
           redirect_to employee_home_path
         end
       else
         @user.password = nil
         @user.password_confirmation = nil
         @title = "Sign up"
-        @accounts = User::ACCOUNT_TYPES
+        if session[:invited] == nil
+          @accounts = User::ACCOUNT_TYPES
+        else
+          @invitation = Invitation.find(session[:invited])
+          @user.account = 4
+          @user.name = @invitation.name
+          @user.email = @invitation.email
+          @business = Business.find(@invitation.business_id)
+          session[:biz] = @business.id
+        end
         render 'new'
       end
     else
@@ -82,7 +106,7 @@ class UsersController < ApplicationController
       flash[:notice] = "You're not allowed to delete your own record."
     else
       @user.destroy
-      flash[:success] = "User destroyed."
+      flash[:success] = "#{@user.name} deleted."
     end
     redirect_to users_path
   end

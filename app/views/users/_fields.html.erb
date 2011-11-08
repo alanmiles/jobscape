@@ -15,8 +15,14 @@
   <%= f.label :password_confirmation, "Confirmation" %> <small>(repeat password)</small><br />
   <%= f.password_field :password_confirmation %>
 </div>
+
 <div class="field">
-  <%= f.label :account, "Account-type" %> <small>(see panel right)</small> &nbsp;
-  <%= select( :user, :account, @accounts ) %>
+  <% if session[:invited] == nil %>
+    <%= f.label :account, "Account-type" %> <small>(see panel right)</small> &nbsp;
+    <%= select( :user, :account, @accounts ) %>
+  <% else %>
+    Signing up for an Employee account with <%= @business.name %>.
+    <%= f.hidden_field :account %>
+  <% end %>
 </div>
 
