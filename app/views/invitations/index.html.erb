@@ -1,2 +1,49 @@
-<h1>Invitations#index</h1>
-<p>Find me in app/views/invitations/index.html.erb</p>
+<div class = "r-float">
+  <%= link_to "Invite more people", new_business_invitation_path(@business) %><br />
+</div>
+
+<h1><%= @title %></h1>
+ 
+<% if @business.no_invitations? %>
+  <div class="no_data round">
+    You have no outstanding invitations, asking colleagues to sign up to HYGWIT.
+  </div>
+<% else %>
+  <div class="info_box_screen">
+    These people have been sent an email inviting them to start using HYGWIT as members of your business, using the special security code.  
+    When you see <%= image_tag("complete.png", :size => "15x15") %> in the <i>OK</i> column, they have signed up and you can delete
+    the record ( <%= image_tag("cancel.png", :size => "15x15") %> ). 
+  </div>
+
+  <%= will_paginate @invitations %>
+
+  <table class="smaller_font">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Invited by</th>
+      <th>Date</th>
+      <th>Code</th>
+      <th>OK?</th>
+      <th></th>
+    </tr>
+    <% @invitations.each do |invitation| %>
+    <tr>
+      <td><%= invitation.name %></td>
+      <td><%= invitation.email %></td>
+      <td><%= invitation.asked_by %></td>
+      <td><%= display_monthday(invitation.created_at) %></td>
+      <td><%= invitation.security_code %></td>
+      <td><%= image_tag("complete.png", :size => "15x15") if invitation.signed_up? %></td>
+      <td><%= link_to image_tag("cancel.png", :size => "15x15"), invitation,
+                   :method => :delete, 
+                   :confirm => "You sure?",
+                   :title => "Cancel invitation" %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @invitations %>
+  
+<% end %>

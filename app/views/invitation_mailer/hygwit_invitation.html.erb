@@ -1,0 +1,20 @@
+Dear <%= @invitation.name %>
+<br /><br />
+  This is an invitation to sign up to our business's achievement management website, HYGWIT (- that's 'Have
+  You Got What It Takes')
+  <br /><br />
+  The idea behind HYGWIT is that everyone should have a better understanding of their job, and what the business
+  needs them to achieve.  We want you to be a high achiever: that's good for your career prospects, and good
+  for our business.
+  <br /><br />
+  You'll find out more when you go to the site.  
+  <% if Rails.env.development? %>
+    <a href="http://localhost:3000/signup/">Follow this link to the HYGWIT sign-up page </a>
+  <% else %>
+    <a href="http://blooming-sword-634.heroku.com/signup/">Follow this link to the HYGWIT sign-up page </a>
+  <% end %>
+  and when prompted for the security code, enter <%= @invitation.security_code %>
+  <br /><br />
+  If there are any problems, just let me know.
+  <br /><br />
+  <%= @sender_name %>

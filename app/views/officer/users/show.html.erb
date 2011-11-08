@@ -14,14 +14,20 @@
 
 <strong>CURRENT JOB</strong> &nbsp;
   <%= link_to "(Assign to a new job)", new_user_placement_path(@user) %>
-<div class="display_wider" style = "padding-top: 5px">
-  <% if @user.no_current_job?(@business) %>
-     <em>Not yet assigned</em>
-  <% else %>
-    <%= @job.job_title %> - <%= @job.department.name %> <small><i>(from <%= display_date(@placement.started_job) %> -
-    <%=link_to " edit date", edit_placement_path(@placement) %>)</i></small>
-  <% end %>
-</div>
+<% if @business.no_jobs? %>
+  <div class="no_data round" style="margin-top: 10px; padding: 25px">
+    First add some <%= link_to "departments and jobs", officer_home_path %>.
+  </div>
+<% else %>
+  <div class="display_wider" style = "padding-top: 5px">
+    <% if @user.no_current_job?(@business) %>
+      <em>Not yet assigned</em>
+    <% else %>
+      <%= @job.job_title %> - <%= @job.department.name %> <small><i>(from <%= display_date(@placement.started_job) %> -
+      <%=link_to " edit date", edit_placement_path(@placement) %>)</i></small>
+    <% end %>
+  </div>
+<% end %>
 
 <% if @user.has_previous_jobs?(@business) %>
   <strong>PREVIOUS JOBS</strong> <small><i>(Can be removed if no external reviews)</i></small>

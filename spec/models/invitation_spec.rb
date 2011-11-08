@@ -11,6 +11,7 @@
 #  invitee_id    :integer
 #  created_at    :datetime
 #  updated_at    :datetime
+#  signed_up     :boolean         default(FALSE)
 #
 
 require 'spec_helper'

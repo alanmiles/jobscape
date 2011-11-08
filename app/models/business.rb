@@ -58,6 +58,10 @@ class Business < ActiveRecord::Base
     #MODIFY LATER TO ADD NO EMPLOYEES
   end
   
+  def no_invitations?
+    self.invitations.count == 0
+  end
+  
   def remove_disconnected_jobs
     if self.jobs.count > 0
       self.jobs.each do |job|

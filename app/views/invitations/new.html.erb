@@ -1,2 +1,38 @@
-<h1>Invitations#new</h1>
-<p>Find me in app/views/invitations/new.html.erb</p>
+<div class = "r-float">
+  <%= link_to "Cancel", business_invitations_path(@business) %>
+</div>
+
+<h1><%= @title %></h1>
+
+<div class="info_box_screen">
+  Give other people in your business access to HYGWIT's employee pages, setting them on the path to high achievement, and allowing 
+  you to keep an eye on their progress.
+  <br /><br />  
+  When you complete the name and email details and then click <em>'Send invitation'</em>, an email will be sent automatically
+  inviting this person to join and directing them to a secure HYGWIT sign-up page.
+  <br /><br />
+  Make sure you've already added their department and job to the HYGWIT lists so they can complete the sign-up form.   
+  <br /><br />
+
+<%= form_for([@business, @invitation]) do |f| %>
+  <%= render "shared/error_messages", :object => f.object %>
+
+  <div class="field">
+    <%= f.label :name, "Enter the employee's name" %><br />
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email, "... and email address" %><br />
+    <%= f.text_field :email %>
+  </div>
+  
+  <%= f.hidden_field :security_code %><br />
+  <%= f.hidden_field :inviter_id %>
+  
+  <div class="actions">
+    <%= f.submit "Send invitation" %>
+  </div>
+
+<% end %>
+</div>

@@ -22,7 +22,13 @@
   </div>
 <% else %>
   <h4><%= @business.name %>, <%= @business.city %></h4>
+  
+  
   <div class="menu_box round grayborder">
+    <% if @business.no_jobs? %>
+      <small><i>Before you get started with employees, you need to set up departments, then jobs.</i></small>
+      <br /><br />
+    <% end %> 
     <ul>
       <li><%= link_to "Business details", @business %></li>
       <li><%= link_to "Departments", business_departments_path(@business.id) %></li>

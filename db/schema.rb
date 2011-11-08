@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111107142318) do
+ActiveRecord::Schema.define(:version => 20111107203347) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20111107142318) do
     t.integer  "invitee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "signed_up",     :default => false
   end
 
   create_table "jobqualities", :force => true do |t|

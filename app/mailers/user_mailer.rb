@@ -16,5 +16,6 @@ class UserMailer < ActionMailer::Base
     @user = user
     @quality = quality
     mail(:to => user.email, :subject => "Attribute Rejected")  
-  end  
+  end 
+      
 end
