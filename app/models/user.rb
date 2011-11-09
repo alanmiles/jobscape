@@ -65,8 +65,8 @@ class User < ActiveRecord::Base
   ACCOUNT_TYPES = [
     ["Individual", 1],
     ["Jobseeker", 2],
-    ["Business", 3],
-    ["Invitee", 4]
+    ["Business", 3]
+   # ["Invitee", 4]
   ]
   
   geocoded_by :address
@@ -270,7 +270,7 @@ class User < ActiveRecord::Base
       elsif account == 3
         return "Business"
       elsif account == 4
-        return "Invitee"
+        return "Employee"
       else
         return "Individual"
       end

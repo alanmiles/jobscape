@@ -13,6 +13,7 @@
 #  updated_at    :datetime
 #  signed_up     :boolean         default(FALSE)
 #  staff_no      :integer
+#  job_id        :integer
 #
 
 require 'spec_helper'

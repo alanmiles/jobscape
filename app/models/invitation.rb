@@ -13,6 +13,7 @@
 #  updated_at    :datetime
 #  signed_up     :boolean         default(FALSE)
 #  staff_no      :integer
+#  job_id        :integer
 #
 
 class Invitation < ActiveRecord::Base
@@ -23,7 +24,7 @@ class Invitation < ActiveRecord::Base
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
-  attr_accessible :name, :email, :inviter_id, :invitee_id, :signed_up, :security_code, :staff_no
+  attr_accessible :name, :email, :inviter_id, :invitee_id, :signed_up, :security_code, :staff_no, :job_id
   
   validates	:business_id,		:presence	=> true
   validates	:name,			:presence	=> true,
@@ -38,6 +39,7 @@ class Invitation < ActiveRecord::Base
   validates	:inviter_id,		:presence	=> true
   validates	:staff_no,		:numericality 	=> { :only => :integer, :allow_blank => true }
   validates	:staff_no,		:duplicate_id	=> true, :if => :staff_no_set?
+  validates	:job_id,		:presence	=> true
   
   def staff_no_set?
     self.staff_no != nil

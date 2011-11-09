@@ -4,11 +4,13 @@
 
 <h1>Edit your account settings</h1>
 
-<div class="info_box grayborder rightpos">
-  <br />
-  <%= render "/shared/account_types" %> 
-  <br /><br />
-</div>
+<% unless @user.account == 4 %>
+  <div class="info_box grayborder rightpos">
+    <br />
+    <%= render "/shared/account_types" %> 
+    <br /><br />
+  </div>
+<% end %>
 
 <%= form_for(@user) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
@@ -20,10 +22,18 @@
     <%= f.label :email %> <br />
     <%= f.text_field :email %>
   </div>
+  
   <div class="field">
-    <%= f.label :account, "Account-type" %> <small>(see panel right)</small> &nbsp;
-    <%= select( :user, :account, @accounts ) %>
+    <% if @user.account == 4 %>
+      Signed up for an Employee account with<br /> <strong><%= @business.name.upcase %></strong>.
+      <%= f.hidden_field :account %>
+      <br /><br />
+    <% else %>
+      <%= f.label :account, "Account-type" %> <small>(see panel right)</small> &nbsp;
+      <%= select( :user, :account, @accounts ) %>
+    <% end %>
   </div>
+  
   <% if @user.account == 2 %>
     <div class="field" style = "width:300px">
       <strong>Location</strong> <br />

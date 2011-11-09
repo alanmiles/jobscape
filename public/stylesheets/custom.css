@@ -138,9 +138,10 @@ ul li.no_bullet {
   padding: 50px;
   font-size: 100%;
   font-weight: bold;
-  color: #A33519;
+  background-color: #D6D6D6;
+  color: #A30000;
   border-style: solid;
-  border-color: #A33519;
+  border-color: #A30000;
   border-width: 1px medium medium 1px; 
 }
 

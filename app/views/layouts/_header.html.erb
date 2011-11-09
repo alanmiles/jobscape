@@ -5,7 +5,7 @@
       <li><%= link_to "Home", root_path %></li>
       <li><%= link_to "Help", help_path %></li>
       <% if signed_in? %>
-        <li><%= link_to "Self-Portrait", user_portrait_path(current_user) %></li>
+        <li><%= link_to "Self-Portrait", user_portrait_path(current_user) unless current_user.account >=3 %></li>
         <li><%= link_to "Settings", edit_user_path(current_user) %></li>
       <% else %>
         <li><%= link_to "Sign up", signup_path %></li>

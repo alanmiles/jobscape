@@ -55,10 +55,16 @@ class UsersController < ApplicationController
           else
             @top_ref = @invitation.staff_no
           end
+          
           @employee = Employee.new(:business_id => @business.id,
           		:user_id => @user.id,
           		:ref_no => @top_ref)
           @employee.save
+          
+          @placement = Placement.new(:user_id => @user.id,
+          		:job_id => @invitation.job_id)
+          @placement.save
+          
           @invitation.update_attribute(:signed_up, true)  
           redirect_to employee_home_path
         end
@@ -100,7 +106,11 @@ class UsersController < ApplicationController
   def edit
     @title = "Edit account settings"
     @user = User.find(params[:id])
-    @accounts = User::ACCOUNT_TYPES
+    if @user.account == 4
+      @business = Business.find(session[:biz])
+    else
+      @accounts = User::ACCOUNT_TYPES
+    end
   end
   
   def update
@@ -110,7 +120,11 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       @title = "Edit account settings"
-      @accounts = User::ACCOUNT_TYPES
+      if @user.account == 4
+        @business = Business.find(session[:biz])
+      else
+        @accounts = User::ACCOUNT_TYPES
+      end
       render 'edit'
     end
   end

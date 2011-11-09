@@ -138,6 +138,7 @@ class PagesController < ApplicationController
     @user = current_user
     @employee = Employee.where("user_id =?", @user).first
     @business = Business.find(@employee.business_id)
+    session[:biz] = @business.id
   end
   
   private
