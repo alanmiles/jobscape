@@ -34,6 +34,9 @@
       <li><%= link_to "Departments", business_departments_path(@business.id) %></li>
       <li><%= link_to "Jobs", business_jobs_path(@business.id) %></li>
       <li><%= link_to "Employees (HYGWIT users)", officer_users_path %></li>
+      <li><%= link_to "HYGWIT invitations", business_invitations_path(@business) %></li>
+      <li><%= link_to "HYGWIT officers", "#" %></li>
+      
     </ul>
   </div>
 <% end %>

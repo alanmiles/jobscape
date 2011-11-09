@@ -12,6 +12,7 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #  signed_up     :boolean         default(FALSE)
+#  staff_no      :integer
 #
 
 class Invitation < ActiveRecord::Base
@@ -22,7 +23,7 @@ class Invitation < ActiveRecord::Base
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
-  attr_accessible :name, :email, :inviter_id, :invitee_id, :signed_up, :security_code
+  attr_accessible :name, :email, :inviter_id, :invitee_id, :signed_up, :security_code, :staff_no
   
   validates	:business_id,		:presence	=> true
   validates	:name,			:presence	=> true,
@@ -35,7 +36,12 @@ class Invitation < ActiveRecord::Base
   validates	:security_code,		:presence	=> true,
   					:length		=> { :minimum => 6, :maximum => 6 }
   validates	:inviter_id,		:presence	=> true
+  validates	:staff_no,		:numericality 	=> { :only => :integer, :allow_blank => true }
+  validates	:staff_no,		:duplicate_id	=> true, :if => :staff_no_set?
   
+  def staff_no_set?
+    self.staff_no != nil
+  end
   
   def self.generate_code
     alphanumerics = [('0'..'9'),('a'..'z')].map {|range| range.to_a}.flatten

@@ -49,11 +49,17 @@ class UsersController < ApplicationController
           redirect_to new_business_path
         elsif @user.account == 4
           @business = Business.find(session[:biz])
-          @top_ref = @business.next_ref_no
+          @invitation = Invitation.find(session[:invited])
+          if @invitation.staff_no == nil
+            @top_ref = @business.next_ref_no
+          else
+            @top_ref = @invitation.staff_no
+          end
           @employee = Employee.new(:business_id => @business.id,
           		:user_id => @user.id,
           		:ref_no => @top_ref)
-          @employee.save  
+          @employee.save
+          @invitation.update_attribute(:signed_up, true)  
           redirect_to employee_home_path
         end
       else
@@ -77,7 +83,16 @@ class UsersController < ApplicationController
       @user.password = nil
       @user.password_confirmation = nil
       @title = "Sign up"
-      @accounts = User::ACCOUNT_TYPES
+      if session[:invited] == nil
+        @accounts = User::ACCOUNT_TYPES
+      else
+        @invitation = Invitation.find(session[:invited])
+        @user.account = 4
+        @user.name = @invitation.name
+        @user.email = @invitation.email
+        @business = Business.find(@invitation.business_id)
+        session[:biz] = @business.id
+      end
       render 'new'
     end
   end

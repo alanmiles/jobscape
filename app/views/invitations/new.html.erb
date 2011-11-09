@@ -6,12 +6,11 @@
 
 <div class="info_box_screen">
   Give other people in your business access to HYGWIT's employee pages, setting them on the path to high achievement, and allowing 
-  you to keep an eye on their progress.
-  <br /><br />  
+  you to keep an eye on their progress. 
   When you complete the name and email details and then click <em>'Send invitation'</em>, an email will be sent automatically
   inviting this person to join and directing them to a secure HYGWIT sign-up page.
   <br /><br />
-  Make sure you've already added their department and job to the HYGWIT lists so they can complete the sign-up form.   
+  Make sure you've already added their department and job to the HYGWIT lists so they can make full use of the website.   
   <br /><br />
 
 <%= form_for([@business, @invitation]) do |f| %>
@@ -25,6 +24,13 @@
   <div class="field">
     <%= f.label :email, "... and email address" %><br />
     <%= f.text_field :email %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :staff_no, "... plus an optional staff number" %>&nbsp;
+    <%= f.text_field :staff_no, :size => 7 %><br />
+    <small>(If you don't enter a number, HYGWIT will assign one automatically.)</small>
+    
   </div>
   
   <%= f.hidden_field :security_code %><br />

@@ -12,6 +12,7 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #  signed_up     :boolean         default(FALSE)
+#  staff_no      :integer
 #
 
 require 'spec_helper'

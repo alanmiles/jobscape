@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111107203347) do
+ActiveRecord::Schema.define(:version => 20111109104458) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(:version => 20111107203347) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "signed_up",     :default => false
+    t.integer  "staff_no"
   end
 
   create_table "jobqualities", :force => true do |t|
