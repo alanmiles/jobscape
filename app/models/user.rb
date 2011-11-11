@@ -348,6 +348,11 @@ class User < ActiveRecord::Base
     @placement = Placement.find_by_user_id_and_job_id_and_current(self.id, @job.id, true)
   end
   
+  def deactivate_current_placement(business)
+    @placement = self.current_placement(business)
+    @placement.update_attribute(:current, false)
+  end
+  
   def no_current_job?(business)
     self.current_job(business) == nil
   end

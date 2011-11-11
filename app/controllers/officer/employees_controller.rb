@@ -14,6 +14,12 @@ class Officer::EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     if @employee.update_attributes(params[:employee])
       if @employee.left?
+        
+        #cancel all employee placements
+        @user = User.find(@employee.user_id)
+        @business = Business.find(@employee.business_id)
+        @user.deactivate_current_placement(@business)
+        
         flash[:success] = "#{@employee.user.name} has now left the business - but you can still see the records
                           in 'Former employees'"
         redirect_to officer_users_path
