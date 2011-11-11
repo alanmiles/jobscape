@@ -1,0 +1,2 @@
+module HiddenDepartmentsHelper
+end

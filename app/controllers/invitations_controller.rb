@@ -9,7 +9,7 @@ class InvitationsController < ApplicationController
 
   def new
     @business = Business.find(params[:business_id])
-    @jobs = @business.jobs.order("job_title")
+    @jobs = @business.available_jobs
     @code = Invitation.generate_code
     @invitation = @business.invitations.build(:inviter_id => current_user.id, :security_code => @code)
     @title = "Send an invitation"
@@ -23,7 +23,7 @@ class InvitationsController < ApplicationController
       flash[:success] = "Your invitation has been emailed to #{@invitation.name}."
       redirect_to business_invitations_path(@business)
     else
-      @jobs = @business.jobs.order("job_title")
+      @jobs = @business.available_jobs
       @code = Invitation.generate_code
       @title = "Send an invitation"
       render 'new'

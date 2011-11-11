@@ -1,8 +1,11 @@
 Jobscape::Application.routes.draw do
 
+  get "rehires/new"
+
   resources :users do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true
+    resources :rehires, :shallow => true
     resources :achievements, :shallow => true do
       collection do
         post :sort
@@ -58,6 +61,8 @@ Jobscape::Application.routes.draw do
     resources :jobs, :shallow => true
     resources :departments, :shallow => true
     resources :invitations, :shallow => true
+    resources :hidden_departments, :shallow => true
+    resources :inactive_jobs, :shallow => true
   end
   resources :plans do
     resources :responsibilities, :shallow => true
@@ -101,6 +106,7 @@ Jobscape::Application.routes.draw do
     resources :vacancy_details,  :only => :show
     resources :employees
     resources :users
+    resources :leavers
   end
   resources :latest_vacancies, :only => :index
   resources :current_vacancies, :only => :index

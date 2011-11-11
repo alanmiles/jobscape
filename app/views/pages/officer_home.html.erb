@@ -26,7 +26,7 @@
   
   <div class="menu_box round grayborder">
     <% if @business.no_jobs? %>
-      <small><i>Before you get started with employees, you need to set up departments, then jobs.</i></small>
+      <i class="highlt round">Before starting with employees, set up departments, then jobs.</i>
       <br /><br />
     <% end %> 
     <ul>
@@ -37,6 +37,13 @@
       <li><%= link_to "HYGWIT invitations", business_invitations_path(@business) %></li>
       <li><%= link_to "HYGWIT officers", "#" %></li>
       
+    </ul>
+    
+    <strong><u>ARCHIVE</u></strong>
+    <ul>
+      <li><%= link_to "Archived departments", business_hidden_departments_path(@business) %></li>
+      <li><%= link_to "Archived jobs", business_inactive_jobs_path(@business) %></li>
+      <li><%= link_to "Former employees", officer_leavers_path %></li>
     </ul>
   </div>
 <% end %>

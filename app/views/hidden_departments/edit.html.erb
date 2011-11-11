@@ -1,0 +1,40 @@
+<div class = "r-float">
+  <%= link_to "Cancel", business_hidden_departments_path(@business) %>
+</div>
+
+<h1><%= @title %></h1>
+<h4><%= @business.name %></h4>
+
+<%= form_for(@department, :url => hidden_department_path(@department)) do |f| %>
+  
+  <%= render 'shared/error_messages', :object => f.object %>
+
+  <div class="display_wider grayborder round">
+    <strong>Department name: <%= @department.name.upcase %></strong>    
+  </div>
+  <br />
+  <div class="shift_center">
+    
+    <div class="field">
+      <%= f.label :manager_id, "Department head" %><br />
+      <%= collection_select(:department, :manager_id, @people, :id, 
+                        :name, :prompt => true) %>
+    </div>
+    <div class="field">
+      <%= f.label :deputy_id, "Deputy department head" %><br />
+      <%= collection_select(:department, :deputy_id, @people, :id, 
+                        :name, :prompt => true) %>
+    </div>
+   
+    <div class="field">
+      <%= f.label :hidden, "UNCHECK to reactivate department" %>
+      <%= f.check_box :hidden %>
+    </div>
+    
+     <br />
+    <div class="actions">
+      <%= f.submit "Confirm changes" %>
+    </div>
+  </div>
+<% end %>
+

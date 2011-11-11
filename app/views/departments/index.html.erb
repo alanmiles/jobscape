@@ -1,9 +1,10 @@
 <div class = "r-float">
-<%= link_to "Add a new department", new_business_department_path(@department) %><br />
-<%= link_to "Menu for this business", officer_home_path %>
+  <%= link_to "Menu for this business", officer_home_path %><br />
+  <%= link_to "Add a new department", new_business_department_path(@department) %>
 </div>
 
-<h1><%= @title %></h1>
+<h1>Departments</h1>
+<h4><%= @business.name %></h4>
 
 <% unless @departments.empty? %>
   <%= will_paginate @departments %>
@@ -13,7 +14,7 @@
       <th>Head</th>
       <th>Deputy</th>
       <th class="centralize">Team</th>
-      <th class="centralize">Positions</th>
+      <th class="centralize">Job-titles</th>
       <th></th>
       <th></th>
     </tr>
@@ -23,18 +24,31 @@
       <td><%= department.manager.name unless department.manager_id == nil %> </td>
       <td><%= department.deputy.name unless department.deputy_id == nil %> </td>
       <td class="centralize">
-        0
+        <%= department.headcount %>
       </td>
       <td class="centralize">
-        0
+        <%= department.position_count %>
       </td>
       <td class="centralize">
         <%= link_to image_tag("select.png", :size => "15x15"), department %>
       </td>
-      <td class = "control"><%= link_to image_tag("cancel.png", :size => "15x15"), department, 
+      <td class = "control">
+        <% unless department.has_active_jobs? %>
+          
+          <% if department.has_inactive_jobs? %>
+            <%= link_to image_tag("cancel.png", :size => "15x15"), department, 
                    :method => :delete, 
-                   :confirm => "You sure?",
-                   :title => "Delete #{department.name}" %>
+                   :confirm => "Are you sure you want to exclude #{department.name} from the current departments list?",
+                   :title => "Remove #{department.name} from the list of current departments" %>
+          
+          <% else %>
+            <%= link_to image_tag("cancel.png", :size => "15x15"), department, 
+                   :method => :delete, 
+                   :confirm => "Are you sure you want to delete #{department.name} completely?",
+                   :title => "Delete #{department.name} completely" %>
+          <% end %>
+          
+        <% end %>
       </td> 
     </tr>
     <% end %>

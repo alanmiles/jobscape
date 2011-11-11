@@ -18,7 +18,7 @@
      Ref #<%= @vacancy.id %> -  
      Posted <%= time_ago_in_words(@vacancy.created_at) %> ago.  Apply by <%= @vacancy.close_date.strftime("%a %b %d, %Y") %>.
      <% if @vacancy.close_date < Date.today %>
-       <span class="highlt">&nbsp; Close-date has now passed!&nbsp;</span>
+       <span class="highlt round">&nbsp; Close-date has now passed!&nbsp;</span>
      <% end %>
   </small>        
 </div>

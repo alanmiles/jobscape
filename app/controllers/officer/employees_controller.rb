@@ -13,8 +13,14 @@ class Officer::EmployeesController < ApplicationController
   def update
     @employee = Employee.find(params[:id])
     if @employee.update_attributes(params[:employee])
-      flash[:success] = "Employee details updated."
-      redirect_to officer_user_path(@employee.user_id)
+      if @employee.left?
+        flash[:success] = "#{@employee.user.name} has now left the business - but you can still see the records
+                          in 'Former employees'"
+        redirect_to officer_users_path
+      else
+        flash[:success] = "Employee details updated."
+        redirect_to officer_user_path(@employee.user_id)
+      end
     else
       @title = "Edit employee details"
       render 'edit'

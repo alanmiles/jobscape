@@ -1,0 +1,34 @@
+<div class = "r-float">
+  <%= link_to "Cancel", business_inactive_jobs_path(@business) %>
+</div>
+
+<h1><%= @title %></h1>
+<h4><%= @business.name %></h4>
+
+<%= form_for(@job, :url => inactive_job_path(@job)) do |f| %>
+  
+  <%= render 'shared/error_messages', :object => f.object %>
+
+  <div class="display_wider grayborder round">
+    <strong>Job-title: <%= @job.job_title.upcase %></strong><br />
+    Department: <%= @job.department.name %>    
+  </div>
+  <br />
+  <div class="shift_center">
+  
+    <div class="field">
+      <%= f.label :occupation_id, "Category" %><br />
+      <%= collection_select(:job, :occupation_id, Occupation.all, :id, 
+                        :name, :prompt => true) %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :inactive, "UNCHECK to reactivate job" %>
+      <%= f.check_box :inactive %>
+    </div>
+    <br />
+    <div class="actions">
+      <%= f.submit "Confirm changes" %>
+    </div>
+  </div>
+<% end %>

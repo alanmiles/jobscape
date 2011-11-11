@@ -62,7 +62,8 @@ class UsersController < ApplicationController
           @employee.save
           
           @placement = Placement.new(:user_id => @user.id,
-          		:job_id => @invitation.job_id)
+          		:job_id => @invitation.job_id,
+          		:started_job => Date.today)
           @placement.save
           
           @invitation.update_attribute(:signed_up, true)  

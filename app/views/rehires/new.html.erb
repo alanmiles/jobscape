@@ -1,0 +1,29 @@
+<div class = "r-float">
+  <%= link_to "Cancel", officer_leavers_path %>
+</div>
+
+<h1><%= @title %></h1>
+<h4>
+  <%= @user.name %><br />
+  at <%= @business.name %>
+</h4>
+
+<%= form_for([@user, @placement], :url => user_rehires_path(@user)) do |f| %>
+  <%= render "shared/error_messages", :object => f.object %>
+
+    <div class="field">
+      <%= f.label :job_id, "Set new job / department" %><br />
+      <%= collection_select(:placement, :job_id, @jobs, :id, :title_department, :prompt => true) %> 
+    </div>
+    
+    <div class="field">
+      <%= f.label :started_job, "Start-date for new job" %><br />
+      <%= f.date_select :started_job %> 
+    </div>
+  
+    <br />
+    <div class="actions">
+      <%= f.submit "Confirm" %>
+    </div>
+  
+<% end %>

@@ -9,6 +9,7 @@
 #  deputy_id   :integer
 #  created_at  :datetime
 #  updated_at  :datetime
+#  hidden      :boolean         default(FALSE)
 #
 
 require 'spec_helper'

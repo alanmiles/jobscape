@@ -533,7 +533,7 @@ describe JobsController do
         
         it "should have a success message" do
           delete :destroy, :id => @job
-          flash[:success].should == @job.job_title + " removed."
+          flash[:success].should == @job.job_title + " has been completely removed - together with its A-Plan."
         end
       
       end

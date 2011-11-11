@@ -9,6 +9,7 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #  department_id :integer
+#  inactive      :boolean         default(FALSE)
 #
 
 require 'spec_helper'

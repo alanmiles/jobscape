@@ -9,7 +9,7 @@ class PlacementsController < ApplicationController
     @user = User.find(params[:user_id])
     @placement = @user.placements.build
     @business = Business.find(session[:biz])
-    @jobs = @business.jobs.order("job_title")
+    @jobs = @business.available_jobs
     @title = "New job"
   end
   
@@ -24,7 +24,7 @@ class PlacementsController < ApplicationController
     else
       @title = "New job"
       @business = Business.find(session[:biz])
-      @jobs = @business.jobs.order("job_title")
+      @jobs = @business.available_jobs
       render 'new'
     end
   end

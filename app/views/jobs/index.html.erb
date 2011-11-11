@@ -1,9 +1,11 @@
 <div class = "r-float">
-<%= link_to "Add a new job", new_business_job_path(@business) %><br />
-<%= link_to "Menu for this business", officer_home_path %>
+<%= link_to "Menu for this business", officer_home_path %><br />
+<%= link_to "Add a new job", new_business_job_path(@business) unless @business.no_departments? %>
+
 </div>
 
-<h1>Jobs at <%= @business.name %></h1>
+<h1>Jobs</h1>
+<h4><%= @business.name %></h4>
 
 <% unless @jobs.empty? %>
   <%= will_paginate %>
@@ -31,17 +33,31 @@
       <td style = "text-align:center">
         <%= image_tag("complete.png", :size => "15x15") if job.plan.complete? %>
       </td>
-      <td class = "control"><%= link_to image_tag("cancel.png", :size => "15x15"), job, 
+      <td class = "control">
+        <% unless job.has_active_placements? %>
+          <% if job.has_former_placements? %>
+            <%= link_to image_tag("cancel.png", :size => "15x15"), job, 
                    :method => :delete, 
-                   :confirm => "You sure?",
-                   :title => "Delete #{job.job_title}" %>
+                   :confirm => "Are you sure you want to remove '#{job.title_department}' from the list of active jobs?  (You'll be able to activate it again later, if necessary - and you won't lose the A-Plan.)",
+                   :title => "Remove '#{job.title_department}' from list of current jobs" %>
+          <% else %>
+            <%= link_to image_tag("cancel.png", :size => "15x15"), job, 
+                   :method => :delete, 
+                   :confirm => "Are you sure you want to delete '#{job.title_department}' (including the A-plan) from the jobs list?",
+                   :title => "Delete '#{job.title_department}' completely" %>
+          <% end %>
+        <% end %>
       </td> 
     </tr>
     <% end %>
   </table>
   <%= will_paginate %>
 <% else %>  
-  <div class="no_data round">
-    You haven't added any jobs yet. Why not start now - with your own?
+  <div class="no_data round"> 
+    <% if @business.no_departments? %>
+      Before you can start adding jobs, you need to set up departments.
+    <% else %>
+      You haven't added any jobs yet. Why not start now - with your own?
+    <% end %>
   </div>
 <% end %>

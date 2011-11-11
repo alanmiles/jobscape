@@ -339,9 +339,9 @@ ul li.no_bullet {
 }
 
 .highlt {
-  background-color: #FFD685;
-  color: #B80000;
-  padding: 0 5px;
+  background-color: #A70000;
+  color: #FFF;
+  padding: 0 10px;
 }
 
 .grade_highlight {

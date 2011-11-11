@@ -1,0 +1,33 @@
+<div class = "r-float">
+  <%= link_to "Menu for this business", officer_home_path %>
+</div>
+
+<h1><%= @title %></h1>
+<h4><%= @business.name %></h4>
+
+<% unless @jobs.empty? %>
+ 
+  <ul>
+    <% @jobs.each do |job| %>
+      <li>
+        <%= job.job_title %> - 
+        <%= job.department.name %> &nbsp;
+        <%= link_to "(reactivate)", edit_inactive_job_path(job) %>
+        <% unless job.has_former_placements? %>
+          &nbsp;
+          <%= link_to image_tag("cancel.png", :size => "15x15"), inactive_job_path(job), 
+                   :method => :delete, 
+                   :confirm => "Are you sure you want to delete '#{@job.title_department}' completely?",
+                   :title => "Delete '#{job.title_department}' completely" %>
+          
+        <% end %>
+      
+      </li>
+      
+    <% end %>
+  </ul>
+<% else %>
+  <div class="no_data round">
+    There are no archived jobs.
+  </div>
+<% end %>

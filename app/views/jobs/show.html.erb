@@ -9,7 +9,7 @@
 </p>
 
 <div class = "display_box grayborder round rightpos">
-  <strong>EMPLOYEES</strong>
+  <strong><%= pluralize(@job.active_placements.count, 'employee').upcase %></strong><br />
 </div>
 
 <div class = "display_box grayborder round">
@@ -19,9 +19,8 @@
 <br />
 
 <div class = "display_box grayborder round">
-  <strong>CURRENT VACANCIES</strong> <br />
+  <strong><%= pluralize(@count_vacancies, 'vacancy').upcase %></strong> <br />
    <% if @plan.complete? %>
-     <%= @count_vacancies %> <br />
      <% if Vacancy.zero_for?(@job) %>
        <%= link_to "Add a vacancy", new_vacancy_path %>
      <% else %>

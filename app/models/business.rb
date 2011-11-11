@@ -49,6 +49,10 @@ class Business < ActiveRecord::Base
     self.jobs.count == 0
   end
   
+  def no_departments?
+    self.departments.count == 0
+  end
+  
   def no_vacancies?
     self.vacancies.count == 0
   end
@@ -102,5 +106,21 @@ class Business < ActiveRecord::Base
   def next_ref_no
     @employee = self.employees.order("employees.ref_no DESC").first
     @employee.ref_no + 1
+  end
+  
+  def available_jobs
+    self.jobs.where("jobs.inactive = ?", false).order("jobs.job_title")
+  end
+  
+  def inactive_jobs
+    self.jobs.where("jobs.inactive = ?", true).order("jobs.job_title")
+  end
+  
+  def current_departments
+    self.departments.where("departments.hidden = ?", false).order("departments.name")
+  end
+  
+  def hidden_departments
+    self.departments.where("departments.hidden = ?", true).order("departments.name")
   end
 end

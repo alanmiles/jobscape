@@ -3,7 +3,11 @@
 </div>
 
 <h1><%= @title %></h1>
-<h4><%= @business.name %></h4>
+<h4 class="shallow"><%= @business.name %></h4>
+<div class="info_box_screen">
+  Use <%= image_tag("select.png", :size => "15x15") %> to view / edit an employee's record - 
+  including marking the employee as a leaver.
+</div>
 
 <%= will_paginate @users %>
 
@@ -13,7 +17,6 @@
     <th>Name</th>
     <th>Department</th>
     <th>Job</th>
-    <th></th>
     <th></th>
   </tr>
   <% @users.each do |u| %>
@@ -34,9 +37,6 @@
     </td>
     <td class="centralize">
       <%= link_to image_tag("select.png", :size => "15x15"), officer_user_path(u) %>
-    </td>
-    <td class="cenralize">
-      <%= link_to image_tag("cancel.png", :size => "15x15"), "#" %>
     </td>
   </tr>
   <% end %>

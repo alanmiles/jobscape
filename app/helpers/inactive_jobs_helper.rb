@@ -1,0 +1,2 @@
+module InactiveJobsHelper
+end

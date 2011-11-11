@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111109130423) do
+ActiveRecord::Schema.define(:version => 20111110194755) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20111109130423) do
     t.integer  "deputy_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "hidden",      :default => false
   end
 
   create_table "dislikes", :force => true do |t|
@@ -184,6 +185,7 @@ ActiveRecord::Schema.define(:version => 20111109130423) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "department_id"
+    t.boolean  "inactive",      :default => false
   end
 
   create_table "limitations", :force => true do |t|

@@ -322,6 +322,18 @@ class User < ActiveRecord::Base
     cnt > 0
   end
   
+  def recent_reviewed_sessions
+    self.reviewed_sessions.where("reviews.completion_date > ?", Date.today - 1.year)
+  end
+  
+  def recent_reviewer_sessions
+    self.reviewer_sessions.where("reviews.completion_date > ?", Date.today - 1.year)
+  end
+  
+  def involved_in_recent_reviews?
+    self.recent_reviewed_sessions.count > 0 || self.recent_reviewer_sessions.count > 0
+  end
+  
   def employee_lookup(business)
     @business = Business.find(business)
     @employee = Employee.find_by_user_id_and_business_id(self.id, @business.id)

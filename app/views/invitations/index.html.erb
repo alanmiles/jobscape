@@ -1,13 +1,17 @@
 <div class = "r-float">
   <%= link_to "Menu for this business", officer_home_path %><br />
-  <%= link_to "Invite more people", new_business_invitation_path(@business) %>
+  <%= link_to "Invite more people", new_business_invitation_path(@business) unless @business.no_jobs? %>
 </div>
 
 <h1><%= @title %></h1>
 
 <% if @business.no_invitations? %>
   <div class="no_data round">
-    You have no outstanding invitations, asking colleagues to sign up to HYGWIT.
+    <% if @business.no_jobs? %>
+      Before you can start inviting colleagues to use HYGWIT, you need to set up their jobs.
+    <% else %>
+      You have no outstanding invitations, asking colleagues to sign up to HYGWIT.
+    <% end %>
   </div>
 <% else %>
   <div class="info_box_screen" style="margin-top:20px">

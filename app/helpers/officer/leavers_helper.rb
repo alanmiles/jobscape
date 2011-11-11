@@ -1,0 +1,2 @@
+module Officer::LeaversHelper
+end
