@@ -67,6 +67,7 @@ class BusinessesController < ApplicationController
   def destroy
     @business = Business.find(params[:id]).destroy
     flash[:success] = "'#{@business.name} - #{@business.city}' removed."
-    redirect_to businesses_path
+    #redirect_to businesses_path
+    redirect_to :back
   end
 end

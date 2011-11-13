@@ -68,6 +68,7 @@ class MyApplicationsController < ApplicationController
     @vacancy = Vacancy.find(@application.vacancy_id)
     @application.destroy
     flash[:success] = "You have cancelled your application for Vacancy ref ##{@vacancy.id} - #{@vacancy.headline}."
-    redirect_to my_applications_path
+    #redirect_to my_applications_path
+    redirect_to :back
   end
 end

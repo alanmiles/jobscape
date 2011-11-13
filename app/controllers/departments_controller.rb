@@ -84,7 +84,8 @@ class DepartmentsController < ApplicationController
       end
     end
     
-    redirect_to business_departments_path(@business)
+    #redirect_to business_departments_path(@business)
+    redirect_to :back
   end
   
 end

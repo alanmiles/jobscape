@@ -104,6 +104,7 @@ describe JobsController do
         @occupation = Factory(:occupation)
         @job = Factory(:job, :business_id => @business.id, 
                       :department_id => @department.id, :occupation_id => @occupation.id)
+        
       end
       
       it "should not destroy the job" do
@@ -507,7 +508,7 @@ describe JobsController do
     end
     
     describe "DELETE 'destroy'" do
-    
+      
       describe "failure when deletion is not permitted" do
       
         it "should not delete the job"
@@ -519,6 +520,10 @@ describe JobsController do
       end
       
       describe "success" do
+      
+        before(:each) do
+          request.env["HTTP_REFERER"] = business_jobs_path(@business)
+        end
       
         it "should destroy the job" do
           lambda do

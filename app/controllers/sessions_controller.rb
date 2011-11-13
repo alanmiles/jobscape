@@ -14,15 +14,22 @@ class SessionsController < ApplicationController
     else
       sign_in user
       if current_user.admin?
-        redirect_back_or admin_path
+        @path = admin_path
       elsif current_user.account == 1
-        redirect_back_or user_home_path
+        @path = user_home_path
       elsif current_user.account == 2
-        redirect_back_or jobseeker_home_path
+        @path = jobseeker_home_path
       elsif current_user.account == 3
-        redirect_back_or officer_home_path
+        @path = officer_home_path
       else
-        redirect_back_or employee_home_path
+        @path = employee_home_path
+      end
+      
+      if current_user.no_pending_invitation?
+        redirect_back_or @path
+      else
+        @invitation = current_user.pending_invitation
+        redirect_to edit_invitation_path(@invitation)
       end
     end
   end

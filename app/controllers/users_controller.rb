@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  
   before_filter :authenticate, :only => [:index, :edit, :update, :show, :destroy]
   before_filter :correct_user, :only => [:edit, :update]
   before_filter :admin_user,   :only => [:index, :destroy]
@@ -138,7 +139,8 @@ class UsersController < ApplicationController
       @user.destroy
       flash[:success] = "#{@user.name} deleted."
     end
-    redirect_to users_path
+    #redirect_to users_path
+    redirect_to :back
   end
   
   private

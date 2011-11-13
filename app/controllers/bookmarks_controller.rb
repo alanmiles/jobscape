@@ -50,6 +50,7 @@ class BookmarksController < ApplicationController
     @bookmark = Application.find(params[:id])  
     @bookmark.destroy
     flash[:success] = "Removed bookmark for vacancy ##{@bookmark.vacancy.id} - #{@bookmark.vacancy.headline}."
-    redirect_to bookmarks_path
+    #redirect_to bookmarks_path
+    redirect_to :back
   end
 end

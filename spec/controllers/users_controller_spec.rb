@@ -357,6 +357,7 @@ describe UsersController do
       before(:each) do
         @admin = Factory(:user, :email => "admin@example.com", :admin => true)
         test_sign_in(@admin)
+        request.env["HTTP_REFERER"] = users_path
       end
 
       it "should destroy the user" do

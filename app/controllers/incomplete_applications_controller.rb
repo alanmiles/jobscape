@@ -12,7 +12,8 @@ class IncompleteApplicationsController < ApplicationController
     @application = Application.find(params[:id])  
     @application.destroy
     flash[:success] = "Removed incomplete application for vacancy ##{@application.vacancy.id} - #{@application.vacancy.headline}."
-    redirect_to incomplete_applications_path
+    #redirect_to incomplete_applications_path
+    redirect_to :back
   end
 
 end

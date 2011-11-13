@@ -1,0 +1,21 @@
+Dear <%= @invitation.name %>
+<br /><br />
+  I'm inviting you to start using a new HYGWIT account for your job at <strong><%= @business.name %></strong>.
+  <br /><br />
+  You don't need to do anything - just log in to your HYGWIT account as usual, and you'll see that you now
+  have an option to access your records at <%= @business.name %>.
+  <br /><br />
+  <% if @job.plan.complete? %>
+    Your job title is <%= @job.job_title %>, and you'll see that the Achievement Plan has been written.  Take a
+    look at it, discuss it with other people in your team, and let me know if anything needs to be added, 
+    removed, or updated. 
+  <% else %>
+    Your job title is <%= @job.job_title %>, and you'll see that the Achievement Plan is still incomplete.  So
+    let's shape it together - you, your colleagues and manager, and me.  Working on an A-Plan is a great way
+    to understand what the business expects from you, and it'll get you started on the path towards a successful
+    and fulfilling career.
+  <% end %>
+  <br /></br />
+  I'm looking forward to working with you.
+  <br /><br />
+  <%= @sender.name %>

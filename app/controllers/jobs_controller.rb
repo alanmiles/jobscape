@@ -110,7 +110,8 @@ class JobsController < ApplicationController
       end
     end
     
-    redirect_to business_jobs_path(@business)
+    #redirect_to business_jobs_path(@business)
+    redirect_to :back
   end
 
 end

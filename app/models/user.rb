@@ -49,9 +49,9 @@ class User < ActiveRecord::Base
   has_many :deputy_jobs, :foreign_key => "deputy_id", :class_name => "Department"
   has_many :deputies, :through => :deputy_jobs
   
-  has_many :invitation_issues, :foreign_key => "inviter_id", :class_name => "Invitation"
+  has_many :invitation_issues, :foreign_key => "inviter_id", :class_name => "Invitation", :dependent => :destroy
   has_many :issued_invitations, :through => :invitation_issues
-  has_many :invitation_receipts, :foreign_key => "invitee_id", :class_name => "Invitation"
+  has_many :invitation_receipts, :foreign_key => "invitee_id", :class_name => "Invitation", :dependent => :destroy
   has_many :received_invitations, :through => :invitation_receipts
   
   accepts_nested_attributes_for :placements
@@ -90,7 +90,7 @@ class User < ActiveRecord::Base
                       	:confirmation 	=> true,
                        	:length       	=> { :within => 6..40 }
                        	
-  before_save :encrypt_password
+  before_save :encrypt_password, :if => :no_businesses_yet?
   after_validation :geocode, :if => :address_changed?
   after_validation :reverse_geocode, :if => :address_changed?
   after_save :create_portrait
@@ -379,6 +379,15 @@ class User < ActiveRecord::Base
     self.placements.where("placements.current = ?", false).order("started_job DESC")  
   end
   
+  def pending_invitation
+    @mail = self.email
+    @invitation = Invitation.find_by_email_and_signed_up(@mail, false)
+  end
+  
+  def no_pending_invitation?
+    self.pending_invitation.nil?
+  end
+  
   private
 
     def encrypt_password
@@ -422,6 +431,9 @@ class User < ActiveRecord::Base
       end
     end
     
+    def no_businesses_yet?
+      self.businesses.count == 0
+    end
 
     def make_salt
       secure_hash("#{Time.now.utc}--#{password}")

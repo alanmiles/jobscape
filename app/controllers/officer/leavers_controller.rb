@@ -22,7 +22,8 @@ class Officer::LeaversController < ApplicationController
       @placement.destroy
     end
     flash[:success] = "All records for #{@user.name} at #{@business.name} have been removed"
-    redirect_to officer_leavers_path
+    #redirect_to officer_leavers_path
+    redirect_to :back
   end
 
 end

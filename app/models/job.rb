@@ -31,6 +31,7 @@ class Job < ActiveRecord::Base
   has_many :jobqualities, :through => :plan
   has_many :responsibilities, :through => :plan
   has_many :reviews
+  has_many :invitations, :dependent => :destroy
   
   validates :job_title, :presence 	=> true,
   			:length		=> { :maximum => 50 },

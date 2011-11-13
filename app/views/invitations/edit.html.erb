@@ -1,0 +1,60 @@
+<h1><%= @title %></h1>
+<h4><%= @user.name %></h4>
+
+
+<p>You've been sent a new HYGWIT invitation.  Here are the details:</p>
+
+<div class = "display_text grayborder round" style = "font-weight: normal">
+  <strong>Business:</strong> <%= @invitation.business.name %><br />
+  <strong>Your job:</strong> <%= @invitation.job.job_title %><br />
+  <strong>Invited by:</strong> <%= @inviter.name %>
+</div> 
+<br />
+
+<p>
+  <% if @user.account == 4 %>
+  
+    If you accept the invitation, you can switch between your HYGWIT jobs
+    at any time in a session.
+  
+  <% elsif @user.account == 1 %>
+    At the moment, you have an 'Individual' HYGWIT account.  If you accept the invitation
+    this will change to an 'Employee' account, allowing you to interact with colleagues at
+    <%= @invitation.business.name %> - and your old account will be inaccessible.  However, 
+    the data you entered (e.g. your Portrait, your A-Plan and reviews) won't be deleted.  If
+    you ever leave the new business, your Individual account will be restored intact.
+      
+  <% elsif @user.account == 2 %>
+    At the moment, you have a 'Jobseeker' HYGWIT account.  If you accept the invitation
+    this will change to an 'Employee' account, allowing you to interact with colleagues at
+    <%= @invitation.business.name %> - and your old account will be inaccessible.  However, 
+    if you've already built a Portrait, it won't be deleted.  If
+    you ever leave the new business, your Jobseeker account will be restored intact.
+      
+  <% else %>
+    At the moment, you have a 'Business' HYGWIT account - with Officer access rights to one or
+    more businesses; nothing will change if you accept the invitation. But for the new job
+    you'll have 'Employee' access rights at first, unless or until you're also invited to be an 
+    officer.
+
+  <% end %>
+</p>
+
+<%= form_for @invitation do |f| %>
+
+  <div class="field">
+    <%= f.label :signed_up, "Do you want to accept the invitation?" %>
+    <%= f.radio_button :signed_up, true %> Yes &nbsp;
+    <%= f.radio_button :signed_up, false %> No
+    
+  </div>
+  
+  <div style="margin-top: 10px; margin-bottom: 10px">
+    If you don't want to accept, mail <%= @inviter.name %> at <%= @inviter.email %> asking for the invitation to be cancelled. 
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Continue" %>
+  </div>
+
+<% end %>

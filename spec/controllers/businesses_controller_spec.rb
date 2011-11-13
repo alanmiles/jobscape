@@ -98,6 +98,7 @@ describe BusinessesController do
     
       before(:each) do
         @business = Factory(:business, :sector_id => @sector.id)
+        request.env["HTTP_REFERER"] = businesses_path
       end
       
       it "should destroy the business" do

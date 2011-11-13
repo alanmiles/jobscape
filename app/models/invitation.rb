@@ -19,6 +19,7 @@
 class Invitation < ActiveRecord::Base
 
   belongs_to :business
+  belongs_to :job
   belongs_to :received_invitation, :class_name => "User"
   belongs_to :issued_invitation, :class_name => "User"
   
@@ -32,7 +33,8 @@ class Invitation < ActiveRecord::Base
   validates	:email,			:presence	=> true,
   					:format 	=> { :with => email_regex },
   					:uniqueness 	=> { :case_sensitive => false, 
-  					                     :message => "has already received an invitation.  Delete the first invitation
+  					                     :scope => :business_id,
+  					                     :message => "has already received an invitation for this business.  Delete the first invitation
   					                     if you want to send a new one." }
   validates	:security_code,		:presence	=> true,
   					:length		=> { :minimum => 6, :maximum => 6 }
@@ -53,5 +55,16 @@ class Invitation < ActiveRecord::Base
   def asked_by
     @user = User.find(self.inviter_id)
     @user.name 
-  end					 			
+  end
+  
+  def corresponds_to_user?
+    @mail = self.email
+    @user = User.find_by_email(@mail)
+    if @user.nil?
+      return false
+    else
+      return true
+    end
+  end
+  				 			
 end
