@@ -1,2 +1,22 @@
+<div class = "r-float">
+  <% if @user.belongs_to_business? %>
+    <%= link_to "Switch business", select_business_path unless @user.single_business? %>
+  <% end %>
+</div>
+
 <h1><%= @user.name %>'s HYGWIT Home</h1>
-<h4><%= @business.name %></h4>
+<h4>
+  <%= @business.name %><br />
+  <%= @job.title_department %>
+</h4>
+
+<div class = "display_wider grayborder round">
+  <ul>
+    <li class="no_bullet"><%= link_to "Your Achievement Plan", "#" %></li>  
+    <li class="no_bullet"><%= link_to "Review your own performance", "#" %></li>
+    <li class="no_bullet"><%= link_to "Your review history", "#" %></li>
+    <li class="no_bullet"><%= link_to "Today's jobs", "#" %></li>
+    <li class="no_bullet"><%= link_to "Weekly plan", "#" %></li>
+    <li class="no_bullet"><%= link_to "Your Development Plan", "#" %></li>
+  </ul>
+</div>

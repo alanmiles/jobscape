@@ -107,6 +107,10 @@ class User < ActiveRecord::Base
       businesses.where("businesses.name != ?", "Biz_#{self.id}").count == 1
     end
   end
+  
+  def sole_business
+    self.businesses.where("businesses.name != ?", "Biz_#{self.id}").first
+  end
    
   def private_business
     @business = Business.find_by_name("Biz_#{self.id}")

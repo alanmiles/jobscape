@@ -1,5 +1,5 @@
 <div class = "r-float">
-  <%= link_to "Add a new business", new_business_path %>
+  <%= link_to "Add a new business", new_business_path if current_user.account == 3 %>
 </div>
 
 <h1>
@@ -13,9 +13,13 @@
 <table>
   <% @employees.each do |employee| %>
   <tr>
-    <td><strong><%= link_to employee.business_location, biz_selection_path(:id => employee.business_id) %>
-    
-    </td>
+    <td><strong>
+      <% if employee.role == "Officer" %>
+        <%= link_to employee.business_location, biz_selection_path(:id => employee.business_id) %>
+      <% else %>
+        <%= link_to employee.business_location, employee_selection_path(:id => employee.business_id) %>
+      <% end %>
+    </strong></td>
     <td><%= employee.role %></td>
     <td>
       <% if employee.role == "Officer" && employee.business.no_associations? %>

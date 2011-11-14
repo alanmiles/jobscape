@@ -43,7 +43,11 @@ class PagesController < ApplicationController
     @title = "Select business"
     @user = current_user
     if @user.single_business?
-      redirect_to officer_home_path
+      if @user.account == 3
+        redirect_to officer_home_path
+      elsif @user.account == 4
+        redirect_to employee_home_path
+      end
     else
       @employees = Employee.all_except_private(@user)
       session[:biz] = nil
@@ -54,6 +58,12 @@ class PagesController < ApplicationController
     @business = Business.find(params[:id])
     session[:biz] = @business.id
     redirect_to officer_home_path 
+  end
+  
+  def employee_selection
+    @business = Business.find(params[:id])
+    session[:biz] = @business.id
+    redirect_to employee_home_path
   end
   
   def jobseeker_home
@@ -136,9 +146,33 @@ class PagesController < ApplicationController
     session[:invited] = nil
     @title = "Employee Home"
     @user = current_user
-    @employee = Employee.where("user_id =?", @user).first
-    @business = Business.find(@employee.business_id)
-    session[:biz] = @business.id
+    
+    @no_business = false
+    if session[:biz] != nil
+      @business = Business.find(session[:biz])
+      @employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
+      @job = @user.current_job(@business)
+      session[:jobid] = @job.id
+    else
+      if @user.belongs_to_business?
+        if @user.single_business?
+          @business = @user.sole_business
+          @employee = Employee.find_by_user_id_and_business_id(@user, @business)
+          @job = @user.current_job(@business)
+          session[:biz] = @business.id
+        else
+          redirect_to select_business_path
+          session[:biz] = nil
+        end
+      else
+        session[:biz] = nil
+        @no_business = true
+      end
+    end
+    
+    #@employee = Employee.where("user_id =?", @user).first
+    #@business = Business.find(@employee.business_id)
+    #session[:biz] = @business.id
   end
   
   private
