@@ -72,7 +72,7 @@ class InvitationsController < ApplicationController
         
         if @user.account < 3
           @user.update_attribute(:account, 4)
-          flash[:success] = "You've accepted the invitation, and you'll now log in to your new Employee account."
+          flash[:success] = "You've accepted the invitation, and you can now access your new Employee account."
         else
           flash[:success] = "You've accepted the invitation from #{@invitation.business.name}."
         end

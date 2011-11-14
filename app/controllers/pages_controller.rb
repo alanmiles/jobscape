@@ -7,16 +7,24 @@ class PagesController < ApplicationController
   def home
     session[:biz] = nil
     if signed_in?
-      if current_user.admin?
-        redirect_to admin_path
-      elsif current_user.account == 2
-        redirect_to jobseeker_home_path
+      if current_user.account == 2
+        @path = jobseeker_home_path
       elsif current_user.account == 3
-        redirect_to officer_home_path
+        @path = officer_home_path  
       elsif current_user.account == 4
-        redirect_to employee_home_path
-      else
-        redirect_to user_home_path
+        @path = employee_home_path
+      else  
+        @path = user_home_path
+      end
+      
+      if current_user.admin?
+        if session[:admin_off] == nil
+          redirect_to admin_path
+        else
+          redirect_to @path
+        end
+      else 
+        redirect_to @path
       end
     else
       @title = "Home"
@@ -37,6 +45,8 @@ class PagesController < ApplicationController
   
   def admin_home
     @title = "Admin"
+    @user = User.find(current_user)
+    session[:admin_off] = nil
   end
   
   def select_business
@@ -58,6 +68,16 @@ class PagesController < ApplicationController
     @business = Business.find(params[:id])
     session[:biz] = @business.id
     redirect_to officer_home_path 
+  end
+  
+  def admin_to_standard
+    session[:admin_off] = true
+    redirect_to root_path
+  end
+  
+  def standard_to_admin
+    session[:admin_off] = nil
+    redirect_to root_path
   end
   
   def employee_selection

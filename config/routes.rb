@@ -134,6 +134,8 @@ Jobscape::Application.routes.draw do
   match '/biz_selection',	:to => 'pages#biz_selection'
   match '/employee_selection',  :to => 'pages#employee_selection'
   match '/my_job',		:to => 'pages#my_job'
+  match '/admin_to_standard',   :to => 'pages#admin_to_standard'
+  match '/standard_to_admin',	:to => 'pages#standard_to_admin'
 
   root :to => 'pages#home'
 

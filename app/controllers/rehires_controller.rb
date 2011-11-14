@@ -28,7 +28,7 @@ class RehiresController < ApplicationController
         InvitationMailer.recall_active_employee(@placement).deliver
       end
       
-      flash[:success] = "Successfully reactivated #{@user.name}."
+      flash[:success] = "Successfully reactivated #{@user.name} and sent email notification."
       redirect_to officer_user_path(@user)
     else
       @title = "Reactivate user"

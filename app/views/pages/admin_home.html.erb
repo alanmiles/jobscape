@@ -1,9 +1,15 @@
+<div class = "r-float">
+  <%= link_to "Exit Admin Menu -> Log in as Standard User", admin_to_standard_path %>
+</div>
 <h1>Admin Menu</h1>
+<h4><%= @user.name %></h4>
 
-<ul>
-  <li><%= link_to "Occupations", occupations_path %></li>
-  <li><%= link_to "Sectors", sectors_path %></li>
-  <li><%= link_to "Businesses", businesses_path %></li>
-  <li><%= link_to "Personal Attributes", qualities_path %></li>
-  <li><%= link_to "Users", users_path %></li>
-</ul>
+<div class = "menu_box grayborder round">
+  <ul>
+    <li><%= link_to "Occupations", occupations_path %></li>
+    <li><%= link_to "Sectors", sectors_path %></li>
+    <li><%= link_to "Businesses", businesses_path %></li>
+    <li><%= link_to "Personal Attributes", qualities_path %></li>
+    <li><%= link_to "Users", users_path %></li>
+  </ul>
+</div>
