@@ -9,6 +9,7 @@
 <table class="smaller_font">
   <tr>
     <th>Completed</th>
+    <th>Job</th>
     <th>Reviewer</th>
     <th class="centralize">Responsibilities</th>
     <th class="centralize">Attributes</th>
@@ -19,6 +20,7 @@
   <% @reviews.each do |review| %>
   <tr>
     <td><%= display_date(review.completion_date) %></td>
+    <td><%= review.job.job_title %></td>
     <td>
       <% if review.self_appraisal? %>
         Self

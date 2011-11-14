@@ -99,17 +99,17 @@ class User < ActiveRecord::Base
 
   def belongs_to_business?
     #businesses.count > 0
-    businesses.where("businesses.name != ?", "Biz_#{self.id}").count > 0
+    businesses.where("businesses.name != ? and left = ?", "Biz_#{self.id}", false).count > 0
   end
   
   def single_business?
     if belongs_to_business?
-      businesses.where("businesses.name != ?", "Biz_#{self.id}").count == 1
+      businesses.where("businesses.name != ? and left = ?", "Biz_#{self.id}", false).count == 1
     end
   end
   
   def sole_business
-    self.businesses.where("businesses.name != ?", "Biz_#{self.id}").first
+    self.businesses.where("businesses.name != ? and left = ?", "Biz_#{self.id}", false).first
   end
    
   def private_business
@@ -350,6 +350,14 @@ class User < ActiveRecord::Base
   def current_placement(business)
     @job = self.current_job(business)
     @placement = Placement.find_by_user_id_and_job_id_and_current(self.id, @job.id, true)
+  end
+  
+  def active_external_jobs
+    @biz = 0
+    @business = Business.find_by_name("Biz_#{self.id.to_s}")
+    @biz = @business.id unless @business == nil
+    @active_jobs = Job.joins(:placements).where("placements.user_id = ? and placements.current = ? and jobs.business_id != ?",
+                      self.id, true, @biz)
   end
   
   def deactivate_current_placement(business)

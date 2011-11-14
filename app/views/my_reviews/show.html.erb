@@ -7,6 +7,7 @@
 </div>
 
 <h1 style = "margin-bottom: 0px"><%= @title %></h1>
+<h4 class= "shallow"><%= @review.job.job_title %></h4>
 <% if @review.completion_date == nil %>
   <%= display_date(@review.created_at) %>
 <% else %>

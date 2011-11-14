@@ -20,6 +20,14 @@ class RehiresController < ApplicationController
     if @placement.save
       @employee = Employee.find_by_business_id_and_user_id(@business, @user)
       @employee.update_attribute(:left, false)
+      
+      if @user.account < 3 
+        @user.update_attribute(:account, 4)
+        InvitationMailer.recall_inactive_employee(@placement).deliver
+      else
+        InvitationMailer.recall_active_employee(@placement).deliver
+      end
+      
       flash[:success] = "Successfully reactivated #{@user.name}."
       redirect_to officer_user_path(@user)
     else

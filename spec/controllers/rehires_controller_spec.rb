@@ -10,5 +10,11 @@ describe RehiresController do
     #  response.should be_success
     #end
   end
+  
+  describe "POST 'create'" do
+  
+    
+  
+  end
 
 end
