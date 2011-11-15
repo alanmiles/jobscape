@@ -15,9 +15,9 @@
   </div>
 <% else %>
   <div class="info_box_screen" style="margin-top:20px">
-    These people have been sent an email inviting them to start using HYGWIT as members of your business. 
-    When you see <%= image_tag("complete.png", :size => "15x15") %> in the <i>OK</i> column, they have signed up; you should then delete
-    the invitation from this list ( <%= image_tag("cancel.png", :size => "15x15") %> ). 
+    These people have been sent an email inviting them to start using HYGWIT as members of your business. When the invitation is accepted, 
+    the record will be automatically removed from the list.  To delete an invitation yourself, click on
+    <%= image_tag("cancel.png", :size => "15x15") %>. 
   </div>
 
   <%= will_paginate @invitations %>
@@ -28,7 +28,6 @@
       <th>Email</th>
       <th>Invited by</th>
       <th>Date</th>
-      <th>OK?</th>
       <th></th>
     </tr>
     <% @invitations.each do |invitation| %>
@@ -37,7 +36,6 @@
       <td><%= invitation.email %></td>
       <td><%= invitation.asked_by %></td>
       <td><%= display_monthday(invitation.created_at) %></td>
-      <td><%= image_tag("complete.png", :size => "15x15") if invitation.signed_up? %></td>
       <td><%= link_to image_tag("cancel.png", :size => "15x15"), invitation,
                    :method => :delete, 
                    :confirm => "You sure?",

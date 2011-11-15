@@ -67,7 +67,8 @@ class UsersController < ApplicationController
           		:started_job => Date.today)
           @placement.save
           
-          @invitation.update_attribute(:signed_up, true)  
+          @invitation.destroy
+          session[:invited] = nil  
           redirect_to employee_home_path
         end
       else

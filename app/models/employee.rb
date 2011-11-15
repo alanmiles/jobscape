@@ -19,6 +19,8 @@ class Employee < ActiveRecord::Base
   belongs_to :user
   belongs_to :business
   
+  before_destroy :remove_placements
+  
   validates :user_id,		:presence 	=> true, 
   				:uniqueness 	=> { :scope => :business_id,
   						     :message => " already belongs to this business - check 'Former Employees' 
@@ -52,5 +54,25 @@ class Employee < ActiveRecord::Base
     @biz = @private_biz.id unless @private_biz == nil
     self.where("business_id != ? and user_id = ?", @biz, user.id)
   end
+  
+  private
+  
+    def remove_placements
+      @user = User.find(self.user_id)
+      @business = Business.find(self.business_id)
+      @jobs = @user.jobs.where("jobs.business_id = ?", @business.id)
+      @jobs.each do |job|
+        @placements = Placement.where("user_id = ? and job_id = ?", @user.id, job.id)
+        @placements.each do |p|
+          p.destroy
+        end
+      end
+    
+      @invitations = @business.invitations.where("email = ?", @user.email)
+      @invitations.each do |i|
+        i.destroy
+      end
+    end
+    
 
 end

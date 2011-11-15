@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   before_filter :authenticate, :only => [:user_home, :admin_home, :select_business]
   before_filter :admin_user, :only => :admin_home
-  before_filter :not_admin_user, :only => :select_business
+  #before_filter :not_admin_user, :only => :select_business
   #before_filter :not_with_single_business, :only => :select_business
   
   def home

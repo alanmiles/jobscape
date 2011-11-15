@@ -12,11 +12,17 @@ class Officer::EmployeesController < ApplicationController
   
   def update
     @employee = Employee.find(params[:id])
+    @user = User.find(@employee.user_id)
+    
     if @employee.update_attributes(params[:employee])
       if @employee.left?
         
+        #remove officer status
+        if @employee.officer?
+          @employee.update_attribute(:officer, false)
+        end
+        
         #cancel all employee placements
-        @user = User.find(@employee.user_id)
         @business = Business.find(@employee.business_id)
         @user.deactivate_current_placement(@business)
         
@@ -30,6 +36,13 @@ class Officer::EmployeesController < ApplicationController
             LeaverMailer.resume_as_jobseeker(@employee).deliver
           end  
         else
+          #User has active external jobs
+          #Reset user.account to 4 if not an officer in external businesses
+          if @user.account == 3
+            if @user.not_an_officer?
+              @user.update_attribute(:account, 4)
+            end
+          end
           LeaverMailer.placement_cancelled(@employee).deliver
         end
         
@@ -37,6 +50,18 @@ class Officer::EmployeesController < ApplicationController
                           in 'Former employees'"
         redirect_to officer_users_path
       else
+        if @employee.officer?
+          if @user.account == 4
+            @user.update_attribute(:account, 3)
+          end
+        else
+          if @user.not_an_officer?
+            if @user.account == 3
+              @user.update_attribute(:account, 4)            
+            end
+          end
+        end
+        
         flash[:success] = "Employee details updated."
         redirect_to officer_user_path(@employee.user_id)
       end

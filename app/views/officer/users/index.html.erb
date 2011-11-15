@@ -6,7 +6,8 @@
 <h4 class="shallow"><%= @business.name %></h4>
 <div class="info_box_screen">
   Use <%= image_tag("select.png", :size => "15x15") %> to view / edit an employee's record - 
-  including marking the employee as a leaver.
+  including marking the employee as a leaver.<br />
+  HYGWIT officers are shown with their names <strong>highlighted</strong>.
 </div>
 
 <%= will_paginate @users %>
@@ -22,7 +23,13 @@
   <% @users.each do |u| %>
   <tr>
     <td><%= u.employee_lookup(@business).ref_no %></td>
-    <td><%= u.name %></td>
+    <td>
+      <% if u.employee_lookup(@business).officer? %>
+        <strong><%= u.name %></strong>
+      <% else %>
+        <%= u.name %>
+      <% end %>    
+    </td>
     <td>
       <% unless u.no_current_job?(@business) %>
         <%= u.current_job(@business).department.name %>

@@ -400,6 +400,12 @@ class User < ActiveRecord::Base
     self.pending_invitation.nil?
   end
   
+  def not_an_officer?
+    cnt = self.businesses.joins(:employees).where("employees.officer = ? and employees.left = ? 
+                               and businesses.name != ?", true, false, "Biz_#{self.id}").count
+    cnt == 0
+  end
+  
   private
 
     def encrypt_password

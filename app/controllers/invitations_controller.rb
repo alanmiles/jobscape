@@ -51,7 +51,8 @@ class InvitationsController < ApplicationController
     @inviter = User.find(@invitation.inviter_id)
     if @invitation.update_attributes(params[:invitation])
       if @invitation.signed_up?
-      
+
+        #Set Staff Number     
         @business = Business.find(@invitation.business_id)
         if @invitation.staff_no == nil
           @top_ref = @business.next_ref_no
@@ -60,16 +61,19 @@ class InvitationsController < ApplicationController
         end
         @job = Job.find(@invitation.job_id)
         
+        #Set a new Employee record
         @employee = Employee.new(:business_id => @business.id,
           		:user_id => @user.id,
           		:ref_no => @top_ref)
         @employee.save
           
+        #Set a new Placement record
         @placement = Placement.new(:user_id => @user.id,
           		:job_id => @invitation.job_id,
           		:started_job => Date.today)
         @placement.save
         
+        #Adjust the User.account type
         if @user.account < 3
           @user.update_attribute(:account, 4)
           flash[:success] = "You've accepted the invitation, and you can now access your new Employee account."
@@ -77,6 +81,9 @@ class InvitationsController < ApplicationController
           flash[:success] = "You've accepted the invitation from #{@invitation.business.name}."
         end
         
+        #Remove the invitation - no longer required
+        @invitation.destroy        
+
       else
         flash[:notice] = "You haven't yet accepted the invitation from #{@invitation.business.name}.  Remember that you can mail #{@inviter.name}
                    at #{@inviter.email} if you want to cancel the invitation."

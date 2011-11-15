@@ -35,7 +35,9 @@ class Invitation < ActiveRecord::Base
   					:uniqueness 	=> { :case_sensitive => false, 
   					                     :scope => :business_id,
   					                     :message => "has already received an invitation for this business.  Delete the first invitation
-  					                     if you want to send a new one." }
+    					                     if you want to send a new one." },
+    					:not_hired	=> true
+    					                     
   validates	:security_code,		:presence	=> true,
   					:length		=> { :minimum => 6, :maximum => 6 }
   validates	:inviter_id,		:presence	=> true

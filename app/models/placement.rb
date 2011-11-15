@@ -21,8 +21,8 @@ class Placement < ActiveRecord::Base
   
   validates :user_id,		:presence 	=> true
   validates :job_id,		:presence 	=> true,
-  				:uniqueness 	=> { :scope => [:user_id, :started_job],
-  				                     :message => " has already been assigned to this employee on the same start-date" }
+  				:uniqueness 	=> { :scope => [:user_id, :started_job, :current],
+  				                     :message => " has already been assigned to this employee on the same start-date.  Try setting a different start-date or delete the previous record." }
   
   def self.individual_make(user, job)
     @user = User.find(user.id)
