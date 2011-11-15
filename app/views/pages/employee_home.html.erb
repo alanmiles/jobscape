@@ -2,7 +2,10 @@
  <% if current_user.admin? %>
     <%= link_to "Return to Admin Mode", standard_to_admin_path %><br />
   <% end %>
-  
+  <% if @user.employee_lookup(@business).officer? %>
+    <%= link_to "Officer mode", own_to_officer_path %>
+    <br />
+  <% end %>
   <% if @user.belongs_to_business? %>
     <%= link_to "Switch business", select_business_path unless @user.single_business? %>
   <% end %>

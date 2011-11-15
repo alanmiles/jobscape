@@ -136,6 +136,8 @@ Jobscape::Application.routes.draw do
   match '/my_job',		:to => 'pages#my_job'
   match '/admin_to_standard',   :to => 'pages#admin_to_standard'
   match '/standard_to_admin',	:to => 'pages#standard_to_admin'
+  match '/officer_to_own',	:to => 'pages#officer_to_own'
+  match '/own_to_officer',	:to => 'pages#own_to_officer'
 
   root :to => 'pages#home'
 

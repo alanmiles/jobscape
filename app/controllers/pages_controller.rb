@@ -80,6 +80,16 @@ class PagesController < ApplicationController
     redirect_to root_path
   end
   
+  def officer_to_own
+    session[:officer_off] = true
+    redirect_to employee_home_path
+  end
+  
+  def own_to_officer
+    session[:officer_off] = nil
+    redirect_to officer_home_path
+  end
+  
   def employee_selection
     @business = Business.find(params[:id])
     session[:biz] = @business.id
