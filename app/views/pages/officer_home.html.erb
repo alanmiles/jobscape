@@ -31,7 +31,16 @@
 <% else %>
   <h4><%= @business.name %>, <%= @business.city %></h4>
   <br />
-  
+
+  <% if @business.count_current_employees > 1 %>
+    <% if @business.needs_an_officer? %>
+      <div class="display_wider highlt round">
+        You need to appoint at least one more HYGWIT officer - by editing an employee record.
+      </div>
+      <br />
+    <% end %>
+  <% end %>
+    
   <div class="menu_box round grayborder">
     <% if @business.no_jobs? %>
       <i class="highlt round">Before starting with employees, set up departments, then jobs.</i>
@@ -43,8 +52,6 @@
       <li><%= link_to "Jobs", business_jobs_path(@business.id) %></li>
       <li><%= link_to "Employees (HYGWIT users)", officer_users_path %></li>
       <li><%= link_to "HYGWIT invitations", business_invitations_path(@business) %></li>
-      <li><%= link_to "HYGWIT officers", "#" %></li>
-      
     </ul>
     
     <strong><u>ARCHIVE</u></strong>
