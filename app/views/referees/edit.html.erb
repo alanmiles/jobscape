@@ -1,9 +1,9 @@
 <div class = "r-float">
-  <%= link_to "Cancel", user_references_path(@reference.user) %>
+  <%= link_to "Cancel", user_referees_path(@referee.user) %>
 </div>
 
 <h1><%= @title %></h1> 
-  <%= form_for(@reference) do |f| %>
+  <%= form_for(@referee) do |f| %>
     <%= render 'fields', :f => f %> 
     <div class="actions">
       <%= f.submit "Confirm changes" %>

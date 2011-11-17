@@ -1,0 +1,9 @@
+  <ul>
+    <% if @user.count_strengths == 0 %>
+      None
+    <% else %>
+      <% @strengths.each do |strength| %>
+        <li><%= strength.strength %></li>
+      <% end %>
+    <% end %>
+  </ul>

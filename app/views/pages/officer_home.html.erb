@@ -9,7 +9,7 @@
     <%= link_to "Switch business", select_business_path unless @user.single_business? %>
     <br />
   <% end %>
-  <%= link_to "Your own records", officer_to_own_path %>
+  <%= link_to "Your own records", officer_to_own_path unless @user.no_business_set? %>
 </div>
 
 
@@ -18,6 +18,7 @@
 </h1>
 
 <% if @no_business == true %>
+  <br />
   <div class = "display_medium round grayborder">
     <h4 class="highlt">BUSINESS DETAILS REQUIRED</h4>
     <br />

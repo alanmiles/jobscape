@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111110194755) do
+ActiveRecord::Schema.define(:version => 20111115184054) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -285,7 +285,7 @@ ActiveRecord::Schema.define(:version => 20111110194755) do
     t.datetime "updated_at"
   end
 
-  create_table "references", :force => true do |t|
+  create_table "referees", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
     t.integer  "relationship",    :default => 4
@@ -295,6 +295,8 @@ ActiveRecord::Schema.define(:version => 20111110194755) do
     t.string   "phone"
     t.string   "email"
     t.integer  "portrait_rating", :default => 7
+    t.string   "access_code"
+    t.text     "remarks"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,0 +1,9 @@
+  <ul>
+    <% if @user.count_limitations == 0 %>
+      <li>None</li>
+    <% else %>
+      <% @limitations.each do |limitation| %>
+        <li><%= limitation.limitation %></li>
+      <% end %>
+    <% end %>
+  </ul>

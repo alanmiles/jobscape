@@ -1,0 +1,9 @@
+  <ul>
+    <% if @user.count_qualifications == 0 %>
+      None
+    <% else %>
+      <% @qualifications.each do |qualification| %>
+        <li><%= qualification.qualification %></li>
+      <% end %>
+    <% end %>
+  </ul>

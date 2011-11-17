@@ -2,28 +2,39 @@
  <% if current_user.admin? %>
     <%= link_to "Return to Admin Mode", standard_to_admin_path %><br />
   <% end %>
-  <% if @user.employee_lookup(@business).officer? %>
-    <%= link_to "Officer mode", own_to_officer_path %>
-    <br />
-  <% end %>
-  <% if @user.belongs_to_business? %>
-    <%= link_to "Switch business", select_business_path unless @user.single_business? %>
+  <% unless @user.no_business_set? %>
+    <% if @user.employee_lookup(@business).officer? %>
+      <%= link_to "Officer mode", own_to_officer_path %>
+      <br />
+    <% end %>
+    <% if @user.belongs_to_business? %>
+      <%= link_to "Switch business", select_business_path unless @user.single_business? %>
+    <% end %>
   <% end %>
 </div>
 
 <h1>HYGWIT Home: <%= @user.name %></h1>
-<h4>
-  <%= @business.name %><br />
-  <%= @job.title_department %>
-</h4>
 
-<div class = "display_wider grayborder round">
-  <ul>
-    <li class="no_bullet"><%= link_to "Your Achievement Plan", "#" %></li>  
-    <li class="no_bullet"><%= link_to "Review your own performance", "#" %></li>
-    <li class="no_bullet"><%= link_to "Your review history", "#" %></li>
-    <li class="no_bullet"><%= link_to "Today's jobs", "#" %></li>
-    <li class="no_bullet"><%= link_to "Weekly plan", "#" %></li>
-    <li class="no_bullet"><%= link_to "Your Development Plan", "#" %></li>
-  </ul>
-</div>
+<% if @user.no_business_set? %>
+  
+  <div class="no_data round">
+    You need to set up your business before you can get started.
+  </div>
+  
+<% else %>
+  <h4>
+    <%= @business.name %><br />
+    <%= @job.title_department %>
+  </h4>
+
+  <div class = "display_wider grayborder round">
+    <ul>
+      <li class="no_bullet"><%= link_to "Your Achievement Plan", "#" %></li>  
+      <li class="no_bullet"><%= link_to "Review your own performance", "#" %></li>
+      <li class="no_bullet"><%= link_to "Your review history", "#" %></li>
+      <li class="no_bullet"><%= link_to "Today's jobs", "#" %></li>
+      <li class="no_bullet"><%= link_to "Weekly plan", "#" %></li>
+      <li class="no_bullet"><%= link_to "Your Development Plan", "#" %></li>
+    </ul>
+  </div>
+<% end %>

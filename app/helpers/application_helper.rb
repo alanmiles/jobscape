@@ -34,5 +34,6 @@ module ApplicationHelper
   def display_monthday(field)
     field.strftime("%b %d")
   end
+  
 end
 

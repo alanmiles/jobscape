@@ -1,0 +1,38 @@
+  <ul>
+    <% if @user.count_referees == 0 %>
+      <li>None provided</li>
+    <% else %>
+      <% @referees.each do |referee| %>
+        <li><strong><%= referee.name %></strong> <em>(<%= referee.what_relation %>)</em><br />
+            <% unless referee.role.empty? && referee.location.empty? %>
+              <% unless referee.role.empty? %>
+                <%= referee.role %>
+                <% unless referee.location.empty? %>
+                  at <%= referee.location %>
+                <% end %>
+              <% else %>
+                <%= referee.location %>
+              <% end %>
+              <br />
+            <% end %>
+            <% unless referee.address.empty? %>
+              <em>Address: </em><%= referee.address %><br />
+            <% end %>
+            <% unless referee.phone.empty? %>
+              <em>Phone: </em><%= referee.phone %><br />
+            <% end %>
+            <em>Email: </em><%= referee.email %>
+            <% if @portrait.public == true %>
+              <br />
+              <% if referee.portrait_rating == 7 %>
+                <span class="highlt round">Has not yet reviewed this Portrait.</span>
+              <% else %>
+                <strong><i>Has reviewed this Portrait.</i></strong>
+              <% end %>
+            <% end %>
+        </li>
+        <br />
+      <% end %>
+    <% end %>
+  </ul>
+

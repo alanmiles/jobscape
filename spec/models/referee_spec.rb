@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: references
+# Table name: referees
 #
 #  id              :integer         not null, primary key
 #  user_id         :integer
@@ -12,12 +12,14 @@
 #  phone           :string(255)
 #  email           :string(255)
 #  portrait_rating :integer         default(7)
+#  access_code     :string(255)
+#  remarks         :text
 #  created_at      :datetime
 #  updated_at      :datetime
 #
 
 require 'spec_helper'
 
-describe Reference do
+describe Referee do
   pending "add some examples to (or delete) #{__FILE__}"
 end

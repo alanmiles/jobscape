@@ -1,7 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "rehires/new"
-
   resources :users do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true
@@ -51,11 +49,12 @@ Jobscape::Application.routes.draw do
         post :sort
       end
     end
-    resources :references, :shallow => true
+    resources :referees, :shallow => true
   end
   resources :occupations
   resources :sessions, :only => [:new, :create, :destroy]
   resources :invitees
+  resources :reference_checks
   resources :sectors
   resources :businesses do
     resources :jobs, :shallow => true

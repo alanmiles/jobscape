@@ -1,0 +1,10 @@
+  <ul>
+    <% if @portrait.notes? %>
+      <li><%= @portrait.notes %></li>
+    <% end %>
+    <% if @portrait.worked_before == false %>
+      <li>I haven't worked before.</li>
+    <% end %>
+    <li><%= legality %></li>
+    <li><%= public_view %></li>
+  </ul>

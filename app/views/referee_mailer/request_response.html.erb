@@ -1,0 +1,35 @@
+Dear <%= @referee.name %>
+<br /><br />
+  Your name and contact details were given to us by <%= @user.name %>, who's using our HYGWIT website to search
+  and apply for jobs, and believes that you may be willing to provide a job reference.  You're described as a
+  <%= @referee.what_relation.downcase %>. 
+  <br /><br />
+  As you'll see, we've taken a new approach to job applications.  Instead of writing a traditional CV, we ask applicants
+  to create a self-portrait highlighting their achievements and interests, both at work and in their life outside work.
+  We'd like to present potential employers with a three-dimensional view, making it easier to identify candidates with the
+  right personal attributes, as well as the right skills.
+  <br /><br />
+  At this stage, we'd like you to verify that the self-portrait is truthful and fair, and then, if you wish, to add a brief
+  comment.  It won't take more than a few minutes of your time.  
+  <br /><br />
+  The applicant will not see any of your input - only whether you've responded or not.  Employers <i>will</i> be able to
+  see your comments, but they will be anonymous, not attributed to you.  Your name and contact details will only be revealed to employers
+  who have already interviewed <%= @user.name %> and are considering a job-offer.   
+  <br /><br />
+  <% if Rails.env.development? %>
+    <a href="http://localhost:3000/reference_checks/new">Follow this link </a>
+  <% else %>
+    <a href="http://blooming-sword-634.heroku.com/reference_checks/new">Follow this link </a>
+  <% end %>
+  to access the HYGWIT website, 
+  and when prompted for the security code, enter <strong><%= @referee.access_code %></strong>.
+  The name you need to enter is <strong><%= @referee.name %></strong>.
+  <br /><br />
+  While you're at the site, please accept our invitation to explore further.  HYGWIT (- that's 'Have You Got What It Takes?') offers
+  an exciting new approach to managing achievement at work - helping ambitious employees and forward-thinking businesses to maximize their 
+  potential.  As well as recruitment, we've developed ground-breaking tools for performance reviews, job evaluation, training needs
+  analysis, and succession planning. Find out more from the 'About' page.
+  <br /><br />
+  Thanks for your assistance. 
+  <br /><br />
+  The HYGWIT admin team

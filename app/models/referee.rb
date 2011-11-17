@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: references
+# Table name: referees
 #
 #  id              :integer         not null, primary key
 #  user_id         :integer
@@ -12,13 +12,15 @@
 #  phone           :string(255)
 #  email           :string(255)
 #  portrait_rating :integer         default(7)
+#  access_code     :string(255)
+#  remarks         :text
 #  created_at      :datetime
 #  updated_at      :datetime
 #
 
-class Reference < ActiveRecord::Base
+class Referee < ActiveRecord::Base
 
-  attr_accessible :name, :relationship, :role, :location, :address, :phone, :email, :portrait_rating
+  attr_accessible :name, :relationship, :role, :location, :address, :phone, :email, :portrait_rating, :access_code, :remarks
   
   belongs_to :user
   
@@ -50,7 +52,7 @@ class Reference < ActiveRecord::Base
   				:inclusion	=> { :in => 1..5 }
   validates :email,		:presence 	=> true,
   				:format 	=> { :with => email_regex }
-  validates :portrait_rating,	:inclusion	=> { :in => 1..7 }				
+  validates :portrait_rating,	:inclusion	=> { :in => 1..7 }					
   				
   def what_relation
     if relationship == 1
@@ -65,5 +67,9 @@ class Reference < ActiveRecord::Base
       return "Friend"
     end  
   end
-
+  
+  def self.generate_code
+    alphanumerics = [('0'..'9'),('a'..'z')].map {|range| range.to_a}.flatten
+    (0...6).map { alphanumerics[Kernel.rand(alphanumerics.size)] }.join
+  end 
 end

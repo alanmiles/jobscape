@@ -1,0 +1,9 @@
+  <ul>
+    <% if @user.count_characteristics == 0 %>
+      Nothing
+    <% else %>
+      <% @characteristics.each do |characteristic| %>
+        <li><%= characteristic.characteristic %></li>
+      <% end %>
+    <% end %>
+  </ul>

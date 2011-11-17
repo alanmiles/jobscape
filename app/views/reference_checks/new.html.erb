@@ -1,0 +1,24 @@
+<h1><%= @title %></h1>
+
+<div class="info_box_screen">
+  We'd be grateful if you'd take a look at a self-portrait submitted by a jobseeker on the HYGWIT site who's given
+  your name as a reference.
+  <br /><br />
+  But before we get started you need to verify your identity.  In the boxes below, enter your name and the
+  security code, both exactly as displayed on your email invitation. 
+  <br /><br />
+  <%= form_for(:referee, :url => reference_checks_path) do |f| %>
+    <div class="field">
+      <%= f.label :name, "Enter your name" %><br />
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :access_code %><br />
+      <%= f.text_field :access_code, :size => 8 %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Submit" %>
+    </div>
+  <% end %>
+  
+</div>

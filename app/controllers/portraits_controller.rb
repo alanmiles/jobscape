@@ -22,8 +22,20 @@ class PortraitsController < ApplicationController
       elsif @portrait.public == false
         flash[:success] = "Portrait updated, but at your request, it won't be shown to employers yet."
       else
-        if @user.count_references >= 2
-          flash[:success] = "Portrait updated, and now viewable by potential employers."
+        if @user.count_referees >= 2
+          
+          #Email references if they haven't already been notified
+          @referees = @user.referees
+          @referees.each do |referee|
+            if referee.access_code.nil? || referee.access_code.empty?
+              @code = Referee.generate_code
+              referee.update_attribute(:access_code, @code)
+              RefereeMailer.request_response(referee).deliver
+            end
+          end
+          
+          flash[:success] = "Portrait updated, and can now be viewed by potential employers."
+          
         else
           @portrait.update_attribute(:public, false)
           flash[:notice] = "Sorry, you can't make your Portrait public until you've entered at least two references."
@@ -48,7 +60,7 @@ class PortraitsController < ApplicationController
     @strengths = @user.strengths.order("strengths.position")
     @limitations = @user.limitations.order("limitations.position")
     @aims = @user.aims.order("aims.position")
-    @references = @user.references
+    @referees = @user.referees
     @previousjobs = @user.previousjobs.order("previousjobs.position") 
   end
 

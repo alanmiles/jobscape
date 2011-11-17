@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   has_many :strengths, :dependent => :destroy
   has_many :limitations, :dependent => :destroy
   has_many :aims, :dependent => :destroy
-  has_many :references, :dependent => :destroy
+  has_many :referees, :dependent => :destroy
   has_many :previousjobs, :dependent => :destroy
   has_many :placements, :dependent => :destroy
   has_many :jobs, :through => :placements, :uniq => true
@@ -118,6 +118,10 @@ class User < ActiveRecord::Base
   
   def has_private_business?
     businesses.where("businesses.name = ?", "Biz_#{self.id}").count == 1
+  end
+  
+  def no_business_set?
+    ! has_private_business? && ! belongs_to_business?
   end
   
   def has_password?(submitted_password)
@@ -236,16 +240,16 @@ class User < ActiveRecord::Base
     count_aims >= 3  
   end
   
-  def count_references
-    self.references.count
+  def count_referees
+    self.referees.count
   end
   
-  def has_references?
-    count_references > 0
+  def has_referees?
+    count_referees > 0
   end
   
-  def max_references?
-    count_references >= 3
+  def max_referees?
+    count_referees >= 3
   end
   
   def count_previousjobs

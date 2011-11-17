@@ -1,0 +1,78 @@
+<h1><%= @title %></h1>
+<h4>Validated by <%= @referee.name %> - <%= @referee.what_relation %></h4>
+
+<%= form_for @referee, :url => reference_check_path(@referee) do |f| %>
+   <%= render 'shared/error_messages', :object => f.object %>
+  
+  <%= render 'portrait' %>
+  <hr />
+
+<h4>YOUR INPUT</h4>
+
+  <div class="info_box_screen">
+    <i>First comment on the portrait.  Your input will be confidential and not revealed to <%= @user.name %>,
+       who will only know whether or not you've sent us a review.  Interested employers will see your comments, 
+       but they will not be attributed to you.  Only after interview, if an employer is considering an offer, will
+       your identity be revealed.
+    </i>
+  </div>
+  
+  <div class="shift_center">
+    <div class="field">
+      <%= f.label :portrait_rating, "How do you rate the portrait?" %><br />
+      <%= select( :referee, :portrait_rating, @ratings ) %> 
+    </div>
+  
+    <div class="field">
+      <%= f.label :remarks, "Any further observations?" %> <small>(optional)</small><br />
+      <%= f.text_area :remarks, :cols => 60, :rows => 4 %>
+    </div>
+  </div>
+  
+  <div class="info_box_screen">
+    <i>Now check your details - employers will only contact you if they're considering a job-offer.</i>
+  </div>
+  
+  <div class="rightpos">
+    <div class="field">
+      <%= f.label :address %> <small>(optional)</small> <br />
+      <%= f.text_area :address, :cols => 40, :rows => 3 %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :phone %> <small>(optional)</small> <br />
+      <%= f.text_field :phone %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :email %></br />
+      <%= f.text_field :email %>
+    </div>
+  </div>
+  
+  <div class="field">
+    <%= f.label :name, "Your name" %><br />
+    <%= f.text_field :name %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :relationship, "Your relationship with" %> <strong><%= @user.name %></strong><br />
+    <%= select( :referee, :relationship, @relationships ) %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :role, "Your role / job" %> <small>(optional)</small><br />
+    <%= f.text_field :role %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :location, "Your business or location" %> <small>(optional)</small><br />
+    <%= f.text_field :location %>
+  </div>
+  
+  
+  <br />
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+  <ul>
+    <% if @user.count_previousjobs == 0 %>
+      None
+    <% else %>
+      <% @previousjobs.each do |previousjob| %>
+        <li><%= previousjob.job %> <em> - <%= previousjob.service_length %></em></li>
+      <% end %>
+    <% end %>
+  </ul>

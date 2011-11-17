@@ -1,0 +1,9 @@
+  <ul>
+    <% if @user.count_achievements == 0 %>
+      None
+    <% else %>
+      <% @achievements.each do |achievement| %>
+        <li><%= achievement.achievement %></li>
+      <% end %>
+    <% end %>
+  </ul>

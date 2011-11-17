@@ -1,0 +1,9 @@
+  <ul>
+    <% if @user.count_dislikes == 0 %>
+      Nothing drives me mad
+    <% else %>
+      <% @dislikes.each do |dislike| %>
+        <li><%= dislike.dislike %></li>
+      <% end %>
+    <% end %>
+  </ul>

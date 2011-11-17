@@ -1,0 +1,9 @@
+  <ul>
+    <% if @user.count_favourites == 0 %>
+      None
+    <% else %>
+      <% @favourites.each do |favourite| %>
+        <li><%= favourite.favourite %></li>
+      <% end %>
+    <% end %>
+  </ul>

@@ -1,0 +1,9 @@
+  <ul>
+    <% if @user.count_aims == 0 %>
+      <li>None</li>
+    <% else %>
+      <% @aims.each do |aim| %>
+        <li><%= aim.aim %></li>
+      <% end %>
+    <% end %>
+  </ul>
