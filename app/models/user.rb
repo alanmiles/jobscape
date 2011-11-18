@@ -99,17 +99,17 @@ class User < ActiveRecord::Base
 
   def belongs_to_business?
     #businesses.count > 0
-    businesses.where("businesses.name != ? and left = ?", "Biz_#{self.id}", false).count > 0
+    businesses.joins(:employees).where("businesses.name != ? and employees.left = ?", "Biz_#{self.id}", false).count > 0
   end
   
   def single_business?
     if belongs_to_business?
-      businesses.where("businesses.name != ? and left = ?", "Biz_#{self.id}", false).count == 1
+      businesses.joins(:employees).where("businesses.name != ? and employees.left = ?", "Biz_#{self.id}", false).count == 1
     end
   end
   
   def sole_business
-    self.businesses.where("businesses.name != ? and left = ?", "Biz_#{self.id}", false).first
+    self.businesses.joins(:employees).where("businesses.name != ? and employees.left = ?", "Biz_#{self.id}", false).first
   end
    
   def private_business
