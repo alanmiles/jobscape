@@ -1,0 +1,236 @@
+quality;grade;descriptor
+Attendance;A;No absences without valid reason in 6 months.
+Attendance;B;Missed fewer than 2 days without valid reason in 6 months.
+Attendance;C;Missed more than 2 but fewer than 5 days without valid reason in 6 months.
+Attendance;D;Missed more than 5 but fewer than 10 days without valid reason in 6 months.
+Attendance;E;Missed more than 10 days without valid reason in 6 months.
+Punctuality;A;Late on fewer than 3 occasions in 6 months.
+Punctuality;B;Late on more than 3 but fewer than 5 occasions in 6 months.
+Punctuality;C;Late on more than 5 but fewer than 8 occasions in 6 months.
+Punctuality;D;Late on more than 8 but fewer than 10 occasions in 6 months.
+Punctuality;E;Late on more than 10 occasions in 6 months.
+Completing assignments;A;Always completes any assignment on time and to a high standard.
+Completing assignments;B;Completes 90% of assignments on time and to a good standard.
+Completing assignments;C;Completes more than 75% but less than 90% of assignments on time and to a good standard.
+Completing assignments;D;Completes more than 50% but less than 75% of assignments on time and to a good standard.
+Completing assignments;E;Less than 50% of tasks are completed on time or to a good standard.
+Personal appearance;A;When dressed for the job, personal appearance and dress immediately impress. Distinctive, perhaps distinguished.
+Personal appearance;B;When dressed for the job, personal appearance and dress don't stand out, but this person is always neat and tidy.
+Personal appearance;C;Not especially neat and tidy, but adequate for the job.
+Personal appearance;D;Some aspects of personal appearance may be off-putting to people encountered in the job.
+Personal appearance;E;Appearance and dress are totally unsuitable for the job.
+Confidence;A;Always assured and confident in demeanour and presentation of ideas without being aggressively over-confident.
+Confidence;B;Appears confident with familiar situations and people, but still sometimes nervous or over-confident when in an unfamiliar context.
+Confidence;C;Uncertain of capabilities and needing frequent reassurance. Or over-confident and sometimes overbearing.
+Confidence;D;Timid in relationships and new situations - or aggressively over-confident.
+Confidence;E;Unsuited for contact with other people because of chronic fear of new situations.  Or someone whose surly aggression drives others away.
+Enthusiasm;A;Always eager to take on a new task, whether hard or simple, and tackles it diligently, without question or complaint. This positive attitude inspires others too.
+Enthusiasm;B;Usually eager to work, but on one or two occasions has been less than willing to tackle an assignment within the range of competence, or reluctant to learn something new. 
+Enthusiasm;C;Generally takes on tasks or assignments without objection, but does not appear to be strongly motivated, and will not inspire others.
+Enthusiasm;D;Has often questioned the validity of tasks or assignments within the range of competence, or has carried them out with obvious reluctance.
+Enthusiasm;E;Responds badly to instructions and will not carry out a task or assignment unless it is demanded. Likely to demotivate others.
+Following instructions;A;Always follows instructions precisely and completely. However, when meeting a situation outside the rules, knows exactly how to act in an appropriate manner. Is careful to understand the instructions before starting.
+Following instructions;B;Follows instructions too well, but has a tendency to be too literal, and can be lost unless there are firm guidelines. Or sometimes may not take sufficient care to check the instructions before starting.
+Following instructions;C;Tries to follow instructions but can sometimes miss a step or misinterpret what is required.
+Following instructions;D;Does not follow instructions well. Misses out steps and does not check thoroughly enough.
+Following instructions;E;Pays no heed to instructions, preferring to set own agenda.
+Leadership;A;A natural leader. People tend to listen and follow this person's example and guidance. Is chosen as leader without making an issue of leadership.
+Leadership;B;Works well in association with another leader. A good number 2, commanding the respect of a team.
+Leadership;C;Has some leadership qualities, but sometimes upsets people in the team by being over-assertive. Or still reluctant to take the lead.
+Leadership;D;Has some leadership qualities, but often upsets people in the team by being over-assertive. Not a popular leader.
+Leadership;E;Shows no inclination to lead, or tries to lead but completely fails to win the respect and support of the team.
+Teamwork;A;Always contributes vigorously to the efforts of the team, whether as a leader or a team member. Understands own weaknesses ond others' strengths and goes to the right people for help. Sympathetically helps others to address their weaknesses. 
+Teamwork;B;Works willingly in a team and tolerant of others, no matter what their strengths and weaknesses.  But does not always make a strong contribution.
+Teamwork;C;Works willingly in a team and tolerant of others, no matter what their strengths and weaknesses.  But tends to rely mostly on the contributions of others, and makes only a limited contribution.
+Teamwork;D;Can work in a team but often produces individual work at the end of a group activity.  Not supportive or tolerant of others in the team.
+Teamwork;E;Strongly individualistic and will not work with other people.
+Personality;A;A pleasant, outgoing personality who always gets on well with others. Someone who will always be noticed and popular in a group.
+Personality;B;Easy-going, relaxed, always welcome in a group - though not the strongest personality.
+Personality;C;Someone who willingly joins groups, but tends to remain anonymous.
+Personality;D;Someone who prefers own company to that of other people.
+Personality;E;Aggressive and difficult. Someone who regularly takes issue with colleagues and is not popular.
+Courtesy;A;Polite, courteous, respectful and charming at all times and in all situations, without being obsequious. Unfailingly courteous even when dealing with a difficult person or situation.
+Courtesy;B;Generally polite, courteous and respectful, though may sometimes lose a little control when confronted with a difficult person or situation. Or perhaps sometimes seems over-polite.
+Courtesy;C;Can be polite, respectful and courteous on occasions and with certain people, but is not by nature polite, and may have upset someone once or twice in the last six months - inside the business or outside - with a lack of respect.
+Courtesy;D;Is not someone you'd choose to put on show when politeness is called for. Has rough edges, and may sometimes be considered abrasive.
+Courtesy;E;Impolite, ill-mannered and brusque. Sometimes people might find it amusing, but there have been several occasions in the last six months when colleagues or customers have been upset by the lack of politeness and respect.
+Care for the workplace;A;Meticulous in keeping the workplace clean and tidy. Makes a habit of keeping own area clean and hazard-free, and also assists and encourages others to do the same.
+Care for the workplace;B;Keeps own area neat, tidy and hazard-free, but does not necessarily help or encourage others to do the same.
+Care for the workplace;C;Generally clean and tidy, but at times, work-station needs organizing and tidying. Sometimes fails to clean up at the end of the day.
+Care for the workplace;D;Regularly leaves work-station untidy, during the day and at the end of it.
+Care for the workplace;E;Lack of concern for tidiness in the workplace makes the work-station inefficient and perhaps hazardous to self and others.
+Initiative;A;A self-starter - someone who always finds out the right thing to do and gets on with the job. If a manager has given no guidance will still take appropriate action. If the required tools are unavailable, is able to improvise.
+Initiative;B;Someone who always gets on with the job after being given clear parameters. Generally able to come up with own ideas when help is not available, but may be still lacking the self-confidence to trust own judgment.
+Initiative;C;Needs a supervisor to give instructions, but after receiving them gets on with the job. However, sometimes needs to come back and ask for more guidance.
+Initiative;D;Will rarely start a job unless instructed to do so, and rarely has own ideas.
+Initiative;E;Will never start a job unless instructed to do so, and never offers own ideas.
+Planning;A;Habitually plans and sequences own work and that of others.  Ensures that objectives are clearly established, and that work is systematically carried out in order to achieve the objectives.  Communicates plans clearly to others.
+Planning;B;Habitually plans and sequences own work but not that of others.  Ensures that objectives are clearly established, and that work is systematically carried out in order to achieve the objectives.
+Planning;C;Is capable of planning and sequencing own work, but does not yet do so consistently.  When work is planned, usually works systematically towards objectives.
+Planning;D;Prefers to carry out jobs without thinking them through and tackles tasks as they come to mind.  Is capable of writing a plan when required to do so, but tends to drift away from the planned activity.
+Planning;E;Incapable of planning a job and always reacts spontaneously.  Any plans written are badly structured and not followed.
+Meeting deadlines;A;When working to a firm but realistic deadline, always completes tasks to a high standard. Care and accuracy is obvious even when put under pressure of time. Prepared to work all the extra hours it takes to meet the deadline.
+Meeting deadlines;B;When working to a firm but realistic deadline, always completes tasks to an adequate standard. Accuracy and neatness may suffer but the outcome is acceptable. Puts in some extra hours to meet the deadline.
+Meeting deadlines;C;When working to a firm but realistic deadline, sometimes fails to complete the task because unprepared to work extra hours to meet the deadline. Or completes the task, but with some serious flaws.
+Meeting deadlines;D;When working to a firm but realistic deadline, usually fails to complete the task and refuses to put in the extra hours or effort required for completion.
+Meeting deadlines;E;Very slow and incapable of meeting deadlines and completing work in a reasonable period of time.
+Problem-solving;A;Considers problems as a challenge and enjoys finding creative yet appropriate solutions.  Able to work out own solutions, but also works well with a group to solve problems.
+Problem-solving;B;Likes to work with problems and enjoys problem-solving sessions.  Presents ideas and solutions but these are sometimes limited or unworkable.
+Problem-solving;C;Has own ideas when faced with a problem, but reluctant to implement them unless others are supportive.  Cautious with original ideas.
+Problem-solving;D;Relies entirely on other people's ideas when faced with a problem.  Will willingly implement their ideas, but cannot think of solutions if working alone.
+Problem-solving;E;Hates problems and will do everything possible to avoid them.  Reacts negatively and pessimistically in the face of problems and is unable to deal with the situation, even when supported by others.
+Unsupervised work;A;Enjoys working without supervision and always continues to carry out duties effectively.  But also knows when a supervisor's advice or authority is required, and seeks help at the appropriate time.
+Unsupervised work;B;Enjoys working without supervision and usually continues to carry out duties effectively.  Still needs to learn when it is appropriate to call for a supervisor's advice or authority to act.
+Unsupervised work;C;Still needs to learn the job better and required supervisor's assistance regularly.  Provided supervisor help is close at hand, performs the job well.
+Unsupervised work;D;Does a poor job when unsupervised and standards fall below the required level.
+Unsupervised work;E;Is incapable of doing the job at all without almost constant supervision.
+Ambition;A;Aiming for a top job in the organization. Sets very high standards, aware that this will bring attention and promotion.
+Ambition;B;Aiming for promotion, but recognizes that capabilities and prospects are limited. Sets high personal standards in an attempt to do as well as possible.
+Ambition;C;Expects promotion to a higher grade at some time in the future, although success at work is not the highest priority. Not someone to exert themselves unduly.
+Ambition;D;Accepts that promotion is unlikely.  Does the job as well as it needs to be done, but not better.
+Ambition;E;Work is a low priority.  Keeping the job - or losing it - is of no concern.
+Pride in work;A;In all aspects of work, is not satisfied unless achieving the highest standards.  Works relentlessly to improve skills and knowledge, and the quality of work output.
+Pride in work;B;Performs most jobs well and has the habit of checking work outcomes.  Is achieving excellence in some areas but in others is not yet achieving the highest standards.
+Pride in work;C;Performs to an adequate standard but is not yet achieving excellence in any area.  Generally checks work to make sure it has been done properly.
+Pride in work;D;Performs mostly to an adequate standard but does not check work.  Not likely to achieve excellence.
+Pride in work;E;Work performance is at an inadequate level, and is taking no steps to improve.  Does not check work and has no sense of pride in performance.
+Flexibility;A;Will always willingly and successfully try to do what is required, even if it means performing tasks that are not in the job description or if required to do extra work unexpectedly.
+Flexibility;B;Will always try to do what is required, even if it means performing tasks that are not in the job description or if required to do extra work unexpectedly. However, may sometimes complain about the extra load.
+Flexibility;C;Will only grudgingly perform tasks that are outside the job description or which require extra work. However, these additional tasks are usually carried out successfully.
+Flexibility;D;May try to do tasks outside the job description or requiring extra work, but outcomes are usually not successful - success is limited to the normal daily job.
+Flexibility;E;Refuses to carry out tasks outside the job description or requiring extra work.
+Numeracy;A;Fast and accurate at solving mental math problems and has high-level skills requiring complex calculation and analysis.
+Numeracy;B;Fast and accurate at solving mental math problems involving addition, subtraction, multiplication, division and percentages - but without high-level skills that might be required in jobs requiring complex calculation and analysis.
+Numeracy;C;Accurate at solving mental math problems involving addition, subtraction, multiplication, division and percentages - but without a calculator, cannot reach the answer at speed.
+Numeracy;D;Sometimes makes mistakes in dealing with basic mental math problems - and cannot work at speed.
+Numeracy;E;Numerically illiterate. Regularly makes mistakes with basic mental math calculations.
+Mental agility;A;Intellectually versatile.  When a topic is unfamiliar or new concepts are put forward, listens, learns and adjusts quickly, and is soon making a full and useful contribution to the conversation.
+Mental agility;B;Smart, and not afraid of unfamiliar topics and new concepts, and shows a good ability to learn and adapt.  But it usually takes a session or two before this person will engage in the discussion.
+Mental agility;C;When a topic is unfamiliar or new concepts are put forward, engages in the conversation, but contributions show a lack of understanding at first.  Needs to make more effort to listen, learn and adjust.
+Mental agility;D;Makes an effort to take on board new ideas and concepts, but slow to catch on and needs lots of explanation and help.
+Mental agility;E;Steers clear of anything intellectually demanding. Not at all interested in dealing with unfamiliar ideas and concepts.
+Concentration;A;Able to concentrate and stay focused for periods of several hours, even when tasks are relatively mundane, and doesn't make mistakes. A high boredom threshold.
+Concentration;B;Able to concentrate and stay focused for period of several hours when a task is interesting, but attention may waver if a job is relatively mundance.
+Concentration;C;Able to concentrate and stay focused for short periods of up to an hour but tends to drift after this if not presented with a new task.
+Concentration;D;Is able to focus on a job and concentrate if the task is interesting, but easily distracted and usually unfocused if unchallenged.
+Concentration;E;In all situations finds it difficult to focus on the task in hand.  Low boredom threshold.
+Delegation;A;Does not shirk duties, but always instigates and encourages load-sharing with other members of the team, resulting in strong group output. Consistently plans and monitors the work of team-members.
+Delegation;B;Does not shirk duties, and can share the workload with other people in the team to achieve maximum group output - but does not do so consistently. Good at planning and monitoring the work of team-members.
+Delegation;C;Does not shirk duties, and can share the workload with other people in the team to achieve maximum group output - but does not do so consistently. Not good at planning and monitoring the work of team-members.
+Delegation;D;Only occasionally shares the work with other team members, and not good at planning or supervising their work. Or passes most of the work to the team and doesn't get fully involved or lead.
+Delegation;E;Refuses to entrust work to others in the team and always tries to do everything alone - nobody else is empowered. Or passes the whole job to the team and takes no part at all. 
+Decision-making;A;Reaches a decision rapidly after taking account of all likely outcomes and estimating the route most likely to bring success. The decisions almost always turn out to be good ones.
+Decision-making;B;Makes decisions rapidly and well when dealing with small or personal matters, but still has to gain the confidence to make major decisions. Most of the decisions made turn out to be effective.
+Decision-making;C;Is usually decisive, but too often fails to take account of all possibilities, and this has caused a few problems in the past 6 months.  Or takes account of all possibilities but takes too long to reach the final decision.
+Decision-making;D;Slow in reaching decisions and fails to take account of all possible outcomes, and this has caused potentially serious problems in the past 6 months. Or prefers others to take decisions.
+Decision-making;E;Always indecisive and muddled - incapable of reaching a firm decision, and this has created serious problems in the past 6 months. Leaves the responsibility for decision making to others ... and should probably continue to do so.
+Artistic skills;A;Has outstanding artistic or craft skills, bringing creativity and originality to the task.
+Artistic skills;B;Has strong artistic or craft skills, but not especially creative or original.
+Artistic skills;C;Can copy a design reasonably accurately, but does not produce own ideas.
+Artistic skills;D;Tries to copy designs, but with limited ability.
+Artistic skills;E;Has no artistic capability or craft skills at all.
+Creativity;A;Regularly produces creative, original ideas, plans, products or methods, well-attuned to the needs and capabilities of the organization, and producing clear benefits.
+Creativity;B;Has proven ability to produce creative, original ideas, plans, products or methods,even if they're not always practical, in line with organization needs, or successful.
+Creativity;C;Has produced several plans, ideas, products and methods in the last six months. But generally they've been more of the same - not bursting with freshness and originality.
+Creativity;D;Has occasionally made a suggestion or come up with an idea in the past six months, but creativity is not a strong point.
+Creativity;E;Has not produced a new idea, plan, product or method in the past six months.
+Pressure;A;Responds well when put under pressure - and accepts that pressure is a regular part of the job.
+Pressure;B;Responds well when put under pressure - but prefers not to be pressurized all the time.
+Pressure;C;Copes with short periods of pressure, but the quality of work and level of enthusiasm begin to decline if the pressure continues for a longer period.
+Pressure;D;Resentful of pressure or quickly loses enthusiasm in a pressure situation.
+Pressure;E;Collapses quickly under pressure and produces very poor work - or none at all.
+Dexterity;A;Has a natural flair for jobs involving the use of the hands or hand-tools. Able to cope expertly with intricate detail.
+Dexterity;B;Carries out jobs requiring the use of the hands or hand-tools well, but is not yet a master craftsman.
+Dexterity;C;Uses the hands or hand-tools reasonably well, but has not not yet achieved fully mastery and control, and still struggles with detail and new processes.
+Dexterity;D;Tries to work with the hands or hand-tools, but is still a novice and generally does not achieve good results.
+Dexterity;E;Clumsy in jobs involving the hands or hand-tools, and produces work that's consistently poor.
+Health and fitness;A;Physically fit, very rarely sick, and able to meet the demands of a physically demanding job.
+Health and fitness;B;Normally physically fit but has suffered from injury or sickness in the recent past. No problem predicted with physically demanding jobs in the future. 
+Health and fitness;C;Question-marks over physical fitness and may not be ready at this time for a physically demanding job.
+Health and fitness;D;Probably unsuited to a physically demanding job - lacking strength and fitness.
+Health and fitness;E;Frailty or repeated injury or sickness makes this person completely unsuited for a physically demanding job.
+Physical strength;A;A person with a powerful physique, suited for heavyweight jobs, or situations when it's an advantage to appear strong.
+Physical strength;B;Not necessarily a powerful build, but someone who is capable of taking on heavy, physically demanding jobs.
+Physical strength;C;Of average build.  Ready to contribute to heavy or physical jobs, but needs help from people better equipped.
+Physical strength;D;Below average build - and reluctant to get involved in physically demanding jobs, even as part of a team.
+Physical strength;E;Fragile in build - entirely unsuited for jobs where strength or physical presence is required.
+Physical agility;A;Agile and fit, well-suited to tasks that require movement and mobility in a small space or in difficult physical circumstances.
+Physical agility;B;Not necessarily physically gifted, but easily able to carry out tasks that require mobility or agility.
+Physical agility;C;Average agility - not gifted, but can carry out tasks involving mobility or agility reasonably well.
+Physical agility;D;Not suited for tasks requiring physical agility, though tries to cope.
+Physical agility;E;Immobile, finds it impossible to cope with tasks that require mobility or agility.
+Analytical skills;A;From a set of data, is able to establish a principle, or work out a rule, or suggest a reason for failure or success. The analysis is always accurate and sometimes original.
+Analytical skills;B;From a set of data, is able to establish a principle, or work out a rule, or suggest a reason for failure or success. The analysis is usually accurate but not original.
+Analytical skills;C;When working with a set of data, is beginning to learn how to organize the results, but is not yet ready or competent enough to draw the right conclusions.
+Analytical skills;D;Will try to organize and draw conclusions from a set of data, but usually arrives at the wrong answer, because not all the facts have been taken into account.
+Analytical skills;E;When faced with a set of data, is completely unable to organize it or draw conclusions.
+Investigative skills;A;Habitually asks questions in order to fully understand a position or a statement. Keeps asking until the facts are clear and the truth is understood.
+Investigative skills;B;Is interested in finding out why things are the way they are. Asks questions, but may stop if not getting the answers quickly or easily enough.
+Investigative skills;C;Interested in learning about other people and the world, but tends to let others ask the questions and find the answers. 
+Investigative skills;D;Not very interested in the world around. Will occasionally show interest and ask a few questions, but generally only in an area related to personal interests.
+Investigative skills;E;Not at all interested in the world beyond self, or digging below the surface. Takes everything at face value and accepts the status quo without question.
+Assertiveness;A;When ideas are challenged by others, listens to their view politely, but is able to maintain a position firmly and persuasively, without aggression.
+Assertiveness;B;When ideas are challenged by others, listens to their view and tries to defend a position, but may not yet have the experience or authority to present the case well. Or may be over-aggressive in defending a position.
+Assertiveness;C;Keen to put own ideas across, but does not give others the chance to express their view. May be tempted to overlook the input of others.
+Assertiveness;D;Tends to go along with other peoples' ideas, and lacks the confidence to present own ideas. Not good at arguing a case.
+Assertiveness;E;Weak and vacillating. Always agrees with the other party and cannot maintain or defend own position.
+Diplomacy;A;A skillful negotiator, who instinctively reads a situation correctly, understands the motivations and feelings of the other party, and chooses the right time to proceed or withdraw.
+Diplomacy;B;A good negotiator, who usually chooses the right time to proceed or withdraw in a negotiation after reading the situation correctly. But not yet infallible and may need more experience.
+Diplomacy;C;In negotiations, is generally aware of the motivations and feelings of the other party, but prone to an occasional blunder, which has prevented a successful outcome and may have soured a relationship.
+Diplomacy;D;Not sufficiently aware of the motivations and feelings of others, and this has frequently caused negotiations to break down.
+Diplomacy;E;Constantly ignores the motivations and feelings of others, and is totally unsuited for sensitive negotiations.
+Discretion;A;Understands the importance of confidentiality, and can always be trusted not to reveal confidential or private information to unauthorized parties.
+Discretion;B;Has proved to be trustworthy, but has not yet been given access to material of a highly confidential or sensitive nature. 
+Discretion;C;Is somewhat casual with sensitive or confidential information, and may speak too freely to others.
+Discretion;D;Too talkative about matters that are confidential or sensitive, but has not given away secrets that could cause damage.
+Discretion;E;Does not understand the importance of confidentiality and has given away private or sensitive information that can potentially damage a business or an individual.
+Response to criticism;A;Accepts criticism cheerfully, and uses criticism productively to develop own abilities and skills.
+Response to criticism;B;Takes criticism seriously and tries to learn from it, though can sometimes be a little defensive.
+Response to criticism;C;Usually defensive when efforts are criticised - but nevertheless tries to learn from mistakes.
+Response to criticism;D;Always defensive when others criticize - but nevertheless tries to learn from mistakes.
+Response to criticism;E;Resentful when others criticize.  Does not learn from criticism and carries on behaving exactly as before.
+Judgement;A;Applies professional experience and/or knowledge of people expertly to forecast outcomes with at least 90% accuracy. Others trust this person's judgement because the choices have usually been good.
+Judgement;B;Applies professional experience and/or knowledge of people well to forecast outcomes with at least 75% accuracy.
+Judgement;C;Applies professional experience and/or knowledge of people reasonably well to forecast outcomes with at least 60% accuracy.
+Judgement;D;Forecasts are more usually wrong than right because this person judges people poorly and fails to apply professional experience.
+Judgement;E;Is unable to apply professional experience and/or knowledge of people to forecast outcomes with any degree of accuracy. Forecasts are correct less than 30% of the time.
+Organization;A;Prioritizes and sequences own tasks and those of other people in the team.  Makes sure that the priority tasks are always completed on time.
+Organization;B;Good at organizing own work and usually finishes priority tasks on time, but there's less evidence of organizing the work of the team. 
+Organization;C;Does the right things at the right time when instructed. But without instruction, sometimes fails to spot the priorities and sometimes completes work late.
+Organization;D;Needs lots of help to organize work. and even then sometimes focuses on the wrong thing, and frequently completes work late.
+Organization;E;Always carries out duties haphazardly, without regard to priority or sequence.  Often found to be spending too long on the wrong thing, and frequently completes assignments late.
+Crisis management;A;Reacts quickly and decisively in an emergency, keeping a cool head and effectively leading others.
+Crisis management;B;Is a good team member in an emergency, following instructions quickly, but not taking a leadership role.
+Crisis management;C;Stays cool in an emergency, but needs help from others to take the right action quickly.
+Crisis management;D;Fails to react quickly enough in an emergency, but doesn't usually panic.
+Crisis management;E;Panics and gets flustered when an emergency arises.
+Accuracy;A;Pays great attention to detail, and has always presented work properly checked and completely free of error.
+Accuracy;B;Generally good with detail and checks work thoroughly, but there have been one or two minor errors in work presented in the current period, not putting the business at risk.
+Accuracy;C;One or two minor errors have been spotted in work presented in the current period, not putting the business at risk, but which could have been prevented if the facts and figures had been properly checked.
+Accuracy;D;Regular errors have been discovered in work presented in the current period.  While the consequences are not serious, much more attention to detail is required.
+Accuracy;E;In the current period, slipshod work has been presented with serious inaccuracies, putting the business at risk.
+Courage;A;Is willing to face physical risks and danger, and appears to do so without fear. Sets an example of bravery that inspires others.
+Courage;B;May not always appear to be the bravest, but is nevertheless ready to take on tasks that involve physical risk and danger.
+Courage;C;Somewhat nervous about taking on tasks that involve physical risk and danger, but prepared to participate provided others do too.
+Courage;D;Reluctant to do anything that might involve physical risk or danger. 
+Courage;E;Refuses to do anything that might involve physical risk or danger - and sees danger at every turn.
+Determination;A;Responds to setbacks or adversity with redoubled vigour and enthusiasm. Will never accept that defeat is a foregone conclusion, and inspires others to stay positive and fight on.
+Determination;B;In the face of setbacks or adversity will continue to pursue the objective, and doesn't give up. But may not be able to inspire others to continue as well.
+Determination;C;In the face of setbacks or adversity will wait to see how others respond before continuing. Will continue to pursue the objective as long as others lead the way. but will give up otherwise.
+Determination;D;When there are setbacks or adversity, will soon start to question the objectives and will only continue the challenge after persuasion and reassurance from a leader.
+Determination;E;Gives up and accepts defeat after even a minor setback. Lowers the morale of all around.
+Enthusiasm;A;Always eager to take on a new task, whether hard or simple, and tackles it diligently, without question or complaint. This positive attitude inspires others too.
+Enthusiasm;B;Usually eager to work, but on one or two occasions has been less than willing to tackle an assignment within the range of competence, or reluctant to learn something new. 
+Enthusiasm;C;Generally takes on tasks or assignments without objection, but does not appear to be strongly motivated, and will not inspire others.
+Enthusiasm;D;Has often questioned the validity of tasks or assignments within the range of competence, or has carried them out with obvious reluctance.
+Enthusiasm;E;Responds badly to instructions and will not carry out a task or assignment unless it is demanded. Likely to demotivate others.
+Communication;A;Always succeeds in explaining ideas clearly. Others find this person easy to understand. Also has the ability to listen carefully to what others are saying, to understand and then to respond appropriately. Conversations with this person are two-way.
+Communication;B;Has the potential to be a good communicator, although may occasionally confuse some listeners. Gives others the chance to speak too, and seems to take on board their point of view.
+Communication;C;Communicates reasonably well, but not someone you would choose to present a case effectively or to get across detailed instructions. Generally seems to listen to others and take on board their views.
+Communication;D;Not a comfortable communicator.  Either somewhat reticent, or talks too much and has one-way conversations.
+Communication;E;Doesn't put across ideas well.  Either doesn't make an impression at all, or others find explanations confusing. Also takes no notice whatsoever of the contributions of others.
+Literacy;A;Has a flair for creative, original writing and makes an impact on the reader. Can adapt the style to the purpose.  Never makes mistakes with grammar, spelling or style.
+Literacy;B;A competent writer, who reliably produces professional business correspondence and reports free of spelling, grammar and structural mistakes.
+Literacy;C;With a supervisor checking for occasional spelling, grammar and style errors, can produce business correspondence and reports of acceptable quality.
+Literacy;D;Writes well enough to produce internal reports and correspondence, but makes too many mistakes to write to customers or external business contacts.
+Literacy;E;A poor writer, unable to write coherent business reports or correspondence, even for internal use.

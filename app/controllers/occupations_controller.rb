@@ -5,7 +5,7 @@ class OccupationsController < ApplicationController
   
   def index
     @title = "Occupations"
-    @occupations = Occupation.all
+    @occupations = Occupation.order("name").paginate(:page => params[:page])
   end
   
   def new
@@ -48,7 +48,8 @@ class OccupationsController < ApplicationController
       @occupation.destroy
       flash[:success] = "#{@occupation.name} removed."
     end
-    redirect_to occupations_path
+    #redirect_to occupations_path
+    redirect_to :back
   end
 
 end

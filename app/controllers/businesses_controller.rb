@@ -5,7 +5,7 @@ class BusinessesController < ApplicationController
   
   def index
     @title = "Businesses"
-    @businesses = Business.paginate(:page => params[:page])
+    @businesses = Business.order("name").paginate(:page => params[:page])
   end
 
   def show

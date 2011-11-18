@@ -6,10 +6,12 @@
 
   <%= link_to "Add a new business", new_business_path %><br />
   <% if @user.belongs_to_business? %>
-    <%= link_to "Switch business", select_business_path unless @user.single_business? %>
-    <br />
+    <% unless @user.single_business? %>
+      <%= link_to "Switch business", select_business_path %>
+      <br />
+    <% end %>
   <% end %>
-  <%= link_to "Your own records", officer_to_own_path unless @user.no_business_set? %>
+  <%= link_to "Your own records", officer_to_own_path unless @user.no_business_set? || @job.nil? %>
 </div>
 
 

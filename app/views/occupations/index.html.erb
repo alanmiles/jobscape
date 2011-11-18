@@ -4,7 +4,8 @@
 
 <h1><%= @title %></h1>
 
-
+<%= will_paginate @occupations %>
+<br />
 <ul>
   <% @occupations.each do |occupation| %>
     <li><%= link_to occupation.name, edit_occupation_path(occupation) %>
@@ -18,3 +19,4 @@
     </li>
   <% end %>
 </ul>
+<%= will_paginate @occupations %>

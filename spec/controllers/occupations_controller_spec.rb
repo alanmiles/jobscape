@@ -251,6 +251,7 @@ describe OccupationsController do
     
       before(:each) do
         @occupation = Factory(:occupation)
+        request.env["HTTP_REFERER"] = occupations_path
       end
       
       describe "success" do
