@@ -11,7 +11,7 @@
       <br />
     <% end %>
   <% end %>
-  <%= link_to "Your own records", officer_to_own_path unless @user.no_business_set? || @job.nil? %>
+  <%= link_to "Your own records", officer_to_own_path unless @user.no_current_job?(@business) %>
 </div>
 
 

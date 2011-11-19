@@ -18,6 +18,7 @@ class Placement < ActiveRecord::Base
   belongs_to :user
   belongs_to :job
   has_many :reviews, :dependent => :destroy
+  has_many :tasks, :dependent => :destroy
   
   validates :user_id,		:presence 	=> true
   validates :job_id,		:presence 	=> true,

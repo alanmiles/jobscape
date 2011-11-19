@@ -45,7 +45,9 @@ section h3 {
 }
 
 section h4 {
-  color: #A33519;
+  font-size: 90%;
+  color: #999;
+  /* color: #A33519; */
 }
 
 h4.success {

@@ -1,0 +1,41 @@
+ <%= render 'shared/error_messages', :object => f.object %>
+
+  <div class="shift_center_50">
+  <div class="field">
+    <%= f.label :task %><br />
+    <%= f.text_area :task, :maxlength => 140, :cols => 60, :rows => 3 %>
+    <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  </div>
+  
+  <div class="field">
+    <%= f.label :task_date %><br />
+    <%= f.date_select :task_date %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :personal, "What kind of task is it?" %> &nbsp;
+    <%= f.radio_button :personal, false %> Business &nbsp; 
+    <%= f.radio_button :personal, true %> Personal 
+  </div>
+  
+  <div class="field">
+    <%= f.label :completed, "Check if you've completed the task" %> &nbsp;
+    <%= f.check_box :completed %>
+  </div>
+  
+  
+  <%= f.hidden_field :placement_id %>
+  <br />
+  
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $('#task_task').live('keyup keydown', function(e) {
+    var maxLen = 140;
+    var left = maxLen - $(this).val().length;
+    $('#char-count').html(left);
+    });
+    
+  <% end %>
+<% end %>

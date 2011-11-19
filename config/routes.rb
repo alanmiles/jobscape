@@ -89,6 +89,7 @@ Jobscape::Application.routes.draw do
   resources :my_submissions
   resources :attribute_submissions
   resources :attribute_rejections
+  resources :my_tasks
   resources :vacancies do
     resources :applications, :shallow => true
   end
