@@ -19,6 +19,7 @@ class Placement < ActiveRecord::Base
   belongs_to :job
   has_many :reviews, :dependent => :destroy
   has_many :tasks, :dependent => :destroy
+  has_many :targets, :dependent => :destroy
   
   validates :user_id,		:presence 	=> true
   validates :job_id,		:presence 	=> true,
@@ -54,7 +55,13 @@ class Placement < ActiveRecord::Base
     nmbr > 0
   end
   
-  #def make_this_only_current_for(user, business)
-  #  @other_current = Placement.w
-  #end
+  def current_targets
+    self.targets.where("targets.achieved = ? and targets.cancelled = ?", 
+    			false, false).order("targets.target_date")
+  end
+  
+  def history_targets
+    self.targets.where("targets.achieved = ? or targets.cancelled = ?", 
+    			true, true).order("targets.target_date DESC")
+  end
 end

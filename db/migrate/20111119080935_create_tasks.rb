@@ -3,7 +3,6 @@ class CreateTasks < ActiveRecord::Migration
     create_table :tasks do |t|
       t.integer :placement_id
       t.string :task
-      t.boolean :personal, :default => false
       t.boolean :completed, :default => false
       t.date :task_date 
 

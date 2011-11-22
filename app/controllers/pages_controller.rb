@@ -205,6 +205,10 @@ class PagesController < ApplicationController
     #session[:biz] = @business.id
   end
   
+  def hygwit_introduction
+    @title = "Introduction to HYGWIT"
+  end
+  
   private
   
     #def not_with_single_business

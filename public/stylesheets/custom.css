@@ -346,6 +346,12 @@ ul li.no_bullet {
   padding: 0 10px;
 }
 
+.achieved {
+  background-color: #2E742E;
+  color: #FFF;
+  padding: 0 10px;
+}
+
 .grade_highlight {
   background:#2E742E;
   color: white; 

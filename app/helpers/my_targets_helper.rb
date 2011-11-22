@@ -1,0 +1,2 @@
+module MyTargetsHelper
+end

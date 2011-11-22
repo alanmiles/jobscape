@@ -1,5 +1,7 @@
 Jobscape::Application.routes.draw do
 
+  get "history_targets/index"
+
   resources :users do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true
@@ -90,6 +92,8 @@ Jobscape::Application.routes.draw do
   resources :attribute_submissions
   resources :attribute_rejections
   resources :my_tasks
+  resources :my_targets
+  resources :history_targets
   resources :vacancies do
     resources :applications, :shallow => true
   end
@@ -138,6 +142,7 @@ Jobscape::Application.routes.draw do
   match '/standard_to_admin',	:to => 'pages#standard_to_admin'
   match '/officer_to_own',	:to => 'pages#officer_to_own'
   match '/own_to_officer',	:to => 'pages#own_to_officer'
+  match '/hygwit_introduction', :to => 'pages#hygwit_introduction'
 
   root :to => 'pages#home'
 

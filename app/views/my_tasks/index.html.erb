@@ -9,35 +9,32 @@
   <%= @job.title_department %>
 </h4>
 
-<% if @tasks.empty? %>
-
-  <div class="no_data round" style = "margin-top: 30px"> 
-    You haven't set any daily tasks.  Use this tool to set a daily
-    achievement diary, keeping track of your tasks for the last three months.
-  </div>
-  
-<% else %>
-  <div id="infotext" class="info_box_screen" style = "display:none">
-    This is where you keep a diary of your daily tasks, and whether you've managed to achieve them.
-    Just list the activities you're planning <em>TO DO</em> - the list is designed to work hand-in-hand with your weekly targets, 
-    where you set what you're expecting <em>TO ACHIEVE</em>.
+<div id="infotext" class="info_box_screen" style = "display:none">
+    This is where you keep a diary of your daily tasks, and whether you've managed to complete them.
+    Just list the activities you're planning <em>TO DO</em>.  But - a word of warning - don't start entering tasks until you've
+    first defined your targets, what you intend <em>TO ACHIEVE</em>.  If you do, there's a good chance that you'll be busy .. but
+    without purpose or direction. 
     <br /><br />
-    You can use this tool to plan your life outside work as well, by selecting the 'Personal'
-    option.  Anything marked 'personal' will be private - only you can see it.  Entries marked as 'business', on the other
-    hand, can be seen by your manager/appraiser, so they can see how you're getting on.
-    <br /><br />
-    Records are held for three months, then automatically deleted.  We recommend that you don't remove anything yourself, unless 
+    Your tasks are stored on HYGWIT for three months, then automatically deleted.  We recommend that you don't remove anything yourself, unless 
     you've made a mistake.  If the records show that you're struggling to keep up, that's useful information.  You and your manager
     can discuss the reasons, and plan remedial action together.  And nobody's plan is ever perfect!
     &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
+</div>
+  
+<% if @tasks.empty? %>
+
+  <div class="no_data round" style = "margin-top: 30px"> 
+    You haven't set any daily tasks yet.
   </div>
+  
+<% else %>
+ 
   
   <%= will_paginate @tasks %>
     <table class="smaller_font">
       <tr>
         <th>Date</th>
         <th>Task</th>
-        <th>Type</th>
         <th class="centralize">Done?</th>
         <th></th>
         <th></th>    
@@ -47,7 +44,6 @@
       <tr>
         <td class="at_top" style="width:12%"><%= display_daymonthday(task.task_date) %></td>
         <td><%= task.task %></td>
-        <td class="at_top"><%= task.task_type %></td>
         <td class="at_top centralize"><%= image_tag("complete.png", :size => "15x15") if task.completed? %></td>
         <td class="at_top"><%= link_to image_tag("select.png", :size => "15x15"), edit_my_task_path(task),
                         :title => "Edit task" %>

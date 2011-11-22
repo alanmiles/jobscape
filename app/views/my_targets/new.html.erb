@@ -1,0 +1,19 @@
+<div class = "r-float">
+  <%= link_to "Cancel", my_targets_path %>
+</div>
+
+<h1><%= @title %></h1>
+<h4>
+  <%= @user.name %> - <%= @business.name %><br />
+  <%= @job.title_department %>
+</h4>
+
+<%= form_for(@target, :url => my_targets_path) do |f| %>
+  
+  <%= render "fields", :f => f %>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  </div>
+<% end %>

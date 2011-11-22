@@ -1,0 +1,21 @@
+<div class = "r-float">
+  <%= link_to "Personal home-page", employee_home_path %><br />
+  <%= link_to "Current targets", my_targets_path %>
+</div>
+
+<h1><%= @title %> 
+<h4>
+  <%= @user.name %> - <%= @business.name %><br />
+  <%= @job.title_department %>
+</h4>
+  
+<% if @targets.empty? %>
+
+  <div class="no_data round" style = "margin-top: 30px"> 
+    You have no achieved or cancelled targets yet.
+  </div>
+  
+<% else %>
+  <%= render 'my_targets/targets' %>
+<% end %>
+

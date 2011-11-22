@@ -1,0 +1,50 @@
+<div class = "r-float">
+  <%= link_to "Personal home-page", employee_home_path %><br />
+  <%= link_to "Add a new target", new_my_target_path %><br />
+  <%= link_to "Targets history", history_targets_path %>
+</div>
+
+<h1><%= @title %> &nbsp;<span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span></h1>
+<h4>
+  <%= @user.name %> - <%= @business.name %><br />
+  <%= @job.title_department %>
+</h4>
+
+<div id="infotext" class="info_box_screen" style = "display:none">
+    The major goals you've set for yourself in the next few weeks.  Targets remain in the list until you say they're completed or
+    cancelled ( use <%= image_tag("select.png", :size=> "13x13") %> ) - after that they'll appear in the history list.  
+    You can delete a target ( <%= image_tag("cancel.png", :size => "13x13") %> ) for 3 days after you've
+    entered it; after that it's fixed.
+    &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
+</div>
+  
+<% if @targets.empty? %>
+
+  <div class="no_data round" style = "margin-top: 30px"> 
+    You have no targets set at the moment.
+  </div>
+  
+<% else %>
+  <%= render 'targets' %>
+<% end %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#info').click(function() {
+      $('#infotext').show('fast', function() {
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#infotext').hide('fast', function() {
+      });
+    });
+    
+   });
+   
+  <% end %>
+<% end %>
