@@ -12,11 +12,13 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  sector_id  :integer
+#  mission    :text
+#  values     :text
 #
 
 class Business < ActiveRecord::Base
 
-  attr_accessible :name, :address, :latitude, :longitude, :created_by, :sector_id
+  attr_accessible :name, :address, :latitude, :longitude, :created_by, :sector_id, :mission, :values
   geocoded_by :address
   reverse_geocoded_by :latitude, :longitude do |obj, results|
     if geo = results.first
@@ -35,6 +37,7 @@ class Business < ActiveRecord::Base
   has_many :vacancies,  :through => :jobs
   has_many :users, :through => :employees, :uniq => true
   has_many :invitations, :dependent => :destroy
+  has_many :objectives, :dependent => :destroy
   
   
   validates :sector_id, :presence 	=> true
@@ -44,6 +47,8 @@ class Business < ActiveRecord::Base
   			         :message => "+ address appears to be a duplicate" }
   validates :address, 	:presence 	=> true,
   			:length		=> { :maximum => 50 }
+  validates :mission,	:length		=> { :maximum => 500, :allow_blank => true }
+  validates :values,	:length		=> { :maximum => 500, :allow_blank => true }
   			
   def no_jobs?
     self.jobs.count == 0
@@ -123,4 +128,14 @@ class Business < ActiveRecord::Base
   def hidden_departments
     self.departments.where("departments.hidden = ?", true).order("departments.name")
   end
+  
+  def objectives_by_focus(fcs)
+    self.objectives.where("objectives.focus = ?", fcs)
+  end
+  
+  def max_objectives_by_focus?(fcs)
+    nmbr = self.objectives_by_focus(fcs).count
+    nmbr >= 5   
+  end
+  
 end

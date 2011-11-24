@@ -12,6 +12,8 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  sector_id  :integer
+#  mission    :text
+#  values     :text
 #
 
 require 'spec_helper'

@@ -51,6 +51,7 @@
     <% end %> 
     <ul>
       <li><%= link_to "Business details", @business %></li>
+      <li><%= link_to "Business mission, values, objectives", corporate_plan_path(@business) %></li>
       <li><%= link_to "Departments", business_departments_path(@business.id) %></li>
       <li><%= link_to "Jobs", business_jobs_path(@business.id) %></li>
       <li><%= link_to "Employees (HYGWIT users)", officer_users_path %></li>

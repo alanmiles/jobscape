@@ -1,0 +1,45 @@
+<div class = "r-float">
+  <%= link_to "Business home page", officer_home_path %><br />
+</div>
+
+<h1><%= @title %></h1>
+<h4>Agreed/approved by the management team at<br />
+<%= @business.name %>, <%= @business.city %></h4>
+
+<div class="info_box_screen">
+  
+  <strong>MISSION</strong> &nbsp; <%= link_to "(edit)", edit_corporate_plan_path(@business) %> <br />
+  <%= mission_statement %> 
+  
+  <br /><br />
+  <strong>VALUES</strong> &nbsp; <%= link_to "(edit)", edit_corporate_plan_path(@business) %> <br />
+  <%= values_statement %>
+  
+  <br /><br />
+  <strong>OBJECTIVES</strong> &nbsp <%= link_to "(add)", new_business_objective_path(@business) %> <br />
+  <% if @objectives.empty? %>
+    No objectives set.
+  <% else %>
+    <ol style ="margin-top:5px">
+      <% @objectives.each do |objective| %>
+        <li>
+            
+            <%= objective.focus_name.upcase %> &nbsp; &nbsp;
+            <%= link_to image_tag("select.png", :size => "15x15"), edit_objective_path(objective),
+            		  :title => "Edit this objective" %>  &nbsp;
+            <%= link_to image_tag("cancel.png", :size => "15x15"), objective,
+                          :method => :delete, 
+                          :confirm => "You sure?",
+                          :title => "Delete this objective" %> <br />
+            <%= objective.objective %><br />
+            <div style = "margin-top: 5px">
+              <i>Measurement:</i> <%= objective.measurement %>
+            </div>
+            <div style = "margin-top:5px">
+            <hr />
+            </div>
+        </li>    
+      <% end %>
+    </ol>  
+  <% end %>
+</div>

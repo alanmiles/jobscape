@@ -1,0 +1,19 @@
+<div class = "r-float">
+  <%= link_to "Cancel", corporate_plan_path(@business)  %><br />
+</div>
+
+<h1><%= @title %></h1>
+<h4><%= @business.name %></h4>
+
+<%= form_for([@business, @objective]) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  
+  <div class="shift_center_50">
+  
+    <%= render 'fields', :f => f %>
+  
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </div>
+<% end %>

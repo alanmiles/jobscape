@@ -1,0 +1,86 @@
+    <div class="field">
+      <%= f.label :focus %> &nbsp;
+      <% if @select_focus == true %>
+        <%= select( :objective, :focus, Objective::FOCUS_TYPES, 
+                         :prompt => true) %>
+      <% else %>
+        <%= @objective.focus_name.upcase %>
+      <% end %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :objective %> &nbsp; <span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span><br />
+      
+      <div id="infotext" class="info_box_screen" style = "margin-left:0; margin-right: 150px; display:none">
+        In each of the focus areas (Profit, Customers, Employees and Processes) add up to 5 key objectives for the
+        coming months.  For example, in Customers, you might include <i>'Increase direct sales by improving the company website'</i>.
+        <br /></br />
+        Review your business objectives at least every 6 months, and bring them up to date as circumstances change.
+        &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
+      </div>
+      
+      <%= f.text_area :objective, :cols => 60, :rows => 3 %>
+      <span id="char-count-objective" style = "color:blue; padding-left: 5px"><%= @characters_objective %></span>
+    </div>
+
+    
+
+    <div class="field">
+      <%= f.label :measurement %> &nbsp; <span id="info2", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span><br />
+      
+      <div id="infotext2" class="info_box_screen" style = "margin-left:0; margin-right: 150px; display:none">
+        
+        Describe how and when you're going to measure success.  For example, if the objective is to increase direct sales via the website,e the
+        measurement might be <i>'At least 500 website-generated sales worth £50,000 by December 31'.</i>
+        <br /><br />
+        Again, review the statements frequently to take account of new circumstances.  If you've achieved the current targets, set them 
+        higher next time.
+        &nbsp; <span id = "no-info2" style="color:#069; cursor:n-resize">(Hide)</span>
+      </div>
+      
+      <%= f.text_area :measurement, :cols => 60, :rows => 3 %>
+      <span id="char-count-measurement" style = "color:blue; padding-left: 5px"><%= @characters_measurement %></span>
+    </div>
+    
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#info').click(function() {
+      $('#infotext').show('fast', function() {
+      });
+    });
+    
+    $('#info2').click(function() {
+      $('#infotext2').show('fast', function() {
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#infotext').hide('fast', function() {
+      });
+    });
+    
+    $('#no-info2').click(function() {
+      $('#infotext2').hide('fast', function() {
+      });
+    });
+    
+    $('#objective_objective').live('keyup keydown', function(e) {
+    var maxLen = 255;
+    var left = maxLen - $(this).val().length;
+    $('#char-count-objective').html(left);
+    });
+    
+    $('#objective_measurement').live('keyup keydown', function(e) {
+    var maxLen = 255;
+    var left = maxLen - $(this).val().length;
+    $('#char-count-measurement').html(left);
+    });
+    
+   });
+   
+  <% end %>
+<% end %>

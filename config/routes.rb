@@ -1,6 +1,10 @@
 Jobscape::Application.routes.draw do
 
-  get "history_targets/index"
+  get "objectives/index"
+
+  get "objectives/new"
+
+  get "objectives/edit"
 
   resources :users do
     resource :portrait, :shallow => true
@@ -64,6 +68,8 @@ Jobscape::Application.routes.draw do
     resources :invitations, :shallow => true
     resources :hidden_departments, :shallow => true
     resources :inactive_jobs, :shallow => true
+    resources :corporate_plans, :shallow => true
+    resources :objectives, :shallow => true
   end
   resources :plans do
     resources :responsibilities, :shallow => true

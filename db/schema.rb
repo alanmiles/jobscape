@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111120102756) do
+ActiveRecord::Schema.define(:version => 20111123155532) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -81,6 +81,8 @@ ActiveRecord::Schema.define(:version => 20111120102756) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sector_id"
+    t.text     "mission"
+    t.text     "values"
   end
 
   create_table "characteristics", :force => true do |t|
@@ -192,6 +194,15 @@ ActiveRecord::Schema.define(:version => 20111120102756) do
     t.integer  "user_id"
     t.string   "limitation"
     t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "objectives", :force => true do |t|
+    t.integer  "business_id"
+    t.string   "objective"
+    t.integer  "focus"
+    t.string   "measurement"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
