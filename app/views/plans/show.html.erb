@@ -1,9 +1,33 @@
 <div class = "r-float">
   <% if current_user.account == 1 %>
     <%= link_to "#{@job.job_title} menu", my_job_path %>
+  <% elsif current_user.account == 4 %>
+    <%= link_to "Home Page", employee_home_path %>
+    <% if @plan.complete? %>
+      <br />
+      <%= link_to "View complete A-Plan", aplan_path(@plan) %>
+    <% end %>
   <% else %>
-    <%= link_to "#{@job.job_title} menu", @job %> <br />
-    <%= link_to "All jobs in business", business_jobs_path(@business) unless current_user.account == 1 %>
+    
+    <% if session[:officer_off] == true %>
+    
+      <%= link_to "Personal Home Page", employee_home_path %>
+      <% if @plan.complete? %>
+        <br />
+        <%= link_to "View complete A-Plan", aplan_path(@plan) %>
+      <% end %>
+      
+    <% else %>
+      
+      <%= link_to "#{@job.job_title} menu", @job %>
+      <% if @plan.complete? %>
+        <br />
+        <%= link_to "View complete A-Plan", aplan_path(@plan) %>
+      <% end %>
+      <br />
+      <%= link_to "All jobs in business", business_jobs_path(@business) unless current_user.account == 1 %>
+    
+    <% end %>
   <% end %>
 </div>
 <h1>Achievement Plan 
@@ -12,34 +36,60 @@
   <% end %>
 </h1>
 <h4><%= @job.job_title %></h4>
-<p><em>
+
+<% if current_user.account == 1 && ! @plan.complete? %>
+  <%= render 'aplans/instructions' %>
+<% elsif current_user.account >=3 && ! @plan.complete? %>
+  <%= render 'aplans/instructions' %>
+<% end %>
+  
+<div class = "info_box_screen">
   <% if current_user.account == 1 %>
-    <% unless @plan.complete? %>
-       Click the links to build your A-PLAN, a document that describes not only what you're
-       supposed to do, but what you're supposed to <em><u>achieve</u></em>.  If possible, get 
-       your direct manager involved: make sure you agree on priorities. The A-Plan is ready to use 
-       when all items in the right-hand column below are <span style = "color: green">green</span>.
+    <% unless @plan.complete? %>      
+       Tackle each of the sections below in turn. Youll find lots of guidance as you go.  The A-Plan is ready to use
+       when all items in the right-hand column are <span style = "color: green">green</span>. 
     <% else %>
-       Now your A-Plan is complete, use it to make yourself a high-value employee.  Get people into the habit 
-       of reviewing your own performance monthly, and make sure you're hitting your targets.  If you're not, 
-       take the initiative to change things until you are.  It's all down to you!  And remember that your Plan 
-       should change as the business changes: revise it when you need to, and aim to keep setting the bar higher. 
+       Now your A-Plan is complete, use it to make yourself a high-value employee.  Get into the habit 
+       of reviewing your own performance monthly - with an external review roughly every 3 months and make sure 
+       you're hitting your targets.  If you're not, take the initiative to change things until you are.  It's all 
+       down to you!  And remember that your Plan should change as the business changes: revise it when you need to, 
+       and aim to keep setting the bar higher. 
+    <% end %>
+  <% elsif current_user.account == 4 %>
+    <% unless @plan.complete? %>
+       Tackle each of the sections below in turn. Youll find lots of guidance as you go.  The A-Plan is ready to use
+       when all items in the right-hand column are <span style = "color: green">green</span>. 
+    <% else %>
+       Now the A-Plan is complete, use it to make yourself a high-value employee.  Get into the habit 
+       of reviewing your own performance monthly - then there should be no surprises when your boss conducts
+       a formal review (which should happen roughly every 3 months).  If you're not hitting your targets,
+       take the initiative to change things until you are.  It's all down to you!  And remember that if the job-role
+       changes, the Plan should change too: suggest revisions when you need to, and aim to keep setting the bar higher.    
     <% end %>
   <% else %>
     <% unless @plan.complete? %>
-       Click the links to build the A-PLAN, a powerful tool for recruitment, appraisal, training
-       needs analysis, and succession planning.  Best of all, everyone in the job will be 
-       focused on achievement!  The A-Plan is ready to use when all items in the right-hand
-       column below are <span style = "color: green">green</span>. 
+       Tackle each of the sections below in turn. Youll find lots of guidance as you go.  The A-Plan is ready to use
+       when all items in the right-hand column are <span style = "color: green">green</span>. 
     <% else %> 
-       Now the A-Plan is complete, use it to drive achievement - for recruitment, appraisal, training
-       needs analysis, succession planning.  Get people into the habit of reviewing their own performance
-       monthly. And remember that the Plan should change as the business changes: involve jobholders  
-       in updating their responsibilities and goals. Aim to keep setting the bar higher. 
+       <% if session[:officer_off] == true %>
+         
+         Now the A-Plan is complete, use it to drive your performance and make the maximum possible contribution
+         to the organization.  Get into the habit of reviewing your own performance monthly, and then, every three months,
+         ask a senior colleague or one of your own (less senior!) team-members to review as well.  If you're not hitting your targets,
+         take the initiative to change things until you are.  It's all down to you!  Remember that if the job-role
+         or the business strategy changes, your Plan may need to change too. And always aim to set the bar higher.  
+       
+       <% else %>
+         Now the A-Plan is complete, use it to drive achievement - for recruitment, appraisal, training
+         needs analysis, succession planning.  Get people into the habit of reviewing their own performance
+         monthly - with an external review roughly every 3 months. And remember that the Plan should change 
+         as the business changes: involve jobholders in updating their responsibilities and goals. Aim to keep 
+         setting the bar higher.
+       <% end %> 
     <% end %>
   <% end %>  
-</em></p>
-<table>
+</div>
+<table class="smaller_font">
   <tr>
     <td><strong><%= link_to "Responsibilities", plan_responsibilities_path(@plan) %></strong></td>
     <td>10-20 key activities</td>
@@ -118,7 +168,29 @@
 <% else %>
   <h4 class="success">
 <% end %>
-  Overall Job Rating: <%= job_valuation %> &nbsp;
-    <small style = "font-size: 0.65em">(based on the 10 highest-rated responsibilities)</small>
+  <strong>Overall Job Rating: <%= job_valuation %></strong> &nbsp;
+    <small style = "font-size: 0.85em">(based on the 10 highest-rated responsibilities)</small>
   </h4>
+  
+<% if current_user.account == 3 %>
+  <% unless session[:officer_off] == true %>
+    <%= form_for @plan do |f| %>
+      <%= render 'shared/error_messages', :object => f.object %>
+      
+      <div class="field">
+        <% if @plan.no_changes? %>
+          <%= f.label :no_changes, "Plan locked. Uncheck if you want to allow users to update." %>
+        <% else %>
+          <%= f.label :no_changes, "Plan unlocked. Check if you want to stop users updating." %>
+        <% end %>
+        <%= f.check_box :no_changes %> &nbsp; &nbsp;
+        <%= f.submit "Confirm" %>
+      </div>
+      
+      
+    <% end %>
+  <% end %>
+<% end %>
+  
+
 

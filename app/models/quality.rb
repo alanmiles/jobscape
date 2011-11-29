@@ -46,7 +46,7 @@ class Quality < ActiveRecord::Base
     end 
     
     qualities_table = Arel::Table.new(:qualities)
-    self.where(qualities_table[:id].not_in already_taken).where("approved = ? and removed = ?", true, false)
+    self.where(qualities_table[:id].not_in already_taken).where("approved = ? and removed = ?", true, false).order("quality")
   end
   
   

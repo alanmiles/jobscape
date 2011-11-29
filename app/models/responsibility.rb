@@ -40,7 +40,7 @@ class Responsibility < ActiveRecord::Base
   				
   def display_rating
     if self.rating == 0
-      "n/a"
+      "?"
     else
       self.rating.to_s
     end 

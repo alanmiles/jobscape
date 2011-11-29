@@ -3,7 +3,7 @@ class SubmittedPamsController < ApplicationController
   before_filter :authenticate
   before_filter :check_status
   before_filter :ownership
-  before_filter :not_admin_user
+  #before_filter :not_admin_user
   
   def edit
     @pam = Pam.find(params[:id])

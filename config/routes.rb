@@ -1,11 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "objectives/index"
-
-  get "objectives/new"
-
-  get "objectives/edit"
-
   resources :users do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true

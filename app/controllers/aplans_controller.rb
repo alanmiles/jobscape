@@ -8,7 +8,11 @@ class AplansController < ApplicationController
     @responsibilities = @plan.current_responsibilities
     @jobqualities = @plan.jobqualities.order("jobqualities.position")
     @requirements = @plan.requirements.order("requirements.position")
-    @title = "Your A-Plan"
+    if current_user.account == 3
+      @title = "A-Plan"
+    else
+      @title = "Your A-Plan"
+    end
   end
 
 end

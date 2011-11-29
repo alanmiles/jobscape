@@ -23,7 +23,7 @@ require 'digest'
 class User < ActiveRecord::Base
  
   has_many :employees, :dependent => :destroy
-  has_many :businesses, :through => :employees
+  has_many :businesses, :through => :employees, :uniq => true
   has_one :portrait, :dependent => :destroy
   has_many :achievements, :dependent => :destroy
   has_many :characteristics, :dependent => :destroy
@@ -99,12 +99,13 @@ class User < ActiveRecord::Base
 
   def belongs_to_business?
     #businesses.count > 0
-    businesses.joins(:employees).where("businesses.name != ? and employees.left = ?", "Biz_#{self.id}", false).count > 0
+    businesses.includes(:employees).where("businesses.name != ? and employees.left = ?", "Biz_#{self.id}", false).count > 0
   end
   
   def single_business?
     if belongs_to_business?
-      businesses.joins(:employees).where("businesses.name != ? and employees.left = ?", "Biz_#{self.id}", false).count == 1
+      @businesses = businesses.includes(:employees).where("businesses.name != ? and employees.user_id = ? and employees.left = ?", "Biz_#{self.id}", self.id, false)
+      @businesses.count == 1
     end
   end
   

@@ -10,7 +10,7 @@ module PlansHelper
   
   def job_valuation
     if @plan.job_value.nil? || @plan.job_value == 0
-      return "n/a"      
+      return "?"      
     else
       @plan.job_value
     end

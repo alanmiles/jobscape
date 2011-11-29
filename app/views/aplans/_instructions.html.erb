@@ -1,0 +1,270 @@
+  
+    
+    <span id="what", style ="cursor:help; font-size: 90%; color: #09c">What's an A-Plan?</span><br />
+  
+    <div id="describe" class="info_box_screen grayborder round" style = "display:none; margin-top:10px">
+      <span id = "no-info" class="hide_link">(Hide)</span> &nbsp;
+      An Achievement Plan is an enhanced job description - with clearly defined targets.<br /><br />
+    
+      First, a 3-paragraph summary includes a job outline, the key employee requirements, and why
+      the job is important to the business.<br /><br />
+    
+      Next, 10 - 20 key responsibilities are listed, each with 1-3 measurable goals. Well-written goals 
+      eliminate uncertainty: jobholders have either achieved their targets, or they haven't.
+      <br /><br />
+    
+      Responsibilities also have a rating with a maximum score of 100, based on how much they
+      contribute to company profitability, customer or employee satisfaction, or process improvement.
+      The higher the rating, the more important it is to achieve the goals.<br /><br />  
+    
+      The A-Plan also defines 10 personality attributes that will contribute to success: 
+      each attribute has five descriptors, from A to E (Outstanding to Poor).  The ideal employee will be rated
+      at A or B, certainly for the attributes at the top of the list, which are the most important. <br /><br /> 
+    
+      And finally, the A-Plan lists the key requirements - qualifications, experience, background - 
+      when someone new is hired for the job.
+      
+      <% if current_user.account == 1 %>
+        <br /><br />
+        As you write or update your A-Plan, it's important to discuss it with your boss.  You work in an organization
+        and it's important to make sure that you're playing as part of the team.  Check that your view of what's 
+        important is the same as your boss's view ... or there'll be trouble later!
+      <% end %>
+      &nbsp; <span id = "no-info2" class="hide_link">(Hide)</span>
+    </div>
+  
+  <span id="how", style ="cursor:help; font-size: 90%; color: #09c">How do you use the A-Plan?</span><br />
+  
+  <div id="uses" class="info_box_screen grayborder round" style = "display:none; margin-top:10px">
+    <span id = "no-info3" class="hide_link">(Hide)</span> &nbsp;
+    There's an important difference between a job description and an achievement plan.  Job descriptions usually just describe
+    the activities an employee will be involved in, and they tend to be filed away until someone has cause for complaint
+     - <i>'It's not in the job description!'</i>.  But an achievement plan includes the targets we need to hit on a daily, weekly,
+    monthly basis, and they're therefore used much more often, helping people to grow in their jobs and to contribute 
+    more.  Achievement is good for the business and good for the employee.<br /><br />
+    
+    If you're new in the job, your A-Plan shows you exactly what you have to do to impress your boss, and set
+    you out on the right track.<br /><br />
+    
+    The A-Plan is also the basis for HYGWIT performance reviews.  We can say goodbye to the annual appraisal, dreaded by managers
+    because of all the preparation involved and by employees who were never sure what they were going to be hit with.  With HYGWIT,
+    reviews can be set up instantly, and it's absolutely clear what will be reviewed - whether the A-Plan targets have 
+    been achieved or not. And we've added objectivity: in the old-style appraisal, we tended to ask managers for their opinions, 
+    but in a HYGWIT review we ask them to stick with the facts.<br /><br />
+    
+    We recommend that you review your own performance every month.  Are you achieving your goals?  If not, what needs to 
+    change?  Do you need more training or more assistance? Is someone or something preventing you from succeeding?  If so, 
+    how can you fix it?  Or if you're achieving everything comfortably, should the targets be set higher?  Could you be 
+    contributing more?<br /><br />
+    
+    Then, at least every 3 months (more often if you feel you're struggling), get someone else to review your performance 
+    - your boss or a senior colleague. If you've been honest with your self-reviews, there should be no surprises. 
+    But the importance of the external review is the discussion that follows. How does your colleague think you should tackle 
+    any problems or achieve more?<br /><br />
+    
+    <% if current_user.account == 1 %>
+      You have an Individual HYGWIT account.  If you ever decide to sign up for a Business account, using HYGWIT across the
+      whole business, the A-Plan has several other uses as well. The job-score ( - the sum of the top 10 responsibility scores) 
+      helps to determine the appropriate salary for a new job: we look for other jobs with similar scores.
+    <% end %>
+    Managers also use the A-Plan for recruitment and internal promotions.  The summary can be used - or easily adapted - 
+    for recruitment advertisements. The key responsibilities, attributes and hiring requirements appear in the handy HYGWIT interview 
+    scoresheets, making it easy to identify the internal or external candidates best suited to a vacant job.
+    &nbsp; <span id = "no-info4" class="hide_link">(Hide)</span>
+  </div>
+  
+  <% if current_user.account == 4 %>
+    <% if @plan.no_changes? || @plan.complete? %>
+      <span id="change", style ="cursor:help; font-size: 90%; color: #09c">Updating the A-Plan</span><br />
+    <% else %>
+      <span id="change", style ="cursor:help; font-size: 90%; color: #09c">Who should write the A-Plan?</span><br />
+    <% end %>
+  <% elsif current_user.account == 1 %>
+    <span id="change", style ="cursor:help; font-size: 90%; color: #09c">Updating the A-Plan</span><br />
+  <% else %>
+    <span id="change", style ="cursor:help; font-size: 90%; color: #09c">Who should write the A-Plan?</span><br />
+  <% end %>
+  
+  <div id="updates" class="info_box_screen grayborder round" style = "display:none; margin-top:10px">
+    <span id = "no-info5" class="hide_link">(Hide)</span> &nbsp;
+    <% if current_user.account == 4 %>
+      
+      <% if @plan.no_changes? %>
+        <% if @plan.complete? %>
+          Your A-Plan is written and ready to use, and at the moment it's locked - you can't change it.<br /><br />
+        
+          But if you notice that something needs to change - perhaps your job focus has changed, or you feel that the 
+          targets are unachievable or too easy - then speak to your manager about it, and if you both agree, ask one of
+          your HYGWIT administrators to change the A-Plan. You may then be asked to update the A-Plan yourself, subject
+          to approval.<br /><br />
+        
+          Businesses and jobs change all the time - so don't be afraid to ask for a change, particularly if you feel the 
+          job isn't challenging enough and you could do more for the business.  But if you share your job-title with other 
+          colleagues, ask them how they feel before you talk to your boss.  If you're finding everything easy but they're
+          not, ask yourself first whether you could do more to help the rest of the team.
+      
+        <% else %>
+          
+          Your A-Plan isn't ready yet, and it's been locked by your HYGWIT administrator - perhaps it's being prepared now.
+          Talk to your administrator and find out when it'll be ready.
+        
+        <% end %>
+      <% else %>
+        
+        <% if @plan.complete? %>
+          Your A-Plan appears to be ready to use, but it remains open for further editing and updates.  Perhaps you're
+          planning to add more responsibilities or goals.  Normally, when everyone agrees that the Plan's complete, 
+          your HYGWIT administrator will lock it, to make sure that reviews are consistent.  So if you're sure there's
+          nothing more to add and the Plan's been approved by your boss, have a word with your administrator.<br /><br />
+         
+          Locking the A-Plan doesn't mean it will stay fixed for ever.  Most jobs change over time, and you'll probably
+          need to update it if you and your boss agree that you could set more ambitious targets, or if an aspect of
+          the job changes.  When that happens, all you need to do is speak to the administrator again ... unlocking
+          the Plan is straightforward.
+        
+        <% else %>
+          Your A-Plan isn't complete yet.  Who better to write it than you? ... together with any colleagues who share
+          your job-title.  After all, you're supposed to know it best!  Discuss the plan with colleagues and your boss, making
+          sure you all agree with the objectives.  Check too that your plan is well-aligned to the business strategy.
+          <br /><br />
+          You may find that discussion of the A-Plan will also lead to new discoveries: identification of a 
+          problem previously unnoticed, or suggestions for a more effective or efficient approach.<br /><br />
+        
+          When you've finished, ask your direct manager to check it.  It will then pass to your HYGWIT Administrator who'll
+          confirm that everything's been done properly, and then probably lock it until it needs to be updated again.
+        <% end %> 
+      <% end %>
+      
+    <% elsif current_user.account == 1 %>
+    
+      Businesses and jobs change all the time. If the business circumstances or the scope of your job change,
+      don't forget to update the A-Plan.  If you're finding that you're achieving your targets easily (and your
+      colleagues agree that you're doing well, it's probably time to think about setting more difficult targets.  
+      Remember that the whole point of HYGWIT is continuous improvement.  As your achievements begin to stack up, 
+      people will start to think of you as a star.<br /><br />
+      
+      Whenever you're thinking about an update, discuss it with your boss too, just making sure that your thinking is
+      aligned and that what you're planning fits with the boss's plan for the team.  You may find that discussion of the 
+      A-Plan with colleagues will also lead to new discoveries: identification of a problem previously unnoticed, or 
+      suggestions for a more effective or efficient approach.
+      
+    <% else %>
+    	
+      It depends on the status of your business.<br /><br />
+    
+      If you're building a new business, defining the business strategy and then writing A-Plans for the first jobs will give
+      your plans shape and certainty from the outset.<br /><br />
+    
+      In an existing business, when managers suggest that new jobs should be created, get them to make their case by writing 
+      the A-Plan. First, this will make sure that they've thought through the job properly.  Secondly, the job-score ( - the sum of 
+      the top 10 responsibility scores) will help you to decide the appropriate salary: look for other jobs with similar scores.
+      <br /><br />
+    
+      If the business is established but you're just beginning with HYGWIT, ask your employees to write their own A-Plans and then
+      get their managers to approve them.  This approach has many advantages.  First, it's obviously much faster than asking someone
+      in HR to write all the A-Plans.  Secondly, it'll show you how well people understand their jobs.  Third, it'll make sure that
+      employees and their managers have their objectives aligned. (Make sure as well that job-targets are not in conflict with 
+      corporate objectives.)  You may also find that discussion of the A-Plan will lead to new discoveries: identification of a 
+      problem previously unnoticed, or suggestions for a more effective or efficient approach.  Finally, we've found that
+      asking employees to get involved in discussing their own A-Plans gives them a sense of empowerment and increases motivation.
+      <br /><br />
+    
+      When everyone agrees that the A-Plan is complete, the HYGWIT administrator normally locks it.  But that doesn't mean the
+      plan is fixed forever - in fact you should expect it to change.  When?  The business circumstances or the scope of the job
+      may change. Capable and hard-working employees may be struggling to meet the targets.  Or they may be hitting the targets too
+      easily and feel they can offer more.  Whenever this happens, unlock the A-Plan and encourage the jobholder(s) to update it;
+      get the manager's approval for any changes, and check yourself that the Plan is still in line with the business strategy.  
+    
+    <% end %>
+    &nbsp; <span id = "no-info6" class="hide_link">(Hide)</span>
+  </div>
+  
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#what').click(function() {
+      $('html, body').animate({ scrollTop: 0 }, 0);
+      $('#how').css("font-weight","normal");
+      $('#change').css("font-weight","normal");
+      $('#what').css("font-weight","bold");
+      $('#uses').hide('fast', function() {
+        $('#updates').hide('fast', function() {
+          $('#describe').show('fast', function() {
+          });
+        });
+      });
+    });
+    
+    $('#how').click(function() {
+      $('html, body').animate({ scrollTop: 0 }, 0);
+      $('#what').css("font-weight","normal");
+      $('#change').css("font-weight","normal");
+      $('#how').css("font-weight","bold");
+      $('#describe').hide('fast', function() {
+        $('#updates').hide('fast', function() {
+          $('#uses').show('fast', function() {
+          });
+        });  
+      });
+    });
+    
+    $('#change').click(function() {
+      $('html, body').animate({ scrollTop: 0 }, 0);
+      $('#what').css("font-weight","normal");
+      $('#how').css("font-weight","normal");
+      $('#change').css("font-weight","bold");
+      $('#describe').hide('fast', function() {
+        $('#uses').hide('fast', function() {
+          $('#updates').show('fast', function() {
+          });   
+        });  
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#what').css("font-weight","normal");
+      $('#describe').hide('fast', function() {
+      });
+    });
+    
+    $('#no-info2').click(function() {
+      $('#what').css("font-weight","normal");
+      $('html, body').animate({ scrollTop: 0 }, 0);
+      $('#describe').hide('fast', function() {
+      });
+    });
+    
+    $('#no-info3').click(function() {
+      $('#how').css("font-weight","normal");
+      $('#uses').hide('fast', function() {
+      });
+    });
+    
+    $('#no-info4').click(function() {
+      $('#how').css("font-weight","normal");
+      $('html, body').animate({ scrollTop: 0 }, 0);
+      $('#uses').hide('fast', function() {
+      });
+    });
+    
+    $('#no-info5').click(function() {
+      $('#change').css("font-weight","normal");
+      $('#updates').hide('fast', function() {
+      });
+    });
+    
+    $('#no-info6').click(function() {
+      $('#change').css("font-weight","normal");
+      $('html, body').animate({ scrollTop: 0 }, 0);
+      $('#updates').hide('fast', function() {
+      });
+    });
+    
+   });
+   
+  <% end %>
+<% end %>

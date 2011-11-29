@@ -7,32 +7,34 @@
 
 <h4>for <%= @job.job_title %></h4>
 
-     <div id ="infotext" class="info_box_screen beige round" style="display:none">
-               The thinking behind HYGWIT's Responsibility Rating derives from Kaplan's and Norton's Balanced Scorecard.
-               They taught us that when determining strategic objectives, it's important for a business to look beyond
-               narrow profit/stakeholder interests.  To build long-term strength and wealth, we also need to consider what
-               we're doing to delight customers, motivate and develop our staff, and improve our internal methodologies
-               and structures.  
-               <br /><br />
-               We'd like to see everyone in every business thinking this way - frequently asking themselves <em>'What am
-               I doing to make my business stronger?'</em>, and that's why we ask the four questions below about each responsibility.
-               If the responsibility isn't <em>Important</em> or <em>Critical</em> in answer to at least one of the questions, then perhaps it
-               shouldn't be in this list.
-               <br /><br />
-               As you give your answers, HYGWIT calculates an overall score out of 100 for the responsibility.  So then, when 
-               you look at the list of all your responsibilities, you'll know which are the most important to the business.
-               <br /><br />
-               HYGWIT also produces an overall job evaluation - <em>How important is the job to the business?</em> - by taking the top 10 ranked
-               responsibilities and producing a score out of 1000.  If you're working on HYGWIT alone, this won't be particularly
-               useful to you, but if you're using the application across the business, it'll be a big help in determining appropriate
-               grading and salary levels.  A job with a score of 750 is clearly more important to the business than another with a score of
-               550.  Be careful not to be too rigid though.  There'd probably be very little difference between jobs scored at, say, 730 
-               and 750.
-               <br /><br />
-               Again we suggest that rating the responsibilities should be a discussion between a jobholder and the immediate manager.  
-               It's important that the two of them should reach agreement on which responsibilities are most important and why.
+     <div id ="infotext" class="info_box_screen" style="display:none">
+       
+       <span id = "no-info" class="hide_link">(Hide)</span> &nbsp;
+       The thinking behind HYGWIT's Responsibility Rating derives from Kaplan's and Norton's Balanced Scorecard.
+       They taught us that when determining strategic objectives, it's important for a business to look beyond
+       narrow profit/stakeholder interests.  To build long-term strength and wealth, we also need to consider what
+       we're doing to delight customers, motivate and develop our staff, and improve our internal methodologies
+       and structures.  
+       <br /><br />
+       We'd like to see everyone in every business thinking this way - frequently asking themselves <em>'What am
+       I doing to make my business stronger?'</em>, and that's why we ask the four questions below about each responsibility.
+       If the responsibility isn't <em>Important</em> or <em>Critical</em> in answer to at least one of the questions, then perhaps it
+       shouldn't be in this list.
+       <br /><br />
+       As you give your answers, HYGWIT calculates an overall score out of 100 for the responsibility.  So then, when 
+       you look at the list of all your responsibilities, you'll know which are the most important to the business.
+       <br /><br />
+       HYGWIT also produces an overall job evaluation - <em>How important is the job to the business?</em> - by taking the top 10 ranked
+       responsibilities and producing a score out of 1000.  If you're working on HYGWIT alone, this won't be particularly
+       useful to you, but if you're using the application across the business, it'll be a big help in determining appropriate
+       grading and salary levels.  A job with a score of 650 is clearly more important to the business than another with a score of
+       450.  Be careful not to be too rigid though.  There'd probably be very little difference between jobs scored at, say, 630 
+       and 650.
+       <br /><br />
+       Again we suggest that rating the responsibilities should be a discussion between a jobholder and the immediate manager.  
+       It's important that the two of them should reach agreement on which responsibilities are most important and why.
                
-               &nbsp; <span id = "no-info" class="hide_link">(Hide)</span>
+       &nbsp; <span id = "no-info2" class="hide_link">(Hide)</span>
       </div>
 
 <p class = "display_text grayborder round"><%= @responsibility.definition %>
@@ -47,21 +49,21 @@
     <%= f.label :profits, "Business profit:" %> &nbsp;
     <%= select( :evaluation, :profits, @ratings ) %>
     <span style="float:right; margin-right:100px">
-      <%= f.label :customers, "Customer satisfaction:" %> &nbsp;
+      <%= f.label :customers, "Customer impact:" %> &nbsp;
       <%= select( :evaluation, :customers, @ratings ) %>
     </span>
   </div>
   <div class = "field">
-    <%= f.label :staff, "Staff well-being:" %> &nbsp;
+    <%= f.label :staff, "Staff impact:" %> &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
     <%= select( :evaluation, :staff, @ratings ) %>
     <span style="float:right; margin-right:100px">
-      <%= f.label :processes, "Business processes:" %> &nbsp;
+      <%= f.label :processes, "Process enhancement:" %> &nbsp;
       <%= select( :evaluation, :processes, @ratings ) %>
     </span>
   </div>
   <br />
   <div class="actions">
-    <%= f.submit "Confirm and calculate rating" %>
+    <%= f.submit "Confirm and calculate" %>
   </div>
 <% end %>
 
@@ -80,6 +82,12 @@
       $('#infotext').hide('fast', function() {
       });
     });
+    
+    $('#no-info2').click(function() {
+      $('#infotext').hide('fast', function() {
+      });
+    });
+    
    }); 
   <% end %>
 <% end %>

@@ -13,7 +13,7 @@
   <% end %>
 </h1> 
 <h4>for <%= @job.job_title %></h4>
-<p><em>
+<div class="info_box_screen">
     <% if @plan.has_responsibilities? %>
        Click on <%= image_tag("select.png", :size => "15x15") %> 
        to edit responsibility OR view/edit/add/delete goals
@@ -37,8 +37,8 @@
     <% elsif ! @plan.ratings_complete? %>
       <span class="highlt round">Ratings are incomplete.</span>
     <% end %>
-</em></p>
-<table>
+</div>
+<table class="smaller_font">
   <tr>
    <th></th>
    <th>Responsibility</th>

@@ -182,6 +182,7 @@ class PagesController < ApplicationController
       @business = Business.find(session[:biz])
       @employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
       @job = @user.current_job(@business)
+      @plan = Plan.find_by_job_id(@job)
       session[:jobid] = @job.id
     else
       if @user.belongs_to_business?
@@ -189,7 +190,9 @@ class PagesController < ApplicationController
           @business = @user.sole_business
           @employee = Employee.find_by_user_id_and_business_id(@user, @business)
           @job = @user.current_job(@business)
+          @plan = Plan.find_by_job_id(@job)
           session[:biz] = @business.id
+          session[:jobid] = @job.id
         else
           redirect_to select_business_path
           session[:biz] = nil

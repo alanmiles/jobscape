@@ -32,6 +32,7 @@
       </td>
       <td style = "text-align:center">
         <%= image_tag("complete.png", :size => "15x15") if job.plan.complete? %>
+         <%= image_tag("locked.png", :size => "15x15") if job.plan.no_changes? %>
       </td>
       <td class = "control">
         <% unless job.has_active_placements? %>

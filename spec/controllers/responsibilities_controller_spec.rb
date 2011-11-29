@@ -126,11 +126,11 @@ describe ResponsibilitiesController do
         #end
         #OR SHOULD SHOW 'n/a' IF NO RATING
         
-        it "should display 'n/a' if the rating is 0" do
+        it "should display '?' if the rating is 0" do
           get :index, :plan_id => @plan.id
           @responsibilities[0..2].each do |responsibility|
             if responsibility.rating == 0
-              response.should have_selector("td", :content => "n/a")
+              response.should have_selector("td", :content => "?")
             end
           end
         end

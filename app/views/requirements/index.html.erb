@@ -9,11 +9,11 @@
   <% end %>
 </h1>
 <h4>for <%= @job.job_title %></h4>
-<div class = "display_wider" style = "padding-top:0px">
+<div class = "info_box_screen" style = "padding-top:0px">
  
-  <i>Add at least 1, and up to 10 hiring requirements.
+  Add at least 1, and up to 10 hiring requirements.
      <% if @plan.count_requirements >= 2 %>
-       <span class="highlt">IMPORTANT!</span> As you build your list, arrange the requirements in order of priority with the most
+       <span class="highlt round">IMPORTANT!</span> As you build your list, arrange the requirements in order of priority with the most
        important at the top.  Click on a requirement and drag it up or down to its new position.
      <% end %>
      <% if @plan.has_requirements? %>
@@ -21,7 +21,7 @@
          Select <%= image_tag("select.png", :size => "15x15") %> to edit and 
          <%= image_tag("cancel.png", :size => "15x15") %> to remove the requirement.
      <% end %> 
-   </i>
+   
 </div>
 <hr />
 <ul id="requirements-list" style="cursor: move"> 

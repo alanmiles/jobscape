@@ -7,20 +7,20 @@
 <h4>for <%= @job.job_title %></h4>
 
 <p class = "display_text grayborder round"><%= @responsibility.definition %>
-           &nbsp; <span style = "font-weight: normal">
+           &nbsp;
              <%= link_to "(Edit)", edit_responsibility_path(@responsibility) %>
-           </span>
+          
 </p>
 
 <div class = "r-float">
   <% if @responsibility.maximum_goals? %>
-     <small class="highlt">&nbsp; 3 goals is the maximum &nbsp;</small>
+     <small class="highlt round">&nbsp; 3 goals is the maximum &nbsp;</small>
   <% else %>
     <%= link_to "Add a goal", new_responsibility_goal_path(@responsibility) %>
   <% end %>
 </div>
-<h3>Goals:</h3> 
-<table>
+<h3><strong>GOALS:</strong></h3> 
+<table class="smaller_font">
   <% @goals.each do |goal| %>
     <tr>
       <td class = "grayline"><%= goal.objective %></td>
@@ -37,6 +37,6 @@
     </tr>  
   <% end %>
 </table>
-<h3>Rating: <%= @responsibility.show_rating %> &nbsp;
-   <small style = "font-size:0.8em"><%= evaluation %></small>
+<h3><strong>RATING:</strong> <%= @responsibility.show_rating %> &nbsp;
+   <small style = "font-size:0.9em"><%= evaluation %></small>
 </h3>

@@ -1,7 +1,7 @@
 class OutlinesController < ApplicationController
   
   before_filter :authenticate
-  before_filter :not_admin_user
+  #before_filter :not_admin_user
   before_filter :correct_job
   
   def show

@@ -14,7 +14,13 @@
 
 <div class = "display_box grayborder round">
   <strong>ACHIEVEMENT PLAN</strong> <br />
-   <span id = "status"><%= link_to plan_status, plan_path(@plan) %></span>
+  <span id="status">    
+    <% if @plan.complete? %>
+      <%= link_to plan_status, aplan_path(@plan) %>
+    <% else %>
+      <%= link_to plan_status, plan_path(@plan) %>
+    <% end %>
+  </span>
 </div>
 <br />
 

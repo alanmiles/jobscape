@@ -14,11 +14,12 @@
 #  updated_by          :integer
 #  created_at          :datetime
 #  updated_at          :datetime
+#  no_changes          :boolean         default(FALSE)
 #
 
 class Plan < ActiveRecord::Base
-
-  #after_create :build_outline
+  
+  attr_accessible :job_id, :responsibilities, :goals, :personal_attributes, :recruitment_factors, :summary, :evaluation, :job_value, :updated_by, :no_changes
   
   belongs_to :job
   

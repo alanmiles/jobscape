@@ -4,23 +4,23 @@
 <h1>Your suggested attribute</h1>
 
 
-<p class = "display_text grun round cntr">Attribute: <%= @quality.quality %>
+<p class = "display_text grayborder round cntr">Attribute: <%= @quality.quality %>
            &nbsp; <span style = "font-weight: normal">
              <%= link_to "(Edit)", edit_submitted_quality_path(@quality) %>
            </span>
 </p>
-<p style = "padding-left:5px; padding-right:5px">
-   <small>Your suggestion has been saved and is awaiting approval.  Now edit the 5 PAMs, 
+<div class="info_box_screen">
+   Your suggestion has been saved and awaits approval.  Now edit the 5 PAMs, 
    making them clear and if possible measurable, so that 2 people commenting on the same 
-   employee's qualities would agree on the rating. Click on 'Back' when complete.</small>
-</p>
+   employee's qualities would agree on the rating. Click on 'Back' when complete.
+</div>
 <h1>PAMs <i style = "font-size:0.6em">( = personal attribute measurements )</i></h1> 
-<table>
+<table class="smaller_font">
   <% @pams.each do |pam| %>
     <tr>
       <td class = "at_top"><%= pam.grade %></td>
       <td><%= pam.descriptor %></td>
-      <td class = "control at_top"><%= link_to "Edit", edit_submitted_pam_path(pam) %></td> 
+      <td class = "at_top"><%= link_to "Edit", edit_submitted_pam_path(pam) %></td> 
     </tr>  
   <% end %>
 </table>

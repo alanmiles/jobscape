@@ -41,7 +41,7 @@ section h2 {
 }
 
 section h3 {
-  font-size: 130%;
+  font-size: 110%;
 }
 
 section h4 {
@@ -153,7 +153,6 @@ ul li.no_bullet {
   width: 450px;
   padding: 15px;
   font-size: 100%;
-  font-weight: bold;
 }
 
 .menu_box {

@@ -8,8 +8,8 @@
   <%= form_for([@plan, @responsibility]) do |f| %>
     <%= render 'shared/error_messages', :object => f.object %>
     <div class = "field">
-      <%= f.label :definition, "What needs to get done?" %> <span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span><br />
-      <div id ="infotext" class="info_box_wide beige round" style = "display:none; margin-left:0px">
+      <%= f.label :definition, "Enter an area of responsibility" %> <span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span><br />
+      <div id ="infotext" class="info_box_wide" style = "display:none; margin-left:0px">
          In 140 characters or less, describe one of the job's key responsibilities.<br /><br />
          It should read like something like a statement in a traditional job-description - 'Prepare the annual IT budget' ... 
          'Win new corporate business' ... 'Answer all incoming calls to the department', etc.<br /><br />

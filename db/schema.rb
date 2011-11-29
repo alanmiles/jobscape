@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111123155532) do
+ActiveRecord::Schema.define(:version => 20111124154333) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -255,6 +255,7 @@ ActiveRecord::Schema.define(:version => 20111123155532) do
     t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "no_changes",          :default => false
   end
 
   create_table "portraits", :force => true do |t|

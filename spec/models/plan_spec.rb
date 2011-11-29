@@ -14,6 +14,7 @@
 #  updated_by          :integer
 #  created_at          :datetime
 #  updated_at          :datetime
+#  no_changes          :boolean         default(FALSE)
 #
 
 require 'spec_helper'

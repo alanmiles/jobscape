@@ -2,7 +2,19 @@
   <%= link_to logo, root_path %>
   <nav class="round">
     <ul>
-      <li><%= link_to "Home", root_path %></li>
+      <% if signed_in? %>
+        <% if current_user.account == 3 && session[:admin_off] == true %>
+          <% if session[:officer_off] == true %>
+            <li><%= link_to "Home", employee_home_path %></li>
+          <% else %>
+            <li><%= link_to "Home", officer_home_path %></li>
+          <% end %>
+        <% else %>
+          <li><%= link_to "Home", root_path %></li>
+        <% end %>
+      <% else %>
+        <li><%= link_to "Home", root_path %></li>
+      <% end %>
       <li><%= link_to "Help", help_path %></li>
       <% if signed_in? %>
         <li><%= link_to "Self-Portrait", user_portrait_path(current_user) unless current_user.account >=3 %></li>
