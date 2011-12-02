@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111124154333) do
+ActiveRecord::Schema.define(:version => 20111130154701) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -387,6 +387,7 @@ ActiveRecord::Schema.define(:version => 20111124154333) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "placement_id"
+    t.integer  "review_type",               :default => 1
   end
 
   add_index "reviews", ["reviewee_id"], :name => "index_reviews_on_reviewee_id"

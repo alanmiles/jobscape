@@ -26,6 +26,7 @@
 #  created_at                :datetime
 #  updated_at                :datetime
 #  placement_id              :integer
+#  review_type               :integer         default(1)
 #
 
 require 'spec_helper'

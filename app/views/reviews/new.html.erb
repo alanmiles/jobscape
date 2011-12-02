@@ -1,2 +1,44 @@
-<h1>Reviews#new</h1>
-<p>Find me in app/views/reviews/new.html.erb</p>
+<div class = "r-float">
+  <%= link_to "Home page", employee_home_path %>
+</div>
+
+<h1><%= @title %></h1>
+
+<p class = "display_text grayborder round cntr">
+  <%= @user.name %> - 
+  <%= @job.job_title %>
+</p>
+
+<%= render 'explanation' %>
+
+<br />
+
+<%= form_for @review do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :review_type, "Who's your reviewer? Select from:-" %> <br />
+    Yourself (- it's a self-appraisal)
+    <%= f.radio_button :review_type, 1 %> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    Someone in your department
+    <%= f.radio_button :review_type, 2 %><br />
+    Someone outside your department
+    <%= f.radio_button :review_type, 3 %>&nbsp; &nbsp; &nbsp;
+    Someone who's not a HYGWIT user
+    <%= f.radio_button :review_type, 4 %>
+
+  </div>
+  <br />
+  
+  
+  <%= f.hidden_field :job_id %>
+  <%= f.hidden_field :reviewee_id %>
+  <%= f.hidden_field :reviewer_id %>
+  <%= f.hidden_field :placement_id %>
+  <%= f.hidden_field :reviewer_name %>
+  
+    <div class="actions">
+      <%= f.submit "Continue" %>
+    </div>
+ 
+<% end %>
+

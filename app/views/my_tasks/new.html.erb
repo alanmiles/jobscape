@@ -4,8 +4,12 @@
 
 <h1><%= @title %></h1>
 <h4>
-  <%= @user.name %> - <%= @business.name %><br />
-  <%= @job.title_department %>
+  <% if @user.account == 1 %>
+    <%= @user.name %> - <%= @job.job_title %>
+  <% else %>
+    <%= @user.name %> - <%= @business.name %><br />
+    <%= @job.title_department %>
+  <% end %>
 </h4>
 
 <%= form_for(@task, :url => my_tasks_path) do |f| %>

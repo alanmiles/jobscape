@@ -1,0 +1,143 @@
+
+  <span id="why", style ="cursor:help; color: #09c; font-size: 90%; margin-left:10px">Why review performance?</span><br />
+ 
+  <div id="reason" class="info_box_screen grayborder round" style = "margin-top: 10px; display:none">
+    The HYGWIT performance review mirrors your Achievement Plan.  It's
+    now that we find out whether you've got what it takes to make
+    a success of your job.  Are you hitting the targets that you and your
+    manager set?  If not, then what are you going to do about it?  Review sessions have two parts.
+    First, there's evaluating past performance: which targets did you hit?  Second, 
+    there's planning for the future: what needs to change if you're going to achieve more next time?
+    &nbsp; <span id = "no-info" class="hide_link">(Hide)</span>
+  </div>
+  
+  <span id="who", style ="cursor:help; color: #09c; font-size: 90%; margin-left:10px">Who should review?</span><br />
+  
+  <div id="reviewers" class="info_box_screen grayborder round" style = "margin-top: 10px; display:none">
+    In the old-style appraisal, managers gave their opinions on employee performance.  But a HYGWIT review
+    is different.  It's not about opinions, but facts: did you achieve the A-Plan responsibility and attribute
+    targets?  With clearly-defined measurements, you can review your own performance, and you should get the same 
+    results as you would from an external reviewer.  Nevertheless it's a good idea to ask your boss or someone 
+    senior to do a review as well.  Why?  Because it's useful to have a second opinion as you work out how you can 
+    best improve the results next time. 
+    &nbsp; <span id = "no-info3" class="hide_link">(Hide)</span>
+  </div>
+  
+  <span id="frequency", style ="cursor:help; color: #09c; font-size: 90%; margin-left:10px">How often should it happen?</span><br />
+  
+  <div id="often" class="info_box_screen grayborder round" style = "margin-top: 10px; display:none">
+    Many businesses review performance annually.  But a year is much too long to wait if targets aren't 
+    being hit. The damage may have been done long ago. HYGWIT makes reviews easy - there's no paperwork and 
+    it just takes a minute to set up.  So make it a habit to review your own performance and achievements 
+    every 2-3 months - and then arrange an external review roughly every 6 months, or more frequently if 
+    you're new in the job or struggling to meet targets,
+    &nbsp; <span id = "no-info2" class="hide_link">(Hide)</span>
+  </div>
+  
+  <span id="length", style ="cursor:help; color: #09c; font-size: 90%; margin-left:10px">How long does it take?</span><br />
+  <div id="time" class="info_box_screen grayborder round" style = "margin-top: 10px; display:none">
+    With the A-Plan in place, there's no preparation: if it's an external review, you'll just need
+    to make arrangements with the reviewer.  For a first-timer, evaluating performance might take around 
+    20 minutes, but with practice you'll be doing it in half the time.  Remember though that evaluation is 
+    just the starting-point.  In a good review session, you'll spend just as long - or longer - analyzing 
+    the results and planning the next few weeks' work.  If you're hitting the targets easily, is it time 
+    to set new goals and aim higher? Are there new responsibilities you need to add to the A-Plan or old ones
+    you need to remove?  And how will you fix the areas where you're failing?
+    &nbsp; <span id = "no-info4" class="hide_link">(Hide)</span>
+  </div>
+
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#why').click(function() {
+      $('#frequency').css("font-weight","normal");
+      $('#who').css("font-weight","normal");
+      $('#length').css("font-weight","normal");
+      $('#why').css("font-weight","bold");
+      $('#often').hide('fast', function() {
+        $('#reviewers').hide('fast', function() {
+          $('#time').hide('fast', function() {
+            $('#reason').show('fast', function() {
+            });
+          });
+        });
+      });
+    });
+    
+    $('#frequency').click(function() {
+      $('#why').css("font-weight","normal");
+      $('#who').css("font-weight","normal");
+      $('#length').css("font-weight","normal");
+      $('#frequency').css("font-weight","bold");
+      $('#reason').hide('fast', function() {
+        $('#reviewers').hide('fast', function() {
+          $('#time').hide('fast', function() {
+            $('#often').show('fast', function() {
+            });
+          });
+        });  
+      });
+    });
+    
+    $('#who').click(function() {
+      $('#why').css("font-weight","normal");
+      $('#frequency').css("font-weight","normal");
+      $('#length').css("font-weight","normal");
+      $('#who').css("font-weight","bold");
+      $('#reason').hide('fast', function() {
+        $('#often').hide('fast', function() {
+          $('#time').hide('fast', function() {
+            $('#reviewers').show('fast', function() {
+            });
+          });   
+        });  
+      });
+    });
+    
+    $('#length').click(function() {
+      $('#why').css("font-weight","normal");
+      $('#frequency').css("font-weight","normal");
+      $('#who').css("font-weight","normal");
+      $('#length').css("font-weight","bold");
+      $('#reason').hide('fast', function() {
+        $('#often').hide('fast', function() {
+          $('#reviewers').hide('fast', function() {
+            $('#time').show('fast', function() {
+            });
+          });
+        });  
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#why').css("font-weight","normal");
+      $('#reason').hide('fast', function() {
+      });
+    });
+    
+    $('#no-info2').click(function() {
+      $('#frequency').css("font-weight","normal");
+      $('#often').hide('fast', function() {
+      });
+    });
+    
+    $('#no-info3').click(function() {
+      $('#who').css("font-weight","normal");
+      $('#reviewers').hide('fast', function() {
+      });
+    }); 
+    
+    $('#no-info4').click(function() {
+      $('#length').css("font-weight","normal");
+      $('#time').hide('fast', function() {
+      });
+    });
+    
+   });
+   
+  <% end %>
+<% end %>

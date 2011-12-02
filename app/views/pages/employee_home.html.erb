@@ -35,7 +35,17 @@
       <% end %>
       <% if @plan.complete? %>
         <li class="no_bullet"><%= link_to "View your complete Achievement Plan", aplan_path(@plan) %></li>
-        <li class="no_bullet"><%= link_to "Arrange a performance review", "#" %></li>
+        <li class="no_bullet">
+          <% if current_user.has_incomplete_review? %>
+            <% if @review.reviewer_id == current_user.id %>
+              <%= link_to "Continue your self-appraisal", edit_self_appraisal_path(@review) %>
+            <% else %>
+              <%= link_to "Check progress of current appraisal", employee_home_path %>
+            <% end %>   
+          <% else %>
+            <%= link_to "Arrange a performance review", new_review_path %>
+          <% end %>  
+        </li>
       <% else %>
         <div style ="color: #999">
           <li class="no_bullet">View your complete Achievement Plan</li>
@@ -43,12 +53,10 @@
         </div> 
       <% end %>
       <% if @user.has_completed_reviews? %>  
-        <li class="no_bullet"><%= link_to "Review history", "#" %></li>
-        <li class="no_bullet"><%= link_to "Your last review", "#" %></li>
+        <li class="no_bullet"><%= link_to "Review history", my_reviews_path %></li>
       <% else %>
         <div style ="color: #999">
           <li class="no_bullet">Review history</li>
-          <li class="no_bullet">Your last review</li>
         </div>
       <% end %> 
       <li class="no_bullet"><%= link_to "Targets", my_targets_path %></li>

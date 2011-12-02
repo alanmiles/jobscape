@@ -2,6 +2,7 @@ class MyReviewsController < ApplicationController
   
   def index
     @user = current_user
+    @business = Business.find(session[:biz])
     @job = Job.find(session[:jobid])
     @reviews = Review.completed_for(@user).paginate(:page => params[:page])
     @title = "Your review history"
@@ -9,6 +10,7 @@ class MyReviewsController < ApplicationController
 
   def show
     @review = Review.find(params[:id])
+    @job = Job.find(session[:jobid])
     if @review.self_appraisal?
       @title = "Self-appraisal"
     else

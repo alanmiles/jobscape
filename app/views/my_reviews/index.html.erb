@@ -1,9 +1,18 @@
 <div class = "r-float">
-   <%= link_to "#{@job.job_title} menu", my_job_path %>
+  <% if current_user.account == 1 %>
+    <%= link_to "#{@job.job_title} menu", my_job_path %>
+  <% else %>
+    <%= link_to "Home Page", employee_home_path %>
+  <% end %>
 </div>
 
 <h1><%= @title %></h1>
-
+<h4>
+  <%= @user.name %>
+  <% unless @user.account == 1 %>
+    - <%= @business.name %><br />
+  <% end %>
+</h4>
 <%= will_paginate @reviews %>
 
 <table class="smaller_font">

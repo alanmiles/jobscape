@@ -26,6 +26,7 @@
 #  created_at                :datetime
 #  updated_at                :datetime
 #  placement_id              :integer
+#  review_type               :integer         default(1)
 #
 
 class Review < ActiveRecord::Base
@@ -45,7 +46,7 @@ class Review < ActiveRecord::Base
   
   attr_accessible :reviewee_id, :reviewer_id, :reviewer_name, :job_id, :completed, :completion_date, :reviewer_email, :secret_code, :comments_complete,
   		 :reviewresponsibilities_attributes, :reviewqualities_attributes, :responsibilities_complete, :qualities_complete, :achievements,
-  		 :problems, :observations, :change_responsibilities, :change_goals, :change_attributes, :plan, :responsibilities_score, 
+  		 :problems, :observations, :change_responsibilities, :change_goals, :change_attributes, :plan, :responsibilities_score, :review_type,
   		 :attributes_score, :placement_id
   
   after_save :build_review_tables

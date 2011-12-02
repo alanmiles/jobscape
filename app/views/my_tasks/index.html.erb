@@ -1,12 +1,21 @@
 <div class = "r-float">
-  <%= link_to "Personal home-page", employee_home_path %><br />
+  <% if @user.account == 1 %>
+    <%= link_to "#{@job.job_title} menu", my_job_path %>
+  <% else %>
+    <%= link_to "Home Page", employee_home_path %>
+  <% end %>
+  <br />
   <%= link_to "Add a new task", new_my_task_path %>
 </div>
 
 <h1><%= @title %> &nbsp;<span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span></h1>
 <h4>
-  <%= @user.name %> - <%= @business.name %><br />
-  <%= @job.title_department %>
+  <% if @user.account == 1 %>
+    <%= @user.name %> - <%= @job.job_title %>
+  <% else %>
+    <%= @user.name %> - <%= @business.name %><br />
+    <%= @job.title_department %>
+  <% end %>
 </h4>
 
 <div id="infotext" class="info_box_screen" style = "display:none">

@@ -1,0 +1,7 @@
+<h1><%= @title %></h1>
+<h4>
+  <%= @user.name %>
+  <% unless @user.account == 1 %>
+    - <%= @business.name %><br />
+  <% end %>
+</h4>

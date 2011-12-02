@@ -1,17 +1,18 @@
-      <li class= "display_wider" style= "display: block; border-bottom: 1px solid #eee">
-          
+      <li class= "display_wider" style = "padding:0"> 
+         
          <em><%= f.object.quality.quality %></em>
+        
          <div class="field" style="margin-top: 5px">
                    
           <% @pams = f.object.quality.pams %> 
           
           <%= render "/reviews/grades" %>
-          
+         
           <div class="field" style="float:left">
             <%= f.label :reviewer_score, "Which description fits best?" %>
             <%= f.select :reviewer_score, @grades %>
           </div>
-          <br /><br />
+          <hr />
       </li>
       
       

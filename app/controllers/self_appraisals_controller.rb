@@ -11,7 +11,8 @@ class SelfAppraisalsController < ApplicationController
     @user = current_user
     @job = Job.find(session[:jobid])
     @placement = Placement.find_by_user_id_and_job_id_and_current(@user, @job, true)
-    @review = Review.new(:reviewee_id => @user.id, :reviewer_id => @user.id, :reviewer_name => @user.name, :job_id => @job.id)
+    @review = Review.new(:reviewee_id => @user.id, :reviewer_id => @user.id, 
+    		:reviewer_name => @user.name, :job_id => @job.id, :placement_id => @placement.id)
     @title = "New performance review"    
   end
   
@@ -23,6 +24,7 @@ class SelfAppraisalsController < ApplicationController
     else
       @user = current_user
       @job = Job.find(session[:jobid])
+      @placement = Placement.find_by_user_id_and_job_id_and_current(@user, @job, true)
       #@review = Review.new(:reviewee_id => @user.id, :reviewer_id => @user.id, :reviewer_name => @user.name, :job_id => @job.id)
       @title = "New performance review"
       render 'new'
@@ -94,6 +96,7 @@ class SelfAppraisalsController < ApplicationController
 
   def show
     @review = Review.find(params[:id])
+    @job = Job.find(session[:jobid])
     @title = "Your self-appraisal"
     @responsibilities = @review.reviewresponsibilities.order("rating_value DESC")
     @qualities = @review.reviewqualities.order("position")

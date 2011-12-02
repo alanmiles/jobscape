@@ -176,6 +176,9 @@ class PagesController < ApplicationController
     session[:invited] = nil
     @title = "Employee Home"
     @user = current_user
+    if @user.has_incomplete_review?
+      @review = Review.find(@user.incomplete_review)
+    end
     
     @no_business = false
     if session[:biz] != nil

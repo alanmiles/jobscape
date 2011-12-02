@@ -13,13 +13,13 @@
   </div>
   
   <div class="field">
-    <%= f.label :achieved, "Check if you've already achieved the target" %> &nbsp;
+    <%= f.label :achieved, "Check the box if you've already achieved the target" %> &nbsp;
     <%= f.check_box :achieved %>
   </div>
   
   <% if @allow_cancel == true %>
     <div class="field">
-      <%= f.label :cancelled, "Check if you now need to cancel the target" %> &nbsp;
+      <%= f.label :cancelled, "Check the box if you now need to cancel the target" %> &nbsp;
       <%= f.check_box :cancelled %>
     </div>
   <% end %>

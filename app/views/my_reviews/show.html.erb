@@ -3,7 +3,12 @@
     <%= link_to "Edit results (till #{display_date(@review.editable_date)} only)", edit_self_appraisal_path(@review) %>
     <br />
   <% end %>
-  <%= link_to "Your review history", my_reviews_path %>
+  <%= link_to "Your review history", my_reviews_path %><br />
+  <% if current_user.account == 1 %>
+    <%= link_to "#{@job.job_title} menu", my_job_path %>
+  <% else %>
+    <%= link_to "Home Page", employee_home_path %>
+  <% end %>
 </div>
 
 <h1 style = "margin-bottom: 0px"><%= @title %></h1>

@@ -1,5 +1,7 @@
 Jobscape::Application.routes.draw do
 
+  get "reviewer_selections/edit"
+
   resources :users do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true
@@ -120,6 +122,7 @@ Jobscape::Application.routes.draw do
   end
   resources :self_appraisals
   resources :my_reviews
+  resources :reviewer_selections, :only => [:edit, :update]
   
   match '/signup',  		:to => 'users#new'
   match '/signin',  		:to => 'sessions#new'

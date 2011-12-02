@@ -1,10 +1,15 @@
 <div class = "r-float">
-  <%= link_to "#{@job.job_title} menu", my_job_path %>
+  <% if current_user.account == 1 %>
+    <%= link_to "#{@job.job_title} menu", my_job_path %>
+  <% else %>
+    <%= link_to "Home Page", employee_home_path %>
+  <% end %>
 </div>
 
 <h1><%= @title %></h1>
 <div class="info_box_screen" style = "margin-bottom: 0px">
-    <em>Click on each of the blue labels in turn, and answer the questions in each section.<br /><br />
+    <em>All questions must be answered, unless you have nothing useful to add in the final 
+    <i>'Comments'</i> section.<br /><br />
     If you don't have time to complete the review in a single session, click on 'Save changes'
     at the bottom of this form, and then return at any time until 
     <%= (@review.created_at + 14.days).strftime("%a %b %d, %Y") %> to pick up from where you left off.</em> 
@@ -35,7 +40,7 @@
   
   <div class="small_action_label round">ATTRIBUTES</div>
   <br />
-  <div class="info_box_screen round" style = "margin-bottom: 0px; background-color: #EEE">
+  <div class="info_box_screen round" style = "background-color: #EEE">
     Attributes - the words we use when we're describing someone.  <br />
       For each attribute, decide what most other people would say about you.
   </div> 

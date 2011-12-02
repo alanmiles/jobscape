@@ -357,6 +357,11 @@ class User < ActiveRecord::Base
     @placement = Placement.find_by_user_id_and_job_id_and_current(self.id, @job.id, true)
   end
   
+  def current_department(business)
+    @job = Job.find(self.current_job(business))
+    @department = Department.find(@job.department_id)
+  end
+  
   def active_external_jobs
     @biz = 0
     @business = Business.find_by_name("Biz_#{self.id.to_s}")

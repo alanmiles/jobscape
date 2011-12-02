@@ -18,13 +18,16 @@
         <% end %>
       </li>
       <% if current_user.has_completed_reviews? %>
-        <li class="no_bullet"><%= link_to "Your most recent review & current development plan", my_review_path(@last_review) %></li>
         <li class="no_bullet"><%= link_to "Your performance review history", my_reviews_path %></li>
+      <% else %>
+        <li class="no_bullet" style ="color: #999">Your performance review history</li>
       <% end %>
     <% else %>
       <li class="no_bullet"><%= link_to "Build", plan_path(@plan) %> your Achievement Plan</li>
-      <li class="no_bullet" style ="color:#BBB">View the complete Achievement Plan <small><em>(when A-Plan is complete)</em></small></li>
-      <li class="no_bullet" style ="color:#BBB">Set up a performance review <small><em>(when A-Plan is complete)</em></small></li>
+      <li class="no_bullet" style ="color:#999">View the complete Achievement Plan <small><em>(when A-Plan is complete)</em></small></li>
+      <li class="no_bullet" style ="color:#999">Set up a performance review <small><em>(when A-Plan is complete)</em></small></li>
     <% end %>
+    <li class="no_bullet"><%= link_to "Targets", my_targets_path %></li>
+    <li class="no_bullet"><%= link_to "Daily tasks", my_tasks_path %></li>
   </ul>
 </div>
