@@ -131,6 +131,10 @@ ul li.no_bullet {
   padding-bottom: 10px;
 }
 
+ul li.no_bullet_compact {
+  list-style-type: none;
+}
+
 .handle:hover {
   cursor: move;
 }
@@ -340,7 +344,7 @@ ul li.no_bullet {
 }
 
 .highlt {
-  background-color: #A70000;
+  background-color: #D97533;
   color: #FFF;
   padding: 0 10px;
 }

@@ -1,0 +1,51 @@
+<div class = "r-float">
+  <% if @review.consent? %>
+    <%= link_to "Home Page", employee_home_path %>
+  <% else %>
+    <%= link_to "No changes", employee_home_path %>
+  <% end %>
+</div>
+
+<h1><%= @title %></h1>
+
+<%= form_for(@review, :url => current_review_path(@review)) do |f| %>
+
+  <%= render 'shared/error_messages', :object => f.object %>
+  
+  <div class="display_wider">
+    <strong>Review for:</strong> &nbsp;&nbsp; <%= @review.reviewee.name.upcase %> - <%= @review.reviewee.current_job(@business).job_title %>,
+                     <%= @review.reviewee.current_department(@business).name %><br />
+    <strong>Reviewer selected:</strong> <%= @review.reviewer.name %> - <%= @review.reviewer.current_job(@business).job_title %>,
+                     <%= @review.reviewer.current_department(@business).name %><br />
+
+    <br />
+ 
+    Review set up <%= time_ago_in_words(@review.created_at) %> ago.<br />
+    Scheduled completion date is <%= display_daydate(@review.scheduled_completion) %>.
+    <br /><br />
+    <% if @review.consent? %>
+      <span class="highlt round"><%= @review.reviewer.name %> has agreed to be your reviewer.</span>
+      <br />
+    
+    <% elsif @review.consent == false %>
+      <%= render 'rejection', :f => f %>
+    
+    <% else %>
+      <%= render 'no_reply', :f => f %>
+    
+    <% end %>
+  
+    <br />
+ 
+    <div class="actions">
+      <% if @review.consent? %>
+        <%= link_to "Return to Home Page", employee_home_path %>
+      <% elsif @review.consent == false %>
+        <%= f.submit "Confirm and continue" %>
+      <% else %>
+        <%= f.submit "Confirm changes" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+ 

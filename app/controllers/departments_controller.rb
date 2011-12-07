@@ -7,7 +7,7 @@ class DepartmentsController < ApplicationController
   def index
     @business = Business.find(session[:biz])
     @title = "Departments at #{@business.name}"
-    @departments = @business.current_departments.paginate(:page => params[:page]) 
+    @departments = @business.current_departments.paginate(:page => params[:page])
   end
 
   def new
@@ -43,6 +43,8 @@ class DepartmentsController < ApplicationController
   def show
     @department = Department.find(params[:id])
     @business = Business.find(@department.business_id)
+    @users = User.all_active_in(@department).paginate(:page => params[:page])
+    session[:dept_id] = @department.id
     @title = "Department at #{@business.name}"
   end
 

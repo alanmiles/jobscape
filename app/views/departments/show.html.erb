@@ -1,5 +1,5 @@
 <div class = "r-float">
-  <%= link_to "Departments list", business_departments_path(@business) %>
+  <%= link_to "All departments", business_departments_path(@business) %>
 </div>
 
 <h1>Department</h=1>
@@ -22,4 +22,6 @@
     <br />
   <% end %>
 </div>
-
+<br />
+<h3><strong>TEAM</strong></h3>
+<%= render 'users/current_list' %>

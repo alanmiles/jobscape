@@ -291,7 +291,7 @@ class User < ActiveRecord::Base
   end
   
   def outdated_reviews
-    self.reviewed_sessions.where("reviews.completed = ? and created_at <?", false, Date.today - 14)
+    self.reviewed_sessions.where("reviews.completed = ? and cancel = ? and created_at <?", false, false, Date.today - 14)
   end
   
   def has_outdated_reviews?
@@ -299,12 +299,14 @@ class User < ActiveRecord::Base
     cnt > 0
   end
   
-  def incomplete_review
-    self.reviewed_sessions.where("reviews.completed = ? and created_at >=?", false, Date.today - 14).limit(1)
+  def incomplete_review(business)
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.cancel = ? 	
+    		and reviews.created_at >=? and reviews.business_id = ?", 
+    		false, false, Date.today - 14, business.id).limit(1)
   end
   
-  def has_incomplete_review?
-    cnt = self.incomplete_review.count
+  def has_incomplete_review?(business)
+    cnt = self.incomplete_review(business).count
     cnt > 0
   end
   
@@ -341,6 +343,42 @@ class User < ActiveRecord::Base
   
   def involved_in_recent_reviews?
     self.recent_reviewed_sessions.count > 0 || self.recent_reviewer_sessions.count > 0
+  end
+  
+  def review_requests(business)
+    Review.where("reviewer_id = ? and reviewee_id != ? and cancel = ? and completed = ? 
+             and business_id = ? and created_at >= ? and (consent = ? or consent IS NULL)", self.id, self.id, false, false, business.id, Time.now - 14.days, true)
+  end
+  
+  def has_review_requests?(business)
+    self.review_requests(business).count > 0
+  end
+  
+  def all_review_requests
+    Review.where("reviewer_id = ? and reviewee_id != ? and cancel = ? and completed = ? 
+             and created_at >= ? and (consent = ? or consent IS NULL)", self.id, self.id, false, false, Time.now - 14.days, true)
+  end
+  
+  def has_any_review_requests?
+    self.all_review_requests.count > 0
+  end
+  
+  def rejected_review_requests(business)
+    Review.where("reviewer_id = ? and reviewee_id != ? and cancel = ? and completed = ? 
+             and business_id = ? and created_at >= ? and consent = ?", self.id, self.id, false, false, business.id, Time.now - 14.days, false)
+  end
+  
+  def has_rejected_review_requests?(business)
+    self.rejected_review_requests(business).count > 0
+  end
+  
+  def all_rejected_review_requests
+    Review.where("reviewer_id = ? and reviewee_id != ? and cancel = ? and completed = ? 
+             and created_at >= ? and consent = ?", self.id, self.id, false, false, Time.now - 14.days, false)
+  end
+  
+  def has_any_rejected_review_requests?
+    self.all_rejected_review_requests.count > 0
   end
   
   def employee_lookup(business)
@@ -414,6 +452,11 @@ class User < ActiveRecord::Base
     cnt = self.businesses.joins(:employees).where("employees.officer = ? and employees.left = ? 
                                and businesses.name != ?", true, false, "Biz_#{self.id}").count
     cnt == 0
+  end
+  
+  def self.all_active_in(department)
+    self.joins(:placements).where("placements.current = ? and placements.department_id = ?", 
+         true, department.id).order("users.name")
   end
   
   private

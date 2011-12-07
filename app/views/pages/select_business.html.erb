@@ -15,6 +15,7 @@
 </p>    
 <table class="smaller_font">
   <% @employees.each do |employee| %>
+  <% biz = Business.find(employee.business_id) %>
   <tr>
     <td><strong>
       <% if employee.role == "Officer" %>
@@ -23,7 +24,15 @@
         <%= link_to employee.business_location, employee_selection_path(:id => employee.business_id) %>
       <% end %>
     </strong></td>
+    <td>
+      <% if @user.has_review_requests?(biz) || @user.has_rejected_review_requests?(biz) %>
+        <span class="highlt round">
+          Action required
+        </span>
+      <% end %>
+    </td>
     <td><%= employee.role %></td>
+    
     <td>
       <% if employee.role == "Officer" && employee.business.no_associations? %>
         <%= link_to(image_tag("cancel.png", :size => "15x15"), officer_business_path(employee.business_id), 

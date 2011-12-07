@@ -27,6 +27,10 @@
 #  updated_at                :datetime
 #  placement_id              :integer
 #  review_type               :integer         default(1)
+#  cancel                    :boolean         default(FALSE)
+#  cancellation_reason       :string(255)
+#  business_id               :integer
+#  consent                   :boolean
 #
 
 require 'spec_helper'

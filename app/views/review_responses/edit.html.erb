@@ -1,0 +1,38 @@
+<div class = "r-float">
+  <% unless @user.has_review_requests?(@business) %>
+    <%= link_to "Home Page", employee_home_path %>
+  <% else %>
+    <%= link_to "All review requests", reviewer_reviews_path %>
+  <% end %>
+</div>
+
+
+<h1><%= @title %></h1>
+<h4> 
+  <%= @user.name %> - <%= @business.name %><br />
+</h4>
+
+<%= form_for(@review, :url => review_response_path(@review)) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+
+  <div class="display_wider">  
+    Request from: <%= @review.reviewee.name %> - <%= @review.job.job_title %>, <%= @review.job.department.name %><br />
+    Your review needs to be completed by <%= display_daydate(@review.created_at + 14.days) %>.
+    <br /><br />
+  
+    <div class="field">
+      Send a message (via HYGWIT) to <%= @review.reviewee.name %><br />
+      <%= f.radio_button :consent, true %> Yes, I'll be able to do the review.<br />
+      <%= f.radio_button :consent, false %> Sorry, I won't be able to help with the review.
+    </div>
+    <br />
+    <div class="field">
+      If you can't do the review, a short explanation would be helpful: - <br />
+      <%= f.text_field :cancellation_reason, :size => 60 %>
+    </div>
+    <br />
+    <div class="actions">
+      <%= f.submit "Confirm" %>
+    </div>
+  </div>
+<% end %>

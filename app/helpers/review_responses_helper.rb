@@ -1,0 +1,2 @@
+module ReviewResponsesHelper
+end

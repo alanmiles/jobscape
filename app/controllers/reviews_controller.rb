@@ -1,6 +1,5 @@
 class ReviewsController < ApplicationController
   
-  
   def new
     @user = current_user
     @job = Job.find(session[:jobid])

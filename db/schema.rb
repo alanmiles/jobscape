@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130154701) do
+ActiveRecord::Schema.define(:version => 20111205145928) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -237,10 +237,11 @@ ActiveRecord::Schema.define(:version => 20111130154701) do
   create_table "placements", :force => true do |t|
     t.integer  "user_id"
     t.integer  "job_id"
-    t.boolean  "current",     :default => true
+    t.boolean  "current",       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "started_job"
+    t.integer  "department_id"
   end
 
   create_table "plans", :force => true do |t|
@@ -388,6 +389,10 @@ ActiveRecord::Schema.define(:version => 20111130154701) do
     t.datetime "updated_at"
     t.integer  "placement_id"
     t.integer  "review_type",               :default => 1
+    t.boolean  "cancel",                    :default => false
+    t.string   "cancellation_reason"
+    t.integer  "business_id"
+    t.boolean  "consent"
   end
 
   add_index "reviews", ["reviewee_id"], :name => "index_reviews_on_reviewee_id"

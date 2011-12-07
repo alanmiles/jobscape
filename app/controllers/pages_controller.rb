@@ -113,6 +113,7 @@ class PagesController < ApplicationController
     @title = "Officer Home"
     @user = current_user
     @no_business = false
+    session[:dept_id] = nil
     if session[:biz] != nil
       @business = Business.find(session[:biz])
       @employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
@@ -166,8 +167,8 @@ class PagesController < ApplicationController
       @job = Job.where("id = ?", @placement.job_id).first
       session[:jobid] = @job.id
       @plan = Plan.find_by_job_id(@job)
-      if @user.has_incomplete_review?
-        @review = @user.incomplete_review.first
+      if @user.has_incomplete_review?(@business)
+        @review = @user.incomplete_review(@business).first
       end
     end
   end
@@ -176,9 +177,6 @@ class PagesController < ApplicationController
     session[:invited] = nil
     @title = "Employee Home"
     @user = current_user
-    if @user.has_incomplete_review?
-      @review = Review.find(@user.incomplete_review)
-    end
     
     @no_business = false
     if session[:biz] != nil
@@ -206,6 +204,16 @@ class PagesController < ApplicationController
       end
     end
     
+    unless session[:biz] == nil
+      if @user.has_incomplete_review?(@business)
+        @review = Review.find(@user.incomplete_review(@business))
+      end
+      if @user.has_review_requests?(@business)
+        if @user.review_requests(@business).count == 1
+          @review_requested = @user.review_requests(@business).first
+        end
+      end
+    end
     #@employee = Employee.where("user_id =?", @user).first
     #@business = Business.find(@employee.business_id)
     #session[:biz] = @business.id

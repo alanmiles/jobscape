@@ -38,6 +38,7 @@ class Business < ActiveRecord::Base
   has_many :users, :through => :employees, :uniq => true
   has_many :invitations, :dependent => :destroy
   has_many :objectives, :dependent => :destroy
+  has_many :reviews, :dependent => :destroy
   
   
   validates :sector_id, :presence 	=> true

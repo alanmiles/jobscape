@@ -1,0 +1,35 @@
+<div class = "r-float">
+  <%= link_to "Home Page", employee_home_path %>
+</div>
+
+<h1><%= @title %></h1>
+<h4> 
+  <%= @user.name %> - <%= @business.name %><br />
+</h4>
+
+<div class="info_box_screen">
+  These people have recently asked you to review their performance.  It shouldn't take more than 30 minutes to complete
+  the review, and you can spread the work across several sessions, but you'll need to complete it within 14 
+  days of the request.
+  <br /><br />
+  If you can't manage it for some reason, or if you've seen the request but need to delay for a few days,
+  click on 'Respond' and follow the instructions there.  Or click on 'Review now'. 
+</div>
+
+<div class="display_wider">
+  <ol>
+    <% @reviews.each do |review| %>
+      <li style = "margin-bottom: 10px; border-bottom: 1px solid #EEE">
+        <%= review.reviewee.name %> - <%= review.job.job_title %>, <%= review.job.department.name %><br />
+        Added <%= time_ago_in_words(review.created_at) %> ago. &nbsp; &nbsp;
+        <% if review.consent.nil? %>
+          <%= link_to "Respond", edit_review_response_path(review) %>  <i>or</i> <%= link_to "Review now", edit_reviewer_review_path(review) %>
+        <% elsif review.consent == true %>
+          <%= link_to "Review now", edit_reviewer_review_path(review) %> &nbsp; <small><i>(You've confirmed you will review.)</i></small>
+        <% else %>
+          <strong><i>You've said you're unable to review.</i></strong>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</div>

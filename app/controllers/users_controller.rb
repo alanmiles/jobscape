@@ -51,6 +51,7 @@ class UsersController < ApplicationController
         elsif @user.account == 4
           @business = Business.find(session[:biz])
           @invitation = Invitation.find(session[:invited])
+          @job = Job.find(@invitation.job_id)
           if @invitation.staff_no == nil
             @top_ref = @business.next_ref_no
           else
@@ -63,7 +64,8 @@ class UsersController < ApplicationController
           @employee.save
           
           @placement = Placement.new(:user_id => @user.id,
-          		:job_id => @invitation.job_id,
+          		:job_id => @job.id,
+          		:department_id => @job.department_id,
           		:started_job => Date.today)
           @placement.save
           
@@ -79,6 +81,7 @@ class UsersController < ApplicationController
           @accounts = User::ACCOUNT_TYPES
         else
           @invitation = Invitation.find(session[:invited])
+          @job = Job.find(@invitation.job_id)
           @user.account = 4
           @user.name = @invitation.name
           @user.email = @invitation.email

@@ -14,6 +14,9 @@ class Officer::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @business = Business.find(session[:biz])
+    unless session[:dept_id] == nil
+      @department = Department.find(session[:dept_id])    
+    end
     @employee = @user.employee_lookup(@business)
     unless @user.no_current_job?(@business)
       @job = Job.find(@user.current_job(@business)) 

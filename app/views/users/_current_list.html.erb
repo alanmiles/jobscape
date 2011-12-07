@@ -1,0 +1,40 @@
+<%= will_paginate @users %>
+
+<table class="smaller_font">
+  <tr>
+    <th>Ref</th>
+    <th>Name</th>
+    <th>Department</th>
+    <th>Job</th>
+    <th></th>
+  </tr>
+  <% @users.each do |u| %>
+  <tr>
+    <td><%= u.employee_lookup(@business).ref_no %></td>
+    <td>
+      <% if u.employee_lookup(@business).officer? %>
+        <strong><%= u.name %></strong>
+      <% else %>
+        <%= u.name %>
+      <% end %>    
+    </td>
+    <td>
+      <% unless u.no_current_job?(@business) %>
+        <%= u.current_job(@business).department.name %>
+      <% end %>
+    </td>
+    <td>
+      <% if u.no_current_job?(@business) %>
+       <em>NOT ENTERED</em>
+      <% else %>
+        <%= u.current_job(@business).job_title %>
+      <% end %>
+    </td>
+    <td class="centralize">
+      <%= link_to image_tag("select.png", :size => "15x15"), officer_user_path(u) %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @users %>

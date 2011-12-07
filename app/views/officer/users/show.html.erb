@@ -1,5 +1,9 @@
 <div class = "r-float">
-  <%= link_to "All users in this business", officer_users_path %>
+  <% if session[:dept_id] == nil %>
+    <%= link_to "All users in this business", officer_users_path %>
+  <% else %>
+    <%= link_to "Back to #{@department.name} page", @department %>
+  <% end %>
 </div>
 <h1><%= @title %></h1>
 

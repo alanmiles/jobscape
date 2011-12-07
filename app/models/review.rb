@@ -27,6 +27,10 @@
 #  updated_at                :datetime
 #  placement_id              :integer
 #  review_type               :integer         default(1)
+#  cancel                    :boolean         default(FALSE)
+#  cancellation_reason       :string(255)
+#  business_id               :integer
+#  consent                   :boolean
 #
 
 class Review < ActiveRecord::Base
@@ -35,6 +39,7 @@ class Review < ActiveRecord::Base
   belongs_to :reviewee, :class_name => "User"
   belongs_to :job
   belongs_to :placement
+  belongs_to :business
   has_many :reviewqualities, :dependent => :destroy
   has_many :reviewresponsibilities, :dependent => :destroy
   has_many :reviewgoals, :through => :reviewresponsibilities
@@ -47,8 +52,9 @@ class Review < ActiveRecord::Base
   attr_accessible :reviewee_id, :reviewer_id, :reviewer_name, :job_id, :completed, :completion_date, :reviewer_email, :secret_code, :comments_complete,
   		 :reviewresponsibilities_attributes, :reviewqualities_attributes, :responsibilities_complete, :qualities_complete, :achievements,
   		 :problems, :observations, :change_responsibilities, :change_goals, :change_attributes, :plan, :responsibilities_score, :review_type,
-  		 :attributes_score, :placement_id
+  		 :attributes_score, :placement_id, :cancel, :cancellation_reason, :business_id, :consent
   
+  before_save :assign_business
   after_save :build_review_tables
   
   validates	:reviewee_id,		:presence 	=> true
@@ -68,6 +74,7 @@ class Review < ActiveRecord::Base
   validates	:change_goals,		:length		=> { :maximum => 255, :allow_blank => true }
   validates	:change_attributes,	:length		=> { :maximum => 255, :allow_blank => true }
   validates	:plan,			:length		=> { :maximum => 255, :allow_blank => true }
+  validates	:cancellation_reason,	:length		=> { :maximum => 100, :allow_blank => true }
   
   def has_reviewqualities?
     nmbr = self.reviewqualities.count
@@ -141,6 +148,10 @@ class Review < ActiveRecord::Base
   def self.completed_for(user)
     self.where("reviewee_id = ? and completed = ?", user.id, true).order("completion_date DESC")
   end
+  
+  def scheduled_completion
+    self.created_at + 14.days
+  end
    
   private
   
@@ -180,4 +191,11 @@ class Review < ActiveRecord::Base
       end
       
     end
+    
+    def assign_business
+      if self.business_id.nil?
+        @job = Job.find(self.job_id)
+        self.business_id = @job.business_id
+      end
+    end 
 end
