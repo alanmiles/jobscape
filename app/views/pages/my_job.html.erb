@@ -17,7 +17,7 @@
           <%= link_to "Set up a performance review", new_self_appraisal_path %>
         <% end %>
       </li>
-      <% if current_user.has_completed_reviews? %>
+      <% if current_user.has_completed_reviews?(@business) %>
         <li class="no_bullet"><%= link_to "Your performance review history", my_reviews_path %></li>
       <% else %>
         <li class="no_bullet" style ="color: #999">Your performance review history</li>

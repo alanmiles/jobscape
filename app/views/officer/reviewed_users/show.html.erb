@@ -1,0 +1,31 @@
+<div class = "r-float">
+  <% unless session[:reviewreq] == nil %>
+    <% if session[:reviewreq] == "self" %>
+      <%= link_to "Back to 'need self-appraisal' list", no_appraisals_path %>
+    <% else %>
+      <%= link_to "Back to 'need review' list", no_reviews_path %>
+    <% end %>
+  <% else %>
+    <% if session[:dept_id] == nil %>
+      <%= link_to "Reviews for all employees", officer_reviewed_users_path %>
+    <% else %>
+      <%= link_to "Reviews for team in same department", department_review_path(@user.current_department(@business).id) %>
+    <% end %>
+  <% end %>
+</div>
+
+
+<h1><%= @title %></h1>
+<h4><%= @user.name %> - <%= @user.current_job(@business).job_title %>, <%= @user.current_department(@business).name %></h4>
+
+<% unless @user.has_completed_reviews?(@business) %>
+
+  <div class="no_data round" style = "margin-top: 30px"> 
+    There are no completed reviews for this employee.
+  </div>
+  
+<% else %>
+
+  <%= render 'reviews/history' %>
+
+<% end %>

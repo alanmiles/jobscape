@@ -1,0 +1,39 @@
+<div class = "r-float"> 
+  <%= link_to "All reviews for this employee", officer_reviewed_user_path(@review.reviewee_id) %><br />
+  <% unless session[:reviewreq] == nil %>
+    <% if session[:reviewreq] == "self" %>
+      <%= link_to "Back to 'need self-appraisal' list", no_appraisals_path %>
+    <% else %>
+      <%= link_to "Back to 'need review' list", no_reviews_path %>
+    <% end %>
+  <% else %>
+    <% if session[:dept_id] == nil %>
+      <%= link_to "Latest reviews for all employees", officer_reviewed_users_path %>
+    <% else %>
+      <%= link_to "Latest reviews for department team", department_review_path(@review.job.department_id) %>
+    <% end %>
+  <% end %>
+</div>
+
+<h1><%= @title %></h1>
+<br />
+<h4 class= "shallow">
+  <%= @review.reviewee.name %> - 
+  <%= @review.job.job_title %>, <%= @review.job.department.name %><br />
+  <% if @review.reviewer_id == @review.reviewee.id %>
+    Self-appraisal
+  <% else %>
+    Reviewer: <%= @review.reviewer.name %> - <%= @review.reviewer.current_job(@business).job_title unless @review.reviewer.no_job? %>
+  <% end %><br />
+  <%= display_date(@review.completion_date) %>
+</h4>
+
+<br />
+
+<%= render "/reviews/overall_result" %>
+
+<%= render "/reviews/result_responsibilities" %>
+
+<%= render "/reviews/result_attributes" %>
+
+<%= render "/reviews/result_plan" %>

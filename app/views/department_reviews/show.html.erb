@@ -1,0 +1,66 @@
+<div class = "r-float">
+  <%= link_to "Reviews for all departments", department_reviews_path %>
+</div>
+
+<h1><%= @title %> &nbsp;<span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span></h1>
+<h4 class="shallow"><%= @department.name %>, <%= @business.name %></h4>
+
+<div id="infotext" class="info_box_screen" style = "display:none">
+  Click on an employee name to see a list of all performance reviews, or on the review / self-appraisal date
+  to see full details of the most recent scoring and comments. 
+   &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
+</div>
+
+<table class="smaller_font">
+  <tr>
+    <th>Ref</th>
+    <th>Name</th>
+    <th>Job</th>
+    <th>Latest:  Review</th>
+    <th>Self-appraisal</th>
+  </tr>
+  <% @users.each do |u| %>
+  <tr>
+    <td><%= u.employee_lookup(@business).ref_no %></td>
+    <td><%= link_to u.name, officer_reviewed_user_path(u) %></td>
+    <td>
+      <% unless u.no_current_job?(@business) %>
+        <%= u.current_job(@business).job_title %>
+      <% end %>
+    </td>
+    <td>
+      <% unless u.no_formal_reviews?(@business) %>
+        <%= link_to display_monthday(Review.find(u.last_formal_review(@business)).completion_date), officer_review_path(u.last_formal_review(@business)) %> - 
+        <%= Review.find(u.last_formal_review(@business)).total_score %>%
+      <% end %>
+    </td>
+    <td>
+      <% unless u.no_self_appraisals?(@business) %>
+        <%= link_to display_monthday(Review.find(u.last_self_appraisal(@business)).completion_date), officer_review_path(u.last_self_appraisal(@business)) %> 
+        - <%= Review.find(u.last_self_appraisal(@business)).total_score %>%
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#info').click(function() {
+      $('#infotext').show('fast', function() {
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#infotext').hide('fast', function() {
+      });
+    });
+    
+   });
+   
+  <% end %>
+<% end %>

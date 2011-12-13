@@ -1,0 +1,33 @@
+<%= will_paginate @users %>
+
+<ul>
+  <% @users.each do |user| %>
+    <li class="no_bullet">
+      <%= user.current_employee_at(@business).ref_no %> &nbsp;
+      <strong><%= user.name %></strong> - <%= user.current_job(@business).job_title %>, <%= user.current_department(@business).name %> <br />
+      <div style = "margin-left: 25px; font-size: 0.85em">
+        
+        Last external review:
+        <% if user.no_formal_reviews?(@business) %> 
+          None
+        <% else %> 
+          <%= link_to display_date(Review.find(user.last_formal_review(@business)).completion_date), 
+              officer_review_path(user.last_formal_review(@business)) %>
+        <% end %> &nbsp;
+        Last self-appraisal: 
+        <% if user.no_self_appraisals?(@business) %>
+          None
+        <% else %>     
+          <%= link_to display_date(Review.find(user.last_self_appraisal(@business)).completion_date), 
+              officer_review_path(user.last_self_appraisal(@business)) %>
+        <% end %>
+        <% if user.employee_lookup(@business).created_at > Date.today - 6.months %>
+          &nbsp;
+          <em>(Joined: <%= display_date(user.employee_lookup(@business).created_at) %>)</em>
+        <% end %>
+      </div>
+    </li>    
+  <% end %>
+</ul>
+
+<%= will_paginate @users %>

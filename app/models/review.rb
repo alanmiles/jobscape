@@ -145,8 +145,8 @@ class Review < ActiveRecord::Base
     end
   end
   
-  def self.completed_for(user)
-    self.where("reviewee_id = ? and completed = ?", user.id, true).order("completion_date DESC")
+  def self.completed_for(user, business)
+    self.where("reviewee_id = ? and completed = ? and business_id = ?", user.id, true, business.id).order("completion_date DESC")
   end
   
   def scheduled_completion

@@ -139,4 +139,26 @@ class Business < ActiveRecord::Base
     nmbr >= 5   
   end
   
+  def requiring_appraisal
+    @no_appraisals = []
+    @users = self.all_current_employees
+    @users.each do |u|
+      if u.no_self_appraisals?(self)
+        @no_appraisals << User.find(u.id)
+      end
+    end
+    @reqd = @no_appraisals
+  end
+  
+  def requiring_review
+    @no_reviews = []
+    @users = self.all_current_employees
+    @users.each do |u|
+      if u.no_formal_reviews?(self)
+        @no_reviews << User.find(u.id)
+      end
+    end
+    @reqd = @no_reviews
+  end
+  
 end

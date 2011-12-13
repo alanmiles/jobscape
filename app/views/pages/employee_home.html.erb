@@ -68,7 +68,7 @@
           <li class="no_bullet_compact">Arrange a performance review</li> 
         </div> 
       <% end %>
-      <% if @user.has_completed_reviews? %>  
+      <% if @user.has_completed_reviews?(@business) %>  
         <li class="no_bullet_compact"><%= link_to "Review history", my_reviews_path %></li>
       <% else %>
         <div style ="color: #999">

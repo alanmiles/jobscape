@@ -1,0 +1,2 @@
+module NoReviewsHelper
+end

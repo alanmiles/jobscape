@@ -1,0 +1,2 @@
+module DepartmentReviewsHelper
+end

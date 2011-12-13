@@ -114,6 +114,7 @@ class PagesController < ApplicationController
     @user = current_user
     @no_business = false
     session[:dept_id] = nil
+    session[:reviewreq] = nil 
     if session[:biz] != nil
       @business = Business.find(session[:biz])
       @employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
@@ -155,8 +156,8 @@ class PagesController < ApplicationController
     @business = Business.find(session[:biz])
     @business.remove_disconnected_jobs
     
-    if @user.has_completed_reviews?
-      @last_review = @user.last_review
+    if @user.has_completed_reviews?(@business)
+      @last_review = @user.last_review(@business)
     end
     
     if @user.no_job?
@@ -175,6 +176,7 @@ class PagesController < ApplicationController
   
   def employee_home
     session[:invited] = nil
+    session[:dept_id] = nil
     @title = "Employee Home"
     @user = current_user
     
@@ -221,6 +223,13 @@ class PagesController < ApplicationController
   
   def hygwit_introduction
     @title = "Introduction to HYGWIT"
+  end
+  
+  def performance_reviews
+    @user = current_user
+    @business = Business.find(session[:biz])
+    @title = "Performance reviews"
+    session[:reviewreq] = nil
   end
   
   private

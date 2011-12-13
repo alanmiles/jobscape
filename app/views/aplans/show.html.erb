@@ -8,9 +8,13 @@
       <%= link_to "Update A-Plan", @plan %>
     <% end %>
   <% else %>
-    <%= link_to "#{@job.job_title} menu", @job %> <br />
-    <%= link_to "Edit this A-Plan", @plan %><br />
-    <%= link_to "All jobs in business", business_jobs_path(@business) unless current_user.account == 1 %>
+    <% if session[:officer_off] == true %>
+      <%= link_to "Home Page", employee_home_path %><br />
+      <%= link_to "Edit your A-Plan", @plan %>
+    <% else %>
+      <%= link_to "#{@job.job_title} menu", @job %> <br />
+      <%= link_to "All jobs in business", business_jobs_path(@business) unless current_user.account == 1 %><br />
+    <% end %>
   <% end %>
 </div>
 

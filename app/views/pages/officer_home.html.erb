@@ -56,12 +56,12 @@
         <% if @business.count_current_employees > 1 %>
           <% if @business.needs_an_officer? %> 
             &nbsp;
-            <span class="highlt round"><small>Appoint annother HYGWIT officer</small></span>
+            <span class="highlt round"><small>Appoint another HYGWIT officer</small></span>
           <% end %>
         <% end %>
       </li>
       <li class="no_bullet_compact"><%= link_to "HYGWIT invitations", business_invitations_path(@business) %></li>
-      <li class="no_bullet_compact"><%= link_to "Reviews", "#" %></li>
+      <li class="no_bullet_compact"><%= link_to "Performance reviews", performance_reviews_path %></li>
       
     </ul>
     

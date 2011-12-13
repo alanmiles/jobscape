@@ -1,0 +1,81 @@
+<div class = "r-float">
+  <%= link_to "Performance reviews menu", performance_reviews_path %>
+</div>
+
+<h1><%= @title %> &nbsp;<span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span></h1>
+<h4 class="shallow"><%= @business.name %></h4>
+
+<div id="infotext" class="info_box_screen" style = "display:none">
+   This table indicates how well your departments are coping with performance reviews.  We recommend SELF-APPRAISALS
+   every 2-3 months and external REVIEWS every 6 months.  So if the average frequency of self-appraisals is greater than
+   90 days or 200 days for reviews, the department is probably not focused enough on achievement. <br /><br />
+   
+   The success of the whole business is dependent on a network of people all achieving their individual goals.  So look 
+   out for any departments with noticeably lower average review scores (= the scores from <i>external</i> reviews).  On 
+   the other hand, the approach to these departments should be helpful and supportive, not critical.  Be careful not
+   to build a culture where people are afraid to report mistakes or failure, because that will damage the business, sooner 
+   or later.
+   <br /><br />
+   
+   Unusually high department scores - where almost everything has been achieved - may also be a danger sign.  Are the 
+   people in the department self-critical, taking reviews seriously?  If everything's easy, is there any evidence they're
+   trying to set the bar higher?  For evidence, check the <i>Comments</i> in individual reviews.  If that doesn't convince you,
+   you might try an achievement audit - asking an independent assessor to conduct a few reviews.
+   <br /><br />
+   
+   This report is based on reviews and self-appraisals conducted in the past 12 months, or since the department was added to 
+   your HYGWIT records, whichever is the shorter.  In the early days after you've added the department, the figures are not
+   going to be very reliable, but as time goes on this will be a very important indicator.
+   <br /><br />
+   
+   Click on <%= image_tag("select.png", :size => "15x15") %> to see review and self-appraisal records for individuals in the department.
+   
+   &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
+</div>
+
+<table class="smaller_font">
+  <tr>
+    <th>Department</th>
+    <th class="centralize">Headcount</th>
+    <th class="centralize">External review frequency</th>
+    <th class="centralize">Self-appraisal frequency</th>
+    <th class="centralize">Avg review score</th>
+    <th></th>
+  </tr>
+
+  <% @departments.each do |department| %>
+  <tr>
+    <td><%= department.name %></td>
+    <td class="centralize"><%= department.headcount %></td> 
+    <td class="centralize"><%= department.review_frequency_in_days %> days</td>
+    <td class="centralize"><%= department.self_appraisal_frequency_in_days %> days</td>
+    <td class="centralize"><%= department.avg_review_score_in_calculation_period %> %</td>
+    <td class="centralize">
+      <%= link_to image_tag("select.png", :size => "15x15"), department_review_path(department),
+          :title => "Review records of the department team" %> 
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#info').click(function() {
+      $('#infotext').show('fast', function() {
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#infotext').hide('fast', function() {
+      });
+    });
+    
+   });
+   
+  <% end %>
+<% end %>

@@ -1,0 +1,11 @@
+<div class = "r-float">
+  <%= link_to "Performance reviews menu", performance_reviews_path %>
+</div>
+
+<h1><%= @title %></h1>
+
+<div class="info_box_wide">Shows people who haven't had an external review in the last 200 days.<br />  
+            Joining-date shown if within last 6 months.
+</div>
+
+<%= render 'userlist' %>

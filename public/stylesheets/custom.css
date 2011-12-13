@@ -135,6 +135,10 @@ ul li.no_bullet_compact {
   list-style-type: none;
 }
 
+ul li.smaller_font {
+  font-size: 0.85em;
+}
+
 .handle:hover {
   cursor: move;
 }

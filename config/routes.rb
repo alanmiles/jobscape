@@ -1,5 +1,11 @@
 Jobscape::Application.routes.draw do
 
+  get "no_appraisals/index"
+
+  get "no_reviews/index"
+
+  get "department_reviews/index"
+
   resources :users do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true
@@ -111,6 +117,8 @@ Jobscape::Application.routes.draw do
     resources :employees
     resources :users
     resources :leavers
+    resources :reviews
+    resources :reviewed_users
   end
   resources :latest_vacancies, :only => :index
   resources :current_vacancies, :only => :index
@@ -121,8 +129,11 @@ Jobscape::Application.routes.draw do
   resources :self_appraisals
   resources :my_reviews
   resources :current_reviews
+  resources :no_reviews
+  resources :no_appraisals
   resources :review_responses, :only => [:edit, :update]
   resources :reviewer_selections, :only => [:edit, :update]
+  resources :department_reviews
   namespace :reviewer do
     resources :reviews
   end
@@ -149,6 +160,7 @@ Jobscape::Application.routes.draw do
   match '/officer_to_own',	:to => 'pages#officer_to_own'
   match '/own_to_officer',	:to => 'pages#own_to_officer'
   match '/hygwit_introduction', :to => 'pages#hygwit_introduction'
+  match '/performance_reviews', :to => 'pages#performance_reviews'
 
   root :to => 'pages#home'
 

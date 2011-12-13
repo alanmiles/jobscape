@@ -27,7 +27,6 @@ class ReviewsController < ApplicationController
       @title = "Set up a new performance review"
       render 'new'
     end
-  
   end
-
+  
 end

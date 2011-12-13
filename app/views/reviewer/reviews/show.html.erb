@@ -1,0 +1,24 @@
+<div class = "r-float">
+  <% if @review.editable_date > Date.today %>
+    <%= link_to "Edit results (till #{display_date(@review.editable_date)} only)", edit_reviewer_review_path(@review) %>
+    <br />
+  <% end %>
+  <%= link_to "Home Page", employee_home_path %>
+</div>
+
+<h1><%= @title %></h1>
+<h4>
+    For: <%= @review.reviewee.name %> <br />
+    Reviewed by: <%= @review.reviewer.name %><br />
+    Completed:  <%= display_date(@review.completion_date) %>
+</h4>
+
+<br />
+
+<%= render "/reviews/overall_result" %>
+
+<%= render "/reviews/result_responsibilities" %>
+
+<%= render "/reviews/result_attributes" %>
+
+<%= render "/reviews/result_plan" %>

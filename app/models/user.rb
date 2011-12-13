@@ -140,6 +140,10 @@ class User < ActiveRecord::Base
     (user && user.salt == cookie_salt) ? user : nil
   end
   
+  def current_employee_at(business)
+    @employee = Employee.where("business_id = ? and user_id = ? and left = ?", business.id, self.id, false).first
+  end
+  
   def has_attribute_submissions?
     total = Quality.find_all_by_created_by(self.id).count
     return true if total > 0 
@@ -291,7 +295,7 @@ class User < ActiveRecord::Base
   end
   
   def outdated_reviews
-    self.reviewed_sessions.where("reviews.completed = ? and cancel = ? and created_at <?", false, false, Date.today - 14)
+    self.reviewed_sessions.where("reviews.completed = ? and cancel = ? and created_at < ?", false, false, Date.today - 14)
   end
   
   def has_outdated_reviews?
@@ -310,17 +314,33 @@ class User < ActiveRecord::Base
     cnt > 0
   end
   
-  def completed_reviews
-    self.reviewed_sessions.where("reviews.completed = ?", true).order("reviews.completion_date DESC")
+  def completed_reviews(business)
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.business_id = ?", true, business.id).order("reviews.completion_date DESC")
   end
   
-  def has_completed_reviews?
-    nmbr = self.completed_reviews.count
+  def has_completed_reviews?(business)
+    nmbr = self.completed_reviews(business).count
     nmbr > 0
   end
   
-  def last_review
-    self.reviewed_sessions.where("reviews.completed = ?", true).last
+  def last_review(business)
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.business_id = ?", true, business.id).last
+  end
+  
+  def no_formal_reviews?(business)
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.reviewer_id != ? and reviews.business_id = ?", true, self.id, business.id).count == 0
+  end
+  
+  def last_formal_review(business)
+     self.reviewed_sessions.where("reviews.completed = ? and reviews.reviewer_id != ? and reviews.business_id = ?", true, self.id, business.id).last
+  end
+  
+  def no_self_appraisals?(business)
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.reviewer_id = ? and reviews.business_id = ?", true, self.id, business.id).count == 0
+  end
+  
+  def last_self_appraisal(business)
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.reviewer_id = ? and reviews.business_id = ?", true, self.id, business.id).last
   end
   
   def formal_reviews(job)
