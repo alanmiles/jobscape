@@ -85,6 +85,10 @@ class Business < ActiveRecord::Base
   
   def all_current_employees
     self.users.joins(:employees).where("employees.left = ?", false).order("users.name")
+  end
+  
+  def all_current_employees_except(user)
+    self.users.joins(:employees).where("employees.left = ? and users.id != ?", false, user.id).order("users.name")
   end		
   
   def all_former_employees
@@ -106,6 +110,15 @@ class Business < ActiveRecord::Base
   	
   def needs_an_officer?
     nmbr = self.employees.where("employees.officer = ? and employees.left = ?", true, false).count
+    nmbr < 2
+  end
+  
+  def officer_list
+    self.employees.where("employees.officer = ? and employees.left = ?", true, false)
+  end
+  
+  def needs_an_officer?
+    nmbr = self.officer_list.count
     nmbr < 2
   end
   
@@ -143,8 +156,10 @@ class Business < ActiveRecord::Base
     @no_appraisals = []
     @users = self.all_current_employees
     @users.each do |u|
-      if u.no_self_appraisals?(self)
-        @no_appraisals << User.find(u.id)
+      unless u.external_review_overdue?(self) #because external reviews take precedence
+        if u.self_appraisal_overdue?(self)
+          @no_appraisals << User.find(u.id)
+        end
       end
     end
     @reqd = @no_appraisals
@@ -154,11 +169,15 @@ class Business < ActiveRecord::Base
     @no_reviews = []
     @users = self.all_current_employees
     @users.each do |u|
-      if u.no_formal_reviews?(self)
+      if u.external_review_overdue?(self)
         @no_reviews << User.find(u.id)
       end
     end
     @reqd = @no_reviews
+  end
+  
+  def reviews_in_progress
+    self.reviews.where("reviews.completed = ? and reviews.cancel = ?", false, false)
   end
   
 end

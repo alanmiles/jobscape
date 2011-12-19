@@ -31,6 +31,8 @@
 #  cancellation_reason       :string(255)
 #  business_id               :integer
 #  consent                   :boolean
+#  contribution              :integer
+#  seen_by_reviewee          :boolean         default(TRUE)
 #
 
 require 'spec_helper'

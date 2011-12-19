@@ -8,11 +8,13 @@
 <div class="menu_box round grayborder">
   <br />
   <ul>
-    <li class="no_bullet_compact"><%= link_to "Employee reviews", officer_reviewed_users_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Department reviews", department_reviews_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Best / worst results", "#" %></li>
+    <li class="no_bullet_compact"><%= link_to "Reviews & self-appraisals in progress", officer_reviews_path %></li>
     <li class="no_bullet_compact"><%= link_to "Who needs a self-appraisal?", no_appraisals_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Who needs an external review?", no_reviews_path %></li>    
+    <li class="no_bullet_compact"><%= link_to "Who needs a colleague review?", no_reviews_path %></li>    
+    <br />
+    <li class="no_bullet_compact"><%= link_to "Employee reviews: results", officer_reviewed_users_path %></li>
+    <li class="no_bullet_compact"><%= link_to "Department reviews: results", department_reviews_path %></li>
+    <li class="no_bullet_compact"><%= link_to "Best / worst results", "#" %></li>
     <li class="no_bullet_compact"><%= link_to "Who's out of step with their reviewer?", "#" %></li>
     <li class="no_bullet_compact"><%= link_to "Employee contribution", "#" %></li>
     <br />

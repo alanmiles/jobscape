@@ -21,7 +21,7 @@
     <% @reviews.each do |review| %>
       <li style = "margin-bottom: 10px; border-bottom: 1px solid #EEE">
         <%= review.reviewee.name %> - <%= review.job.job_title %>, <%= review.job.department.name %><br />
-        Added <%= time_ago_in_words(review.created_at) %> ago. &nbsp; &nbsp;
+        Request made <%= time_ago_in_words(review.created_at) %> ago. &nbsp; &nbsp;
         <% if review.consent.nil? %>
           <%= link_to "Respond", edit_review_response_path(review) %>  <i>or</i> <%= link_to "Review now", edit_reviewer_review_path(review) %>
         <% elsif review.consent == true %>

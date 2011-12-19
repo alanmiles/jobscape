@@ -115,6 +115,7 @@ class PagesController < ApplicationController
     @no_business = false
     session[:dept_id] = nil
     session[:reviewreq] = nil 
+    session[:reviewee] = nil
     if session[:biz] != nil
       @business = Business.find(session[:biz])
       @employee = Employee.find_by_business_id_and_user_id(@business.id, @user.id)
@@ -221,6 +222,14 @@ class PagesController < ApplicationController
     #session[:biz] = @business.id
   end
   
+  def locked_aplan
+    @user = current_user
+    @business = Business.find(session[:biz])
+    @job_title = @user.current_job(@business).job_title
+    @officers = @business.officer_list
+    @title = "Locked A-Plan"
+  end
+  
   def hygwit_introduction
     @title = "Introduction to HYGWIT"
   end
@@ -230,6 +239,7 @@ class PagesController < ApplicationController
     @business = Business.find(session[:biz])
     @title = "Performance reviews"
     session[:reviewreq] = nil
+    session[:reviewee] = nil
   end
   
   private

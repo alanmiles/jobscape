@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111205145928) do
+ActiveRecord::Schema.define(:version => 20111214161553) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -393,6 +393,8 @@ ActiveRecord::Schema.define(:version => 20111205145928) do
     t.string   "cancellation_reason"
     t.integer  "business_id"
     t.boolean  "consent"
+    t.integer  "contribution"
+    t.boolean  "seen_by_reviewee",          :default => true
   end
 
   add_index "reviews", ["reviewee_id"], :name => "index_reviews_on_reviewee_id"

@@ -161,6 +161,7 @@ Jobscape::Application.routes.draw do
   match '/own_to_officer',	:to => 'pages#own_to_officer'
   match '/hygwit_introduction', :to => 'pages#hygwit_introduction'
   match '/performance_reviews', :to => 'pages#performance_reviews'
+  match '/locked_aplan',	:to => 'pages#locked_aplan'
 
   root :to => 'pages#home'
 

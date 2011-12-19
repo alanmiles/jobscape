@@ -31,6 +31,8 @@
 #  cancellation_reason       :string(255)
 #  business_id               :integer
 #  consent                   :boolean
+#  contribution              :integer
+#  seen_by_reviewee          :boolean         default(TRUE)
 #
 
 class Review < ActiveRecord::Base
@@ -52,9 +54,10 @@ class Review < ActiveRecord::Base
   attr_accessible :reviewee_id, :reviewer_id, :reviewer_name, :job_id, :completed, :completion_date, :reviewer_email, :secret_code, :comments_complete,
   		 :reviewresponsibilities_attributes, :reviewqualities_attributes, :responsibilities_complete, :qualities_complete, :achievements,
   		 :problems, :observations, :change_responsibilities, :change_goals, :change_attributes, :plan, :responsibilities_score, :review_type,
-  		 :attributes_score, :placement_id, :cancel, :cancellation_reason, :business_id, :consent
+  		 :attributes_score, :placement_id, :cancel, :cancellation_reason, :business_id, :consent, :seen_by_reviewee
   
   before_save :assign_business
+  before_save :calculate_contribution
   after_save :build_review_tables
   
   validates	:reviewee_id,		:presence 	=> true
@@ -88,6 +91,10 @@ class Review < ActiveRecord::Base
   
   def self_appraisal?
     reviewer_id == reviewee_id && reviewer_email.blank?
+  end
+  
+  def started?
+    responsibilities_complete? || qualities_complete? || comments_complete?
   end
   
   def elements_complete?
@@ -136,6 +143,13 @@ class Review < ActiveRecord::Base
   def total_score
     responsibilities_score + attributes_score
   end 
+  
+  def contribution_score
+    @job = Job.find(self.job_id)
+    @plan = Plan.find_by_job_id(@job)
+    @jvalue = @plan.job_value
+    score = (@jvalue * total_score / 100).to_i 
+  end
   
   def editable_date
     if completion_date == nil
@@ -196,6 +210,12 @@ class Review < ActiveRecord::Base
       if self.business_id.nil?
         @job = Job.find(self.job_id)
         self.business_id = @job.business_id
+      end
+    end
+    
+    def calculate_contribution
+      if self.completed? && self.elements_complete? && (self.reviewer_id != self.reviewee_id)
+        self.contribution = self.contribution_score
       end
     end 
 end

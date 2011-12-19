@@ -1,0 +1,21 @@
+
+
+<h1><%= @title %></h1>
+
+<%= form_for(@review, :url => reviewer_selection_path(@review)) do |f| %>
+  <%= render "shared/error_messages", :object => f.object %>
+  
+  
+  <div class="shift_center"
+    <div class="fields">
+      <%= f.label :reviewer %>&nbsp;
+      <%= collection_select(:review, :reviewer_id, @reviewers, :id, 
+                        :name, :prompt => true) %>
+    </div>
+    <br />
+    <div class="actions">
+      <%= f.submit "Confirm" %>
+    </div> 
+  </div>
+<% end %>
+

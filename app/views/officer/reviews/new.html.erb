@@ -1,0 +1,95 @@
+<div class = "r-float">
+  <% if session[:reviewreq] == "external" %>
+    <%= link_to "Cancel", no_reviews_path %>
+  <% elsif session[:reviewreq] == "self" %>
+    <%= link_to "Cancel", no_appraisals_path %>
+  <% end %>
+</div>
+
+<h1><%= @title %> &nbsp;<span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span></h1>
+
+<%= form_for(@review, :url => officer_reviews_path) do |f| %>
+  <%= render "shared/error_messages", :object => f.object %>
+  <br />
+ 
+  <div id="infotext" class="info_box_screen" style = "display:none">
+    This form allows you to set up a colleague review or a self-appraisal for people in your business.  (To set up a self-appraisal,
+    just make the reviewer and the reviewee the same person.)
+    <br /><br />
+    If you've built a culture of achievement - where success is celebrated and achievement recognized and rewarded - you shouldn't
+    need to use this form often.  Employees will willingly set up their own self-appraisals and reviews, eager to show how
+    well they're doing.
+    <br /><br />
+    But if you've reached this form, it means that the employee has not responded to two weeks of HYGWIT reminders that a review or 
+    self-appraisal is due - and therefore may not be using HYGWIT on a regular basis.  So when you confirm the review details, as well
+    as notifications on the main HYGWIT menu page, an email will be sent to the employee - as well as the reviewer if it's a colleage
+    review.
+    &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
+  </div>
+
+  <div class="shift_center_50">
+    
+    <strong>Who's the review for?</strong><br />
+    <%= @review.reviewee.name %><br />
+    <%= @review.reviewee.current_job(@business).job_title %>, 
+    <%= @review.reviewee.current_department(@business).name %><br /><br />
+    <strong>Last external review:</strong>
+      <% if @reviewee.no_formal_reviews?(@business) %> 
+        None
+      <% else %> 
+        <%= time_ago_in_words(Review.find(@reviewee.last_formal_review(@business)).completion_date) %> ago.
+      <% end %>
+      <% if session[:reviewreq] == "external" %>
+        &nbsp; <span class="highlt round"><small>Overdue</small></span>
+      <% end %>
+      <br />
+    
+    <strong>Last self-appraisal:</strong>
+      <% if @reviewee.no_self_appraisals?(@business) %>
+        None
+      <% else %>     
+        <%= time_ago_in_words(Review.find(@reviewee.last_self_appraisal(@business)).completion_date) %> ago. 
+      <% end %>    
+      <% if session[:reviewreq] == "self" %>
+        &nbsp; <span class="highlt round"><small>Overdue</small></span>
+      <% end %>  
+    <br /><br />
+     
+    <div class="fields">
+      <%= f.label :reviewer_id, "Reviewer now:" %>&nbsp;
+      <%= grouped_collection_select(:review, :reviewer_id, @departments, :current_team, :name, :id, :name) %>
+    </div>
+    
+    <%= f.hidden_field :job_id %>
+    <%= f.hidden_field :reviewee_id %>
+    <%= f.hidden_field :placement_id %>
+    <%= f.hidden_field :seen_by_reviewee %>
+    <%= f.hidden_field :reviewer_name %>
+    
+    <br />
+    <div class="actions">
+      <%= f.submit "Confirm" %>
+    </div> 
+  </div>
+<% end %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#info').click(function() {
+      $('#infotext').show('fast', function() {
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#infotext').hide('fast', function() {
+      });
+    });
+    
+   });
+   
+  <% end %>
+<% end %>

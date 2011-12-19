@@ -314,6 +314,28 @@ class User < ActiveRecord::Base
     cnt > 0
   end
   
+  def incomplete_self_appraisal(business)
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.cancel = ? 	
+    		and reviews.created_at >=? and reviews.business_id = ? and reviews.reviewer_id = ?", 
+    		false, false, Date.today - 14, business.id, self.id).limit(1)
+  end
+  
+  def has_incomplete_self_appraisal?(business)
+    cnt = self.incomplete_self_appraisal(business).count
+    cnt > 0
+  end
+  
+  def incomplete_external_review(business)
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.cancel = ? 	
+    		and reviews.created_at >=? and reviews.business_id = ? and reviews.reviewer_id != ?", 
+    		false, false, Date.today - 14, business.id, self.id).limit(1)
+  end
+  
+  def has_incomplete_external_review?(business)
+    cnt = self.incomplete_external_review(business).count
+    cnt > 0
+  end
+  
   def completed_reviews(business)
     self.reviewed_sessions.where("reviews.completed = ? and reviews.business_id = ?", true, business.id).order("reviews.completion_date DESC")
   end
@@ -352,6 +374,66 @@ class User < ActiveRecord::Base
     cnt = self.formal_reviews(job).count
     cnt > 0
   end
+  
+  def self_appraisal_due?(business)
+    appraisal_due = false
+    @job = Job.find(self.current_job(business))  #make sure A-Plan exists and review is possible
+    if @job.plan.complete?
+      if self.created_at < Time.now - 30.days
+        if self.completed_reviews(business).count == 0 
+          appraisal_due = true
+        elsif self.last_review(business).completion_date < Time.now - 100.days
+          appraisal_due = true
+        end 
+      end
+    end
+    return appraisal_due
+  end
+  
+  def self_appraisal_overdue?(business)
+    appraisal_overdue = false
+    #@job = Job.find(self.current_job(business))  #make sure A-Plan exists and review is possible
+    #if @job.plan.complete?                       #now cancelled so officer warned A-Plan doesn't exist
+      if self.created_at < Time.now - 30.days
+        if self.completed_reviews(business).count == 0
+          appraisal_overdue = true
+        elsif self.last_review(business).completion_date < Time.now - 114.days
+          appraisal_overdue = true
+        end 
+      end
+    #end
+    return appraisal_overdue
+  end
+  
+  def external_review_due?(business)
+    review_due = false
+    @job = Job.find(self.current_job(business))  #make sure A-Plan exists and review is possible
+    if @job.plan.complete?
+      if self.created_at < Time.now - 60.days
+        if self.completed_reviews(business).count == 0
+          review_due = true
+        elsif self.last_formal_review(business).completion_date < Time.now - 200.days
+          review_due = true
+        end 
+      end
+    end
+    return review_due
+  end
+  
+  def external_review_overdue?(business)
+    review_overdue = false
+    #@job = Job.find(self.current_job(business))  #make sure A-Plan exists and review is possible
+    #if @job.plan.complete?			  #now cancelled so officer warned A-Plan doesn't exist
+      if self.created_at < Time.now - 60.days
+        if self.completed_reviews(business).count == 0 
+          review_overdue = true
+        elsif self.last_formal_review(business).completion_date < Time.now - 214.days
+          review_overdue = true
+        end
+      end 
+    #end
+    return review_overdue
+  end 
   
   def recent_reviewed_sessions
     self.reviewed_sessions.where("reviews.completion_date > ?", Date.today - 1.year)
@@ -418,6 +500,10 @@ class User < ActiveRecord::Base
   def current_department(business)
     @job = Job.find(self.current_job(business))
     @department = Department.find(@job.department_id)
+  end
+  
+  def full_identifier(business)
+    identification = "#{self.name} - #{self.current_job(business).job_title}, #{self.current_department(business).name}"
   end
   
   def active_external_jobs

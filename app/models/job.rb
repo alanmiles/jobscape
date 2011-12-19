@@ -48,7 +48,7 @@ class Job < ActiveRecord::Base
   end
   
   def title_department
-    "#{self.job_title} - #{self.department.name}"
+    "#{self.job_title}, #{self.department.name}"
   end
   
   def unfilled_vacancies

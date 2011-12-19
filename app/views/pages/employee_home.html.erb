@@ -59,14 +59,15 @@
             <% end %>   
           
           <% else %>
-            <%= link_to "Arrange a performance review", new_review_path %>
+            <%= link_to "Set up a performance review / self-appraisal", new_review_path %>
+            <% if current_user.external_review_due?(@business) || current_user.self_appraisal_due?(@business) %>
+              &nbsp; <small><span class="highlt round">Due now!</span></small>
+            <% end %>
           <% end %>  
         </li>
       <% else %>
-        <div style ="color: #999">
-          <li class="no_bullet_compact">View your complete Achievement Plan</li>
-          <li class="no_bullet_compact">Arrange a performance review</li> 
-        </div> 
+        <li class="no_bullet_compact"><%= link_to "Your Achievement Plan", locked_aplan_path %></li>
+        <li class="no_bullet_compact" style = "color: #999">Arrange a performance review</li> 
       <% end %>
       <% if @user.has_completed_reviews?(@business) %>  
         <li class="no_bullet_compact"><%= link_to "Review history", my_reviews_path %></li>

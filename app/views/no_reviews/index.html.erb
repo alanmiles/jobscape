@@ -2,10 +2,48 @@
   <%= link_to "Performance reviews menu", performance_reviews_path %>
 </div>
 
-<h1><%= @title %></h1>
+<h1><%= @title %> &nbsp;<span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span></h1>
 
-<div class="info_box_wide">Shows people who haven't had an external review in the last 200 days.<br />  
-            Joining-date shown if within last 6 months.
+<div id="infotext" class="info_box_screen" style = "display:none">
+    We recommend that everyone has a formal review - from their manager or a senior colleague - at least every 6 months.
+    <br /><br />
+    HYGWIT users are encouraged to set up their own review sessions, and if there hasn't been a review in the last 200 days,
+    they'll see a HYGWIT reminder.  If no action is taken for a further two weeks, the employee's name is added to this 
+    watch-list.
+    <br /><br />
+    You can then set up a review session and send email notifications to the employee and the reviewer, using the 
+    <i>'Set up a review now'</i> link in the list.
+    <br /><br />
+    People who have just been added to HYGWIT and have never had a colleague review will also appear in the list, but only 60 days
+    after they've been added.
+    &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
 </div>
+<br />
+<% if @users.empty? %>
+  <div class="no_data round" style = "margin-top: 30px"> 
+    Everyone seems to be up-to-date with external reviews at the moment.
+  </div>
+<% else %>
+  <%= render 'userlist' %>
+<% end %>
 
-<%= render 'userlist' %>
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#info').click(function() {
+      $('#infotext').show('fast', function() {
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#infotext').hide('fast', function() {
+      });
+    });
+    
+   });
+   
+  <% end %>
+<% end %>

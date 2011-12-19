@@ -57,7 +57,7 @@ class SelfAppraisalsController < ApplicationController
          
           @review.update_attributes(:responsibilities_score => @review.score_for_responsibilities,
                                     :attributes_score => @review.score_for_qualities,
-                                    :completion_date => Date.today)
+                                    :completion_date => Time.now)
           flash[:success] = "Well done - you've completed your self-appraisal.  This is how it looks."
           redirect_to self_appraisal_path(@review)
         else
@@ -77,7 +77,11 @@ class SelfAppraisalsController < ApplicationController
       else
         flash[:notice] = "Your changes have been saved, but there's still work to do.  You can return and complete the review any 
           time up to #{(@review.created_at + 14.days).strftime('%a %b %d, %Y')}."
-        redirect_to my_job_path
+        if current_user.account >= 3
+          redirect_to employee_home_path
+        else
+          redirect_to my_job_path
+        end
       end
     else
       @qualities = @review.reviewqualities.order("reviewqualities.position")

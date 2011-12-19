@@ -1,0 +1,15 @@
+Dear <%= @reviewer.name %>
+<br /><br />
+  The records show me that a performance review is overdue for <%= @reviewee.name %>, and I'd like
+  to ask for your help in conducting the review.
+  <br /><br />
+  When you open your copy of HYGWIT, you'll see that you have a new review request. Just follow the links and instructions
+  there.
+  <br /><br />
+  The review is due to be completed by <%= (@review.created_at + 14.days).strftime("%a %b %d, %Y") %>.  If that's a problem, or you can't
+  do the review for some other reason, please let us know as soon as possible via the <i>Respond</i> link on the <i>Respond 
+  to a review request</i> page, so that other arrangements can be made.
+  <br /><br />
+  Thanks for your help.
+  <br /><br />
+  <%= @user.name %>

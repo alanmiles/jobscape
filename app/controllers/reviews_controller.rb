@@ -2,28 +2,33 @@ class ReviewsController < ApplicationController
   
   def new
     @user = current_user
+    @business = Business.find(session[:biz])
+    @departments = @business.current_departments
     @job = Job.find(session[:jobid])
     @placement = Placement.find_by_user_id_and_job_id_and_current(@user, @job, true)
     @review = Review.new(:reviewee_id => @user.id, :reviewer_id => @user.id, 
-      		:reviewer_name => @user.name, :job_id => @job.id, :placement_id => @placement.id)
+      		:reviewer_name => @user.name, :job_id => @job.id, :placement_id => @placement.id, :review_type => 1)
     @title = "Set up a new performance review"  
   end
   
   def create
     @review = Review.new(params[:review])
     if @review.save
-      if @review.review_type == 1
+      if @review.reviewer_id == @review.reviewee_id
         flash[:success] = "New self-appraisal session started"
         redirect_to edit_self_appraisal_path(@review)
       else
-        flash[:success] = "Now name your reviewer"
-        redirect_to edit_reviewer_selection_path(@review)
+        @review.update_attributes(:reviewer_name => @review.reviewer.name,
+                    :review_type => 2)
+        flash[:success] = "#{@review.reviewer.name} has been invited to review your performance."
+        redirect_to employee_home_path
       end
     else
       @user = current_user
+      @business = Business.find(session[:biz])
+      @departments = @business.current_departments
       @job = Job.find(session[:jobid])
       @placement = Placement.find_by_user_id_and_job_id_and_current(@user, @job, true)
-      #@review = Review.new(:reviewee_id => @user.id, :reviewer_id => @user.id, :reviewer_name => @user.name, :job_id => @job.id)
       @title = "Set up a new performance review"
       render 'new'
     end

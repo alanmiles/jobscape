@@ -29,10 +29,11 @@ class Reviewer::ReviewsController < ApplicationController
           @review.calculate_achievement_scores
           
           @review.adjust_attribute_scores
-         
+               
           @review.update_attributes(:responsibilities_score => @review.score_for_responsibilities,
                                     :attributes_score => @review.score_for_qualities,
-                                    :completion_date => Date.today)
+                                    :completion_date => Time.now)                          
+                                    
           flash[:success] = "Thank you for completing the appraisal.  This is how it looks."
           redirect_to reviewer_review_path(@review)
         else

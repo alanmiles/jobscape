@@ -5,40 +5,59 @@
 <h1><%= @title %></h1>
 
 <p class = "display_text grayborder round cntr">
-  <%= @user.name %> - 
-  <%= @job.job_title %>
+  <u><strong><%= @user.name %></strong> - 
+  <%= @job.job_title %></u><br />
+  
+  Last colleague review: 
+  <% if @user.no_formal_reviews?(@business) %> 
+    None
+  <% else %> 
+    <%= time_ago_in_words(Review.find(@user.last_formal_review(@business)).completion_date) %> ago.
+  <% end %>
+  <% if @user.external_review_due?(@business) %>
+    &nbsp; <small><span class="highlt round">Due now!</span></small>
+  <% end %>
+  <br />
+  
+  Last self-appraisal:
+  <% if @user.no_self_appraisals?(@business) %>
+    None
+  <% else %>     
+    <%= time_ago_in_words(Review.find(@user.last_self_appraisal(@business)).completion_date) %> ago. 
+  <% end %>
+  <% unless @user.external_review_due?(@business) %>
+    <% if @user.self_appraisal_due?(@business) %>
+      &nbsp; <small><span class="highlt round">Due now!</span></small>
+    <% end %>
+  <% end %> 
 </p>
 
 <%= render 'explanation' %>
 
 <br />
 
+
 <%= form_for @review do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :review_type, "Who's your reviewer? Select from:-" %> <br />
-    Yourself (- it's a self-appraisal)
-    <%= f.radio_button :review_type, 1 %> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    Someone in your department
-    <%= f.radio_button :review_type, 2 %><br />
-    Someone outside your department
-    <%= f.radio_button :review_type, 3 %>&nbsp; &nbsp; &nbsp;
-    Someone who's not a HYGWIT user
-    <%= f.radio_button :review_type, 4 %>
-
-  </div>
-  <br />
+  
+  <div class="shift_center_50">
+    <div class="field">
+      <%= f.label :reviewer_id %> &nbsp;
+      <%= grouped_collection_select(:review, :reviewer_id, @departments, :current_team, :name, :id, :name) %><br /> 
+      <small>(Select your own name for a self-appraisal, or someone else if you want a colleague to review.)</small> 
+    </div>
+    <br />
   
   
-  <%= f.hidden_field :job_id %>
-  <%= f.hidden_field :reviewee_id %>
-  <%= f.hidden_field :reviewer_id %>
-  <%= f.hidden_field :placement_id %>
-  <%= f.hidden_field :reviewer_name %>
+    <%= f.hidden_field :job_id %>
+    <%= f.hidden_field :reviewee_id %>
+    <%= f.hidden_field :placement_id %>
+    <%= f.hidden_field :reviewer_name %>
+    <%= f.hidden_field :review_type %>
   
     <div class="actions">
-      <%= f.submit "Continue" %>
+      <%= f.submit "Confirm" %>
     </div>
- 
+  </div>
 <% end %>
 

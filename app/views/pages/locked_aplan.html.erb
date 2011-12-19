@@ -1,0 +1,29 @@
+<div class = "r-float">
+  <%= link_to "Home Page", employee_home_path %>
+</div>
+
+<h1><%= @title %></h1>
+<h4><%= @user.full_identifier(@business) %></h4>
+
+<div class ="info_box_screen">
+  Your Achievement Plan will show you how to make a big success of your job at <%= @business.name %>.  
+  You'll see a list of the key responsibilities, each with a set of goals you need to achieve.  
+  Another list of key personality attributes for the job will show how you're expected to behave and 
+  interact with people inside and outside the business. 
+  <br /><br />
+  Unfortunately, the <em><%= @job_title %></em> A-Plan isn't ready to use yet ... and it's been locked, which probably means that
+  someone is working on completing it right now.  Until it's ready, you won't be able to use the A-Plan
+  as intended in HYGWIT: to guide your everyday actions and decisions, to appraise your own achievement, 
+  and, from time to time, to find out how your colleagues and your manager think you're getting on.
+  <br /><br />
+  If the A-Plan isn't available in a couple of days, ask one of these HYGWIT administrators when you're likely to see it:-
+
+  <br /><br />
+  <ul>
+    <% @officers.each do |o| %>
+      <li class="no_bullet_compact">
+        <%= o.user.full_identifier(@business) %>
+      </li>
+    <% end %>
+  </ul>
+</div> 

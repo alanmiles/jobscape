@@ -15,6 +15,13 @@
   <% if @user.has_review_requests?(@business) || @user.has_rejected_review_requests?(@business) %>
     &nbsp;
     <span class="highlt round"><small>Action required</small></span>
+  <% else %>
+    <% unless @user.no_current_job?(@business) %>
+      <% if @user.self_appraisal_due?(@business) || @user.external_review_due?(@business) %>
+        &nbsp;
+        <span class="highlt round"><small>Action required</small></span>
+      <% end %>
+    <% end %>
   <% end %>
 </div>
 
@@ -50,7 +57,7 @@
       <li class="no_bullet_compact"><%= link_to "Business details", @business %></li>
       <li class="no_bullet_compact"><%= link_to "Business mission, values, objectives", corporate_plan_path(@business) %></li>
       <li class="no_bullet_compact"><%= link_to "Departments", business_departments_path(@business.id) %></li>
-      <li class="no_bullet_compact"><%= link_to "Jobs", business_jobs_path(@business.id) %></li>
+      <li class="no_bullet_compact"><%= link_to "Jobs & A-Plans", business_jobs_path(@business.id) %></li>
       <li class="no_bullet_compact">
         <%= link_to "Employees (HYGWIT users)", officer_users_path %>
         <% if @business.count_current_employees > 1 %>

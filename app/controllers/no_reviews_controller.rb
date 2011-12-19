@@ -7,4 +7,9 @@ class NoReviewsController < ApplicationController
     session[:reviewreq] = "external"
   end
 
+  def edit
+    @reviewee = User.find(params[:id])
+    session[:reviewee] = @reviewee.id
+    redirect_to new_officer_review_path
+  end
 end

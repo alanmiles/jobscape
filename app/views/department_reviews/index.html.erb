@@ -47,9 +47,21 @@
   <tr>
     <td><%= department.name %></td>
     <td class="centralize"><%= department.headcount %></td> 
-    <td class="centralize"><%= department.review_frequency_in_days %> days</td>
-    <td class="centralize"><%= department.self_appraisal_frequency_in_days %> days</td>
-    <td class="centralize"><%= department.avg_review_score_in_calculation_period %> %</td>
+    <td class="centralize">
+      <% unless department.reviews_in_calculation_period.count == 0 %>
+        <%= department.review_frequency_in_days %> days
+      <% end %>
+    </td>
+    <td class="centralize">
+      <% unless department.self_appraisals_in_calculation_period.count == 0 %>
+        <%= department.self_appraisal_frequency_in_days %> days
+      <% end %>  
+    </td>
+    <td class="centralize">
+      <% unless department.reviews_in_calculation_period.count == 0 %>  
+        <%= department.avg_review_score_in_calculation_period %> %
+      <% end %>  
+    </td>
     <td class="centralize">
       <%= link_to image_tag("select.png", :size => "15x15"), department_review_path(department),
           :title => "Review records of the department team" %> 
