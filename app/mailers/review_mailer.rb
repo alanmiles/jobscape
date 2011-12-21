@@ -21,4 +21,12 @@ class ReviewMailer < ActionMailer::Base
     mail(:to => review.reviewer.email, :subject => "HYGWIT review request", :from => @user.email) 
   end
   
+  def external_reviewer(review)
+    @reviewer_name = review.reviewer_name
+    @reviewee = User.find(review.reviewee_id)
+    @code = review.secret_code
+    @scheduled_completion = (review.created_at + 14.days).strftime("%a %b %d, %Y")
+    mail(:to => review.reviewer_email, :subject => "Performance review - #{@reviewee.name}", :from => @reviewee.email)  
+  end
+  
 end

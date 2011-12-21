@@ -25,7 +25,7 @@ class CurrentReviewsController < ApplicationController
       else
         if @review.consent == false
           flash[:notice] = "You didn't confirm that you've seen the previous form, so the review has not yet
-                      been cancelled.  This will prevent you from setting up a new review."
+                      been cancelled.  This prevents you from setting up a new review."
         else
           flash[:success] = "Any changes you made to your current review have been recorded.
                          The reviewer is #{@review.reviewer.name}."

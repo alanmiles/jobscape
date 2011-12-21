@@ -1,0 +1,21 @@
+    There's been no response from <%= @contact %> yet.
+ 
+    
+    <br />
+    
+    
+      <div class="field">    
+        <%= f.label :reviewer_name, "Edit reviewer name" %> &nbsp;
+        <%= f.text_field :reviewer_name %>
+        <% if ! @review.reviewer_name.empty? && @review.reviewer_name == current_user.name %>
+          <br /><small>You should have the reviewer name above, but it's your name.  Edit?</small>
+        <% end %> 
+      </div>
+      <br />
+      <div class="field">
+        <%= f.label :cancel, "Check this box to cancel the review completely" %> &nbsp;
+        <%= f.check_box :cancel %><br />
+        <small>(Only cancel for a good reason - e.g. your reviewer is unavailable, and there's no time to find a replacement)</small>
+      </div>
+    
+      

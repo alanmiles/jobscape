@@ -12,28 +12,29 @@
 <%= render 'reviews/explanation' %>
 <br />
 
-<%= form_for(@review, :url => self_appraisals_path(@review)) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :reviewer_name %> <br />
-    <small>Change the name if someone else is reviewing your performance this time.</small><br />
-    <%= f.text_field :reviewer_name, :size => 40 %>
-  </div>
+<div class="shift_center_50">
+  <%= form_for(@review, :url => self_appraisals_path(@review)) do |f| %>
+    <%= render 'shared/error_messages', :object => f.object %>
+    <div class="field">
+      <%= f.label :reviewer_name %> <br />
+      <small>Change the name if someone else is reviewing your performance this time.</small><br />
+      <%= f.text_field :reviewer_name, :size => 40 %>
+    </div>
 
-  <div class="field">
-    <%= f.label :reviewer_email %> <small><br />
-    If added, we'll direct your reviewer to a special HYGWIT page for the review.<br />
-    Not necessary if this is a self-appraisal.</small><br />
-    <%= f.text_field :reviewer_email, :size => 40 %>
-  </div>
-  <%= f.hidden_field :job_id %>
-  <%= f.hidden_field :reviewee_id %>
-  <%= f.hidden_field :reviewer_id %>
-  <%= f.hidden_field :placement_id %>
+    <div class="field">
+      <%= f.label :reviewer_email %> <small><br />
+      If added, we'll direct your reviewer to a special HYGWIT page for the review.<br />
+      Not necessary if this is a self-appraisal.</small><br />
+      <%= f.text_field :reviewer_email, :size => 40 %>
+    </div>
+    <%= f.hidden_field :job_id %>
+    <%= f.hidden_field :reviewee_id %>
+    <%= f.hidden_field :reviewer_id %>
+    <%= f.hidden_field :placement_id %>
 
     <div class="actions">
       <%= f.submit "Continue" %>
     </div>
  
-<% end %>
-
+  <% end %>
+</div>

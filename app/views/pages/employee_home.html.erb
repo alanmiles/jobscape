@@ -42,7 +42,7 @@
             
             <% if @review.reviewer_id == current_user.id %>
               <%= link_to "Continue your self-appraisal", edit_self_appraisal_path(@review) %>
-            
+              &nbsp; <span class="highlt round"><small> incomplete</small></span>
             <% else %>
               
               <% if @review.consent? %>

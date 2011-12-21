@@ -69,7 +69,7 @@ class Review < ActiveRecord::Base
   validates	:responsibilities_score, :presence	=> true
   validates	:attributes_score,	:presence 	=> true
   validates	:reviewer_email, 	:format 	=> { :with => email_regex, :allow_blank => true }
-  validates	:secret_code,		:length		=> { :maximum => 4, :allow_blank => true }
+  validates	:secret_code,		:length		=> { :maximum => 6, :allow_blank => true }
   validates	:achievements,		:length		=> { :maximum => 255, :allow_blank => true }
   validates	:problems,		:length		=> { :maximum => 255, :allow_blank => true }
   validates	:observations,		:length		=> { :maximum => 255, :allow_blank => true } 
@@ -92,6 +92,11 @@ class Review < ActiveRecord::Base
   def self_appraisal?
     reviewer_id == reviewee_id && reviewer_email.blank?
   end
+  
+  def self.generate_secret_code
+    alphanumerics = [('0'..'9'),('a'..'z')].map {|range| range.to_a}.flatten
+    (0...6).map { alphanumerics[Kernel.rand(alphanumerics.size)] }.join
+  end 
   
   def started?
     responsibilities_complete? || qualities_complete? || comments_complete?

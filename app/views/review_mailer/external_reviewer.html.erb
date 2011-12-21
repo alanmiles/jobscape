@@ -1,0 +1,35 @@
+<% unless @reviewer_name.empty? || @reviewer_name == @reviewee.name %>
+  Dear <%= @reviewer_name %>
+<% end %>
+<br /><br />
+  I'd be grateful if you'd give me some help with a review of my performance at work recently.
+  <br /><br />
+  I'm using a website called HYGWIT (="Have You Got What It Takes?"), which is all about managing achievement.  Using
+  HYGWIT I've listed my key responsibilities, then set a couple of measurable goals for each of them.  What I'd like 
+  from you is an objective opinion.  From the evidence you've seen, have I achieved the goals or not?
+  <br /><br />
+  There's also a list of the 10 personal attributes that are critical to success in my job.  For each attribute, there
+  are 5 descriptors, a sentence or two long.  I'd like you to select the descriptor that you think fits me best.
+  <br /><br />
+  Finally, there's a section for your comments, such as my best achievements recently, or biggest failures!  If you
+  have ideas about how I can do better, I'd like to hear them. You may also have views about the goals I've set: do
+  they seem appropriate?
+  <br /><br />
+  The whole exercise shouldn't take more than 30 minutes.  It doesn't need to be completed in a single session, but it
+  has to be finished by <%= @scheduled_completion %>.  If you can't manage that, please let me know, so that I can make
+  other arrangements.
+  <br /><br />
+  <% if Rails.env.development? %>
+    <a href="http://localhost:3000/reviewer_login">Follow this link to log in to HYGWIT. </a>
+  <% else %>
+    <a href="http://blooming-sword-634.heroku.com/reviewer_login">Follow this link to log in to HYGWIT. </a>
+  <% end %>
+  You'll need to enter my name, just like this - <strong><%= @reviewee.name %></strong> and a password - <strong><%= @code %></strong>.
+  You'll then be directed to the review page, which has detailed instructions.
+  <br /><br />
+  Thank you for helping me to measure and fine-tune my performance.
+  <br /><br />
+  <%= @reviewee.name %>
+ 
+ 
+ 

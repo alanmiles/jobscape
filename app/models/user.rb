@@ -316,8 +316,8 @@ class User < ActiveRecord::Base
   
   def incomplete_self_appraisal(business)
     self.reviewed_sessions.where("reviews.completed = ? and reviews.cancel = ? 	
-    		and reviews.created_at >=? and reviews.business_id = ? and reviews.reviewer_id = ?", 
-    		false, false, Date.today - 14, business.id, self.id).limit(1)
+    		and reviews.created_at >=? and reviews.business_id = ? and reviews.review_type = ?", 
+    		false, false, Date.today - 14, business.id, 1).limit(1)
   end
   
   def has_incomplete_self_appraisal?(business)
@@ -327,8 +327,8 @@ class User < ActiveRecord::Base
   
   def incomplete_external_review(business)
     self.reviewed_sessions.where("reviews.completed = ? and reviews.cancel = ? 	
-    		and reviews.created_at >=? and reviews.business_id = ? and reviews.reviewer_id != ?", 
-    		false, false, Date.today - 14, business.id, self.id).limit(1)
+    		and reviews.created_at >=? and reviews.business_id = ? and reviews.review_type != ?", 
+    		false, false, Date.today - 14, business.id, 1).limit(1)
   end
   
   def has_incomplete_external_review?(business)
@@ -350,24 +350,24 @@ class User < ActiveRecord::Base
   end
   
   def no_formal_reviews?(business)
-    self.reviewed_sessions.where("reviews.completed = ? and reviews.reviewer_id != ? and reviews.business_id = ?", true, self.id, business.id).count == 0
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.review_type != ? and reviews.business_id = ?", true, 1, business.id).count == 0
   end
   
   def last_formal_review(business)
-     self.reviewed_sessions.where("reviews.completed = ? and reviews.reviewer_id != ? and reviews.business_id = ?", true, self.id, business.id).last
+     self.reviewed_sessions.where("reviews.completed = ? and reviews.review_type != ? and reviews.business_id = ?", true, 1, business.id).last
   end
   
   def no_self_appraisals?(business)
-    self.reviewed_sessions.where("reviews.completed = ? and reviews.reviewer_id = ? and reviews.business_id = ?", true, self.id, business.id).count == 0
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.review_type = ? and reviews.business_id = ?", true, 1, business.id).count == 0
   end
   
   def last_self_appraisal(business)
-    self.reviewed_sessions.where("reviews.completed = ? and reviews.reviewer_id = ? and reviews.business_id = ?", true, self.id, business.id).last
+    self.reviewed_sessions.where("reviews.completed = ? and reviews.review_type = ? and reviews.business_id = ?", true, 1, business.id).last
   end
   
   def formal_reviews(job)
-    self.reviewed_sessions.where("reviews.job_id = ? and reviews.reviewer_id != ? 
-      and reviewer_name = ? and completed = ?", job.id, self.id, nil, true).order("reviews.completion_date DESC")
+    self.reviewed_sessions.where("reviews.job_id = ? and reviews.review_type != ? 
+      and reviewer_name = ? and completed = ?", job.id, 1, nil, true).order("reviews.completion_date DESC")
   end
   
   def has_formal_reviews?(job)
@@ -448,8 +448,8 @@ class User < ActiveRecord::Base
   end
   
   def review_requests(business)
-    Review.where("reviewer_id = ? and reviewee_id != ? and cancel = ? and completed = ? 
-             and business_id = ? and created_at >= ? and (consent = ? or consent IS NULL)", self.id, self.id, false, false, business.id, Time.now - 14.days, true)
+    Review.where("reviewer_id = ? and review_type != ? and cancel = ? and completed = ? 
+             and business_id = ? and created_at >= ? and (consent = ? or consent IS NULL)", self.id, 1, false, false, business.id, Time.now - 14.days, true)
   end
   
   def has_review_requests?(business)
@@ -457,8 +457,8 @@ class User < ActiveRecord::Base
   end
   
   def all_review_requests
-    Review.where("reviewer_id = ? and reviewee_id != ? and cancel = ? and completed = ? 
-             and created_at >= ? and (consent = ? or consent IS NULL)", self.id, self.id, false, false, Time.now - 14.days, true)
+    Review.where("reviewer_id = ? and review_type != ? and cancel = ? and completed = ? 
+             and created_at >= ? and (consent = ? or consent IS NULL)", self.id, 1, false, false, Time.now - 14.days, true)
   end
   
   def has_any_review_requests?
@@ -466,8 +466,8 @@ class User < ActiveRecord::Base
   end
   
   def rejected_review_requests(business)
-    Review.where("reviewer_id = ? and reviewee_id != ? and cancel = ? and completed = ? 
-             and business_id = ? and created_at >= ? and consent = ?", self.id, self.id, false, false, business.id, Time.now - 14.days, false)
+    Review.where("reviewer_id = ? and review_type != ? and cancel = ? and completed = ? 
+             and business_id = ? and created_at >= ? and consent = ?", self.id, 1, false, false, business.id, Time.now - 14.days, false)
   end
   
   def has_rejected_review_requests?(business)
@@ -475,8 +475,8 @@ class User < ActiveRecord::Base
   end
   
   def all_rejected_review_requests
-    Review.where("reviewer_id = ? and reviewee_id != ? and cancel = ? and completed = ? 
-             and created_at >= ? and consent = ?", self.id, self.id, false, false, Time.now - 14.days, false)
+    Review.where("reviewer_id = ? and review_type != ? and cancel = ? and completed = ? 
+             and created_at >= ? and consent = ?", self.id, 1, false, false, Time.now - 14.days, false)
   end
   
   def has_any_rejected_review_requests?

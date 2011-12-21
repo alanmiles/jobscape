@@ -44,7 +44,9 @@
     <div class="field">
       <%= f.label :reviewer_id %> &nbsp;
       <%= grouped_collection_select(:review, :reviewer_id, @departments, :current_team, :name, :id, :name) %><br /> 
-      <small>(Select your own name for a self-appraisal, or someone else if you want a colleague to review.)</small> 
+      <small>
+        (Select your own name for a self-appraisal, or someone else if you want a colleague to review.)
+      </small> 
     </div>
     <br />
   

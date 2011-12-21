@@ -11,8 +11,22 @@
       <li class="no_bullet"><%= link_to "Update your Achievement Plan", plan_path(@plan) %></li>
       <li class="no_bullet"><%= link_to "View the complete Achievement Plan", aplan_path(@plan) %></li>
       <li class="no_bullet">
-        <% if current_user.has_incomplete_review?(@business) %>        
-          <%= link_to "Continue your performance review", edit_self_appraisal_path(@review) %>
+        <% if current_user.has_incomplete_self_appraisal?(@business) %>        
+          <%= link_to "Continue your self-appraisal", edit_self_appraisal_path(@review) %>
+        <% elsif current_user.has_incomplete_external_review?(@business) %>
+          
+          <% if @review.consent? %>
+            <span class="highlt round">Review request accepted</span> &nbsp;
+            <%= link_to "Details", edit_external_reviewer_path(@review) %>
+              
+          <% elsif @review.consent == false %>
+            <span class="highlt round">Reviewer unavailable</span> &nbsp; 
+            <%= link_to "Change review arrangements", edit_external_reviewer_path(@review) %>
+              
+          <% elsif @review.consent.nil? %>
+            <%= link_to "Review in progress: change reviewer or cancel", edit_external_reviewer_path(@review) %>
+          <% end %>
+        
         <% else %>
           <%= link_to "Set up a performance review", new_self_appraisal_path %>
         <% end %>

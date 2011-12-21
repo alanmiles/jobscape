@@ -1,10 +1,6 @@
 Jobscape::Application.routes.draw do
 
-  get "no_appraisals/index"
-
-  get "no_reviews/index"
-
-  get "department_reviews/index"
+  get "external_reviewers/edit"
 
   resources :users do
     resource :portrait, :shallow => true
@@ -129,6 +125,7 @@ Jobscape::Application.routes.draw do
   resources :self_appraisals
   resources :my_reviews
   resources :current_reviews
+  resources :external_reviewers, :only => [:edit, :update]
   resources :no_reviews
   resources :no_appraisals
   resources :review_responses, :only => [:edit, :update]
@@ -162,7 +159,8 @@ Jobscape::Application.routes.draw do
   match '/hygwit_introduction', :to => 'pages#hygwit_introduction'
   match '/performance_reviews', :to => 'pages#performance_reviews'
   match '/locked_aplan',	:to => 'pages#locked_aplan'
-
+  match '/reviewer_login',	:to => 'pages#reviewer_login'
+  
   root :to => 'pages#home'
 
   # The priority is based upon order of creation:

@@ -222,6 +222,10 @@ class PagesController < ApplicationController
     #session[:biz] = @business.id
   end
   
+  def reviewer_login
+    @title = "Reviewer log-in"
+  end
+  
   def locked_aplan
     @user = current_user
     @business = Business.find(session[:biz])

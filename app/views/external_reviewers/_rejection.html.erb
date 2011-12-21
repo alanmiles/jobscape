@@ -1,0 +1,22 @@
+<br />
+<span class="highlt round" style="text-align: center; margin-top:10px">
+  <%= @contact %> is unable to review.
+</span><br />
+
+<% if @review.cancellation_reason.empty? %>
+  No reason was given
+<% else %>
+  Reason: '<i><%= @review.cancellation_reason %></i>'
+<% end %>
+<br /><br />
+
+<div class="field">
+  <%= f.label :cancel, "Confirm that you've seen this message by checking this box" %> &nbsp;
+  <%= f.check_box :cancel %><br />
+  <small>( When you check the box and then confirm, this review will be cancelled. )</small>
+</div>
+<br />
+You then need to set up a new review with a different reviewer.<br />
+
+
+

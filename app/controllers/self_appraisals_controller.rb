@@ -19,10 +19,30 @@ class SelfAppraisalsController < ApplicationController
   def create
     @review = Review.new(params[:review])
     if @review.save
-      flash[:success] = "New review session started"
-      redirect_to edit_self_appraisal_path(@review)
+      if @review.reviewer_email.empty?
+        if @review.reviewer_name == current_user.name
+          flash[:success] = "New self-appraisal session started"  
+        else
+          flash[:success] = "You changed the reviewer name, but did not enter a reviewer email address.  So if
+                 someone else is reviewing your performance, you'll need to log them in to HYGWIT first.  The next
+                 time you want an external review, why not enter an email address?  Your reviewer will immediately
+                 receive a special log-in, giving direct access to the page for your review.)"
+        end
+        redirect_to edit_self_appraisal_path(@review)
+      else
+        @code = Review.generate_secret_code
+        @review.update_attributes(:review_type => 2, :secret_code => @code)
+        ReviewMailer.external_reviewer(@review).deliver
+        if @review.reviewer_name.empty? || @review.reviewer_name == @review.reviewee.name
+          @contact = @review.reviewer_email
+        else
+          @contact = @review.reviewer_name
+        end
+        flash[:success] = "An email has been sent to #{@contact} requesting a performance review within the next 2 weeks."
+        redirect_to my_job_path
+      end
     else
-      @user = current_user
+
       @job = Job.find(session[:jobid])
       @placement = Placement.find_by_user_id_and_job_id_and_current(@user, @job, true)
       #@review = Review.new(:reviewee_id => @user.id, :reviewer_id => @user.id, :reviewer_name => @user.name, :job_id => @job.id)
