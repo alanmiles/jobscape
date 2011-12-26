@@ -58,6 +58,9 @@ h4.shallow {
   margin-bottom: 5px; 
 }
 
+section h5 {
+  font-size: 90%;
+}
 /* Links */
 
 a {
