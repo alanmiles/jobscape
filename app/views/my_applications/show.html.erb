@@ -1,20 +1,59 @@
-<div class = "r-float">
-  <%= link_to "Your completed applications list", my_applications_path %><br />
-  <%= link_to "Change your application", edit_my_application_path(@application) %>
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), my_applications_path %>
+
+<div>
+
+  <strong>
+    <% if @vacancy.quantity == 1 %>
+      <%= @vacancy.job.job_title %>
+    <% else %>
+      <%= "#{@vacancy.quantity.to_s} #{@vacancy.job.job_title.pluralize}" %>
+    <% end %>
+    - <%= @vacancy.job.business.city %>
+  </strong>       
+  <div class="subtext">   
+    <% if @vacancy.full_time? %>
+      Full-time  
+    <% else %>
+      Part-time 
+    <% end %> 
+    job in <%= @vacancy.sector.sector %> business. 
+    <% if @vacancy.voluntary? %>
+      Voluntary work.
+    <% else %>
+      Salary: £<%= number_with_delimiter(@vacancy.remuneration, :delimiter => ",") %><%= @vacancy.remuneration_rate %>.
+    <% end %>
+    <br />
+    Posted <%= time_ago_in_words(@vacancy.created_at) %> ago.  
+    Deadline - <%= @vacancy.close_date.strftime("%a %b %d") %>.
+    &nbsp;<em>(<%= pluralize(@vacancy.all_completed_applications.count, "application") %> so far)</em>
+    <br />
+    <% unless @vacancy.notes.empty? %> 
+      <%= @vacancy.notes %>
+      <br />
+    <% end %>
+    <% if @details_link == true %>
+      <% unless @vacancy.interest_from?(current_user) %>
+        <%= link_to "(Full details)", new_vacancy_application_path(@vacancy) %>
+      <% else %>
+        <% if @vacancy.application_from(current_user).next_action == 1 %>
+          <%= link_to "(Review job details & apply)", "#" %>
+        <% else %>
+          <% if @vacancy.application_from(current_user).submitted? %>
+            <%= link_to "(Review your application)", "#" %>
+          <% else %>
+            <%= link_to "(Continue with application)", "#" %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <br />
+    <% end %>
+    <%= link_to image_tag("details.png"), "#" %> &nbsp;
+    <%= link_to "Detailed description of job", "#" %>   
+  </div>
 </div>
 
-<h1><%= @title %></h1>
 <br />
 
-<div class="info_box_screen">
-  <small><em>This is what the recruiter will see - together with your portrait, and any inputs received from your references.
-      Check through your answers carefully, and then, if you've not sent a HYGWIT application before, take a look at our 'Guidance Notes' 
-      via the link at the bottom of the page.  If you want to cancel your application, you can do this from the 
-      'Completed Applications List'</em></small>
-</div>
-
-<%= render "brief_without_status", :vacancy => @vacancy %>
-<br />
 <h4>You were asked..</h4>
 
 <table class="smaller_font">

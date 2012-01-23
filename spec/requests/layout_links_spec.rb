@@ -31,7 +31,7 @@ describe "LayoutLinks" do
     visit root_path
     click_link "About"
     response.should have_selector('title', :content => "About")
-    click_link "Help"
+    click_link "Click to toggle Help on/off"
     response.should have_selector('title', :content => "Help")
     click_link "Contact"
     response.should have_selector('title', :content => "Contact")
@@ -44,8 +44,7 @@ describe "LayoutLinks" do
   describe "when not signed in" do
     it "should have a signin link" do
       visit root_path
-      response.should have_selector("a", :href => signin_path,
-                                         :content => "Log in")
+      response.should have_selector("a", :href => signin_path)
     end
   end
 
@@ -67,8 +66,7 @@ describe "LayoutLinks" do
 
     it "should have a signout link" do
       visit root_path
-      response.should have_selector("a", :href => signout_path,
-                                         :content => "Log off")
+      response.should have_selector("a", :href => signout_path)
     end
 
     it "should have a self-portrait link" do

@@ -1,53 +1,61 @@
-<div class = "r-float">
-  <%= render 'home_redirection' %>
-</div>
-
-<h1>Edit your account settings</h1>
+<%= render 'home_redirection' %>
 
 <% unless @user.account == 4 %>
-  <div class="info_box grayborder rightpos">
+  <div class="info_box grayborder rightpos" style="display:none">
     <br />
     <%= render "/shared/account_types" %> 
     <br /><br />
   </div>
 <% end %>
 
-<%= form_for(@user) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :name %> <small>(Your normal first name and family name)</small><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :email %> <br />
-    <%= f.text_field :email %>
-  </div>
+<div class="shift_center_50">
+  <%= form_for(@user) do |f| %>
+ 
+    <%= render 'shared/error_messages', :object => f.object %>
   
-  <div class="field">
-    <% if @user.account == 4 %>
-      Signed up for an Employee account with<br /> <strong><%= @business.name.upcase %></strong>.
-      <%= f.hidden_field :account %>
-      <br /><br />
-    <% else %>
-      <%= f.label :account, "Account-type" %> <small>(see panel right)</small> &nbsp;
-      <%= select( :user, :account, @accounts ) %>
-    <% end %>
-  </div>
-  
-  <% if @user.account == 2 %>
-    <div class="field" style = "width:300px">
-      <strong>Location</strong> <br />
-      <%= @user.city %>, <%= @user.country %>.
-      <br /><br />
-      <small>If the location's wrong, replace your IP address below with your post-code or address. (Max 50 characters)</small> 
-      <%= f.text_field :address %>
+    <div class="field">
+      <%= f.label :name %> 
+      <div class="subtext">Your normal first name and family name - <br />
+         the name you use at work.  
+      </div>
+      <%= f.text_field :name %>
     </div>
+    <div class="field">
+      <%= f.label :email %> <br />
+      <%= f.text_field :email %>
+    </div>
+  
+    <div class="field">
+      <% if @user.account == 4 %>
+        Signed up for an Employee account with<br /> <strong><%= @business.name.upcase %></strong>.
+        <%= f.hidden_field :account %>
+        <br /><br />
+      <% else %>
+        <%= f.label :account, "Account-type" %><br />
+        <%= select( :user, :account, @accounts ) %>
+      <% end %>
+    </div>
+  
+    <% if @user.account == 2 %>
+      <div class="field" style = "width:300px">
+        Location <br />
+        <%= @user.city %>, <%= @user.country %>.
+        <br /><br />
+        <div class="subtext">If the location's wrong, replace your IP address below with your post-code or address. (Max 50 characters)</div> 
+        <%= f.text_field :address %>
+      </div>
+    <% end %>
+    <div class="field">
+       Re-enter password *<br />
+       <%= f.password_field :password, :size => 16 %>
+    </div>
+    <div class="field">
+      Confirm password *<br />
+      <%= f.password_field :password_confirmation, :size => 16 %> 
+    </div>
+    <div class="actions">
+      <%= f.submit "Update", :class => "create round" %>
+    </div>
+  
   <% end %>
-  <div class="field">
-     <strong>Re-enter password</strong> &nbsp; <%= f.password_field :password, :size => 16 %><br />
-     <strong>Confirm password </strong> &nbsp; <%= f.password_field :password_confirmation, :size => 16 %> 
-  </div>
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
+</div>

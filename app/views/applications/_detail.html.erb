@@ -1,9 +1,9 @@
-          <%= application.vacancy.headline %>. &nbsp;<i>(Ref #<%= application.vacancy.id %>)</i><br />
           <% if application.vacancy.full_time? %>
-            Full-time.  
+            Full-time  
           <% else %>
-            Part-time. 
-          <% end %>
+            Part-time 
+          <% end %> 
+          job in <%= application.vacancy.sector.sector %> business. 
           <% if application.vacancy.voluntary? %>
             Voluntary work.
           <% else %>

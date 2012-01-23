@@ -1,11 +1,9 @@
-<div class = "r-float">
-  <%= link_to "Job-search menu", jobsearch_menu_path %>
-</div>
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), jobsearch_menu_path %>
 
-<h1><%= @title %></h1>
 
 <% if Application.incomplete?(@user) %>
   <div class="no_data round">
+    <%= image_tag("no_entry.png") %> &nbsp;
     You have no incomplete applications.
   </div>
 <% else %>

@@ -64,9 +64,9 @@ describe BusinessesController do
     
       before(:each) do
         @biz1 = Factory(:business, :sector_id => @sector.id)
-        @biz2 = Factory(:business, :name => "Biz2", :address => "CB1 3TJ",
+        @biz2 = Factory(:business, :name => "Business2", :address => "CB1 3TJ",
         		:sector_id => @sector.id)
-        @biz3 = Factory(:business, :name => "Biz3", :address => "CB1 3TJ",
+        @biz3 = Factory(:business, :name => "Business3", :address => "CB1 3TJ",
         		:sector_id => @sector.id) 
         @businesses = [@biz1, @biz2, @biz3]                          
       end
@@ -84,13 +84,13 @@ describe BusinessesController do
       it "should have an element for each business" do
         get :index
         @businesses[0..2].each do |business|
-          response.should have_selector("td", :content => business.name)
+          response.should have_selector("li", :content => business.name)
         end
       end
       
       it "should count the total number of businesses" do
         get :index
-        response.should have_selector(".r-float", :content => @businesses.count.to_s)
+        response.should have_selector(".r-float", :content => "Total: #{@businesses.count.to_s}")
       end
     end
   
@@ -180,7 +180,7 @@ describe BusinessesController do
       
       it "should have the right title" do
         get :new
-        response.should have_selector("title", :content => "New business")
+        response.should have_selector("title", :content => "Add a business")
       end
     end
     

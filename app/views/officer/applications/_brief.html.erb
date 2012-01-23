@@ -1,0 +1,75 @@
+      <div class="display_wider grayborder round">
+        
+        <strong>
+          <% if vacancy.quantity == 1 %>
+            <%= vacancy.job.job_title %>
+          <% else %>
+            <%= "#{vacancy.quantity.to_s} #{vacancy.job.job_title.pluralize}" %>
+          <% end %>
+          - <%= vacancy.job.department.name %>.
+        </strong>
+  
+        <br />
+        <% if vacancy.full_time? %>
+          Full-time.  
+        <% else %>
+          Part-time. 
+        <% end %>
+        <% if vacancy.voluntary? %>
+          This is a voluntary position.
+        <% elsif vacancy.annual_salary.nil? %>
+          Hourly rate: £<%= two_dec(vacancy.hourly_rate) %>.
+        <% else %>
+          Annual salary: £<%= number_with_delimiter(vacancy.annual_salary, :delimiter => ",") %>.
+        <% end %>
+        <br />
+        
+        <% unless vacancy.notes.empty? %>
+          <%= vacancy.notes %> 
+          <br />
+        <% end %>
+        
+        <small>
+           Vacancy ref #<%= vacancy.id %> -  
+           Close-date: <%= display_daydate(vacancy.close_date) %>.
+        </small>
+        <br />
+        <span id="info", style ="cursor:help; color:#09c; font-size:85%">View job summary</span>
+        
+        <div id ="infotext" class="info_box_wide shift_center_50 beige round" style = "display:none; margin-top: 10px; width: 75%">
+          <span id = "no-info2" style="color:#09c; cursor:n-resize">(Hide)</span> &nbsp;
+          <%= @outline.role %><br /><br />
+          <%= @outline.qualities %><br /><br />
+          <%= @outline.importance %>
+          &nbsp; <span id = "no-info" style="color:#09c; cursor:n-resize">(Hide)</span>
+        </div>
+        
+      </div>      
+      
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+   $(document).ready(function(){
+    
+    $('#info').click(function() {
+      $('#infotext').show('fast', function() {
+      // Animation complete.
+      });
+    });
+    
+    $('#no-info').click(function() {
+      $('#infotext').hide('fast', function() {
+      // Animation complete.
+      });
+    });
+    
+    $('#no-info2').click(function() {
+      $('#infotext').hide('fast', function() {
+      // Animation complete.
+      });
+    });
+   }); 
+  <% end %>
+<% end %>
+  

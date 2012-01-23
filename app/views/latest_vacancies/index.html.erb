@@ -1,22 +1,23 @@
-<div class = "r-float">
-  <%= link_to "Job-search menu", jobsearch_menu_path if signed_in? %>
-</div>
+<% if signed_in? %>
+  <%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), jobsearch_menu_path %>
+<% else %>
+  <%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), root_path %>
+<% end %>
 
-<h1><%= @title %></h1>
-
-<div class = "display_wider">
-  <% if @vacancies.count == 0 %>
-    <div class="no_data round">
-      Sorry, there are no vacancies at present.  But please check back soon.
-    </div>
-  <% else %>
+<% if @vacancies.count == 0 %>
+  <div class="no_data round">
+    <%= image_tag("no_entry.png") %> &nbsp;
+    Sorry, there are no vacancies at present.  But please check back soon.
+  </div>
+<% else %>
+  <div class = "display_wider">
     <% if signed_in? %>
       <% if current_user.has_public_portrait? %>
         To bookmark or apply for one of these jobs, click on 'Full details'
       <% else %>
         <i>Before you can apply for any of these vacancies, you need to complete 
-         your <%= link_to "Self-Portrait", user_portrait_path(current_user) %> and then make it public 
-       - the Portrait is the HYGWIT equivalent of a CV.</i>
+           your <%= link_to "Self-Portrait", user_portrait_path(current_user) %> and then make it public 
+           - the Portrait is the HYGWIT equivalent of a CV.</i>
       <% end %>
     <% else %>
       Listed below are just the 10 latest HYGWIT jobs.  <%= link_to "Log in", signin_path %> or <%= link_to "sign up for a free account", signup_path %> to 
@@ -26,8 +27,9 @@
       announcements just like these, and find out how HYGWIT can transform your business.
 
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>
+
 <ul class="no_dec">
   <% @vacancies.each do |vacancy| %>
     <li><%= render 'brief', :vacancy => vacancy %></li>

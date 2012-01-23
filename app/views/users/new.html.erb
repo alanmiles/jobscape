@@ -1,7 +1,5 @@
-<h1>Sign up</h1>
-
 <% if session[:invited] == nil %>
-  <div class="info_box grayborder rightpos">
+  <div class="info_box grayborder rightpos" style="display: none">
     <br />
     <%= render "/shared/account_types" %> 
     <br /><br />
@@ -13,12 +11,11 @@
   <%= render 'fields', :f => f %>
   
   <div class="field">
-    I have read and agree to <%= link_to "the HYGWIT terms", "#" %>.
+    Check to confirm you've read and agree to <%= link_to "the HYGWIT terms", "#" %>.
     <%= f.check_box :terms %>
   </div>
-  <br />
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "Sign up", :class => "create round" %>
   </div>
 <% end %>
 

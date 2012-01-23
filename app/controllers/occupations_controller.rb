@@ -16,7 +16,7 @@ class OccupationsController < ApplicationController
   def create
     @occupation = Occupation.new(params[:occupation])
     if @occupation.save
-      flash[:success] = "#{@occupation.name} added."
+      flash[:success] = "'#{@occupation.name}' added."
       redirect_to occupations_path
     else
       @title = "New occupation"
@@ -32,7 +32,7 @@ class OccupationsController < ApplicationController
   def update
     @occupation = Occupation.find(params[:id])
     if @occupation.update_attributes(params[:occupation])
-      flash[:success] = "#{@occupation.name} updated."
+      flash[:success] = "'#{@occupation.name}' updated."
       redirect_to occupations_path
     else
       @title = "Edit occupation"
@@ -46,9 +46,8 @@ class OccupationsController < ApplicationController
       flash[:error] = " Cannot delete occupation while associated jobs exist"
     else
       @occupation.destroy
-      flash[:success] = "#{@occupation.name} removed."
+      flash[:success] = "'#{@occupation.name}' removed."
     end
-    #redirect_to occupations_path
     redirect_to :back
   end
 

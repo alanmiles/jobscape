@@ -5,7 +5,8 @@ class BusinessesController < ApplicationController
   
   def index
     @title = "Businesses"
-    @businesses = Business.order("name").paginate(:page => params[:page])
+    @businesses = Business.signed_up.order("name").paginate(:page => params[:page])
+    @nmbr = @businesses.count
   end
 
   def show
@@ -14,7 +15,7 @@ class BusinessesController < ApplicationController
   end
   
   def new
-    @title = "New business"
+    @title = "Add a business"
     @business = Business.new
     @sectors = Sector.order("sector")
   end
@@ -67,7 +68,6 @@ class BusinessesController < ApplicationController
   def destroy
     @business = Business.find(params[:id]).destroy
     flash[:success] = "'#{@business.name} - #{@business.city}' removed."
-    #redirect_to businesses_path
     redirect_to :back
   end
 end

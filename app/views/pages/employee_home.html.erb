@@ -28,16 +28,16 @@
   </h4>
   <br />
   
-  <div class = "menu_box grayborder round">
-    <ul>
-      <li class="no_bullet_compact"><%= link_to "Introduction", hygwit_introduction_path %></li> 
+  <div id = "listing">
+    <ul class="no_dec">
+      <li><%= link_to "Introduction", hygwit_introduction_path %></li> 
       <% unless @plan.no_changes? %>
-        <li class="no_bullet_compact"><%= link_to "Update your Achievement Plan", @plan %></li>
+        <li><%= link_to "Update your Achievement Plan", @plan %></li>
       <% end %>
       <% if @plan.complete? %>
-        <li class="no_bullet_compact"><%= link_to "View your complete Achievement Plan", aplan_path(@plan) %></li>
+        <li><%= link_to "View your complete Achievement Plan", aplan_path(@plan) %></li>
         
-        <li class="no_bullet_compact">
+        <li>
           <% if current_user.has_incomplete_review?(@business) %>
             
             <% if @review.reviewer_id == current_user.id %>
@@ -66,18 +66,18 @@
           <% end %>  
         </li>
       <% else %>
-        <li class="no_bullet_compact"><%= link_to "Your Achievement Plan", locked_aplan_path %></li>
-        <li class="no_bullet_compact" style = "color: #999">Arrange a performance review</li> 
+        <li><%= link_to "Your Achievement Plan", locked_aplan_path %></li>
+        <li style = "color: #999">Arrange a performance review</li> 
       <% end %>
       <% if @user.has_completed_reviews?(@business) %>  
-        <li class="no_bullet_compact"><%= link_to "Review history", my_reviews_path %></li>
+        <li><%= link_to "Review history", my_reviews_path %></li>
       <% else %>
         <div style ="color: #999">
-          <li class="no_bullet_compact">Review history</li>
+          <li>Review history</li>
         </div>
       <% end %> 
-      <li class="no_bullet_compact"><%= link_to "Targets", my_targets_path %></li>
-      <li class="no_bullet_compact"><%= link_to "Daily tasks", my_tasks_path %></li>
+      <li><%= link_to "Targets", my_targets_path %></li>
+      <li><%= link_to "Daily tasks", my_tasks_path %></li>
       <% if @user.has_review_requests?(@business) %>
         <% if @user.review_requests(@business).count == 1 %>
           <span class="highlt round">1 review request to deal with </span> &nbsp;

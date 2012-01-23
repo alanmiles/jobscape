@@ -3,7 +3,7 @@ class MyApplicationsController < ApplicationController
   def index
     @user = current_user
     @applications = Application.where("user_id = ? and next_action = ? and submitted = ?", @user, 2, true).order("updated_at DESC").paginate(:page => params[:page]) 
-    @title = "Your completed applications"
+    @title = "Your live applications"
     store_location
   end
 
@@ -28,6 +28,7 @@ class MyApplicationsController < ApplicationController
         @r_score = @application.sum_of_requirements
         @b_score = @application.sum_of_responsibilities
         @application.update_attributes(:qualities_score => @q_score, :requirements_score => @r_score, :responsibilities_score => @b_score)
+        @application.calculate_hygwit_score
         flash[:success] = "Your application for job ref ##{@application.vacancy_id} has now been sent.  Now check the application again."
         redirect_to my_application_path(@application)
       else

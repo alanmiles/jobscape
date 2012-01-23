@@ -1,53 +1,57 @@
 <div class = "r-float">
-
   <% if current_user.admin? %>
-    <%= link_to "Return to Admin Mode", standard_to_admin_path %><br />
+    <%= link_to "Admin Mode", standard_to_admin_path %> |
   <% end %>
 
   <%= link_to "Add a new business", new_business_path %><br />
   <% if @user.belongs_to_business? %>
     <% unless @user.single_business? %>
-      <%= link_to "Switch business", select_business_path %>
-      <br />
+      <%= link_to "Switch business", select_business_path %> |
     <% end %>
   <% end %>
   <%= link_to "Your own records", officer_to_own_path unless @user.no_current_job?(@business) %>
-  <% if @user.has_review_requests?(@business) || @user.has_rejected_review_requests?(@business) %>
-    &nbsp;
-    <span class="highlt round"><small>Action required</small></span>
-  <% else %>
-    <% unless @user.no_current_job?(@business) %>
-      <% if @user.self_appraisal_due?(@business) || @user.external_review_due?(@business) %>
-        &nbsp;
-        <span class="highlt round"><small>Action required</small></span>
+  <% unless @no_business == true %>
+    <% if @user.has_review_requests?(@business) || @user.has_rejected_review_requests?(@business) %>
+      &nbsp;
+      <%= image_tag("important.png") %>
+      &nbsp;
+    <% else %>
+      <% unless @user.no_current_job?(@business) %>
+        <% if @user.self_appraisal_due?(@business) || @user.external_review_due?(@business) %>
+          &nbsp;
+          <%= image_tag("important.png") %>
+          &nbsp;
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
 </div>
 
 
-<h1>
-  Home - <%= @user.name %>
-</h1>
+<h4>
+  <%= @user.name %>
+</h4>
 
 <% if @no_business == true %>
   <br />
-  <div class = "display_medium round grayborder">
-    <h4 class="highlt">BUSINESS DETAILS REQUIRED</h4>
-    <br />
-    You've signed up for a Business account, but you haven't entered the details of your business yet.<br /><br/>
-    You now have two options:<br /><br />
-    <ol>
-      <li><%= link_to "Add your business now", new_business_path %></li>
-      <li><% link_to "Go to Settings", edit_user_path(@user) %> and change to one of the other HYGWIT account-types</li>
+  <div id = "listing">
+    <%= image_tag("important.png") %> &nbsp; BUSINESS DETAILS REQUIRED
+    <p class="under">
+      You've signed up for a Business account, but you haven't entered the details of your business yet.<br /><br/>
+      So select one of these options:
+    <p>
+    <ol class="shift_center_25">
+      <li class="over"><%= link_to "Add your business now", new_business_path %></li>
+      
+      <i>OR</i>
+     
+      <li class="under"><%= link_to "Follow this link", edit_user_path(@user) %> and change to a non-business account-type</li>
     </ol>
   </div>
 <% else %>
   <h4><%= @business.name %>, <%= @business.city %></h4>
   <br />
 
-  
-    
   <div class="menu_box round grayborder">
     <% if @business.no_jobs? %>
       <i class="highlt round">Before starting with employees, set up departments, then jobs.</i>
@@ -55,9 +59,9 @@
     <% end %> 
     <ul>
       <li class="no_bullet_compact"><%= link_to "Business details", @business %></li>
-      <li class="no_bullet_compact"><%= link_to "Business mission, values, objectives", corporate_plan_path(@business) %></li>
+      <li class="no_bullet_compact"><%= link_to "Business strategy", corporate_plan_path(@business) %></li>
       <li class="no_bullet_compact"><%= link_to "Departments", business_departments_path(@business.id) %></li>
-      <li class="no_bullet_compact"><%= link_to "Jobs & A-Plans", business_jobs_path(@business.id) %></li>
+      <li class="no_bullet_compact"><%= link_to "Jobs / A-Plans / Vacancies", business_jobs_path(@business.id) %></li>
       <li class="no_bullet_compact">
         <%= link_to "Employees (HYGWIT users)", officer_users_path %>
         <% if @business.count_current_employees > 1 %>
@@ -69,7 +73,7 @@
       </li>
       <li class="no_bullet_compact"><%= link_to "HYGWIT invitations", business_invitations_path(@business) %></li>
       <li class="no_bullet_compact"><%= link_to "Performance reviews", performance_reviews_path %></li>
-      <li class="no_bullet_compact"><%= link_to "Vacancies and applications", "#" %></li>  
+      <li class="no_bullet_compact"><%= link_to "Recruitment", recruitment_menu_path %></li>  
     </ul>
     
     <strong><u>ARCHIVE</u></strong>

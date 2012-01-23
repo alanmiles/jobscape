@@ -1,5 +1,8 @@
 class ApplicationsController < ApplicationController
   
+  def index
+  end
+  
   def new
     @vacancy = Vacancy.find(params[:vacancy_id])
     @user = current_user
@@ -15,9 +18,6 @@ class ApplicationsController < ApplicationController
     @title = "Job vacancy"
   end
 
-  def index
-  end
-  
   def create
     @vacancy = Vacancy.find(params[:vacancy_id])
     @application = @vacancy.applications.new(params[:application])

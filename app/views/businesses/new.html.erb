@@ -1,11 +1,6 @@
-<div class = "r-float">
-<%= link_to "Cancel", officer_home_path %>
-</div>
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), officer_home_path %>
 
-<h1>Add your business</h1>
-<%= form_for(@business) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  <div class="info_box grayborder rightpos round"><br />
+  <div class="info_box grayborder rightpos round" style="display:none"><br />
     Sign up your business to:
     <ul>
       <li>Create achievement plans for all.</li>
@@ -21,20 +16,27 @@
     <br /><br />
   </div>
 
-  <div class="field">
-    <%= f.label :name %> <small> (50 character maximum)  </small><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :sector, "Sector" %><br />
-    <%= collection_select(:business, :sector_id, @sectors, :id, 
+<div class="shift_center_50">
+  <%= form_for(@business) do |f| %>
+    <%= render 'shared/error_messages', :object => f.object %>
+  
+
+    <div class="field">
+      <%= f.label :name, "Business name" %> 
+      <div class="subtext">50 characters maximum</div>
+      <%= f.text_field :name, :size => 35 %>
+    </div>
+    <div class="field">
+      <%= f.label :sector, "Sector" %><br />
+      <%= collection_select(:business, :sector_id, @sectors, :id, 
                         :sector, :prompt => true) %>
-  </div>
-  <div class="field">
-    <%= f.label :address, "UK post-code" %><br />
-    <%= f.text_field :address %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Create" %>
-  </div>
-<% end %>
+    </div>
+    <div class="field">
+      <%= f.label :address, "Postcode / Zipcode" %><br />
+      <%= f.text_field :address, :size => 35 %>
+    </div>
+    <div class="actions">
+      <%= f.submit :class => "create round" %>
+    </div>
+  <% end %>
+</div>

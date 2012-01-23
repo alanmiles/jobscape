@@ -4,7 +4,7 @@ describe PagesController do
   render_views
 
   before :each do
-    @base_title = "JobScape"
+    @base_title = "HYGWIT"
     @sector = Factory(:sector)
   end
   
@@ -118,16 +118,10 @@ describe PagesController do
       
       it "should include the user's name" do
         get :user_home
-        response.should have_selector("h1", :content => @user.name) 
+        response.should have_selector("h4", :content => @user.name) 
       end
     
       describe "when user is not attached to a business" do
-        
-        it "should state that there are no business connections" do
-          get :user_home
-          response.should have_selector("h4", 
-              :content => "WHERE DO YOU WANT TO START?")
-        end
         
         it "should have a button to create a new business" do
           get :user_home
@@ -230,7 +224,7 @@ describe PagesController do
         it "should show all associated businesses for the current user" do
           get :select_business
           @employees[0..1].each do |employee|
-            response.should have_selector("td", 
+            response.should have_selector("li", 
                :content => employee.business.name)
           end
         end
@@ -239,9 +233,9 @@ describe PagesController do
           get :select_business
           @employees[0..1].each do |employee|
             if employee.officer?
-              response.should have_selector("td", :content => "Officer")
+              response.should have_selector("li", :content => "Officer")
             else
-              response.should have_selector("td", :content => "Employee")
+              response.should have_selector("li", :content => "Employee")
             end 
           end
         end

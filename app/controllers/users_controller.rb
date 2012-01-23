@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   
    def index
     @title = "All users"
-    @users = User.paginate(:page => params[:page])
+    @users = User.order("name").paginate(:page => params[:page])
   end
   
   def show
@@ -141,9 +141,8 @@ class UsersController < ApplicationController
       flash[:notice] = "You're not allowed to delete your own record."
     else
       @user.destroy
-      flash[:success] = "#{@user.name} deleted."
+      flash[:success] = "'#{@user.name}' deleted."
     end
-    #redirect_to users_path
     redirect_to :back
   end
   

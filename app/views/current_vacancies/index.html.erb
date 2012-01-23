@@ -1,11 +1,12 @@
-<div class = "r-float">
-  <%= link_to "Job-search menu", jobsearch_menu_path if signed_in? %>
-</div>
-
-<h1><%= @title %></h1>
+<% if signed_in? %>
+  <%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), jobsearch_menu_path %>
+<% else %>
+  <%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), root_path %>
+<% end %>
 
 <% if @vacancies.count == 0 %>
   <div class="no_data round">
+    <%= image_tag("no_entry.png") %> &nbsp;
     Sorry - there are no vacancies at present.  But please check back soon.
   </div>
 <% else %>

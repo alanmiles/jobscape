@@ -7,19 +7,26 @@
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js", "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js", "jquery_ujs.js" %>
   </head>
   <body>
+  
+    <div class="panel">
+      Hello, I'd like to tell you a little story about a famous wolf.  He lived deep in the forest with only his old Granny for protection ...
+    </div>
+    
     <div class="container">
       <%= render 'layouts/header' %>
-      <section class="round">
+      <div id = "content">
+        
         <% flash.each do |key, value| %>
           <%= content_tag(:div, value, :class => "flash #{key}") %>
         <% end %>
-        <%= yield %>
-      </section>
-      <%= render 'layouts/footer' %>
-      <%= debug(params) if Rails.env.development? %>
+          <%= yield %>
+      </div>  
+      
+      
     </div>
+    
+    <%= render 'layouts/footer' %>
     <%= yield :javascript %>
   </body>
+ 
 </html>
-
-

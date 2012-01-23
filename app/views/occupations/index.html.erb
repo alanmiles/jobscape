@@ -2,21 +2,28 @@
   <%= link_to "Add a new occupation", new_occupation_path %><br />
 </div>
 
-<h1><%= @title %></h1>
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), admin_path %>
 
-<%= will_paginate @occupations %>
-<br />
-<ul>
-  <% @occupations.each do |occupation| %>
-    <li><%= link_to occupation.name, edit_occupation_path(occupation) %>
-      <% unless occupation.associated_jobs? %>
-        &nbsp;
-        <%= link_to(image_tag("cancel.png", :size => "15x15"), occupation, 
+<div class="pagination over">
+  <%= will_paginate @occupations %>
+</div>
+
+<div id = "listing">
+  <ul class="no_dec">
+    <% @occupations.each do |occupation| %>
+      <li><%= link_to occupation.name, edit_occupation_path(occupation), :title => "Click to edit" %>
+        <span class="r-float">
+        <% unless occupation.associated_jobs? %>
+          &nbsp;
+          <%= link_to(image_tag("delete.png"), occupation, 
                    :method => :delete, 
-                   :confirm => "You sure?",
-                   :title => "Delete #{occupation.name}") %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
-<%= will_paginate @occupations %>
+                   :confirm => "Are you sure you want to delete '#{occupation.name}'?",
+                   :title => "Delete '#{occupation.name}'") %>
+        <% end %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="pagination under"><%= will_paginate @occupations %></div>
+</div>

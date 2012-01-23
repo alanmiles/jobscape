@@ -1,0 +1,37 @@
+
+<div class = "r-float">
+  <%= link_to "Menu - this vacancy", officer_vacancy_path(@vacancy) %><br />
+  <%= link_to "All current vacancies", officer_vacancies_path %>
+</div>
+
+<h1><%= @title %></h1>
+
+<h4><%= @vacancy.job.title_department %></h4>
+ 
+
+<table class="smaller_font">
+  <tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th class="centralize">Applctn<br />Score</th>
+    <th class="centralize">Intvw<br />score</th>
+    <th>Status</th>
+    <th></th>
+  </tr>
+  
+  <% @applications.each do |application| %>
+  <tr>
+    <td><%= application.user.name %></td>
+    <td><%= application.user.city %></td>
+    <td class="centralize"><%= application.hygwit_score %></td>
+    <td class="centralize"></td>
+    <td><%= application.describe_employer_action %></td>
+    <td>
+      <%= link_to image_tag("select.png", :size => "15x15"), officer_application_path(application),
+             :title => "Applicant details" %>
+    </td>
+  </tr>    
+  <% end %>
+</table>
+
+

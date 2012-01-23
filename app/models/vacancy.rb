@@ -91,7 +91,7 @@ class Vacancy < ActiveRecord::Base
   end
   
   def headline
-    @headline = "#{self.job.job_title} / #{self.sector.sector} / #{self.job.business.city}"
+    @headline = "#{self.job.job_title} - #{self.job.business.city}"
   end
   
   def remuneration
@@ -109,4 +109,5 @@ class Vacancy < ActiveRecord::Base
       return "/year"
     end
   end
+  
 end

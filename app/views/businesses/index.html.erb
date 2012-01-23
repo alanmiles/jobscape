@@ -1,31 +1,35 @@
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), admin_path %>
+
 <div class = "r-float">
-  <small>Total: <%= @businesses.count %></small>
+  <small>Total: <%= @nmbr %></small>
 </div>
-<h1><%= @title %></h1>
 
-<%= will_paginate %>
-<table class="smaller_font">
-  <tr>
-    <th>Name</th>
-    <th>City</th>
-    <th>Country</th>
-    <th>Sector</th>
-    <th></th>
-  </tr>
-  
-  <% @businesses.each do |business| %>
-  <tr>
-    <td><%= business.name %></td> 
-    <td><%= business.city %></td>
-    <td><%= business.country %></td>
-    <td><%= business.sector.sector %></td>
-    <td><small><%= link_to image_tag("cancel.png", :size => "15x15"), business, 
+<div class="pagination over">
+  <%= will_paginate @businesses %>
+</div>
+
+<div id = "listing">
+  <ul class="no_dec">
+    <% @businesses.each do |business| %>
+    
+      <li>
+        <%= business.name %>
+        <span class="r-float">
+          <%= link_to image_tag("delete.png"), business, 
     			:method => :delete, 
-    			:confirm => "You sure?",
-                        :title => "Delete #{business.name}" %></small>
-    </td>
-  </tr>
-  <% end %>
+    			:confirm => "Are you sure you want to delete '#{business.name}' - including all employee records?",
+                        :title => "Delete '#{business.name}'" %>
+        </span>
+        <div class="subtext">
+          <%= business.city %>, 
+          <%= business.country %> -
+          <%= business.sector.sector %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
-</table>
-<%= will_paginate %>
+<div class="pagination under">
+  <%= will_paginate @businesses %>
+</div>

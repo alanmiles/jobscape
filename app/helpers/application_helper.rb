@@ -1,12 +1,13 @@
 module ApplicationHelper
 
-  def logo
-    logo = image_tag("logo.png", :alt => "JobScape", :class => "round")
-  end
+  #def logo
+  #  logo = image_tag("logo.png", :alt => "HYGWIT", :class => "round")
+  #end
   
   # Return a title on a per-page basis.
+  
   def title
-    base_title = "JobScape"
+    base_title = "HYGWIT"
     if @title.nil?
       base_title
     else

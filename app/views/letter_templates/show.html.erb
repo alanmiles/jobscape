@@ -1,0 +1,13 @@
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), letter_templates_path %>
+
+<div class = "r-float">
+  <%= link_to "Edit", edit_letter_template_path(@letter_template) %>
+</div>
+
+<div id ="listing">
+  <h1><%= @letter_template.description.upcase %></h1>
+
+  <div class="shift_center_50 cut_right_50 subtext">
+    <%= @letter_template.content %>
+  </div>
+</div>

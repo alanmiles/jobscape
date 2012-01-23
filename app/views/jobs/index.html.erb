@@ -5,7 +5,15 @@
 </div>
 
 <h1>Jobs</h1>
-<h4><%= @business.name %></h4>
+<h4 class="shallow"><%= @business.name %></h4>
+<div class="info_box_screen" style="padding-top:0">
+  <%= image_tag("complete.png", :size => "15x15") %> shows that the A-Plan for the job is complete. 
+  <%= image_tag("locked.png", :size => "15x15") %> shows that the A-Plan is locked - only an administrator can change it or unlock it.
+  Click on the job-title link to view or edit the job details, update the A-Plan, create a new vacancy, and to see a list of current
+  employees and applicants for the job.
+
+</div>
+
 
 <% unless @jobs.empty? %>
   <%= will_paginate %>
@@ -24,8 +32,8 @@
       <td><%= job.department.name unless job.department_id == nil %></td>
       <td><%= job.occupation.name %> </td>
       <td style = "text-align:center">
-        <% if job.plan.job_value.nil? || job.plan.job_value == nil %>
-          n/a
+        <% if job.plan.job_value.nil? || job.plan.job_value == 0 %>
+          ---
         <% else %>
           <%= job.plan.job_value %>        
         <% end %>

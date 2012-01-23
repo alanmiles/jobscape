@@ -1,0 +1,63 @@
+<div class = "r-float">
+  <%= link_to "Recruitment menu", recruitment_menu_path %><br />
+</div>
+
+<h1><%= @title %></h1>
+<h4 class="shallow"><%= @business.name %></h4>
+<div class="info_box_screen" style="padding-top:0">
+  Click on <%= image_tag("select.png", :size => "15x15") %> to see applicants for the job.
+  <%= image_tag("cancel.png", :size => "15x15") %> deletes the vacancy - but this is only allowed if there are
+      no applicants, or if all applications have been rejected.  To add a new vacancy, start by clicking <em>Jobs</em> on the
+      home page.
+
+</div>
+
+<% unless @vacancies.empty? %>
+  <%= will_paginate @vacancies %>
+  <table class="smaller_font">
+    <tr>
+      <th>Title</th>
+      <th>Department</th>
+      <th class="centralize">Reqd</th>
+      <th class="centralize">Close date</th>
+      <th class="centalize">Applicants</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% @vacancies.each do |vacancy| %>
+    <tr>
+      <td><%= vacancy.job.job_title %></td>
+      <td><%= vacancy.job.department.name unless vacancy.job.department_id == nil %></td>
+      <td class = "centralize"><%= vacancy.quantity %></td>
+      <% if vacancy.close_date <= Date.today %>
+        <td class = "centralize warning">
+      <% else %>
+        <td class = "centralize">
+      <% end %>
+        <%= display_monthday(vacancy.close_date) %> 
+      </td>
+      <td class="centralize">
+        <%= vacancy.all_completed_applications.count %>
+      </td>
+      <td class = "control">
+        <%= link_to image_tag("select.png", :size => "15x15"), officer_vacancy_path(vacancy),
+            :title => "View vacancy and applicant details" %>
+      </td>
+      <td class = "control">
+    
+            <%= link_to image_tag("cancel.png", :size => "15x15"), vacancy, 
+                   :method => :delete, 
+                   :confirm => "Are you sure you want to remove the vacancy for '#{vacancy.job.title_department}'",
+                   :title => "Remove the vacancy for '#{vacancy.job.title_department}'" %>
+          
+       
+      </td> 
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @vacancies %>
+<% else %>  
+  <div class="no_data round"> 
+    There are no current vacancies.
+  </div>
+<% end %>

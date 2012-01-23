@@ -71,5 +71,21 @@ class Referee < ActiveRecord::Base
   def self.generate_code
     alphanumerics = [('0'..'9'),('a'..'z')].map {|range| range.to_a}.flatten
     (0...6).map { alphanumerics[Kernel.rand(alphanumerics.size)] }.join
+  end
+  
+  def rating_given
+    if portrait_rating == 1
+      return "The portrait is completely accurate"
+    elsif portrait_rating == 2
+      return "The portrait is mostly accurate"
+    elsif portrait_rating == 3
+      return "The portrait contains some inaccuracies"
+    elsif portrait_rating == 4
+      return "The portrait is mostly inaccurate"
+    elsif portrait_rating == 5
+      return "The portrait is completely inaccurate"
+    elsif portrait_rating == 6
+      return "I don't know this person well enough to comment on the portrait"
+    end
   end 
 end

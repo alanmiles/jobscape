@@ -1,0 +1,105 @@
+<div class = "r-float">
+  <%= link_to "All applications for this job", officer_vacancy_applications_path(@vacancy) %>
+</div>
+
+<h1><%= @title %></h1>
+
+<h4 class="shallow">THE JOB</h4>
+  <strong>
+    <% if @vacancy.quantity == 1 %>
+      <%= @vacancy.job.job_title %>
+    <% else %>
+      <%= "#{@vacancy.quantity.to_s} #{@vacancy.job.job_title.pluralize}" %>
+    <% end %>
+    - <%= @vacancy.job.department.name %>.
+  </strong>
+  <ul class="no_dec">
+    <li><%= link_to "Vacancy announcement", "#" %></li>
+    <li><%= link_to "Job requirements", "#" %></li>
+  </ul>
+<%= render "brief", :vacancy => @vacancy %>
+<br />
+
+<h4>THE CANDIDATE</h4>
+<strong>Applicant: <%= @application.user.name %> - <%= @application.user.city %></strong><br />
+Application score: <%= @application.hygwit_score %> %<br />
+Next action: <%= @application.describe_employer_action %> 
+
+<ul class="no_dec">
+  <li><%= link_to "Application details", "#" %></li>
+  <li><%= link_to "Self-portrait & references", officer_portrait_path(@application) %></li>
+  <li><%= link_to "Change next action", "#" %></li>
+</ul>
+
+
+
+<br /><br />
+
+<table class="smaller_font">
+  <tr>
+    <th class="grayborder round beige">Do you have the experience to ... ?</th>
+    <th class="grayborder round beige">Response</th>
+  </tr>
+  <% @responsibilities.each do |responsibility| %>
+  <tr>
+    <td class="round width_65"><%= responsibility.responsibility.definition %></td>
+    <td class="round at_top"><%= responsibility.rating %></td>
+  </tr>
+  <% end %>
+</table>
+<br />
+<table class="smaller_font">
+  <tr>
+    <th class="grayborder round beige">How would you rate yourself on ... ?</th>
+    <th class="grayborder round beige">Response</th>
+  </tr>
+  <% @qualities.each do |quality| %>
+  <tr>
+    <td class="round width_65"><%= quality.quality.quality %></td>
+    <td class="round at_top"><%= quality.rating %></td>
+  </tr>
+  <% end %>
+</table>
+<br />
+<table class="smaller_font">
+  <tr>
+    <th class="grayborder round beige">Do you meet these hiring requirements ... ?</th>
+    <th class="grayborder round beige">Response</th>
+  </tr>
+  <% @requirements.each do |requirement| %>
+  <tr>
+    <td class="round width_65"><%= requirement.requirement.requirement %></td>
+    <td class="round at_top"><%= requirement.rating %></td>
+  </tr>
+  <% end %>
+</table>
+<br />
+<span class="wide_label grayborder round beige">What makes you a great candidate for this job?</span>
+<div class="info_box_wide grayborder round" style="margin-left: 0px">
+  <%= application_message %>
+</div>
+<br />
+
+<div class="info_box_screen grun round grayborder">
+  <%= form_for(@application, :url => officer_application_path(@application)) do |f| %>
+    <%= render 'shared/error_messages', :object => f.object %>
+
+    <div class="rightpos" style = "padding: 5px 15px">
+      <div class="actions">
+        <%= f.submit "Confirm your decision" %>
+      </div>
+    </div>
+  
+    <div class="field">
+      <%= f.label :employer_action %>
+      <%= select( :application, :employer_action, @actions ) %>
+    </div>
+   
+  <% end %>
+</div>
+
+<div class = "r-float">
+  <%= link_to "All applications for this job", officer_vacancy_path(@vacancy) %>
+</div>
+<br />
+

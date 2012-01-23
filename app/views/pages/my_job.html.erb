@@ -4,13 +4,13 @@
 <h1><%= @title %></hi>
 <h4><%= @job.job_title %></h4>
 
-<div class="menu_box grayborder round">
+<div id="listing">
   <br /> 
-  <ul>
+  <ul class="no_dec">
     <% if @plan.complete? %>
-      <li class="no_bullet"><%= link_to "Update your Achievement Plan", plan_path(@plan) %></li>
-      <li class="no_bullet"><%= link_to "View the complete Achievement Plan", aplan_path(@plan) %></li>
-      <li class="no_bullet">
+      <li><%= link_to "Update your Achievement Plan", plan_path(@plan) %></li>
+      <li><%= link_to "View the complete Achievement Plan", aplan_path(@plan) %></li>
+      <li>
         <% if current_user.has_incomplete_self_appraisal?(@business) %>        
           <%= link_to "Continue your self-appraisal", edit_self_appraisal_path(@review) %>
         <% elsif current_user.has_incomplete_external_review?(@business) %>
@@ -32,16 +32,16 @@
         <% end %>
       </li>
       <% if current_user.has_completed_reviews?(@business) %>
-        <li class="no_bullet"><%= link_to "Your performance review history", my_reviews_path %></li>
+        <li><%= link_to "Your performance review history", my_reviews_path %></li>
       <% else %>
-        <li class="no_bullet" style ="color: #999">Your performance review history</li>
+        <li style ="color: #999">Your performance review history</li>
       <% end %>
     <% else %>
-      <li class="no_bullet"><%= link_to "Build", plan_path(@plan) %> your Achievement Plan</li>
-      <li class="no_bullet" style ="color:#999">View the complete Achievement Plan <small><em>(when A-Plan is complete)</em></small></li>
-      <li class="no_bullet" style ="color:#999">Set up a performance review <small><em>(when A-Plan is complete)</em></small></li>
+      <li><%= link_to "Build", plan_path(@plan) %> your Achievement Plan</li>
+      <li style ="color:#999">View the complete Achievement Plan <small><em>(when A-Plan is complete)</em></small></li>
+      <li style ="color:#999">Set up a performance review <small><em>(when A-Plan is complete)</em></small></li>
     <% end %>
-    <li class="no_bullet"><%= link_to "Targets", my_targets_path %></li>
-    <li class="no_bullet"><%= link_to "Daily tasks", my_tasks_path %></li>
+    <li><%= link_to "Targets", my_targets_path %></li>
+    <li><%= link_to "Daily tasks", my_tasks_path %></li>
   </ul>
 </div>

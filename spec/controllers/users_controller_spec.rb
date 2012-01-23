@@ -68,7 +68,7 @@ describe UsersController do
       it "should include a 'delete' control" do
         get :index
         @users[0..2].each do |user|
-          response.should have_selector("a", :title => "Delete #{user.name}")
+          response.should have_selector("a", :title => "Delete '#{user.name}'")
         end  
       end
       

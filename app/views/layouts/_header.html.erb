@@ -1,35 +1,55 @@
 <header>
-  <%= link_to logo, root_path %>
-  <nav class="round">
+  <span class="title-image">
+    <%= image_tag("hygwit.png") %>
+  </span>  
+  <span class= "title-text">
+    YGWIT | <%= @title %>
+  </span>
+  
+
+  
+  <nav>
     <ul>
       <% if signed_in? %>
         <% if current_user.account == 3 && session[:admin_off] == true %>
           <% if session[:officer_off] == true %>
-            <li><%= link_to "Home", employee_home_path %></li>
-          <% else %>
-            <li><%= link_to "Home", officer_home_path %></li>
+            <li><%= link_to image_tag("home.png"), employee_home_path, :title => "Home" %></li>
+          <% else %> 
+            <li><%= link_to image_tag("home.png"), officer_home_path, :title => "Home" %></li>
           <% end %>
         <% else %>
-          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to image_tag("home.png"), root_path, :title => "Home" %></li>
         <% end %>
       <% else %>
-        <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to image_tag("home.png"), root_path, :title => "Home" %></li>
       <% end %>
-      <li><%= link_to "Help", help_path %></li>
+      <li><span id="guidance"><%= link_to image_tag("guidance.png"), root_path, :remote => true, :title => "Click to toggle Help on/off" %></span></li>
       <% if signed_in? %>
-        <li><%= link_to "Self-Portrait", user_portrait_path(current_user) unless current_user.account >=3 %></li>
-        <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+        <li><%= link_to image_tag("exit.png"), signout_path, :method => :delete, :title => "Exit" %></li>
       <% else %>
-        <li><%= link_to "Sign up", signup_path %></li>
+        <li><%= link_to image_tag("user.png"), signin_path, :title => "Log In" %></li>
       <% end %>
-      <% if signed_in? %>
-        <li><%= link_to "Log off", signout_path, :method => :delete %></li>
-      <% else %>
-        <li><%= link_to "Log in", signin_path %></li>
+      <%  unless signed_in? %>
+        <li><%= link_to image_tag("signup.png"), signup_path, :title => "Sign Up - for free" %></li>
       <% end %>
     </ul>
   </nav>
 </header>
 
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+   
+   $(document).ready(function(){
+   
+    $('#guidance').click(function() {
+      $('.panel').toggle( 100, function() {
+      });
+    });
+   
+   });
+    
+  <% end %>
+<% end %>
 
 

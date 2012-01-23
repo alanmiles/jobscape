@@ -1,6 +1,3 @@
-class Application < ActiveRecord::Base
-
-
 # == Schema Information
 #
 # Table name: applications
@@ -14,12 +11,16 @@ class Application < ActiveRecord::Base
 #  requirements_score     :integer         default(0)
 #  qualities_score        :integer         default(0)
 #  portrait_score         :integer         default(0)
-#  employer_shortlist     :boolean         default(FALSE)
 #  created_at             :datetime
 #  updated_at             :datetime
 #  personal_statement     :string(255)
 #  responsibilities_score :integer         default(0)
+#  employer_action        :integer         default(0)
+#  hygwit_score           :integer         default(0)
 #
+
+class Application < ActiveRecord::Base
+
 
   
   belongs_to :vacancy
@@ -32,8 +33,8 @@ class Application < ActiveRecord::Base
   accepts_nested_attributes_for :applicrequirements
   
   attr_accessible :submitted, :next_action, :submission_date, :requirements_score, :qualities_score, :responsibilities_score, 
-  			:portrait_score, :employer_shortlist, :user_id, :personal_statement, :applicresponsibilities_attributes,
-                  	:applicqualities_attributes, :applicrequirements_attributes
+  			:portrait_score, :employer_action, :user_id, :personal_statement, :applicresponsibilities_attributes,
+                  	:applicqualities_attributes, :applicrequirements_attributes, :hygwit_score
   
   ACTION_TYPES = [
     ["It's not for me, thanks.", 0],
@@ -46,12 +47,27 @@ class Application < ActiveRecord::Base
     ["Yes, I'd like to apply now.", 2]
   ]
   
+  EMPLOYER_DECISIONS = [
+    ["No decision yet", 0],
+    ["Rejected without interview", 1],
+    ["Consider for interview", 2],
+    ["Interview arranged", 3],
+    ["Interview completed", 4],
+    ["Rejected after interview", 5],
+    ["Shortlisted after interview", 6],
+    ["Shortlisted but rejected", 7],
+    ["Offer made", 8],
+    ["Hired", 9]
+  ]
+  
   after_save :build_associated_tables
   
   validates	:vacancy_id,		:presence	=> true,
   					:uniqueness	=> { :scope => :user_id }
   validates	:user_id,		:presence	=> true
   validates 	:next_action,		:presence	=> true
+  validates 	:employer_action,	:presence 	=> true
+  validates	:hygwit_score,		:numericality 	=> [:integer => true, :allow_zero => true]
   
   def has_applicqualities?
     self.applicqualities.count > 0
@@ -102,6 +118,47 @@ class Application < ActiveRecord::Base
   
   def sum_of_responsibilities
     self.applicresponsibilities.sum(:applicant_score)
+  end
+  
+  def total_score
+    responsibilities_score + qualities_score + requirements_score
+  end
+  
+  def describe_employer_action
+    if employer_action == 0
+      act = "No decision yet"
+    elsif employer_action == 1
+      act = "Rejected without interview"
+    elsif employer_action == 2
+      act = "Consider for interview"
+    elsif employer_action == 3
+      act = "Interview arranged" 
+    elsif employer_action == 4
+      act = "Interview completed"
+    elsif employer_action == 5
+      act = "Rejected after interview"
+    elsif employer_action == 6
+      act = "Shortlisted after interview"
+    elsif employer_action == 7
+      act = "Shortlisted but rejected"
+    elsif employer_action == 8
+      act = "Offer made"
+    elsif employer_action == 9
+      act = "Hired"
+    end
+  end
+  
+  def calculate_hygwit_score
+    @job = Job.find(self.vacancy.job_id)
+    @cnt_requirements = @job.plan.count_requirements
+    if @cnt_requirements > 5
+      @cnt_requirements = 5
+    end
+    @req_score = @cnt_requirements * 3
+    @possible_score = 30 + @req_score
+    @h_score = total_score * 100 / @possible_score
+    self.hygwit_score = @h_score
+    self.save
   end
   
   private

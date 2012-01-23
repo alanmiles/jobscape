@@ -1,30 +1,21 @@
-<div class = "r-float">
-  <% if current_user.account == 1 %>
-    <%= link_to "Home", user_home_path %>
-  <% else %>
-    <%= link_to "Home", jobseeker_home_path %>
-  <% end %>
-</div>
-
-<h1><%= @title %></h1> 
 <% unless current_user.has_public_portrait? %>
-  <div class="display_text">
-    <strong>IMPORTANT: </strong>Before you start applying for jobs, first create a public 
-           <%= link_to "Self-Portrait", user_portrait_path(current_user) %>, the beefed-up HYGWIT
+  <div class="warning round">
+    <%= image_tag("important.png") %>  Before you start applying for jobs, first create a public 
+           <%= link_to "Self-Portrait", user_portrait_path(current_user) %>, the supercharged HYGWIT
           equivalent of a CV.
   </div>
 <% else %>
   <br /><br />
 <% end %>
-<div class ="menu_box round grayborder" style = "margin-top: 15px; margin-bottom: 15px">
-  <ul style="margin-bottom: 0px">
+<div id = "listing">
+  <ul class="no_dec">
     <li><%= link_to "Most recent vacancies", latest_vacancies_path %> &nbsp; (<%= Vacancy.latest.count %>)</li>
     <li><%= link_to "Browse all current vacancies", current_vacancies_path %> &nbsp;(<%= Vacancy.all_current.count %>)</li>
     <li><%= link_to "Set your search criteria", "#" %></li>
     <li><%= link_to "Search vacancies", "#" %></li>
     <li><%= link_to "Your bookmarked jobs", bookmarks_path %> &nbsp;(<%= Application.bookmarks(current_user).count %>)</li>
     <li><%= link_to "Incomplete applications", incomplete_applications_path %> &nbsp;(<%= Application.incomplete(current_user).count %>)</li>
-    <li><%= link_to "Your application history", my_applications_path %> &nbsp;(<%= Application.completed(current_user).count %>)</li>
+    <li><%= link_to "Your live applications", my_applications_path %> &nbsp;(<%= Application.completed(current_user).count %>)</li>
     
   </ul>
 

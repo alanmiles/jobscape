@@ -1,47 +1,44 @@
 <div class = "r-float">
  <% if current_user.admin? %>
-    <%= link_to "Return to Admin Mode", standard_to_admin_path %><br />
+    <%= link_to "Switch to Admin Mode", standard_to_admin_path %> | 
   <% end %>
   <%= link_to "Add a new business", new_business_path if current_user.account == 3 %>
 </div>
 
-<h1>
+<h4>
   <%= @user.name %>
-</h1>
+</h4>
 
-<h4>SELECT BUSINESS</h4>
-<p>These are the businesses you're associated with.  
-    Select one.
-</p>    
-<table class="smaller_font">
-  <% @employees.each do |employee| %>
-  <% biz = Business.find(employee.business_id) %>
-  <tr>
-    <td><strong>
-      <% if employee.role == "Officer" %>
-        <%= link_to employee.business_location, biz_selection_path(:id => employee.business_id) %>
-      <% else %>
-        <%= link_to employee.business_location, employee_selection_path(:id => employee.business_id) %>
-      <% end %>
-    </strong></td>
-    <td>
-      <% if @user.has_review_requests?(biz) || @user.has_rejected_review_requests?(biz) %>
-        <span class="highlt round">
-          Action required
-        </span>
-      <% end %>
-    </td>
-    <td><%= employee.role %></td>
+<p class="under">Select one of your businesses:-</p> 
+
+<div id="listing">   
+  <ul class="no_dec">
+    <% @employees.each do |employee| %>
+      <li>
+        <% biz = Business.find(employee.business_id) %>
+  
+        <% if employee.role == "Officer" %>
+          <%= link_to employee.business_location, biz_selection_path(:id => employee.business_id) %>
+        <% else %>
+          <%= link_to employee.business_location, employee_selection_path(:id => employee.business_id) %>
+        <% end %>
+     
+        <% if @user.has_review_requests?(biz) || @user.has_rejected_review_requests?(biz) %>
+          <%= image_tag("important.png") %>
+        <% end %>
+        |
+        <%= employee.role %>
+        <span class= "r-float"
     
-    <td>
-      <% if employee.role == "Officer" && employee.business.no_associations? %>
-        <%= link_to(image_tag("cancel.png", :size => "15x15"), officer_business_path(employee.business_id), 
+          <% if employee.role == "Officer" && employee.business.no_associations? %>
+            <%= link_to(image_tag("delete.png"), officer_business_path(employee.business_id), 
                    :method => :delete, 
-                   :confirm => "You sure?",
-                   :title => "Delete #{employee.business.name}") %>
-      <% end %>
-    </td> 
-  </tr>
-  <% end %>
-</table>
+                   :confirm => "Are you sure you want to delete '#{employee.business.name}'?",
+                   :title => "Delete '#{employee.business.name}'") %>
+          <% end %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+</div>
 

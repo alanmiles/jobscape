@@ -1,9 +1,3 @@
-require 'spec_helper'
-
-describe Application do
-  pending "add some examples to (or delete) #{__FILE__}"
-end
-
 # == Schema Information
 #
 # Table name: applications
@@ -17,10 +11,17 @@ end
 #  requirements_score     :integer         default(0)
 #  qualities_score        :integer         default(0)
 #  portrait_score         :integer         default(0)
-#  employer_shortlist     :boolean         default(FALSE)
 #  created_at             :datetime
 #  updated_at             :datetime
 #  personal_statement     :string(255)
 #  responsibilities_score :integer         default(0)
+#  employer_action        :integer         default(0)
+#  hygwit_score           :integer         default(0)
 #
+
+require 'spec_helper'
+
+describe Application do
+  pending "add some examples to (or delete) #{__FILE__}"
+end
 

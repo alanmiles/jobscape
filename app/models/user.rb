@@ -257,6 +257,10 @@ class User < ActiveRecord::Base
     count_referees >= 3
   end
   
+  def referees_who_commented
+    self.referees.where("referees.portrait_rating != ? OR referees.remarks IS NULL", 7).count
+  end
+  
   def count_previousjobs
     self.previousjobs.count
   end

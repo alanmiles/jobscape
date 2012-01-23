@@ -1,0 +1,94 @@
+<div class = "r-float">
+  <%= link_to "Return to application", officer_application_path(@application) %>
+</div>
+
+<h1><%= @title %></h1>
+<strong><%= @user.name %> - <%= @user.city %></strong>
+<br /><br />
+
+<div class="two_column rightpos">
+  <h4 class="shallow">Strongest attributes</h4>
+  <%= render 'portraits/characteristics' %>
+</div>
+
+<div class="two_column">
+  <h4 class="shallow">Achievements</h4>
+  <%= render 'portraits/achievements' %>
+</div>  
+<hr /> 
+
+<div class="two_column rightpos">  
+  <h4 class="shallow">Favourite things</h4>
+  <%= render 'portraits/favourites' %>
+</div>
+
+<div class="two_column">
+  <h4 class="shallow">Qualifications</h4>
+  <%= render 'portraits/qualifications' %>
+</div>
+<hr />
+
+<div class="two_column rightpos"> 
+  <h4 class="shallow">Dislikes</h4>
+  <%= render 'portraits/dislikes' %>
+</div>
+
+<div class="two_column"> 
+  <h4 class="shallow">Strengths</h4>
+  <%= render 'portraits/strengths' %>
+</div>
+
+<hr />
+<div class="two_column rightpos"> 
+  <h4 class="shallow">Possible limitations</h4>
+  <%= render 'portraits/limitations' %>
+</div>
+
+<div class="two_column">
+  <h4 class="shallow">Ambitions</h4>
+  <%= render 'portraits/aims' %>
+</div>
+<hr />
+<div class="two_column rightpos">
+
+</div>
+
+<div class="two_column rightpos">
+  <h4 class="shallow">Other notes</h4>
+  <%= render 'portraits/notes' %>
+</div>
+  
+<div class="two_column">
+  <h4 class="shallow">Previous jobs</h4>
+  <%= render 'portraits/jobs' %>
+</div>
+<hr />
+
+<div class="two_column wide_85">
+  <h4 class="shallow">References</h4>
+  The applicant has provided <%= pluralize(@no_references, "reference") %>.<br />
+  <ul class="smaller_font">
+    <% cnt = 0 %>
+    <% @referees.each do |referee| %>
+      <% cnt = cnt + 1 %>
+      <li>
+        Reference <%= cnt %>, a <%= referee.what_relation.downcase %>,  
+        <% if referee.portrait_rating == 7 %>
+          has not reviewed this portrait
+        <% else %>
+          says: "<%= referee.rating_given %>"
+        <% end %>
+        
+        <% if referee.remarks.nil? %>
+          .
+        <% elsif referee.remarks.empty? %>
+          .
+        <% else %>
+          , and adds "<%= referee.remarks %>"
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  Full reference contact details will be available if you're considering a job-offer.
+</div>
+

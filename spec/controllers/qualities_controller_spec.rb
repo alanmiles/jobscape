@@ -44,7 +44,7 @@ describe QualitiesController do
       it "should list all the admin-approved attributes" do
         get :index
         @qualities[0..2].each do |quality|
-          response.should have_selector("td", :content => quality.quality)
+          response.should have_selector("li", :content => quality.quality)
         end
       end 
       
@@ -238,7 +238,7 @@ describe QualitiesController do
         it "should list all the admin-approved attributes" do
           get :index
           @qualities[0..2].each do |quality|
-            response.should have_selector("td", :content => quality.quality)
+            response.should have_selector("li", :content => quality.quality)
           end
         end 
       
@@ -270,7 +270,7 @@ describe QualitiesController do
           get :index
           @qualities[0..2].each do |quality|
             response.should have_selector("a", 
-                                 :title => "Remove #{quality.quality}")
+                                 :title => "Remove '#{quality.quality}'")
           end
         end
         
@@ -314,7 +314,7 @@ describe QualitiesController do
           it "should display the number of uses of the attribute" do
             get :index
             @qualities[0..1].each do |quality|
-            response.should have_selector("span#uses", 
+            response.should have_selector(".r-float", 
                                  :content => "2")
             end
           end
@@ -467,15 +467,14 @@ describe QualitiesController do
       
         it "should have a 'Cancel' button, returning to the Qualities show page" do
           get :edit, :id => @quality1.id
-          response.should have_selector("a", :href => quality_path(@quality1),
-      					:content => "Cancel")
+          response.should have_selector("a", :href => quality_path(@quality1))
         end
         
         it "should have a 'confirm changes' button" do
           get :edit, :id => @quality1.id
           response.should have_selector("input", 
                     :type => "submit", 
-                    :value => "Confirm")
+                    :value => "Update")
         end
         
         it "should have an edit box for the attribute" do
@@ -629,7 +628,7 @@ describe QualitiesController do
       
       it "should have the right title" do
         get :show, :id => @quality1
-        response.should have_selector("title", :content => "Attribute: #{@quality1.quality}")
+        response.should have_selector("h1", :content => "#{@quality1.quality.upcase}")
       end
       
       it "should have a link back to the attributes list" do
@@ -657,8 +656,8 @@ describe QualitiesController do
                     
         it "should show the attribute's grades" do
           get :show, :id => @quality1.id
-          response.should have_selector("td", :content => @pam_a.descriptor)
-          response.should have_selector("td", :content => @pam_b.descriptor)
+          response.should have_selector("li", :content => @pam_a.descriptor)
+          response.should have_selector("li", :content => @pam_b.descriptor)
         end
           
         it "should not show grades for different attributes" do

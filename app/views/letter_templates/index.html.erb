@@ -1,0 +1,18 @@
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), admin_path %>
+
+<div class = "r-float">
+  <%= link_to "Add a template", new_letter_template_path %>
+</div>
+
+<div id = "listing">
+  <ul class="no_dec">
+    <% @letter_templates.each do |template| %>
+      <li>   
+        <%= template.description %>
+        <span class="r-float">
+          <%= link_to image_tag("details.png", :title => "View/edit content"), letter_template_path(template) %></td>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,42 +1,37 @@
-<div class = "r-float">
-  <%= link_to "Job-search menu", jobsearch_menu_path %>
-</div>
-
-<h1><%= @title %></h1>
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), jobsearch_menu_path %>
 
 <% if Application.none_made?(@user) %>
   <div class="no_data round">
+    <%= image_tag("no_entry.png") %> &nbsp;
     You haven't applied for any jobs yet.
   </div>
 <% else %>
-  <div class="display_wider">
-    <em>Click on <%= image_tag("select.png", :size => "15x15") %> to review or edit your application
-        or <%= image_tag("cancel.png", :size => "15x15") %> to remove it.</em>
-  </div>
+  
   <%= will_paginate @applications %>
-  <table class= "smaller_font">
-    <tr>
-      <th>Job</th>
-      <th>Submitted</th>
-      <th></th>
-      <th></th>
-    </tr>
-    <% @applications.each do |application| %>
-    <tr>
-      <td class="grayline">
-          <%= render "/applications/detail", :application => application %>
-          <em>(<%= pluralize(application.vacancy.all_completed_applications.count, "application") %> - 
-          Deadline: <%= application.vacancy.close_date.strftime("%b %d, %Y") %>.)</em>
-      </td>
-      <td class="at_top grayline"><%= application.submission_date.strftime("%b %d, %Y") %></td>
-      <td class="at_top grayline"><%= link_to image_tag("select.png", :size => "15x15"), my_application_path(application) %></td>
-      <td class="at_top grayline"><%= link_to image_tag("cancel.png", :size => "15x15"), my_application_path(application), 
+  <div id = "listing">
+    <ul class= "no_dec">
+      <% @applications.each do |application| %>
+ 
+        <li>
+       
+          <%= link_to application.vacancy.headline, my_application_path(application) %> &nbsp;
+          <%= link_to image_tag("details.png"), my_application_path(application), :title => "Application details" %> &nbsp; &nbsp;
+          <%= link_to image_tag("delete.png"), my_application_path(application), 
                    :method => :delete, 
-                   :confirm => "You sure?",
+                   :confirm => "Are you sure you want to cancel your application?",
                    :title => "Cancel your application." %>
-      </td>
-    </tr>
-    <% end %>
-  </table>
+          
+          <div class="subtext">
+            <%= render "/applications/detail", :application => application %>
+            Applied - <%= application.submission_date.strftime("%b %d") %>.
+            
+            Deadline - <%= application.vacancy.close_date.strftime("%b %d") %>.
+            <em>(<%= pluralize(application.vacancy.all_completed_applications.count, "application") %>)</em> 
+          </div>  
+        
+        </li>
+      <% end %>
+    </ul>
+  </div>
   <%= will_paginate @applications %>
 <% end %>

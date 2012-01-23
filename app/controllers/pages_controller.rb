@@ -44,7 +44,7 @@ class PagesController < ApplicationController
   end
   
   def admin_home
-    @title = "Admin"
+    @title = "Admin Home"
     @user = User.find(current_user)
     session[:admin_off] = nil
   end
@@ -244,6 +244,12 @@ class PagesController < ApplicationController
     @title = "Performance reviews"
     session[:reviewreq] = nil
     session[:reviewee] = nil
+  end
+  
+  def recruitment_menu
+    @business = Business.find(session[:biz])
+    @user = current_user
+    @title = "Recruitment menu"
   end
   
   private

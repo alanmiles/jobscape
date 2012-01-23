@@ -1,19 +1,20 @@
 <div class = "r-float">
-  <%= link_to "Exit Admin Menu -> Log in as Standard User", admin_to_standard_path %>
+  <%= link_to "Switch to Standard User", admin_to_standard_path %>
   <% if @user.has_any_review_requests? || @user.has_any_rejected_review_requests? %>
     &nbsp;
-    <span class="highlt round"><small>Action required</small></span>
+    <%= image_tag("important.png") %>
   <% end %>
 </div>
-<h1>Admin Menu</h1>
+
 <h4><%= @user.name %></h4>
 <br />
-<div class = "menu_box grayborder round">
-  <ul>
-    <li class="no_bullet_compact"><%= link_to "Occupations", occupations_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Sectors", sectors_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Businesses", businesses_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Personal Attributes", qualities_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Users", users_path %></li>
+<div id = "listing">
+  <ul class="no_dec">
+    <li><%= link_to "Occupations", occupations_path %></li>
+    <li><%= link_to "Sectors", sectors_path %></li>
+    <li><%= link_to "Businesses", businesses_path %></li>
+    <li><%= link_to "Personal Attributes", qualities_path %></li>
+    <li><%= link_to "Applicant response templates", letter_templates_path %></li>
+    <li><%= link_to "Users", users_path %></li>
   </ul>
 </div>

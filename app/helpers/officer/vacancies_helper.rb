@@ -1,0 +1,4 @@
+module Officer::VacanciesHelper
+
+  
+end

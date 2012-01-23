@@ -104,7 +104,7 @@ describe OccupationsController do
       
       it "should have the right title" do
         get :index
-        response.should have_selector("h1", :content => "Occupations")      
+        response.should have_selector(".title-text", :content => "Occupations")      
       end
       
       it "should list alphabetically each Occupation in the database" do
@@ -125,7 +125,7 @@ describe OccupationsController do
       
       it "should have the right title" do
         get :new
-        response.should have_selector("h1", :content => "New occupation")
+        response.should have_selector(".title-text", :content => "New occupation")
       end
       
     end
@@ -176,7 +176,7 @@ describe OccupationsController do
       
         it "should have a success message" do
           post :create, :occupation => @attr
-          flash[:success].should == @nm + " added."
+          flash[:success].should == "'" + @nm + "' added."
         end    
       end     
         
@@ -195,7 +195,7 @@ describe OccupationsController do
       
       it "should have the right title" do
         get :edit, :id => @occupation        
-        response.should have_selector("h1", :content => "Edit occupation")
+        response.should have_selector(".title-text", :content => "Edit occupation")
       end
       
     end
@@ -242,7 +242,7 @@ describe OccupationsController do
 
         it "should have a flash message" do
           put :update, :id => @occupation, :occupation => @attr
-          flash[:success].should == @attr[:name] + " updated."
+          flash[:success].should == "'" + @attr[:name] + "' updated."
         end
       end
     end
@@ -269,7 +269,7 @@ describe OccupationsController do
         
         it "should have a success message" do
           delete :destroy, :id => @occupation
-          flash[:success].should == @occupation.name + " removed."
+          flash[:success].should == "'" + @occupation.name + "' removed."
         end
       
       end

@@ -1,48 +1,45 @@
-<%= form_for(@pam) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-<div class = "r-float">
-  <% if @pam.quality.submitted? | @pam.quality.rejected? %>
-    <%= link_to "Cancel", attribute_submission_path(@pam.quality_id) %>
-  <% else %>
-    <%= link_to "Cancel", quality_path(@pam.quality_id) %>
+<% if @pam.quality.submitted? | @pam.quality.rejected? %>
+  <%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), attribute_submission_path(@pam.quality_id) %>
+<% else %>
+  <%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), quality_path(@pam.quality_id) %>
+<% end %>
+
+<div id="listing">
+  <h1><%= @pam.quality.quality.upcase %></h1>
+</div>
+
+<div class="shift_center_50">
+  <%= form_for(@pam) do |f| %>
+    <%= render 'shared/error_messages', :object => f.object %>
+
+    <div class = "field">
+      <h2><%= f.label :descriptor, "Grade " + @pam.grade + " *" %></h2>
+      <%= f.text_area :descriptor, :maxlength => 255 %>
+      <div id="char-count"><%= @characters_left %> characters left</div>
+    </div>
+    <%= f.hidden_field :updated_by %>
+    <div class="actions">
+      <%= f.submit "Confirm changes", :class => "create round" %>
+    </div>
   <% end %>
 </div>
-<p class = "display_text grayborder round cntr">Attribute: <%= @pam.quality.quality %></p>
-
-<div class = "info_box height_screen rightpos">
-  <strong>All current PAMs</strong><br />
-  <table class="smaller_font">
-    <% @pams.each do |pam| %>
-    <tr>
-      <td class = "at_top"><%= pam.grade %></td>
-      <td><%= pam.descriptor %></td>
-    </tr>
-    <% end %>
-  </table>
-</div>
-
-
-  <div class = "field">
-    <span class="label_large"><%= f.label :descriptor, "Edit PAM: Grade " + @pam.grade %></span><br />
-    <%= f.text_area :descriptor, :maxlength => 255, :cols => 40, :rows => 10 %>
-    <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
-  </div>
-  <%= f.hidden_field :updated_by %>
-  <br />
-  <div class="actions">
-    <%= f.submit "Confirm changes" %>
-  </div>
-<% end %>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
 
-    $('#pam_descriptor').live('keyup keydown', function(e) {
-    var maxLen = 255;
-    var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
-    });
+    $(document).ready(function(){
     
+      $('#pam_descriptor').click(function() {
+        $('#char-count').css('visibility', 'visible');
+      });
+
+      $('#pam_descriptor').live('keyup keydown', function(e) {
+      var maxLen = 255;
+      var left = maxLen - $(this).val().length;
+      $('#char-count').html(left);
+      });
+    
+    });
   <% end %>
 <% end %>

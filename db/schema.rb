@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214161553) do
+ActiveRecord::Schema.define(:version => 20120103180642) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -37,11 +37,12 @@ ActiveRecord::Schema.define(:version => 20111214161553) do
     t.integer  "requirements_score",     :default => 0
     t.integer  "qualities_score",        :default => 0
     t.integer  "portrait_score",         :default => 0
-    t.boolean  "employer_shortlist",     :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "personal_statement"
     t.integer  "responsibilities_score", :default => 0
+    t.integer  "employer_action",        :default => 0
+    t.integer  "hygwit_score",           :default => 0
   end
 
   create_table "applicqualities", :force => true do |t|
@@ -188,6 +189,13 @@ ActiveRecord::Schema.define(:version => 20111214161553) do
     t.datetime "updated_at"
     t.integer  "department_id"
     t.boolean  "inactive",      :default => false
+  end
+
+  create_table "letter_templates", :force => true do |t|
+    t.string   "description"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "limitations", :force => true do |t|

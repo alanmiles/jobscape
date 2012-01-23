@@ -1,11 +1,8 @@
-<div class = "r-float">
-  <%= link_to "Job-search menu", jobsearch_menu_path %>
-</div>
-
-<h1><%= @title %></h1>
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), jobsearch_menu_path %>
 
 <% if Application.no_bookmarks?(@user) %>
   <div class="no_data round">
+    <%= image_tag("no_entry.png") %> &nbsp;
     You have no bookmarked jobs - if you created some, then the application deadlines have now passed.
   </div>
 <% else %>

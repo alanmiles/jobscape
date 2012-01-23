@@ -1,6 +1,9 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :name %> <small>(Your normal first name and family name)</small><br />
+  <%= f.label :name %> 
+  <div class="subtext">Your normal first name and family name - <br />
+     the name you use at work.  
+  </div>
   <%= f.text_field :name %>
 </div>
 <div class="field">
@@ -8,17 +11,19 @@
   <%= f.text_field :email %>
 </div>
 <div class="field">
-  <%= f.label :password %> <small>(at least 6 characters/numbers)</small><br />
+  <%= f.label :password %> 
+  <div class="subtext">At least 6 characters/numbers</div>
   <%= f.password_field :password %>
 </div>
 <div class="field">
-  <%= f.label :password_confirmation, "Confirmation" %> <small>(repeat password)</small><br />
+  <%= f.label :password_confirmation, "Confirmation" %> 
+  <div class="subtext">Repeat password</div>
   <%= f.password_field :password_confirmation %>
 </div>
 
 <div class="field">
   <% if session[:invited] == nil %>
-    <%= f.label :account, "Account-type" %> <small>(see panel right)</small> &nbsp;
+    <%= f.label :account, "Account-type" %> &nbsp;
     <%= select( :user, :account, @accounts ) %>
   <% else %>
     Signing up for an Employee account with <%= @business.name %>.

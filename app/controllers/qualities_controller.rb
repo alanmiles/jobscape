@@ -35,7 +35,7 @@ class QualitiesController < ApplicationController
   
   def show
     @quality = Quality.find(params[:id])
-    @title = "Attribute: #{@quality.quality}"
+    @title = "Attribute grades"
     @pams = @quality.pams.order("pams.grade")
   end
   

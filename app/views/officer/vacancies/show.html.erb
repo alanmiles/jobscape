@@ -1,0 +1,20 @@
+
+<div class = "r-float">
+  <%= link_to "All current vacancies", officer_vacancies_path %><br />
+</div>
+
+<h1>Recruiting for:</h1>
+<h4 class="subtitle"> 
+  <%= @vacancy.job.title_department %> &nbsp; <%= link_to image_tag("show.png", :size => "15x15"), "#" %>
+</h4> 
+
+<ul class="no_dec">
+  <li><%= link_to "Applications", officer_vacancy_applications_path(@vacancy) %></li>
+  <li>Find more candidates</li>
+  <li>Seach current staff</li>
+  <li>Mail unsuccessful applicants</li>
+  <li>Interviews</li>
+  <li>Select</li>
+  <li>Final steps</li>
+</ul>
+

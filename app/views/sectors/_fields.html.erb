@@ -1,5 +1,16 @@
-  <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :sector %> <small> (25 character maximum)  </small><br />
-    <%= f.text_field :sector %>
-  </div>
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), sectors_path %>
+
+<div class ="shift_center_50">
+  <%= form_for(@sector) do |f| %>
+    <%= render 'shared/error_messages', :object => f.object %>
+ 
+    <div class="field">
+      <%= f.label :sector, "Sector *" %>
+      <div class="subtext">(25 characters maximum)</div>
+      <%= f.text_field :sector %>
+    </div>
+    <div class="actions">
+      <%= f.submit :class => "create round" %>
+    </div>
+  <% end %>
+</div>

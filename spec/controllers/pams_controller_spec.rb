@@ -48,12 +48,12 @@ describe PamsController do
       
       it "should refer to the correct attribute" do
         get :edit, :id => @pam.id
-        response.should have_selector(".display_text", :content => "Attribute: #{@quality.quality}")
+        response.should have_selector("h1", :content => "#{@quality.quality.upcase}")
       end
       
       it "should mention the correct grade" do
         get :edit, :id => @pam.id
-        response.should have_selector(".label_large", :content => "Edit PAM: Grade #{@pam.grade}")
+        response.should have_selector("h2", :content => "Grade #{@pam.grade} *")
       end
       
       it "should have a textarea containing the descriptor" do
@@ -70,17 +70,7 @@ describe PamsController do
       
       it "should have a link to return to the attribute_submission 'show' page" do
         get :edit, :id => @pam.id
-        response.should have_selector("a", :href => attribute_submission_path(@pam.quality_id),
-        			:content => "Cancel")
-      end
-      
-      it "should display the other PAMs for the attribute" do
-        @quality = Quality.find(@pam.quality_id)
-        @pams = @quality.pams.all
-        get :edit, :id => @pam.id
-        @pams.each do |pam|
-          response.should have_selector("td", :content => pam.descriptor)
-        end
+        response.should have_selector("a", :href => attribute_submission_path(@pam.quality_id))
       end
       
       describe "for approved attributes" do
@@ -93,8 +83,7 @@ describe PamsController do
         
         it "should have a link to return to the attribute 'show' page" do
           get :edit, :id => @approved_pam
-          response.should have_selector("a", :href => quality_path(@approved_quality.id),
-        			:content => "Cancel")
+          response.should have_selector("a", :href => quality_path(@approved_quality.id))
         end
       end
       
@@ -108,8 +97,7 @@ describe PamsController do
         
         it "should have a link to return to the attribute_submission 'show' page" do
           get :edit, :id => @rejected_pam
-          response.should have_selector("a", :href => attribute_submission_path(@rejected_quality.id),
-        			:content => "Cancel")
+          response.should have_selector("a", :href => attribute_submission_path(@rejected_quality.id))
         end
       end
       

@@ -1,18 +1,29 @@
-<h1>All users</h1>
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), admin_path %>
 
-<%= will_paginate %>
+<div class="pagination over">
+  <%= will_paginate @users %>
+</div>
 
-<ul class="users">
-  <% @users.each do |user| %>
-    <li><%= user.id %>
-        | <%= link_to user.name, user %> 
-        | <%= user.city %>
-  	| <%= user.account_type %>
-  	| <%= link_to "delete", user, :method => :delete, :confirm => "You sure?",
-                                :title => "Delete #{user.name}" %>
+<div id = "listing">
+  <ul class="no_dec">
+    <% @users.each do |user| %>
+      <li>
+        <%= user.id %> |
+        <%= user.name %> 
+        <span class="r-float">
+           <%= link_to image_tag("delete.png"), user, 
+           	:method => :delete, 
+           	:confirm => "Are you sure you want to delete '#{user.name}'?",
+                :title => "Delete '#{user.name}'" %>
+        </span>
+        <div class="subtext">
+          <%= user.city %>, <%= user.country %> - 
+  	  <%= user.account_type %>
+  	</div>
+      </li>
+    <% end %>
+  </ul>
 
-    </li>
-  <% end %>
-</ul>
+  <div class="pagination under"><%= will_paginate @users %></div>
 
-<%= will_paginate %>
+</div>

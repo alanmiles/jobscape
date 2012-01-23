@@ -1,7 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "external_reviewers/edit"
-
   resources :users do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true
@@ -105,6 +103,7 @@ Jobscape::Application.routes.draw do
     resources :applicrequirements, :shallow => true
   end
   resources :bookmarks
+  resources :letter_templates
   resources :my_applications
   resources :incomplete_applications
   namespace :officer do
@@ -115,6 +114,10 @@ Jobscape::Application.routes.draw do
     resources :leavers
     resources :reviews
     resources :reviewed_users
+    resources :vacancies do
+      resources :applications, :shallow => true
+    end
+    resources :portraits
   end
   resources :latest_vacancies, :only => :index
   resources :current_vacancies, :only => :index
@@ -160,6 +163,7 @@ Jobscape::Application.routes.draw do
   match '/performance_reviews', :to => 'pages#performance_reviews'
   match '/locked_aplan',	:to => 'pages#locked_aplan'
   match '/reviewer_login',	:to => 'pages#reviewer_login'
+  match '/recruitment_menu',	:to => 'pages#recruitment_menu'
   
   root :to => 'pages#home'
 

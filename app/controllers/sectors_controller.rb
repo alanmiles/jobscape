@@ -32,7 +32,7 @@ class SectorsController < ApplicationController
   def update
     @sector = Sector.find(params[:id])
     if @sector.update_attributes(params[:sector])
-      flash[:success] = "#{@sector.sector} updated."
+      flash[:success] = "'#{@sector.sector}' updated."
       redirect_to sectors_path
     else
       @title = "Edit sector"
@@ -48,7 +48,7 @@ class SectorsController < ApplicationController
       flash[:error] = " Cannot delete sector while associated vacancies exist"
     else
       @sector.destroy
-      flash[:success] = "#{@sector.sector} removed."
+      flash[:success] = "'#{@sector.sector}' removed."
     end
     redirect_to sectors_path
   end

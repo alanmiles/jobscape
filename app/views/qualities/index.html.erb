@@ -1,31 +1,27 @@
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), admin_path %>
+
 <div class = "r-float">
-  <%= link_to "Add an attribute", new_quality_path %><br />
-  <%= link_to "New submissions", attribute_submissions_path %> <span id="submits">(<%= @submissions %>)</span><br />
-  <%= link_to "Recent rejections", attribute_rejections_path %> <span id="submits">(<%= @rejections %>)</span><br />
-    
+  <%= link_to "Add an attribute", new_quality_path %> |
+  <%= link_to "New submissions", attribute_submissions_path %> <span id="submits">(<%= @submissions %>)</span> |
+  <%= link_to "Recent rejections", attribute_rejections_path %> <span id="submits">(<%= @rejections %>)</span> 
 </div>
 
-<h1><%= @title %></h1>
-<p><em>
-  Click on <%= image_tag("select.png", :size => "15x15") %> to view or 
-  edit the associated grades/objectives.
-</em></p>
-<table class="narrow">
-  
-  <% @qualities.each do |quality| %>
-  <tr>
-    <td><%= quality.quality %></td>
-    <td><%= link_to(image_tag("select.png", :size => "15x15"), quality) %> 
-    <td style = "text-align: center"><span id ="uses">
-    <% if Jobquality.attribute_used?(quality) %>
-      <%= Jobquality.count_attribute(quality) %>
-    <% else %>
-      <%= link_to image_tag("cancel.png", :size => "15x15"), quality, 
+<div id = "listing">
+  <ul class="no_dec">
+    <% @qualities.each do |quality| %>
+      <li>
+        <%= link_to quality.quality, quality, :title => "Edit" %>
+        <div class="r-float">
+          <% if Jobquality.attribute_used?(quality) %>
+            <%= pluralize(Jobquality.count_attribute(quality), "use") %>
+          <% else %>
+            <%= link_to image_tag("delete.png"), quality, 
                    :method => :delete, 
-                   :confirm => "You sure?",
-                   :title => "Remove #{quality.quality}" %>
-    <% end %>
-    </span></td>
-  </tr>
-  <% end %> 
-</table>
+                   :confirm => "Are you sure you want to delete '#{quality.quality}'?",
+                   :title => "Remove '#{quality.quality}'" %>
+          <% end %>
+        </div>
+      </li>
+    <% end %> 
+  </ul>
+</div>

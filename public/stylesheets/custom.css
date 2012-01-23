@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #6699CC;
+  background: #000055;
 }
 
 header {
@@ -44,10 +44,19 @@ section h3 {
   font-size: 110%;
 }
 
+h3.title {
+  color: #CC3333;
+}
+
 section h4 {
   font-size: 90%;
   color: #999;
   /* color: #A33519; */
+}
+
+h4.subtitle {
+  color: #CC3333;
+  font-size: 110%;
 }
 
 h4.success {
@@ -179,6 +188,14 @@ ul li.smaller_font {
   margin-right: 25px;
   width: 600px;
   padding: 15px;
+  font-size: 100%;
+}
+
+.display_wider_shallow {
+  margin-left: 25px;
+  margin-right: 25px;
+  width: 600px;
+  padding: 5px 15px;
   font-size: 100%;
 }
 
@@ -533,6 +550,11 @@ td.at_top {
 
 td.width_65 {
   width: 65%;
+}
+
+td.warning {
+  color: #CC3333;
+  font-style: italic;
 }
 
 .numeric {

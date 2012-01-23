@@ -1,20 +1,18 @@
-<div class = "r-float">
-  <%= link_to "Attributes list", qualities_path %><br />
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), qualities_path %>
+
+<div id ="listing">
+  <h1><%= @quality.quality.upcase %><%= link_to "Edit", edit_quality_path(@quality) %></h1>
+  <ul class="no_dec">
+    <% @pams.each do |pam| %>
+      <li>
+        <%= pam.grade %>
+        <span class="r-float">
+          <%= link_to "Edit", edit_pam_path(pam) %>
+        </span>
+        <div class="subtext">
+          <%= pam.descriptor %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
 </div>
-
-<p class = "display_text grayborder round cntr">Attribute: <%= @quality.quality %>
-           &nbsp; <span style = "font-weight: normal">
-             <%= link_to "(Edit)", edit_quality_path(@quality) %>
-           </span>
-</p>
-
-<h1>PAMs <i style = "font-size:0.6em">( = personal attribute measurements )</i></h1> 
-<table class="smaller_font">
-  <% @pams.each do |pam| %>
-    <tr>
-      <td class = "at_top"><%= pam.grade %></td>
-      <td><%= pam.descriptor %></td>
-      <td class = "control at_top"><%= link_to "Edit", edit_pam_path(pam) %></td> 
-    </tr>  
-  <% end %>
-</table>

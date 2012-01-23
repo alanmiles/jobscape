@@ -34,7 +34,7 @@ class Business < ActiveRecord::Base
   has_many :employees, 	:dependent => :destroy
   has_many :departments, :dependent => :destroy 
   has_many :jobs, 	:dependent => :destroy
-  has_many :vacancies,  :through => :jobs
+  has_many :vacancies,  :through => :jobs, :uniq => true
   has_many :users, :through => :employees, :uniq => true
   has_many :invitations, :dependent => :destroy
   has_many :objectives, :dependent => :destroy
@@ -51,6 +51,10 @@ class Business < ActiveRecord::Base
   validates :mission,	:length		=> { :maximum => 500, :allow_blank => true }
   validates :values,	:length		=> { :maximum => 500, :allow_blank => true }
   			
+  def self.signed_up
+    self.where("name NOT LIKE ?", "Biz_%")
+  end
+  
   def no_jobs?
     self.jobs.count == 0
   end
@@ -178,6 +182,10 @@ class Business < ActiveRecord::Base
   
   def reviews_in_progress
     self.reviews.where("reviews.completed = ? and reviews.cancel = ?", false, false)
+  end
+  
+  def current_vacancies
+    self.vacancies.where("vacancies.filled = ?", false).order("created_at")  
   end
   
 end
