@@ -1,9 +1,11 @@
+          Sector: <%= application.vacancy.sector.sector %><br />
           <% if application.vacancy.full_time? %>
             Full-time  
           <% else %>
             Part-time 
           <% end %> 
-          job in <%= application.vacancy.sector.sector %> business. 
+          - 
+         
           <% if application.vacancy.voluntary? %>
             Voluntary work.
           <% else %>

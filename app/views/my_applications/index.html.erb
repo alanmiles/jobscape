@@ -13,20 +13,22 @@
       <% @applications.each do |application| %>
  
         <li>
-       
-          <%= link_to application.vacancy.headline, my_application_path(application) %> &nbsp;
-          <%= link_to image_tag("details.png"), my_application_path(application), :title => "Application details" %> &nbsp; &nbsp;
-          <%= link_to image_tag("delete.png"), my_application_path(application), 
+          <div class="r-float">
+            <%= link_to image_tag("details.png"), my_application_path(application), :title => "Application details" %> &nbsp;
+            <%= link_to image_tag("delete.png"), my_application_path(application),
+          
                    :method => :delete, 
                    :confirm => "Are you sure you want to cancel your application?",
                    :title => "Cancel your application." %>
+          </div> 
+          <%= link_to application.vacancy.headline, my_application_path(application) %> 
           
           <div class="subtext">
             <%= render "/applications/detail", :application => application %>
             Applied - <%= application.submission_date.strftime("%b %d") %>.
             
             Deadline - <%= application.vacancy.close_date.strftime("%b %d") %>.
-            <em>(<%= pluralize(application.vacancy.all_completed_applications.count, "application") %>)</em> 
+            <em>(<%= pluralize(application.vacancy.all_completed_applications.count, "applicant") %>)</em> 
           </div>  
         
         </li>

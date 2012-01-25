@@ -4,14 +4,14 @@
   <% end %>
 </div>
 
-<h4><%= current_user.name %></h4>
+<h4 class="over"><%= current_user.name %></h4>
 <div id = "listing">
   <ul class="no_dec">
     <li><%= link_to "Find a job", jobsearch_menu_path %>
       <div class="subtext">Set job-search preferences, view vacancies, apply.</div>    
     </li>
     <li><%= link_to "Self-Portrait", user_portrait_path(@user) %>
-      <div class="subtext">HYGWIT's supercharged CV - required if you're applying for jobs.</div>    
+      <div class="subtext">HYGWIT's turbo-CV - required for job applications.</div>    
     </li>
     <li><%= link_to "Job-Tools", my_job_path %>
       <div class="subtext">Build an achievement plan, set targets, review performance.</div> 

@@ -11,21 +11,22 @@
     - <%= @vacancy.job.business.city %>
   </strong>       
   <div class="subtext">   
+    Sector: <%= @vacancy.sector.sector %><br />
     <% if @vacancy.full_time? %>
       Full-time  
     <% else %>
       Part-time 
     <% end %> 
-    job in <%= @vacancy.sector.sector %> business. 
+    -
     <% if @vacancy.voluntary? %>
       Voluntary work.
     <% else %>
       Salary: £<%= number_with_delimiter(@vacancy.remuneration, :delimiter => ",") %><%= @vacancy.remuneration_rate %>.
     <% end %>
     <br />
-    Posted <%= time_ago_in_words(@vacancy.created_at) %> ago.  
-    Deadline - <%= @vacancy.close_date.strftime("%a %b %d") %>.
-    &nbsp;<em>(<%= pluralize(@vacancy.all_completed_applications.count, "application") %> so far)</em>
+    Posted: <%= @vacancy.created_at.strftime("%b %d") %>.
+    Deadline: <%= @vacancy.close_date.strftime("%b %d") %>.
+    &nbsp;<em>(<%= pluralize(@vacancy.all_completed_applications.count, "applicant") %>)</em>
     <br />
     <% unless @vacancy.notes.empty? %> 
       <%= @vacancy.notes %>

@@ -3,7 +3,7 @@
     <%= image_tag("hygwit.png") %>
   </span>  
   <span class= "title-text">
-    YGWIT | <%= @title %>
+   <%= @title %>
   </span>
   
 
@@ -43,7 +43,7 @@
    $(document).ready(function(){
    
     $('#guidance').click(function() {
-      $('.panel').toggle( 100, function() {
+      $('#center-panel').toggle( 100, function() {
       });
     });
    

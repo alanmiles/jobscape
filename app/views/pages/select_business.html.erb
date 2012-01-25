@@ -1,8 +1,8 @@
 <div class = "r-float">
  <% if current_user.admin? %>
-    <%= link_to "Switch to Admin Mode", standard_to_admin_path %> | 
+    <%= link_to "Admin Mode", standard_to_admin_path %> | 
   <% end %>
-  <%= link_to "Add a new business", new_business_path if current_user.account == 3 %>
+  <%= link_to "Add a business", new_business_path if current_user.account == 3 %>
 </div>
 
 <h4>
@@ -15,6 +15,15 @@
   <ul class="no_dec">
     <% @employees.each do |employee| %>
       <li>
+        <span class= "r-float">
+    
+          <% if employee.role == "Officer" && employee.business.no_associations? %>
+            <%= link_to(image_tag("delete.png"), officer_business_path(employee.business_id), 
+                   :method => :delete, 
+                   :confirm => "Are you sure you want to delete '#{employee.business.name}'?",
+                   :title => "Delete '#{employee.business.name}'") %>
+          <% end %>
+        </span>
         <% biz = Business.find(employee.business_id) %>
   
         <% if employee.role == "Officer" %>
@@ -26,17 +35,10 @@
         <% if @user.has_review_requests?(biz) || @user.has_rejected_review_requests?(biz) %>
           <%= image_tag("important.png") %>
         <% end %>
-        |
-        <%= employee.role %>
-        <span class= "r-float"
-    
-          <% if employee.role == "Officer" && employee.business.no_associations? %>
-            <%= link_to(image_tag("delete.png"), officer_business_path(employee.business_id), 
-                   :method => :delete, 
-                   :confirm => "Are you sure you want to delete '#{employee.business.name}'?",
-                   :title => "Delete '#{employee.business.name}'") %>
-          <% end %>
-        </span>
+        <div class="subtext">
+          <%= employee.role %>
+        </div>
+        
       </li>
     <% end %>
   </ul>

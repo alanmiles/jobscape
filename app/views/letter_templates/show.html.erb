@@ -8,6 +8,6 @@
   <h1><%= @letter_template.description.upcase %></h1>
 
   <div class="shift_center_50 cut_right_50 subtext">
-    <%= @letter_template.content %>
+    <%= simple_format(@letter_template.content) %>
   </div>
 </div>
