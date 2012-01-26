@@ -1,5 +1,9 @@
 Jobscape::Application.routes.draw do
 
+  get "notes/index"
+
+  get "notes/new"
+
   resources :users do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true
@@ -137,6 +141,7 @@ Jobscape::Application.routes.draw do
   namespace :reviewer do
     resources :reviews
   end
+  resources :notes
   
   match '/signup',  		:to => 'users#new'
   match '/signin',  		:to => 'sessions#new'

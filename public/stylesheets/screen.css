@@ -79,7 +79,7 @@ body {
 
 /* used */
 #center-content {
-  padding: 5em 2em;
+  padding: 2em 2em;
 }
 
 /* used */
@@ -200,7 +200,7 @@ section h5 {
 textarea {
   font-family: "HelveticaNeue", Arial, Helvetica, sans-serif;
   font-size: 90%;
-  width: 20em;
+  width: 85%;
   height: 10em;
   padding: 1em;
   border: 3px ridge #DDD;

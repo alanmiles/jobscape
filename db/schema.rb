@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120103180642) do
+ActiveRecord::Schema.define(:version => 20120125152516) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -202,6 +202,13 @@ ActiveRecord::Schema.define(:version => 20120103180642) do
     t.integer  "user_id"
     t.string   "limitation"
     t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notes", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
