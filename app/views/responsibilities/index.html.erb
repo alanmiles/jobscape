@@ -1,72 +1,87 @@
-<div class = "r-float">
-<% if @plan.max_responsibilities? %>
-  <u>No more responsibilities can be added</u>
-<% else %>
-  <%= link_to "Add a new responsibility", new_plan_responsibility_path(@plan) %><br />
-<% end %>
-<%= link_to "Back to A-Plan menu", @plan %>
-</div>
+<%= render 'shared/aplan_nav' %>
 
-<h1>Responsibilities
-  <% if @plan.responsibilities_ready? && @plan.goals_complete?  && @plan.ratings_complete? %>
-    &nbsp;<span class="success_marker round">ready to use</span>
-  <% end %>
-</h1> 
-<h4>for <%= @job.job_title %></h4>
-<div class="info_box_screen">
-    <% if @plan.has_responsibilities? %>
-       Click on <%= image_tag("select.png", :size => "15x15") %> 
-       to edit responsibility OR view/edit/add/delete goals
-       OR set the rating.
+<%= link_to image_tag("pageback.png", :title => "Previous"), @plan, :class => "magnify" %>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
+  
+  <div class = "r-float under">
+    <% if @plan.max_responsibilities? %>
+      <u>List is full</u>
     <% else %>
-       Get started by clicking on 'Add a new responsibility'.
-    <% end %>   
-    <br />
-    <%= pluralize(@plan.count_responsibilities, 'responsibility') %> set 
+      <%= link_to "New responsibility", new_plan_responsibility_path(@plan) %><br />
+    <% end %>
+  </div>
+  
+  <h1 class="no-gap under">Responsibilities for this job</h1>
+  <div class="subtext">
+    <%= @plan.count_responsibilities %> set 
     <% if ! @plan.responsibilities_ready? %>
-      <span class = "highlt round"> - you need at least 10 ... and up to 20.</span>
+      <span class="texthl">but 10 - 20 required.</span>
     <% elsif @plan.responsibilities_ready? %>
-      <span style = "color:green"> - enough to use the plan, but you can set up to 20.</span>
+      - enough to use the A-Plan. Max 20.
     <% elsif @plan.max_responsibilities? %>
-      <span class="highlt"> - the maximum for this job.</span>
+       - the maximum for this job.
     <% end %>
-    <% if !@plan.goals_complete? && !@plan.ratings_complete? %>
-      <span class="highlt round">Goals & ratings are incomplete.</span>
-    <% elsif ! @plan.goals_complete? %>
-      <span class="highlt round">Goals are incomplete.</span>
-    <% elsif ! @plan.ratings_complete? %>
-      <span class="highlt round">Ratings are incomplete.</span>
-    <% end %>
+    <span class="texthl">
+      <% if !@plan.goals_complete? && !@plan.ratings_complete? %>
+        Goals & ratings are incomplete.
+      <% elsif ! @plan.goals_complete? %>
+        Goals are incomplete.
+      <% elsif ! @plan.ratings_complete? %>
+        Ratings are incomplete.
+      <% end %>
+    </span>
+  </div>
 </div>
-<table class="smaller_font">
-  <tr>
-   <th></th>
-   <th>Responsibility</th>
-   <th class = "numeric">Goals</th>
-   <th class = "numeric">Rating</th> 
-   <th></th> 
-  </tr>
 
-  <% @responsibilities.each do |responsibility| %>
-    <tr>
-      <td><%= link_to(image_tag("select.png", :size => "15x15"), responsibility) %>
-      <td><%= responsibility.definition %></td>
-      <% if responsibility.has_goals? %>
-        <td class = "numeric"><%= responsibility.count_current_goals %></td>
-      <% else %>
-        <td class = "numeric texthl"><%= responsibility.count_current_goals %></td>
-      <% end %>
-      <% if responsibility.has_rating? %>
-        <td class = "numeric"><%= responsibility.display_rating %></td>
-      <% else %>
-        <td class = "numeric texthl"><%= responsibility.display_rating %></td>
-      <% end %>
-      <td class = "control"><%= link_to image_tag("cancel.png", :size => "15x15"), responsibility, 
+<div id="listing">
+  <ul class="no_dec">
+    <% @responsibilities.each do |responsibility| %>
+      <li>
+        <span class="r-float push-left">
+          <%= link_to image_tag("edit.png"), edit_responsibility_path(responsibility),
+                   :title => "Edit the responsibility" %>
+          <% if responsibility.used? %>
+            <%= link_to image_tag("delete.png"), responsibility, 
                    :method => :delete, 
-                   :confirm => "You sure?",
-                   :title => "Remove this responsibility." %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+                   :confirm => "This responsibility has been used, so to preserve the review history, it can't be deleted.  But it can be removed from the list of active responsibilities - is this what you want to do?",
+                   :title => "Hide this responsibility, its goals and rating." %>
+          <% else %>
+            <%= link_to image_tag("delete.png"), responsibility, 
+                   :method => :delete, 
+                   :confirm => "Are you sure you want to remove this responsibility - including associated goals and rating - completely?",
+                   :title => "Delete this responsibility, its goals and rating." %>
+          <% end %>
+        </span>
+        <div class="subtext">
+          <%= responsibility.definition %>
+          <div class="under">
+            <%= link_to "Goals:", responsibility_goals_path(responsibility) %>
+            <% if responsibility.has_goals? %>
+              <%= responsibility.count_current_goals %>
+            <% else %>
+              <span class = "texthl">
+                <%= responsibility.count_current_goals %>
+                <%= image_tag("warning.png") %>
+              </span>
+            <% end %>
+            <span class="side"> 
+              <%= link_to "Rating:", edit_evaluation_path(responsibility.evaluation) %>
+              <% if responsibility.has_rating? %>
+                <%= responsibility.display_rating %>
+              <% else %>
+                <span class = "texthl">
+                  <%= responsibility.display_rating %>
+                  <%= image_tag("warning.png") %>
+                </span>
+              <% end %>
+            </span>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>  
+</div>
+
 

@@ -5,7 +5,8 @@ class JobqualitiesController < ApplicationController
   def index
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
-    @title = "Attributes: #{@job.job_title}"
+    @business = Business.find(session[:biz])
+    @title = "Attributes"
     @jobqualities = @plan.jobqualities.order("jobqualities.position")
   end
 
@@ -21,7 +22,7 @@ class JobqualitiesController < ApplicationController
   
   def show
     @jobquality = Jobquality.find(params[:id])
-    @title = @jobquality.quality.quality
+    @title = "Attribute + Grades"
     @quality = Quality.find(@jobquality.quality_id)
     @pams = @quality.pams
     @job = Job.find(session[:jobid])
@@ -31,15 +32,15 @@ class JobqualitiesController < ApplicationController
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
     @selected_qualities = @plan.jobqualities.order("jobqualities.position")
-    session[:return_to] = new_plan_jobquality_path(@plan)
+    store_location
     if @plan.max_attributes?
       flash[:notice] = "Sorry, you're only allowed 10 attributes. You'll need to delete an attribute before adding a new one."
-      @title = "Attributes: #{@job.job_title}"
+      @title = "Attributes"
       redirect_to plan_jobqualities_path(@plan)
     else
       @jobquality = @plan.jobqualities.new
       @qualities = @plan.attributes_available
-      @title = "New attribute: #{@job.job_title}"
+      @title = "Select attribute"
     end
   end
 
@@ -48,7 +49,7 @@ class JobqualitiesController < ApplicationController
     @plan = Plan.find_by_job_id(@job.id)
     if @plan.max_attributes?
       flash[:notice] = "Sorry, you're only allowed 10 attributes"
-      @title = "Attributes: #{@job.job_title}"
+      @title = "Attributes"
       redirect_to plan_jobqualities_path(@plan)
     else
       @jobquality = @plan.jobqualities.new(params[:jobquality])
@@ -60,7 +61,7 @@ class JobqualitiesController < ApplicationController
         end
         redirect_to plan_jobqualities_path(@plan)
       else
-        @title = "New attribute: #{@job.job_title}"
+        @title = "Select attribute"
         @selected_qualities = @plan.jobqualities.order("jobqualities.position")
         @qualities = @plan.attributes_available
         render 'new'

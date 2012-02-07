@@ -1,9 +1,6 @@
-<div class = "r-float">
-  <%= link_to "Cancel", corporate_plan_path(@business)  %><br />
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), corporate_plan_path(@business), :class => "magnify" %>
 
-<h1><%= @title %></h1>
-<h4><%= @business.name %></h4>
+<h4 class="over"><%= @business.name_city %></h4>
 
 <%= form_for([@business, @objective]) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
@@ -13,7 +10,7 @@
     <%= render 'fields', :f => f %>
   
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit :class => "create round" %>
     </div>
   </div>
 <% end %>

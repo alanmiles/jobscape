@@ -1,39 +1,25 @@
-<div class = "r-float">
-  <%= link_to "Cancel", corporate_plan_path(@business) %><br />
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), corporate_plan_path(@business), :class => "magnify" %>
 
-<h1><%= @title %></h1>
-<h4><%= @business.name %>, <%= @business.city %></h4>
+<h4 class="over"><%= @business.name %>, <%= @business.city %></h4>
 
 <%= form_for(@business, :url => corporate_plan_path(@business)) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   
   <div class="shift_center_50">
     <div class="field">
-      <%= f.label :mission %> &nbsp; <span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span><br />
-      <div id="infotext" class="info_box_screen" style = "margin-left:0; margin-right: 150px; display:none">
-        Your unique business idea - what sets you apart from other businesses.  A good mission statement includes two or three
-        critical measurements, so that your senior team and stakeholders can assess the business's progress against the stated aims.
-        &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
-      </div>
-      <%= f.text_area :mission, :maxlength => 500, :cols => 60, :rows => 4 %>
-      <span id="char-count-mission" style = "color:blue; padding-left: 5px"><%= @characters_mission %></span>
+      <%= f.label :mission %> 
+      <%= f.text_area :mission, :maxlength => 500, :class => "midsize" %>
+      <div id= "mission_count" class="char-count"><%= @characters_mission %> characters left</div>
     </div>
   
     <div class="field">
-      <%= f.label :values %> &nbsp<span id="info2", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span><br />
-      <div id="infotext2" class="info_box_screen" style = "margin-left: 0; margin-right: 150px; display:none">
-        A statement to show the kind of business you aspire to be, not in terms of business
-        measurements but expressed as human values.  A well-written statement will inspire loyalty and commitment
-        amongst customers and employees.
-        &nbsp; <span id = "no-info2" style="color:#069; cursor:n-resize">(Hide)</span>
-      </div>
-      <%= f.text_area :values, :maxlength => 500, :cols => 60, :rows => 4 %>
-      <span id="char-count-values" style = "color:blue; padding-left: 5px"><%= @characters_values %></span>
+      <%= f.label :values %> 
+      <%= f.text_area :values, :maxlength => 500, :class => "midsize" %>
+      <div id= "values_count" class="char-count"><%= @characters_values %> characters left</div>
     </div>
   
     <div class="actions">
-      <%= f.submit "Confirm changes" %>
+      <%= f.submit "Confirm changes", :class => "create round" %>
     </div>
   </div>
 
@@ -45,36 +31,25 @@
     
    $(document).ready(function(){
     
-    $('#info').click(function() {
-      $('#infotext').show('fast', function() {
-      });
-    });
-    
-    $('#info2').click(function() {
-      $('#infotext2').show('fast', function() {
-      });
-    });
-    
-    $('#no-info').click(function() {
-      $('#infotext').hide('fast', function() {
-      });
-    });
-    
-    $('#no-info2').click(function() {
-      $('#infotext2').hide('fast', function() {
-      });
+    $('#business_mission').click(function() {
+      $('#mission_count').css('visibility', 'visible');
     });
     
     $('#business_mission').live('keyup keydown', function(e) {
     var maxLen = 500;
     var left = maxLen - $(this).val().length;
-    $('#char-count-mission').html(left);
+    $('#mission_count').html(left);
     });
+    
+    $('#business_values').click(function() {
+      $('#values_count').css('visibility', 'visible');
+    });
+    
     
     $('#business_values').live('keyup keydown', function(e) {
     var maxLen = 500;
     var left = maxLen - $(this).val().length;
-    $('#char-count-values').html(left);
+    $('#values_count').html(left);
     });
     
    });

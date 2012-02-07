@@ -7,7 +7,9 @@ class Officer::EmployeesController < ApplicationController
   
   def edit
     @employee = Employee.find(params[:id])
-    @title = "Edit employee details"
+    @business = Business.find(session[:biz])
+    @title = "Edit employee"
+    @job = @employee.user.current_job(@business)
   end
   
   def update
@@ -66,7 +68,7 @@ class Officer::EmployeesController < ApplicationController
         redirect_to officer_user_path(@employee.user_id)
       end
     else
-      @title = "Edit employee details"
+      @title = "Edit employee"
       render 'edit'
     end
   end

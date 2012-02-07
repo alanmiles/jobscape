@@ -1,28 +1,20 @@
-<div class = "r-float">
-<%= link_to "Cancel", plan_responsibilities_path(@plan) %>
-</div>
-<h1>New responsibility</h1>
-<h4>for <%= @job.job_title %></h4>
+<%= link_to image_tag("pageback.png", :title => "Previous"), plan_responsibilities_path(@plan), :class => "magnify" %>
 
-<div class = "shift_center">
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
+</div>
+
+<div class = "shift_center_50">
   <%= form_for([@plan, @responsibility]) do |f| %>
     <%= render 'shared/error_messages', :object => f.object %>
     <div class = "field">
-      <%= f.label :definition, "Enter an area of responsibility" %> <span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span><br />
-      <div id ="infotext" class="info_box_wide" style = "display:none; margin-left:0px">
-         In 140 characters or less, describe one of the job's key responsibilities.<br /><br />
-         It should read like something like a statement in a traditional job-description - 'Prepare the annual IT budget' ... 
-         'Win new corporate business' ... 'Answer all incoming calls to the department', etc.<br /><br />
-         For consistency, start each requirement with a verb, just like the examples above.<br /><br />
-         You need to have at least 10 responsibilities for each job, and not more than 20. 
-         &nbsp; <span id = "no-info" class="hide_link">(Hide)</span>
-      </div>
-      <%= f.text_area :definition, :maxlength => 140, :cols => 50, :rows => 4 %>
-      <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+      <%= f.label :definition, "Enter an area of responsibility *" %> 
+      <%= f.text_area :definition, :maxlength => 140, :class => "tiny" %>
+      <div class="char-count"><%= @characters_left %> characters left.</div>
     </div> 
       <%= f.hidden_field :created_by %>
     <div class="actions">
-      <%= f.submit "Create" %>
+      <%= f.submit :class => "create round" %>
     </div>
   <% end %>
 </div>
@@ -31,23 +23,18 @@
 
   <%= javascript_tag do %>
 
-    $('#responsibility_definition').live('keyup keydown', function(e) {
-    var maxLen = 140;
-    var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
-    });
+    $(document).ready(function(){
     
-    
-    $('#info').click(function() {
-      $('#infotext').show('fast', function() {
-      // Animation complete.
+      $('#responsibility_definition').click(function() {
+        $('.char-count').css('visibility', 'visible');
       });
-    });
-    
-    $('#no-info').click(function() {
-      $('#infotext').hide('fast', function() {
-      // Animation complete.
+
+      $('#responsibility_definition').live('keyup keydown', function(e) {
+        var maxLen = 140;
+        var left = maxLen - $(this).val().length;
+        $('.char-count').html(left);
       });
+    
     });
     
   <% end %>

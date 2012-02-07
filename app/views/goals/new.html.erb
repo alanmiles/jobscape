@@ -1,43 +1,27 @@
-<div class = "r-float">
-<%= link_to "Cancel", @responsibility %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), responsibility_goals_path(@responsibility), :class => "magnify" %>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
 </div>
 
-<h1>New goal</h1>
+<div id="responsibility" class="over">
+  <strong>Responsibility</strong> 
+  <div class="subtext">
+    <%= @responsibility.definition %>
+  </div>
+</div>
 
-<h4><%= @job.job_title %></h4>
-
-<p class = "display_text grayborder round"><%= @responsibility.definition %>
-</p>
-
-<div class="display_wider" style="padding-top:0">
+<div id="set-goal">
   <%= form_for([@responsibility, @goal]) do |f| %>
     <%= render 'shared/error_messages', :object => f.object %>
     <div class = "field">
-      <%= f.label :objective, "Set a MEASURABLE goal" %> <span id="info", 
-                 style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span><br />
-      <div id ="infotext" class="info_box_screen" style = "display:none; margin-left:0px">
-         <span id = "no-info" class="hide_link">(Hide)</span> &nbsp;
-         In 140 characters or less, explain how you'll decide, month by month or quarter by quarter, whether 
-         this responsibility is being successfully achieved. <i>(Note: this shouldn't be a one-off short-term 
-         target - the word 'ongoing' is important.)</i> 
-         <br /><br />
-         Take opinion out of the equation by including measurables ... answering questions like 'How many', 'When by?', etc.  
-         <br /><br />
-         For example, for the responsibility 'Preparing the monthly payroll', goals might include:- <br />
-          "Signed off at least 4 working days before month-end."<br />
-          "No more than 3 errors or justifiable complaints in any month" <br /><br />
-         You can set up to 3 goals for each responsibility. 
-         <br /><br />
-         Don't forget, it's best if employee and direct manager work together to build the A-Plan,
-         reaching agreement about the priorities and the standard of performance expected. &nbsp;
-         &nbsp; <span id = "no-info2" class="hide_link">(Hide)</span>
-      </div>
-      <%= f.text_area :objective, :maxlength => 140, :cols => 50, :rows => 4 %>
-      <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+      <%= f.label :objective, "Set a measurable goal *" %>
+      <%= f.text_area :objective, :maxlength => 140, :class => "tiny" %>
+      <div class="char-count"><%= @characters_left %> characters left</div>
     </div> 
       <%= f.hidden_field :created_by %>
     <div class="actions">
-      <%= f.submit "Create" %>
+      <%= f.submit :class => "create round" %>
     </div>
   <% end %>
 </div>
@@ -46,32 +30,18 @@
 
   <%= javascript_tag do %>
 
-   $(document).ready(function(){
+    $(document).ready(function(){
+
+      $('#goal_objective').click(function() {
+        $('.char-count').css('visibility', 'visible');
+      });
    
-    $('#goal_objective').live('keyup keydown', function(e) {
-    var maxLen = 140;
-    var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
-    });
-    
-    $('#info').click(function() {
-      $('#infotext').show('fast', function() {
-      // Animation complete.
+      $('#goal_objective').live('keyup keydown', function(e) {
+        var maxLen = 140;
+        var left = maxLen - $(this).val().length;
+        $('.char-count').html(left);
       });
-    });
-    
-    $('#no-info').click(function() {
-      $('#infotext').hide('fast', function() {
-      // Animation complete.
-      });
-    });
-    
-    $('#no-info2').click(function() {
-      $('#infotext').hide('fast', function() {
-      // Animation complete.
-      });
-    });
-    
-   }); 
+
+    }); 
   <% end %>
 <% end %>

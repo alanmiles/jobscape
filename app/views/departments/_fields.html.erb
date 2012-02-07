@@ -1,8 +1,8 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :name %><br />
-  <%= f.text_field :name, :maxlength => 50, :size => 40 %>
-  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  <%= f.label :name, "Department name *" %><br />
+  <%= f.text_field :name, :maxlength => 20 %>
+  <div class="char-count"><%= @characters_left %> characters left</div>
 </div>
 <div class="field">
   <%= f.label :manager_id, "Department head" %><br />
@@ -14,7 +14,6 @@
   <%= collection_select(:department, :deputy_id, @people, :id, 
                         :name, :prompt => true) %>
 </div>
-<br />
 
 <% content_for :javascript do %>
 
@@ -22,11 +21,16 @@
 
    $(document).ready(function(){
    
-    $('#department_name').live('keyup keydown', function(e) {
-    var maxLen = 50;
-    var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
+    $('#department_name').click(function() {
+      $('.char-count').css('visibility', 'visible');
     });
+   
+    $('#department_name').live('keyup keydown', function(e) {
+    var maxLen = 20;
+    var left = maxLen - $(this).val().length;
+    $('.char-count').html(left);
+    });
+    
    });
    
   <% end %>

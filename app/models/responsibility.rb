@@ -26,12 +26,12 @@ class Responsibility < ActiveRecord::Base
   has_many :applicresponsibilities
   has_many :reviewresponsibilities
   
-  attr_accessible :definition, :removed, :created_by, :rating
+  attr_accessible :definition, :removed, :removal_date, :created_by, :rating
   
   validates	:plan_id,	:presence 	=> true
   validates	:definition,	:presence 	=> true,
-                		:length		=> { :maximum => 140 },
-  				:uniqueness	=> { :case_sensitive => false, :scope => :plan_id }
+                		:length		=> { :maximum => 140 }
+  				#:uniqueness	=> { :case_sensitive => false, :scope => :plan_id }
   validates	:created_by,	:presence	=> true,
   				:numericality	=> { :integer => true }
   validates     :rating,     	:presence 	=> true,
@@ -58,6 +58,10 @@ class Responsibility < ActiveRecord::Base
     rating > 0
   end
   
+  def current_goals
+    self.goals.where("goals.removed = ?", false)
+  end
+  
   def count_current_goals
     self.goals.where("goals.removed = ?", false).count
   end
@@ -68,6 +72,11 @@ class Responsibility < ActiveRecord::Base
   
   def maximum_goals?
     count_current_goals >= 3
+  end
+  
+  def used?
+    cnt = self.reviewresponsibilities.count
+    cnt > 0
   end
   
   private

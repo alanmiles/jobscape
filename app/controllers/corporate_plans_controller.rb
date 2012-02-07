@@ -8,7 +8,7 @@ class CorporatePlansController < ApplicationController
 
   def edit
     @business = Business.find(params[:id])
-    @title = "Update corporate mission and values"
+    @title = "Edit strategy"
     @characters_mission = 500 - @business.mission.length
     @characters_values = 500 - @business.values.length
   end
@@ -19,7 +19,7 @@ class CorporatePlansController < ApplicationController
       flash[:success] = "You've successfully updated the business plan"
       redirect_to corporate_plan_path(@business)
     else
-      @title = "Update corporate mission and values"
+      @title = "Edit strategy"
       render 'edit'
     end
   end

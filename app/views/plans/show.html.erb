@@ -1,196 +1,194 @@
-<div class = "r-float">
-  <% if current_user.account == 1 %>
-    <%= link_to "#{@job.job_title} menu", my_job_path %>
-  <% elsif current_user.account == 4 %>
-    <%= link_to "Home Page", employee_home_path %>
-    <% if @plan.complete? %>
-      <br />
-      <%= link_to "View complete A-Plan", aplan_path(@plan) %>
-    <% end %>
-  <% else %>
-    
-    <% if session[:officer_off] == true %>
-    
-      <%= link_to "Personal Home Page", employee_home_path %>
-      <% if @plan.complete? %>
-        <br />
-        <%= link_to "View complete A-Plan", aplan_path(@plan) %>
-      <% end %>
-      
-    <% else %>
-      
-      <%= link_to "#{@job.job_title} menu", @job %>
-      <% if @plan.complete? %>
-        <br />
-        <%= link_to "View complete A-Plan", aplan_path(@plan) %>
-      <% end %>
-      <br />
-      <%= link_to "All jobs in business", business_jobs_path(@business) unless current_user.account == 1 %>
-    
-    <% end %>
-  <% end %>
-</div>
-<h1>Achievement Plan 
-  <% if @plan.complete? %>
-    &nbsp;<span class="success_marker round">ready to use</span>
-  <% end %>
-</h1>
-<h4><%= @job.job_title %></h4>
+<nav class="topmenu over">
+  <ul>
+    <span id="intro"><li><%= link_to "A-Plan Intro", intro_aplan_path(@plan), :remote => true %></li></span>
+    <span id="uses"><li><%= link_to "Uses", uses_aplan_path(@plan), :remote => true %></li></span>
+    <span id="writing"><li><%= link_to "How to write", writing_aplan_path(@plan), :remote => true %></li></span>
+  </ul>
+</nav>
 
-<% if current_user.account == 1 && ! @plan.complete? %>
-  <%= render 'aplans/instructions' %>
-<% elsif current_user.account >=3 && ! @plan.complete? %>
-  <%= render 'aplans/instructions' %>
-<% end %>
-  
-<div class = "info_box_screen">
-  <% if current_user.account == 1 %>
-    <% unless @plan.complete? %>      
-       Tackle each of the sections below in turn. Youll find lots of guidance as you go.  The A-Plan is ready to use
-       when all items in the right-hand column are <span style = "color: green">green</span>. 
-    <% else %>
-       Now your A-Plan is complete, use it to make yourself a high-value employee.  Get into the habit 
-       of reviewing your own performance monthly - with an external review roughly every 3 months and make sure 
-       you're hitting your targets.  If you're not, take the initiative to change things until you are.  It's all 
-       down to you!  And remember that your Plan should change as the business changes: revise it when you need to, 
-       and aim to keep setting the bar higher. 
-    <% end %>
-  <% elsif current_user.account == 4 %>
-    <% unless @plan.complete? %>
-       Tackle each of the sections below in turn. Youll find lots of guidance as you go.  The A-Plan is ready to use
-       when all items in the right-hand column are <span style = "color: green">green</span>. 
-    <% else %>
-       Now the A-Plan is complete, use it to make yourself a high-value employee.  Get into the habit 
-       of reviewing your own performance monthly - then there should be no surprises when your boss conducts
-       a formal review (which should happen roughly every 3 months).  If you're not hitting your targets,
-       take the initiative to change things until you are.  It's all down to you!  And remember that if the job-role
-       changes, the Plan should change too: suggest revisions when you need to, and aim to keep setting the bar higher.    
-    <% end %>
-  <% else %>
-    <% unless @plan.complete? %>
-       Tackle each of the sections below in turn. Youll find lots of guidance as you go.  The A-Plan is ready to use
-       when all items in the right-hand column are <span style = "color: green">green</span>. 
-    <% else %> 
-       <% if session[:officer_off] == true %>
-         
-         Now the A-Plan is complete, use it to drive your performance and make the maximum possible contribution
-         to the organization.  Get into the habit of reviewing your own performance monthly, and then, every three months,
-         ask a senior colleague or one of your own (less senior!) team-members to review as well.  If you're not hitting your targets,
-         take the initiative to change things until you are.  It's all down to you!  Remember that if the job-role
-         or the business strategy changes, your Plan may need to change too. And always aim to set the bar higher.  
-       
-       <% else %>
-         Now the A-Plan is complete, use it to drive achievement - for recruitment, appraisal, training
-         needs analysis, succession planning.  Get people into the habit of reviewing their own performance
-         monthly - with an external review roughly every 3 months. And remember that the Plan should change 
-         as the business changes: involve jobholders in updating their responsibilities and goals. Aim to keep 
-         setting the bar higher.
-       <% end %> 
-    <% end %>
-  <% end %>  
-</div>
-<table class="smaller_font">
-  <tr>
-    <td><strong><%= link_to "Responsibilities", plan_responsibilities_path(@plan) %></strong></td>
-    <td>10-20 key activities</td>
-    <td>
-      <% if @plan.responsibilities_ready? %>
-        <span id = "responsibilities" style = "color:green"><%= @plan.count_responsibilities %> entered</span>
-      <% else %>
-        <span id = "responsibilities"><%= @plan.count_responsibilities %> entered</span>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Goals</strong> <small>(set via Responsibilities)</small></td>
-    <td>1-3 measurable outcomes for each responsibility</td>
-    <td>
-      <% if @plan.responsibilities_ready? && @plan.goals_complete? %>
-        <span id = "responsibilities" style = "color:green">
-          <%= @plan.responsibilities_with_goals %> / <%= @plan.count_responsibilities %>
-        </span> 
-      <% else %>
-        <span id = "goals"><%= @plan.responsibilities_with_goals %> / <%= @plan.count_responsibilities %></span> 
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <td><strong>Ratings</strong> <small>(set via Responsibilities)</small></td>
-    <td>The importance of each responsibility to the business</td>
-    <td>
-      <% if @plan.responsibilities_ready? && @plan.ratings_complete? %>
-        <span id = "goals" style = "color:green">
-          <%= @plan.responsibilities_with_ratings %> / <%= @plan.count_responsibilities %>
-        </span>
-      <% else %>
-        <span id = "goals"><%= @plan.responsibilities_with_ratings %> / <%= @plan.count_responsibilities %></span>
-      <% end %>
-    </td> 
-  </tr>
-  <tr>
-    <td><strong><%= link_to "Personal Attributes", plan_jobqualities_path(@plan) %></strong></td>
-    <td>10 key qualities for jobholders</td>
-    <td>
-      <% if @plan.max_attributes? %>
-        <span id = "attribs" style = "color:green""><%= @plan.count_attributes %> selected</span>
-      <% else %>
-        <span id = "attribs"><%= @plan.count_attributes %> selected</span>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <td><strong><%= link_to "Hiring Requirements", plan_requirements_path(@plan) %></strong></td>
-    <td>Preferred qualifications, experience, background</td>
-    <td>
-      <% if @plan.has_requirements? %>
-        <span style = "color:green"><%= @plan.count_requirements %> entered</span>
-      <% else %>
-       <%= @plan.count_requirements %> entered
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <td><strong><%= link_to "Summary", @outline %></strong></td>
-    <td>3-paragraph description of job</td>
-    <td>
-      <% if @plan.outline_complete? %>
-        <span style = "color:green">
-          <%= outline_status %>
-        </span>
-      <% else %>
-        <%= outline_status %>  
-      <% end %>
-    </td>
-  </tr>
-</table> 
-<% if @plan.job_value.nil? || @plan.job_value == 0 %>
-  <h4>
+<% if current_user.account == 1 %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), my_job_path, :class => "magnify" %>
+<% elsif current_user.account == 4 %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
 <% else %>
-  <h4 class="success">
-<% end %>
-  <strong>Overall Job Rating: <%= job_valuation %></strong> &nbsp;
-    <small style = "font-size: 0.85em">(based on the 10 highest-rated responsibilities)</small>
-  </h4>
-  
-<% if current_user.account == 3 %>
-  <% unless session[:officer_off] == true %>
-    <%= form_for @plan do |f| %>
-      <%= render 'shared/error_messages', :object => f.object %>
-      
-      <div class="field">
-        <% if @plan.no_changes? %>
-          <%= f.label :no_changes, "Plan locked. Uncheck if you want to allow users to update." %>
-        <% else %>
-          <%= f.label :no_changes, "Plan unlocked. Check if you want to stop users updating." %>
-        <% end %>
-        <%= f.check_box :no_changes %> &nbsp; &nbsp;
-        <%= f.submit "Confirm" %>
-      </div>
-      
-      
-    <% end %>
+  <% if session[:officer_off] == true %>
+    <%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
+  <% else %>
+    <%= link_to image_tag("pageback.png", :title => "Previous"), @job, :class => "magnify" %>
   <% end %>
 <% end %>
+
+<div class = "r-float">
+  <% if current_user.account == 4 %>
+    <% unless @plan.no_changes? %>
+      <br />
+      <%= link_to "Update A-Plan", @plan %>
+    <% end %>
+  <% else %>
+    <% if session[:officer_off] == true %>
+      <%= link_to "Update A-Plan", @plan %>
+    <% else %>
+      <%= link_to "Other jobs", business_jobs_path(@business) unless current_user.account == 1 %><br />
+    <% end %>
+  <% end %>
+</div>
+
+<div id="intro_text" class="display_off over">
+  <h1>Introducing A-Plans <span class="hide_intro click_link">(Hide)</span></h1>
+  <div class="subtext">
+    <%= render "intro_text" %>
+    <span class="hide_intro click_link">(Hide)</span>
+  </div>
+</div>
+
+<div id="uses_text" class="display_off over">
+  <h1>How do we use the A-Plan? <span class="hide_uses click_link">(Hide)</span></h1>
+  <div class="subtext">
+    <%= render "uses_text" %>
+    <span class="hide_uses click_link">(Hide)</span>
+  </div>
+</div>
+
+<div id="writing_text" class="display_off over">
+  <h1>How do we write / edit the A-Plan? <span class="hide_writing click_link">(Hide)</span></h1>
+  <div class="subtext">
+    <%= render "writing_text" %>
+    <span class="hide_writing click_link">(Hide)</span>
+  </div>
+</div>
+
+
+<div id="listing">
+  <div id="jobtitle">
+    <strong><%= @job.job_title %></strong>
+    <%= image_tag("complete.png") if @job.plan.complete? %>
+    <%= image_tag("locked.png") if @job.plan.no_changes? %>
+  </div>
+  <div class="subtext">
+    Category: <%= @job.occupation.name %><br />
+    <% unless @job.department_id == nil %>
+      Department: <%= @job.department.name %><br />
+    <% end %>
+    <% if @plan.job_value.nil? %>
+      No job rating yet
+    <% else %>
+      Job Rating: <%= @plan.job_value %>
+    <% end %>
+  </div>
   
+  <ul class="no_dec under">
+    <li>
+      <%= link_to "Job Summary", outline_path(@job) %>
+      <% if ! @plan.outline_complete? %>
+        <%= image_tag("warning.png", :size => "15x15") %>
+      <% end %>
+      <div class="subtext">    
+        Role, qualities, importance<br />
+        Also used in vacancy announcements
+        <% if ! @plan.outline_complete? %>
+          <div class="texthl">Not yet written</div>
+        <% else %>
+          <div class="textok">Appears ready to use</div>
+        <% end %>
+      </div>
+    </li>
+    <li>
+      <%= link_to "Responsibilities", responsibilities_path %>
+      <% unless @plan.responsibilities_ready? && @plan.goals_complete? && @plan.ratings_complete? %>
+        <%= image_tag("warning.png") %>
+      <% end %>
+      <div class="subtext">    
+        10 - 20 key responsibilities<br />
+        Each has 1 - 3 goals and a rating value
+        <% if ! @plan.responsibilities_ready? %>
+          <div class="texthl">At least <%= pluralize((10 - @plan.count_responsibilities), "more responsibility") %> needed</div>
+        <% elsif ! @plan.goals_complete? %>
+           <div class="texthl">Some responsibilities still need goals</div>
+        <% elsif ! @plan.ratings_complete? %>
+           <div class="texthl">Some responsibilities still need a rating</div>
+        <% else %>
+           <div class="textok"><%= pluralize(@plan.count_responsibilities, "responsibility") %> added - OK to use</div>
+        <% end %>
+      </div>
+    </li>
+    <li>
+      <%= link_to "Attributes", plan_jobqualities_path(@plan) %>
+      <% unless @plan.max_attributes? %>
+        <%= image_tag("warning.png") %>
+      <% end %>
+      <div class="subtext">    
+        10 job-critical personal qualities
+        <% unless @plan.max_attributes? %>
+          <div class="texthl"><%= pluralize((10- @plan.count_attributes), "more attribute") %> needed</div>
+        <% else %>
+          <div class="textok">Ready to use</div>
+        <% end %>
+      </div>
+    </li>
+    <li>
+      <%= link_to "Requirements", plan_requirements_path(@plan) %>
+      <div class="subtext">    
+        1 - 10 hiring criteria
+        <% if @plan.has_requirements? %>
+          <div class="textok"><%= pluralize(@plan.count_requirements, "requirement") %> added - appears ready to use</div>
+        <% else %>
+          <div class="texthl">At least 1 requirement needed</div>
+        <% end %>
+      </div>
+    </li>
+  </ul>
+</div>
 
+<% content_for :javascript do %>
 
+  <%= javascript_tag do %>
+    
+    $(document).ready(function(){
+    
+      $('#intro').click(function() {
+        $('#intro_text').fadeIn('normal', function() {
+          $('#uses_text').fadeOut('0', function() {
+            $('#writing_text').fadeOut('0', function() {
+            });
+          });
+        });
+      });
+      
+      $('#uses').click(function() {
+        $('#uses_text').fadeIn('normal', function() {
+          $('#intro_text').fadeOut('0', function() {
+            $('#writing_text').fadeOut('0', function() {
+            });
+          });
+        });
+      });
+      
+      $('#writing').click(function() {
+        $('#writing_text').fadeIn('normal', function() {
+          $('#intro_text').fadeOut('0', function() { 
+            $('#uses_text').fadeOut('0', function() {
+            });
+          });
+        });
+      });
+      
+      $('.hide_intro').click(function() {
+        $('#intro_text').fadeOut('fast', function() {
+        });
+      });
+      
+      $('.hide_uses').click(function() {
+        $('#uses_text').fadeOut('fast', function() {
+        });
+      });
+      
+      $('.hide_writing').click(function() {
+        $('#writing_text').fadeOut('fast', function() {
+        });
+      });
+    });
+   
+  <% end %>
+<% end %>  
+  
+    

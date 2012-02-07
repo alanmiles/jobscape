@@ -1,61 +1,64 @@
-<div class = "r-float">
-  <%= link_to "Menu for this business", officer_home_path %><br />
-  <%= link_to "Add a new department", new_business_department_path(@department) %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), officer_home_path, :class => "magnify" %>
+
+<div class="r-float">
+  <%= link_to "Add a department", new_business_department_path(@department) %>
 </div>
 
-<h1>Departments</h1>
-<h4><%= @business.name %></h4>
+<h4><%= @business.name_city %></h4>
 
-<% unless @departments.empty? %>
-  <%= will_paginate @departments %>
-  <table class="smaller_font">
-    <tr>
-      <th>Name</th>
-      <th>Head</th>
-      <th>Deputy</th>
-      <th class="centralize">Team</th>
-      <th class="centralize">Job-titles</th>
-      <th></th>
-      <th></th>
-    </tr>
-    <% @departments.each do |department| %>
-    <tr>
-      <td><%= link_to department.name, department %>
-      <td><%= department.manager.name unless department.manager_id == nil %> </td>
-      <td><%= department.deputy.name unless department.deputy_id == nil %> </td>
-      <td class="centralize">
-        <%= department.headcount %>
-      </td>
-      <td class="centralize">
-        <%= department.position_count %>
-      </td>
-      <td class="centralize">
-        <%= link_to image_tag("select.png", :size => "15x15"), department %>
-      </td>
-      <td class = "control">
-        <% unless department.has_active_jobs? %>
+<div id="listing">
+  <% unless @departments.empty? %>
+    <%= will_paginate @departments %>
+    <ul class="no_dec">
+      <% @departments.each do |department| %>  
+      
+        <li>
+          <%= link_to department.name, department %>
+        
+          <span class="r-float">
+            <% unless department.has_active_jobs? %>
           
-          <% if department.has_inactive_jobs? %>
-            <%= link_to image_tag("cancel.png", :size => "15x15"), department, 
+              <% if department.has_inactive_jobs? %>
+                <%= link_to image_tag("delete.png"), department, 
                    :method => :delete, 
-                   :confirm => "Are you sure you want to exclude #{department.name} from the current departments list?",
-                   :title => "Remove #{department.name} from the list of current departments" %>
+                   :confirm => "Are you sure you want to exclude '#{department.name}' from the current departments list?",
+                   :title => "Remove '#{department.name}' from the list of current departments" %>
           
-          <% else %>
-            <%= link_to image_tag("cancel.png", :size => "15x15"), department, 
+              <% else %>
+                <%= link_to image_tag("delete.png"), department, 
                    :method => :delete, 
-                   :confirm => "Are you sure you want to delete #{department.name} completely?",
-                   :title => "Delete #{department.name} completely" %>
-          <% end %>
+                   :confirm => "Are you sure you want to delete '#{department.name}' completely?",
+                   :title => "Delete '#{department.name}' completely" %>
+              <% end %>
           
-        <% end %>
-      </td> 
-    </tr>
-    <% end %>
-  </table>
-  <%= will_paginate @departments %>
-<% else %>
-  <div class="no_data round">
-    You haven't added any departments yet.  You need to - because jobs will be linked to their departments.
-  </div>
-<% end %>
+            <% end %>    
+          </span>
+        
+          <div class="subtext">
+             <div id="manager">
+               <% unless department.manager_id == nil %>
+                 Department head: <%= department.manager.name %>
+               <% end %>
+             </div>
+             <div id="deputy">
+               <% unless department.deputy_id == nil %>
+                 Deputy: <%= department.deputy.name %>
+               <% end %>
+             </div>
+             <div id="positions">
+               Headcount: <%= department.headcount %> &nbsp; &nbsp;
+               Job-titles: <%= department.position_count %>
+             </div>
+          </div>
+        
+        </li>
+      <% end %>
+    </ul>
+    <%= will_paginate @departments %>
+  <% else %>
+    <div class="no_data round">
+      <%= image_tag("no_entry.png") %> &nbsp;
+      You haven't added any departments yet.  You need to - because jobs will be linked to their departments.
+    </div> 
+  <% end %>
+</div>

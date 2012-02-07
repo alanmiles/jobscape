@@ -1,45 +1,24 @@
     <div class="field">
-      <%= f.label :focus %> &nbsp;
       <% if @select_focus == true %>
+        <%= f.label :focus, "Focus *" %> &nbsp;
         <%= select( :objective, :focus, Objective::FOCUS_TYPES, 
                          :prompt => true) %>
       <% else %>
+        Focus: &nbsp;
         <%= @objective.focus_name.upcase %>
       <% end %>
     </div>
     
     <div class="field">
-      <%= f.label :objective %> &nbsp; <span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span><br />
-      
-      <div id="infotext" class="info_box_screen" style = "margin-left:0; margin-right: 150px; display:none">
-        In each of the focus areas (Profit, Customers, Employees and Processes) add up to 5 key objectives for the
-        coming months.  For example, in Customers, you might include <i>'Increase direct sales by improving the company website'</i>.
-        <br /></br />
-        Review your business objectives at least every 6 months, and bring them up to date as circumstances change.
-        &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
-      </div>
-      
-      <%= f.text_area :objective, :cols => 60, :rows => 3 %>
-      <span id="char-count-objective" style = "color:blue; padding-left: 5px"><%= @characters_objective %></span>
+      <%= f.label :objective, "Objective *" %>
+      <%= f.text_area :objective, :maxlength => 255, :class => "downsize" %>
+      <div id= "objective_count" class="char-count"><%= @characters_objective %> characters left</div>
     </div>
 
-    
-
     <div class="field">
-      <%= f.label :measurement %> &nbsp; <span id="info2", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span><br />
-      
-      <div id="infotext2" class="info_box_screen" style = "margin-left:0; margin-right: 150px; display:none">
-        
-        Describe how and when you're going to measure success.  For example, if the objective is to increase direct sales via the website,e the
-        measurement might be <i>'At least 500 website-generated sales worth £50,000 by December 31'.</i>
-        <br /><br />
-        Again, review the statements frequently to take account of new circumstances.  If you've achieved the current targets, set them 
-        higher next time.
-        &nbsp; <span id = "no-info2" style="color:#069; cursor:n-resize">(Hide)</span>
-      </div>
-      
-      <%= f.text_area :measurement, :cols => 60, :rows => 3 %>
-      <span id="char-count-measurement" style = "color:blue; padding-left: 5px"><%= @characters_measurement %></span>
+      <%= f.label :measurement, "Measurement *" %> 
+      <%= f.text_area :measurement, :maxlength => 255, :class => "downsize" %>
+      <div id="measurement_count" class="char-count"><%= @characters_measurement %> characters left</div>
     </div>
     
 <% content_for :javascript do %>
@@ -47,37 +26,25 @@
   <%= javascript_tag do %>
     
    $(document).ready(function(){
-    
-    $('#info').click(function() {
-      $('#infotext').show('fast', function() {
-      });
-    });
-    
-    $('#info2').click(function() {
-      $('#infotext2').show('fast', function() {
-      });
-    });
-    
-    $('#no-info').click(function() {
-      $('#infotext').hide('fast', function() {
-      });
-    });
-    
-    $('#no-info2').click(function() {
-      $('#infotext2').hide('fast', function() {
-      });
+       
+    $('#objective_objective').click(function() {
+      $('#objective_count').css('visibility', 'visible');
     });
     
     $('#objective_objective').live('keyup keydown', function(e) {
     var maxLen = 255;
     var left = maxLen - $(this).val().length;
-    $('#char-count-objective').html(left);
+    $('#objective_count').html(left);
+    });
+    
+    $('#objective_measurement').click(function() {
+      $('#measurement_count').css('visibility', 'visible');
     });
     
     $('#objective_measurement').live('keyup keydown', function(e) {
     var maxLen = 255;
     var left = maxLen - $(this).val().length;
-    $('#char-count-measurement').html(left);
+    $('#measurement_count').html(left);
     });
     
    });

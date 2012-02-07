@@ -1,4 +1,4 @@
-<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), officer_home_path %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), officer_home_path, :class => "magnify" %>
 
   <div class="info_box grayborder rightpos round" style="display:none"><br />
     Sign up your business to:
@@ -22,17 +22,17 @@
   
 
     <div class="field">
-      <%= f.label :name, "Business name" %> 
+      <%= f.label :name, "Business name *" %> 
       <div class="subtext">50 characters maximum</div>
       <%= f.text_field :name, :size => 35 %>
     </div>
     <div class="field">
-      <%= f.label :sector, "Sector" %><br />
+      <%= f.label :sector, "Sector *" %><br />
       <%= collection_select(:business, :sector_id, @sectors, :id, 
                         :sector, :prompt => true) %>
     </div>
     <div class="field">
-      <%= f.label :address, "Postcode / Zipcode" %><br />
+      <%= f.label :address, "Postcode / Zipcode *" %><br />
       <%= f.text_field :address, :size => 35 %>
     </div>
     <div class="actions">

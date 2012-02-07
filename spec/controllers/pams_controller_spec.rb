@@ -119,7 +119,7 @@ describe PamsController do
         
         it "should have the right title" do
           put :update, :id => @pam, :pam => @attr
-          response.should have_selector("title", :content => "Edit PAM")
+          response.should have_selector("title", :content => "Edit attribute grade")
         end
         
         it "should re-present the 'edit' page" do

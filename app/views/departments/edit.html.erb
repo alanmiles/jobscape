@@ -1,18 +1,13 @@
-<div class = "r-float">
-  <%= link_to "Cancel", @department %>
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), @department, :class => "magnify" %>
 
-<h1><%= @title %></h1>
-<h4><%= @business.name %></h4>
+<h4 class="over"><%= @business.name_city %></h4>
 
 <%= form_for @department do |f| %>
-  <div class="shift_center">
 
-    <%= render 'fields', :f => f %>
+  <%= render 'fields', :f => f %>
 
-    <div class="actions">
-      <%= f.submit "Confirm changes" %>
-    </div>
+  <div class="actions">
+    <%= f.submit :class => "create round" %>
   </div>
 <% end %>
 

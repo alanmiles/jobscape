@@ -180,7 +180,7 @@ describe BusinessesController do
       
       it "should have the right title" do
         get :new
-        response.should have_selector("title", :content => "Add a business")
+        response.should have_selector("title", :content => "New business")
       end
     end
     
@@ -273,8 +273,7 @@ describe BusinessesController do
       
       it "should have a 'Cancel' option, redirecting to the show page" do
         get :edit, :id => @business
-        response.should have_selector("a", :href => business_path(@business),
-                                           :content => "Cancel")
+        response.should have_selector("a", :href => business_path(@business))
       end
     end
     

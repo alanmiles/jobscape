@@ -1,41 +1,45 @@
-<div class = "r-float">
-  <%= link_to "Cancel", officer_user_path(@employee.user_id) %>
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), officer_user_path(@employee.user_id), :class => "magnify" %>
 
-<h1><%= @title %></h1>
-<h4 class="shallow"><%= @employee.user.name %> - <%= @employee.business.name %></h4>
-
-
-<%= form_for(@employee, :url => officer_employee_path(@employee)) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  
-  <div class="display_wider">
-    <div class="field">
-      <%= f.label :ref, "Staff number" %>
-      <%= f.text_field :ref_no, :size => 5 %><br />
-      <small>HYGWIT automatically assigns a unique sequential number to each user in the business.
-            Enter the staff number you already use in your business instead, if it'll make things easier for you.</small>
-    </div>
-    
-    <div class="field">
-      <%= f.label :left, "Leaver?" %>
-      <%= f.check_box :left unless @employee.user_id == current_user.id %><br />
-      <small><%= leaver_message %></small>
-    </div>
-    
-    <div class="field">
-      <%= f.label :officer, "HYGWIT officer?" %>
-      <% if @employee.user_id == current_user.id %>
-        YES
-      <% else %>
-        <%= f.check_box :officer %>
-      <% end %>
-      <br />
-      <small><%= hygwit_officer %></small>
-    </div>
-    <br />
-    <div class="actions">
-      <%= f.submit "Confirm" %>
-    </div>
+<div id="employee">
+  <strong><%= @employee.user.name.upcase %></strong> 
+  <div class= "subtext over" %>
+    <% if @employee.user.no_current_job?(@business) %>  
+       Not assigned
+    <% else %>  
+      <%= @job.job_title %><br />
+      in <%= @job.department.name %>
+    <% end %>  
   </div>
-<% end %>
+
+  <%= form_for(@employee, :url => officer_employee_path(@employee)) do |f| %>
+    <%= render 'shared/error_messages', :object => f.object %>
+  
+      <div class="field" style = "display: none">
+        <%= f.label :ref, "Staff number" %>
+        <%= f.text_field :ref_no, :size => 5 %><br />
+        <small>HYGWIT automatically assigns a unique sequential number to each user in the business.
+            Enter the staff number you already use in your business instead, if it'll make things easier for you.</small>
+      </div>
+    
+      <div class="field">
+        <%= f.label :left, "Leaver?" %>
+        <%= f.check_box :left unless @employee.user_id == current_user.id %><br />
+        <div class="subtext"><%= leaver_message %></div>
+      </div>
+    
+      <div class="field">
+        <%= f.label :officer, "HYGWIT officer?" %>
+        <% if @employee.user_id == current_user.id %>
+          YES
+        <% else %>
+          <%= f.check_box :officer %>
+        <% end %>
+        <br />
+        <div class="subtext"><%= hygwit_officer %></div>
+      </div>
+      <br />
+      <div class="actions">
+        <%= f.submit "Confirm", :class => "create round" %>
+      </div>
+  <% end %>
+</div>

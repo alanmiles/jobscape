@@ -1,27 +1,24 @@
-<div class = "r-float">
-  <%= link_to "All departments", business_departments_path(@business) %>
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), business_departments_path(@business), :class => "magnify" %>
 
-<h1>Department</h=1>
-<h4><%= @business.name %></h4>
+<h4 class="over"><%= @business.name %></h4>
 
-<div class="display_wider grayborder round">
-  <div class="rightpos">
-    <%= link_to "Edit department details", edit_department_path(@department) %>
+  <div class="r-float">
+    <%= link_to "Edit", edit_department_path(@department) %>
   </div>
   
-  <strong><%= @department.name %></strong><br />
-  <% unless @department.manager_id == nil %>
-    Dept Head: <%= @department.manager.name %>
-    ( <%= @department.manager.email %> )
-    <br />
-  <% end %>
-  <% unless @department.deputy_id == nil %>
-    Deputy: <%= @department.deputy.name %>
-    ( <%= @department.deputy.email %> )
-    <br />
-  <% end %>
-</div>
+  <%= @department.name %>
+  <div class="subtext">
+    <% unless @department.manager_id == nil %>
+      Department Head: <%= @department.manager.name %>
+      <br />
+    <% end %>
+    <% unless @department.deputy_id == nil %>
+      Deputy: <%= @department.deputy.name %>
+      ( <%= @department.deputy.email %> )
+      <br />
+    <% end %>
+  </div>
+
 <br />
-<h3><strong>TEAM</strong></h3>
-<%= render 'users/current_list' %>
+<h3>TEAM</h3>
+<%= render 'team' %>

@@ -70,6 +70,9 @@ Jobscape::Application.routes.draw do
     resources :objectives, :shallow => true
   end
   resources :plans do
+    member do
+      get 'intro', 'uses', 'writing'
+    end
     resources :responsibilities, :shallow => true
     resources :requirements, :shallow => true do
       collection do
@@ -82,7 +85,11 @@ Jobscape::Application.routes.draw do
       end
     end  
   end
-  resources :outlines, :only => [:show, :edit, :update]
+  resources :outlines, :only => [:show, :edit, :update] do
+    member do
+      get 'role', 'qualities', 'importance'
+    end
+  end
   resources :responsibilities do
     resources :goals, :shallow => true
   end
@@ -125,7 +132,11 @@ Jobscape::Application.routes.draw do
   end
   resources :latest_vacancies, :only => :index
   resources :current_vacancies, :only => :index
-  resources :aplans
+  resources :aplans do
+    member do
+      get 'intro', 'uses', 'writing'
+    end
+  end
   resources :reviews do
     resources :reviewqualities, :shallow => true
   end

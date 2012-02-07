@@ -1,21 +1,13 @@
-<div class = "r-float">
-  <%= link_to "All your submissions", my_submissions_path %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), my_submissions_path, :class => "magnify" %>
+
+<div id ="listing">Attribute suggested: '<strong><%= @quality.quality %></strong>'
+  <div class="subtext">
+    Submitted <%= time_ago_in_words(@quality.created_at) %> ago -    
+    <%= @quality.status %>
+  </div>   
+
+
+  <h1 class="under">Grade descriptors</h1> 
+  <%= render '/pams/attribute_listing' %>
+ 
 </div>
-<h1>Your suggested attribute</h1>
-
-
-<p class = "display_text grayborder round cntr">Attribute: <%= @quality.quality %>
-           &nbsp; <span style = "font-weight: normal">
-             (<%= @quality.status %>)
-           </span>
-</p>
-
-<h1>PAMs <i style = "font-size:0.6em">( = personal attribute measurements )</i></h1> 
-<table class="smaller_font">
-  <% @pams.each do |pam| %>
-    <tr>
-      <td class = "at_top"><%= pam.grade %></td>
-      <td><%= pam.descriptor %></td>
-    </tr>  
-  <% end %>
-</table>

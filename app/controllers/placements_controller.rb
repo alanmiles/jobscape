@@ -10,7 +10,7 @@ class PlacementsController < ApplicationController
     @placement = @user.placements.build
     @business = Business.find(session[:biz])
     @jobs = @business.available_jobs
-    @title = "New job"
+    @title = "New placement"
   end
   
   def create
@@ -22,7 +22,7 @@ class PlacementsController < ApplicationController
       flash[:success] = "Successfully reassigned to #{@placement.job_dept}"
       redirect_to officer_user_path(@user)
     else
-      @title = "New job"
+      @title = "New placement"
       @business = Business.find(session[:biz])
       @jobs = @business.available_jobs
       render 'new'
@@ -34,9 +34,9 @@ class PlacementsController < ApplicationController
     @user = User.find(@placement.user_id)
     @job = Job.find(@placement.job_id)
     if @placement.current
-      @title = "Edit start-date for current job"
+      @title = "Job-start"
     else
-      @title = "Edit start-date for previous job"
+      @title = "Previous job-start"
     end
   end
   
@@ -49,9 +49,9 @@ class PlacementsController < ApplicationController
       redirect_to officer_user_path(@user)
     else
       if @placement.current
-        @title = "Edit start-date for current job"
+        @title = "Job-start"
       else
-        @title = "Edit start-date for previous job"
+        @title = "Previous job-start"
       end
       render 'edit'
     end

@@ -1,12 +1,11 @@
-<div class = "r-float">
-  <%= link_to "Back to A-Plan menu", @plan %><br />
-  <%= link_to "Modify the summary", edit_outline_path(@outline) %>
-</div>
-<h1><%= @title %>
-  <% if @outline.complete? %>
-    &nbsp;<span class="success_marker round">ready to use</span>
-  <% end %>
-</h1> 
-<h4>for <%= @job.job_title %></h4>
+<%= render 'shared/aplan_nav' %>
 
-<%= render 'fields' %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), @plan, :class => "magnify" %>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
+</div>
+
+<div class="subtext">
+  <%= render 'fields' %>
+</div>

@@ -1,17 +1,16 @@
-<div style ="min-height: 20em">
-<div class = "r-float">
-<%= link_to "Cancel", plan_jobqualities_path(@plan) %>
-</div>
-<h1>Select a Personal Attribute</h1>
-<h4>for <%= @job.job_title %></h4>
+<%= link_to image_tag("pageback.png", :title => "Previous"), plan_jobqualities_path(@plan), :class => "magnify" %>
 
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
+</div>
+ 
 <%= form_for([@plan, @jobquality]) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   
   <% if @plan.has_attributes? %>
-    <div class = "info_box rightpos">
-      ALREADY SELECTED<br />
-      <ul>
+    <div class="subtext">
+      <em>ALREADY SELECTED</em>
+      <ul class="no_dec">
         <% @selected_qualities.each do |sq| %>
           <li><%= sq.quality.quality %></li>
         <% end %>
@@ -19,21 +18,20 @@
     </div>
   <% end %>
     
-  <div class = "field">
-    <%= f.label :quality_id, "Select a key attribute for the job" %><br />
+  <div class = "field under">
+    <%= f.label :quality_id, "Select another attribute *" %><br />
     <%= collection_select(:jobquality, :quality_id, @qualities, :id, 
                         :quality, :prompt => true) %>
   </div> 
   <div class="actions">
-    <%= f.submit "Confirm selection" %>
+    <%= f.submit "Confirm selection", :class => "create round" %>
   </div>
-  <br />
 <% end %>
 
-<p><i>Can't find what you want in the list?<br />  
-  Then why not <%= link_to "suggest a new personal attribute", new_submitted_quality_path %>?</i>
-</p>
-
-<i><%= link_to("View your previous suggestions", my_submissions_path) if current_user.has_attribute_submissions? %></i>
-
+<div class="subtext under">
+  <i>Can't find what you want in the list?<br />  
+  Then why not <%= link_to "suggest a new personal attribute", new_submitted_quality_path %>?<br />
+  <%= link_to("View your previous suggestions", my_submissions_path) if current_user.has_attribute_submissions? %></i>
 </div>
+
+

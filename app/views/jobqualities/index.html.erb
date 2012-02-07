@@ -1,81 +1,76 @@
-<div style ="min-height: 20em">
-<div class = "r-float">
-<% if @plan.max_attributes? %>
-  <u>No more attributes can be added</u><br />
-<% else %>
-  <%= link_to "Select a new attribute", new_plan_jobquality_path(@plan) %><br />
-<% end %>
-<%= link_to "Back to A-Plan menu", @plan %>
+<%= render 'shared/aplan_nav' %>
 
+<%= link_to image_tag("pageback.png", :title => "Previous"), @plan, :class => "magnify" %>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
+  
+  <div class = "r-float under">
+    <% unless @plan.max_attributes? %>
+      <%= link_to "Select an attribute", new_plan_jobquality_path(@plan) %><br />
+    <% end %> 
+  </div>
+
+  <h1 class="no-gap under">Key attributes</h1>
+  <div class="subtext">
+    <% if @plan.max_attributes? %>
+      Ready to use.
+    <% else %>
+      <%= 10 - @plan.count_attributes %> more required.
+    <% end %>
+    <% unless @plan.jobqualities.count < 2 %>
+      Sort list by dragging attributes up / down.
+    <% end %>
+  </div>
+</div>
+
+<div id="listing">
+  <ul id="jobqualities-list" class ="no_dec under smaller_font">
+    <% @jobqualities.each do |f| %>
+      <li id="jobquality_<%= f.id %>">
+    
+        <div class="r-float">
+          <%= link_to(image_tag("details.png"), f,
+              :title => "Grade descriptors for #{f.quality.quality}") %> &nbsp;
      
-</div>
-
-<h1>Personal Attributes
-  <% if @plan.max_attributes? %>
-    &nbsp;<span class="success_marker round">ready to use</span>
-  <% else %>
-    <span class="smallnote">( <%= @plan.count_attributes %>/10 selected )</span>
-  <% end %>
-</h1> 
-<h4>for <%= @job.job_title %></h4>
-
-<div class = "info_box grayborder beige round r-float">
-  <br />
-  INSTRUCTIONS <br /><br />
-  <ol>
-  <li> Select the 10 key attributes for this job.</li>
-  <li> Click on <%= image_tag("select.png", :size => "12x12") %> for a detailed understanding of the attribute.</li>
-  <li> If you change your mind, delete a selection using <%= image_tag("cancel.png", :size => "12x12") %>.</li>
-  <li> 
-     <% if @plan.max_attributes? %>
-       <span class="highlt round">DON'T FORGET! </span>
-     <% end %> 
-     &nbsp; Click and drag your selections till the most important are at the top of the list.</li>
-  </ol>
-</div>
-
-<ul id="jobqualities-list">
-  <% @jobqualities.each do |f| %>
-    <li id="jobquality_<%= f.id %>" class="no_bullet">
-   
-      <%= link_to(image_tag("cancel.png", :size => "15x15"), f,
+          <%= link_to(image_tag("delete.png"), f,
       		:method => :delete, 
-		:confirm => "You sure?",
-		:title => "Remove #{f.quality.quality}") %> &nbsp;
-   
-      <%= link_to(image_tag("select.png", :size => "15x15"), f,
-              :title => "Level descriptors for #{f.quality.quality}") %> &nbsp;
-     
-      <span class="handle"><%= f.quality_content %></span>
-    </li>
-  <% end %>
-</ul>
-
+		:confirm => "Are you sure you want to remove this attribute?",
+		:title => "Remove #{f.quality.quality}") %>
+        </div> 
+        <span class="handle"><%= f.quality_content %></span>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
  
-    $('#jobqualities-list').sortable(
-     {
-       	axis: 'y',
-	dropOnEmpty: false,
-	handle: '.handle',
-	cursor: 'crosshair',
-	items: 'li',
-	opacity: 0.4,
-	scroll: true,
-	update: function(){
-	  $.ajax({
-	    type: 'post',
-	    data: $('#jobqualities-list').sortable('serialize') + '&id=<%=@plan.id %>',
-	dataType: 'script',
-	complete: function(request){
-	  $('#jobqualities-list').effect('highlight');
-	},
-	url: 'jobqualities/sort'})
-      }
-     })
+    $(document).ready(function(){
+    
+      $('#jobqualities-list').sortable(
+       {
+       	 axis: 'y',
+	 dropOnEmpty: false,
+	 handle: '.handle',
+	 cursor: 'crosshair',
+	 items: 'li',
+	 opacity: 0.4,
+	 scroll: true,
+	 update: function(){
+	   $.ajax({
+	     type: 'post',
+	     data: $('#jobqualities-list').sortable('serialize') + '&id=<%=@plan.id %>',
+	 dataType: 'script',
+	 complete: function(request){
+	   $('#jobqualities-list').effect('highlight');
+	 },
+	 url: 'jobqualities/sort'})
+       }
+      })
 
+     });
    <% end %>
 <% end %>

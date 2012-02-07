@@ -1,34 +1,29 @@
-<div style = "min-height:10em">
-<div class = "r-float">
-  <%= link_to "Return to current job", new_plan_jobquality_path(@plan) %>
-</div>
-<h1><%= @title %></h1>
+<%= link_to image_tag("pageback.png", :title => "Previous"), new_plan_jobquality_path(@plan), :class => "magnify" %>
 
-<div class="narrow rightpos"><em>Click on an attribute to see its 5 PAMs.  If the attribute is still 'Pending', you can
-still change or delete it.  The record is fixed after approval or rejection.</em></div>
+<div id="listing">
 
-
-<table class="extend">
-  <% @qualities.each do |quality| %>
-  <tr>
-    <td>
-      <% if quality.status == "Pending" %>
-        <%= link_to quality.quality, submitted_quality_path(quality) %>
-      <% else %>
-        <%= link_to quality.quality, my_submission_path(quality) %>
-      <% end %>
-    </td>
-    <td class = "control"><%= quality.status %></td>
-    <td class = "control"><%= time_ago_in_words(quality.created_at) %> ago </td>
-    <td>
-      <% if quality.status == "Pending" %>
-        <%= link_to(image_tag("cancel.png", :size => "15x15"), my_submission_path(quality), 
+  <ul class="no_dec"
+    <% @qualities.each do |quality| %>
+      <li>
+        <div class="r-float">
+          <% if quality.status == "Pending" %>
+            <%= link_to(image_tag("delete.png", :size => "15x15"), my_submission_path(quality), 
                    :method => :delete, 
-                   :confirm => "You sure?",
-                   :title => "Delete '#{quality.quality}' completely") %>  
-      <% end %>   
-    </td>
-  </tr>
-  <% end %>
-</table>
+                   :confirm => "Are you sure you want to delete '#{quality.quality}' and all its grade descriptors?",
+                   :title => "Delete '#{quality.quality}' and all its grade descriptors") %>  
+          <% end %>
+        </div>
+        <% if quality.status == "Pending" %>
+          <%= link_to quality.quality, submitted_quality_path(quality) %>
+        <% else %>
+          <%= link_to quality.quality, my_submission_path(quality) %>
+        <% end %>
+        <div class="subtext">
+           Submitted <%= time_ago_in_words(quality.created_at) %> ago.
+           <%= quality.status %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
 </div>
+

@@ -4,21 +4,14 @@ class ResponsibilitiesController < ApplicationController
   def index
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
+    @business = Business.find(@job.business_id)
     @responsibilities = @plan.responsibilities.find(:all,
          :conditions => ["responsibilities.removed = ?", false],
          :order => "responsibilities.rating DESC")
-    @title = "Responsibilities: #{@job.job_title}"
+    @title = "Responsibilities"
     session[:responid] = nil
-  end
-
-  def show
-    @responsibility = Responsibility.find(params[:id])
-    session[:responid] = @responsibility.id
-    @job = Job.find(session[:jobid])
-    @plan = Plan.find_by_job_id(@job.id)
-    @title = "Responsibility for #{@job.job_title}"
-    @goals = @responsibility.goals.all
-    @evaluation = Evaluation.find_by_responsibility_id(@responsibility.id)
+    clear_return_to
+    store_location
   end
   
   def new
@@ -27,12 +20,12 @@ class ResponsibilitiesController < ApplicationController
     
     if @plan.max_responsibilities?
       flash[:notice] = "Sorry, you're only allowed 20 responsibilities"
-      @title = "Responsibilities: #{@job.job_title}"
+      @title = "Responsibilities"
       redirect_to plan_responsibilities_path(@plan)
     else
       @responsibility = @plan.responsibilities.new
       @responsibility.created_by = current_user.id
-      @title = "New responsibility: #{@job.job_title}"
+      @title = "New responsibility"
       @characters_left = 140
     end
   end
@@ -48,13 +41,13 @@ class ResponsibilitiesController < ApplicationController
       @responsibility = @plan.responsibilities.new(params[:responsibility])
       if @responsibility.save
         if @plan.count_responsibilities == 20
-          flash[:notice] = "You've now set the maximum number of responsibilities for the job" 
+          flash[:notice] = "You've now set the maximum number of responsibilities for the job. Now add up to 3 goals, and then set the rating." 
         else
-          flash[:success] = "Responsibility added - #{@plan.count_responsibilities} in total so far.  Now add up to 3 goals, and then set the Rating."
+          flash[:success] = "Responsibility added - #{@plan.count_responsibilities} in total so far.  Now add up to 3 goals, and then set the rating."
         end
-        redirect_to @responsibility
+        redirect_to responsibility_goals_path(@responsibility)
       else
-        @title = "New responsibility: #{@job.job_title}"
+        @title = "New responsibility"
         @responsibility.created_by = current_user.id
         @characters_left = 140 - @responsibility.definition.length
         @job = Job.find(session[:jobid])
@@ -73,29 +66,30 @@ class ResponsibilitiesController < ApplicationController
 
   def update
     @responsibility = Responsibility.find(params[:id])
-    if params[:responsibility][:removed] == true
-    
+    @plan = Plan.find(@responsibility.plan_id)
+    if @responsibility.update_attributes(params[:responsibility])
+      @responsibility.update_attribute(:updated_by, current_user.id)
+      flash[:success] = "Responsibility successfully updated."
+      redirect_back_or(plan_path(@plan))
     else
-      if @responsibility.update_attributes(params[:responsibility])
-        @responsibility.update_attribute(:updated_by, current_user.id)
-        flash[:success] = "Successfully updated."
-        redirect_to @responsibility
-      else
-        @title = "Edit responsibility"
-        @job = Job.find(session[:jobid])
-        @characters_left = 140 - @responsibility.definition.length
-        render 'edit'
-      end 
-    end
+      @title = "Edit responsibility"
+      @job = Job.find(session[:jobid])
+      @characters_left = 140 - @responsibility.definition.length
+      render 'edit'
+    end 
   end
   
   def destroy
     @responsibility = Responsibility.find(params[:id])
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
-    #Add condition to hide not delete if previous used in appraisal
-    @responsibility.destroy
-    flash[:success] = "Responsibility successfully deleted - #{@plan.count_responsibilities} now listed."
+    if @responsibility.used?
+      @responsibility.update_attributes(:removed => true, :removal_date => Date.today)
+      flash[:success] = "Responsibility now hidden and archived - #{@plan.count_responsibilities} now listed."
+    else
+      @responsibility.destroy
+      flash[:success] = "Responsibility successfully deleted - #{@plan.count_responsibilities} now listed."
+    end
     redirect_to plan_responsibilities_path(@plan)
   end
   

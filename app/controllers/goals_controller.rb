@@ -1,9 +1,21 @@
 class GoalsController < ApplicationController
   
   before_filter :authenticate
+    
+  def index
+    @responsibility = Responsibility.find(params[:responsibility_id])
+    @plan = Plan.find(@responsibility.plan_id)
+    @job = Job.find(session[:jobid])
+    @business = Business.find(session[:biz])
+    @goals = @responsibility.current_goals
+    @title = "Goals"
+    clear_return_to
+    store_location
+  end
   
   def new
-    @responsibility = Responsibility.find(session[:responid])
+    @responsibility = Responsibility.find(params[:responsibility_id])
+    #@responsibility = Responsibility.find(session[:responid])
     @job = Job.find(session[:jobid])
     if @responsibility.maximum_goals?
       flash[:notice] = "Sorry, you can only have 3 goals for each responsibility"
@@ -12,19 +24,19 @@ class GoalsController < ApplicationController
     else
       @goal = @responsibility.goals.new 
       @goal.created_by = current_user.id
-      @title = "Set a goal"
+      @title = "New goal"
       @characters_left = 140
     end
   end
   
   def create
-    @responsibility = Responsibility.find(session[:responid])
+    @responsibility = Responsibility.find(params[:responsibility_id])
     @goal = @responsibility.goals.new(params[:goal])
     @job = Job.find(session[:jobid])
     if @responsibility.maximum_goals?
       flash[:notice] = "Sorry, you can only have 3 goals for each responsibility"
       @title = "Responsibility for #{@job.job_title}"
-      redirect_to @responsibility
+      redirect_to responsibility_goals_path(@responsibility)
     else
       #@goal = @responsibility.goals.new(params[:goal])
       if @goal.save
@@ -33,9 +45,9 @@ class GoalsController < ApplicationController
         else
           flash[:success] = "Goal successfully added."
         end
-        redirect_to @responsibility
+        redirect_to responsibility_goals_path(@responsibility)
       else
-        @title = "Set a goal"
+        @title = "New goal"
         @goal.created_by = current_user.id
         @characters_left = 140 - @goal.objective.length
         render 'new'
@@ -54,29 +66,29 @@ class GoalsController < ApplicationController
   def update
     @goal = Goal.find(params[:id])
     @responsibility = Responsibility.find(session[:responid])
-    if params[:goal][:removed] == true
-    
+    if @goal.update_attributes(params[:goal])
+      @goal.update_attribute(:updated_by, current_user.id)
+      flash[:success] = "Goal successfully updated."
+      redirect_to @responsibility
     else
-      if @goal.update_attributes(params[:goal])
-        @goal.update_attribute(:updated_by, current_user.id)
-        flash[:success] = "Goal successfully updated."
-        redirect_to @responsibility
-      else
-        @title = "Edit goal"
-        @job = Job.find(session[:jobid])
-        @characters_left = 140 - @goal.objective.length
-        render 'edit'
-      end 
+      @title = "Edit goal"
+      @job = Job.find(session[:jobid])
+      @characters_left = 140 - @goal.objective.length
+      render 'edit' 
     end
   end
   
   def destroy
     @goal = Goal.find(params[:id])
     @responsibility = Responsibility.find(@goal.responsibility_id)
-    #Add condition to hide not delete if previously used in appraisal
-    @goal.destroy
-    flash[:success] = "Goal successfully deleted."
-    redirect_to @responsibility
+    if @goal.used?
+      @goal.update_attributes(:removed => true, :removal_date => Date.today)
+      flash[:success] = "Goal is now hidden and archived"
+    else
+      @goal.destroy
+      flash[:success] = "Goal successfully deleted."
+    end
+    redirect_to responsibility_goals_path(@responsibility)
   end
   
 end

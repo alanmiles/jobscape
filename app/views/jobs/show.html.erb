@@ -1,44 +1,65 @@
-<div class = "r-float">
-<%= link_to "All jobs", business_jobs_path(@business) %>
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), business_jobs_path(@business), :class => "magnify" %>
 
-<h1><%= @title %>  <small style = "font-size:0.7em"><%= link_to "(Edit job details)", edit_job_path(@job) %></small></h1>
-<p><strong><%= @job.business.name %></strong></p>
-<p><strong>Department:</strong> <%= @job.department.name unless @job.department_id == nil %><br />
-   <strong>Category:</strong> <%= @job.occupation.name %>
-</p>
+<h4 class="over"><%= @job.business.name_city %></h4>
 
-<div class = "display_box grayborder round rightpos">
-  <strong><%= pluralize(@job.active_placements.count, 'employee').upcase %></strong><br />
-</div>
-
-<div class = "display_box grayborder round">
-  <strong>ACHIEVEMENT PLAN</strong> <br />
-  <span id="status">    
-    <% if @plan.complete? %>
-      <%= link_to plan_status, aplan_path(@plan) %>
-    <% else %>
-      <%= link_to plan_status, plan_path(@plan) %>
+<div id="listing">
+  <strong><%= @job.job_title %></strong>
+  <div class="r-float">
+    <%= link_to "Edit", edit_job_path(@job) %>
+  </div>
+  <div class="subtext">
+    Category: <%= @job.occupation.name %><br />
+    <% unless @job.department_id == nil %>
+      Department: <%= @job.department.name %>
     <% end %>
-  </span>
-</div>
-<br />
+  </div>
 
-<div class = "display_box grayborder round">
-  <strong><%= pluralize(@count_vacancies, 'vacancy').upcase %></strong> <br />
-   <% if @plan.complete? %>
-     <% if Vacancy.zero_for?(@job) %>
-       <%= link_to "Add a vacancy", new_vacancy_path %>
-     <% else %>
-       <% if @job.vacancy_record_count > 1 %>
-         <%= link_to "Details", vacancies_path %>
-       <% else %>
-         <%= link_to "Details", @vacancy %>
-       <% end %>
-     <% end %>
-   <% else %>
-     <br />
-     <span class="highlt round">First complete the A-Plan.</span>
-   <% end %>
-</div>
+  <ul class="no_dec under">
+    <li>
+      <%= link_to "Employees", "#" %>
+      <div class="subtext">
+        <%= @job.active_placements.count %> listed.
+      </div>
+    </li>
+    <li>
+      <%= link_to "Achievement Plan", @plan %>
+      <% if @job.plan.complete? %>
+        <%= image_tag("complete.png", :size => "15x15") %>
+      <% else %>
+        <%= image_tag("warning.png", :size => "15x15") %>  
+      <% end %>
+      <%= image_tag("locked.png", :size => "15x15") if @job.plan.no_changes? %>
+        
+      <div class="subtext">
+        <span id="status">    
+          <%= plan_status %>
+        </span>
+      </div>
+    </li>
 
+    <li>
+      <% if @plan.complete? %>
+        <% if Vacancy.zero_for?(@job) %>
+          <%= link_to "Announce a vacancy", new_vacancy_path %>
+        <% else %>
+          <% if @job.vacancy_record_count > 1 %>
+            <%= link_to "Vacancies", vacancies_path %>
+            <div class="subtext"> 
+              <%= pluralize(@count_vacancies, 'vacancy') %>
+            </div>
+          <% else %>
+            <%= link_to "Vacancy details", @vacancy %>
+            <div class="subtext">
+              1 listed
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <span class="highlt">Vacancies</span> <%= image_tag("warning.png") %> 
+        <div class="subtext">
+          First complete the A-Plan.
+        </div>
+      <% end %>
+    </li>
+  </ul>
+</div>

@@ -1,21 +1,18 @@
-<div class = "r-float">
-  <% if @user.account == 1 %>
-    <%= link_to "Cancel", user_home_path %>
-  <% else %>
-    <%= link_to "Cancel", business_jobs_path(@business) %>
-  <% end %>
-</div>
+<% if @user.account == 1 %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), user_home_path, :class => "magnify" %>
+<% else %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), business_jobs_path(@business), :class => "magnify" %>
+<% end %>
 
-<h1><%= @title %></h1>
-<h4><%= @business.name unless @user.account == 1 %></h4>
+<h4 class="over"><%= @business.name_city unless @user.account == 1 %></h4>
 
 <%= form_for([@business, @job]) do |f| %>
-  <div class="shift_center">
+  <div class="shift_center_50">
 
     <%= render 'fields', :f => f %>
 
     <div class="actions">
-      <%= f.submit "Create" %>
+      <%= f.submit :class => "create round" %>
     </div>
   </div>
 <% end %>

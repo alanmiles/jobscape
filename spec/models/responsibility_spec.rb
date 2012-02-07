@@ -67,11 +67,13 @@ describe Responsibility do
       long_definition.should_not be_valid
     end
     
-    it "should not accept a duplicate definition for the same plan" do
-      @plan.responsibilities.create(@attr)
-      dup_responsibility = @plan.responsibilities.new(@attr)
-      dup_responsibility.should_not be_valid
-    end
+    #now duplicates are accepted - or at least not considered important enough to reject - user will quickly spot it
+    
+    #it "should not accept a duplicate definition for the same plan" do
+    #  @plan.responsibilities.create(@attr)
+    #  dup_responsibility = @plan.responsibilities.new(@attr)
+    #  dup_responsibility.should_not be_valid
+    #end
     
     it "can accept a duplicate definition for a different plan" do
       @job2 = Factory(:job, :job_title => "Another job",

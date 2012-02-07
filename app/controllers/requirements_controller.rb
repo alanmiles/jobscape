@@ -8,7 +8,7 @@ class RequirementsController < ApplicationController
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
     @requirements = @plan.requirements.order("position")
-    @title = "Hiring Requirements"
+    @title = "Hiring requirements"
   end
 
   def sort
@@ -25,7 +25,7 @@ class RequirementsController < ApplicationController
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
     @requirement = @plan.requirements.new
-    @title = "New applicant requirement"
+    @title = "New hiring requirement"
     @characters_left = 50
   end
   
@@ -37,7 +37,7 @@ class RequirementsController < ApplicationController
       flash[:success] = "Requirement added"
       redirect_to plan_requirements_path(@plan)
     else
-      @title = "New applicant requirement"
+      @title = "New hiring requirement"
       @characters_left = 50 - @requirement.requirement.length
       @job = Job.find(session[:jobid])
       @plan = Plan.find_by_job_id(@job.id)
@@ -49,7 +49,7 @@ class RequirementsController < ApplicationController
     @requirement = Requirement.find(params[:id])
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
-    @title = "Edit applicant requirement"
+    @title = "Edit hiring requirement"
     @characters_left = 50 - @requirement.requirement.length
   end
   
@@ -59,7 +59,7 @@ class RequirementsController < ApplicationController
       flash[:success] = "Requirement updated."
       redirect_to plan_requirements_path(@requirement.plan_id)
     else
-      @title = "Edit applicant requirement"
+      @title = "Edit hiring requirement"
       @job = Job.find(session[:jobid])
       @plan = Plan.find_by_job_id(@job.id)
       @characters_left = 50 - @requirement.requirement.length

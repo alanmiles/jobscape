@@ -7,7 +7,7 @@ class SubmittedPamsController < ApplicationController
   
   def edit
     @pam = Pam.find(params[:id])
-    @title = "Edit PAM submission"
+    @title = "Edit grade submission"
     @pam.updated_by = current_user.id
     @quality = Quality.find(@pam.quality_id)
     @pams = @quality.pams.all
@@ -20,7 +20,7 @@ class SubmittedPamsController < ApplicationController
       flash[:success] = "Grade #{@pam.grade} updated."
       redirect_to submitted_quality_path(@pam.quality_id)
     else
-      @title = "Edit PAM submission"
+      @title = "Edit grade submission"
       @pam.updated_by = current_user.id
       @quality = Quality.find(@pam.quality_id)
       @pams = @quality.pams.all

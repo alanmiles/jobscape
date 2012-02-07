@@ -34,7 +34,7 @@ class Job < ActiveRecord::Base
   has_many :invitations, :dependent => :destroy
   
   validates :job_title, :presence 	=> true,
-  			:length		=> { :maximum => 50 },
+  			:length		=> { :maximum => 30 },
   			:uniqueness 	=> { :scope => :department_id, 
   			     		     :message => " already exists in this department" }
   validates :business_id, :presence	=> true

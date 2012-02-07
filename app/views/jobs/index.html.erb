@@ -1,72 +1,65 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), officer_home_path, :class => "magnify" %>
+
 <div class = "r-float">
-<%= link_to "Menu for this business", officer_home_path %><br />
-<%= link_to "Add a new job", new_business_job_path(@business) unless @business.no_departments? %>
-
+  <%= link_to "Add a job", new_business_job_path(@business) unless @business.no_departments? %>
 </div>
 
-<h1>Jobs</h1>
-<h4 class="shallow"><%= @business.name %></h4>
-<div class="info_box_screen" style="padding-top:0">
-  <%= image_tag("complete.png", :size => "15x15") %> shows that the A-Plan for the job is complete. 
-  <%= image_tag("locked.png", :size => "15x15") %> shows that the A-Plan is locked - only an administrator can change it or unlock it.
-  Click on the job-title link to view or edit the job details, update the A-Plan, create a new vacancy, and to see a list of current
-  employees and applicants for the job.
+<h4 class="over"><%= @business.name_city %></h4>
 
-</div>
-
-
-<% unless @jobs.empty? %>
-  <%= will_paginate %>
-  <table class="smaller_font">
-    <tr>
-      <th>Title</th>
-      <th>Department</th>
-      <th>Category</th>
-      <th style = "text-align: center">Rating</th>
-      <th style = "text-align: center">A-Plan?</th>
-      <th></th>
-    </tr>
-    <% @jobs.each do |job| %>
-    <tr>
-      <td><%= link_to job.job_title, job_path(job) %>
-      <td><%= job.department.name unless job.department_id == nil %></td>
-      <td><%= job.occupation.name %> </td>
-      <td style = "text-align:center">
-        <% if job.plan.job_value.nil? || job.plan.job_value == 0 %>
-          ---
-        <% else %>
-          <%= job.plan.job_value %>        
-        <% end %>
-      </td>
-      <td style = "text-align:center">
-        <%= image_tag("complete.png", :size => "15x15") if job.plan.complete? %>
-         <%= image_tag("locked.png", :size => "15x15") if job.plan.no_changes? %>
-      </td>
-      <td class = "control">
-        <% unless job.has_active_placements? %>
-          <% if job.has_former_placements? %>
-            <%= link_to image_tag("cancel.png", :size => "15x15"), job, 
+<div id="listing">
+  <% unless @jobs.empty? %>
+    <%= will_paginate %>
+    <ul class="no_dec">
+      <% @jobs.each do |job| %>
+      <li>
+        <%= link_to job.job_title, job_path(job) %>
+        
+        <div class="r-float">
+          <%= image_tag("complete.png", :size => "15x15") if job.plan.complete? %>
+          <%= image_tag("locked.png", :size => "15x15") if job.plan.no_changes? %>
+          <% unless job.has_active_placements? %>
+            <% if job.has_former_placements? %>
+              <%= link_to image_tag("store.png", :size => "20x15"), job, 
                    :method => :delete, 
                    :confirm => "Are you sure you want to remove '#{job.title_department}' from the list of active jobs?  (You'll be able to activate it again later, if necessary - and you won't lose the A-Plan.)",
                    :title => "Remove '#{job.title_department}' from list of current jobs" %>
-          <% else %>
-            <%= link_to image_tag("cancel.png", :size => "15x15"), job, 
+            <% else %>
+              <%= link_to image_tag("delete.png"), job, 
                    :method => :delete, 
                    :confirm => "Are you sure you want to delete '#{job.title_department}' (including the A-plan) from the jobs list?",
                    :title => "Delete '#{job.title_department}' completely" %>
+            <% end %>
           <% end %>
-        <% end %>
-      </td> 
-    </tr>
-    <% end %>
-  </table>
-  <%= will_paginate %>
-<% else %>  
-  <div class="no_data round"> 
-    <% if @business.no_departments? %>
-      Before you can start adding jobs, you need to set up departments.
-    <% else %>
-      You haven't added any jobs yet. Why not start now - with your own?
-    <% end %>
-  </div>
-<% end %>
+        </div>
+        
+        <div class="subtext">
+          Category: <%= job.occupation.name %><br />
+          <% unless job.department_id == nil %>
+            Department: <%= job.department.name %>
+            <br />
+          <% end %>
+          <% if job.plan.job_value.nil? || job.plan.job_value == 0 %>
+            No job rating yet.
+          <% else %>
+            Job rating: <%= job.plan.job_value %>        
+          <% end %>
+        </div>
+        
+        
+    
+          
+        </li> 
+      
+      <% end %>
+    </ul>
+    <%= will_paginate %>
+  <% else %>  
+    <div class="no_data round"> 
+      <% if @business.no_departments? %>
+        Before you can start adding jobs, you need to set up departments.
+      <% else %>
+        You haven't added any jobs yet. Why not start now - with your own?
+      <% end %>
+    </div>
+  <% end %>
+</div>

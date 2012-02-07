@@ -7,7 +7,9 @@ class OutlinesController < ApplicationController
   def show
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job.id)
+    @business = Business.find(@job.business_id)
     @outline = @job.outline
+    session[:outline_type] = nil
     @title = "Job summary"
   end
   
@@ -20,6 +22,30 @@ class OutlinesController < ApplicationController
     @importance_left = 500 - @outline.importance.length
   end
   
+  def role
+    @outline = Outline.find(params[:id])
+    session[:outline_type] = "role"
+    @title = "Edit job role"
+    @job = Job.find(@outline.job_id)
+    @characters_left = 500 - @outline.role.length
+  end
+  
+  def qualities
+    @outline = Outline.find(params[:id])
+    session[:outline_type] = "qualities"
+    @title = "Edit job qualities"
+    @job = Job.find(@outline.job_id)
+    @characters_left = 500 - @outline.qualities.length
+  end
+  
+  def importance
+    @outline = Outline.find(params[:id])
+    session[:outline_type] = "importance"
+    @title = "Edit job importance"
+    @job = Job.find(@outline.job_id)
+    @characters_left = 500 - @outline.importance.length 
+  end
+  
   def update
     @outline = Outline.find(params[:id])
     if @outline.update_attributes(params[:outline])
@@ -30,12 +56,27 @@ class OutlinesController < ApplicationController
       end
       redirect_to @outline
     else
-      @title = "Edit job summary"
       @job = Job.find(@outline.job_id)
-      @role_left = 500 - @outline.role.length
-      @qualities_left = 500 - @outline.qualities.length
-      @importance_left = 500 - @outline.importance.length
-      render 'edit'
+      if session[:outline_type] == "role"
+        @title = "Edit job role"
+        @characters_left = 500 - @outline.role.length
+        render 'role'
+      elsif session[:outline_type] == "qualities"
+        @title = "Edit job qualities"
+        @characters_left = 500 - @outline.qualities.length
+        render 'qualities'
+      elsif session[:outline_type] == "importance"
+        @title = "Edit job importance"
+        @characters_left = 500 - @outline.role.importance
+        render 'importance'
+      else
+        @title = "Edit job summary"
+        @job = Job.find(@outline.job_id)
+        @role_left = 500 - @outline.role.length
+        @qualities_left = 500 - @outline.qualities.length
+        @importance_left = 500 - @outline.importance.length
+        render 'edit'
+      end
     end
   end
   

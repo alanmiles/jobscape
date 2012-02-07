@@ -1,93 +1,35 @@
-<div class = "r-float">
-<%= link_to "Cancel", @responsibility %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), session[:return_to], :class => "magnify" %>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
 </div>
-<h1><%= @title %>
-  <span id="info", style ="cursor:help"><%= image_tag("info.png", :size => "20x20") %></span>
-</h1>
 
-<h4>for <%= @job.job_title %></h4>
-
-     <div id ="infotext" class="info_box_screen" style="display:none">
-       
-       <span id = "no-info" class="hide_link">(Hide)</span> &nbsp;
-       The thinking behind HYGWIT's Responsibility Rating derives from Kaplan's and Norton's Balanced Scorecard.
-       They taught us that when determining strategic objectives, it's important for a business to look beyond
-       narrow profit/stakeholder interests.  To build long-term strength and wealth, we also need to consider what
-       we're doing to delight customers, motivate and develop our staff, and improve our internal methodologies
-       and structures.  
-       <br /><br />
-       We'd like to see everyone in every business thinking this way - frequently asking themselves <em>'What am
-       I doing to make my business stronger?'</em>, and that's why we ask the four questions below about each responsibility.
-       If the responsibility isn't <em>Important</em> or <em>Critical</em> in answer to at least one of the questions, then perhaps it
-       shouldn't be in this list.
-       <br /><br />
-       As you give your answers, HYGWIT calculates an overall score out of 100 for the responsibility.  So then, when 
-       you look at the list of all your responsibilities, you'll know which are the most important to the business.
-       <br /><br />
-       HYGWIT also produces an overall job evaluation - <em>How important is the job to the business?</em> - by taking the top 10 ranked
-       responsibilities and producing a score out of 1000.  If you're working on HYGWIT alone, this won't be particularly
-       useful to you, but if you're using the application across the business, it'll be a big help in determining appropriate
-       grading and salary levels.  A job with a score of 650 is clearly more important to the business than another with a score of
-       450.  Be careful not to be too rigid though.  There'd probably be very little difference between jobs scored at, say, 630 
-       and 650.
-       <br /><br />
-       Again we suggest that rating the responsibilities should be a discussion between a jobholder and the immediate manager.  
-       It's important that the two of them should reach agreement on which responsibilities are most important and why.
-               
-       &nbsp; <span id = "no-info2" class="hide_link">(Hide)</span>
-      </div>
-
-<p class = "display_text grayborder round"><%= @responsibility.definition %>
-           &nbsp; <span style = "font-weight: normal">
-             <%= link_to "(Edit)", edit_responsibility_path(@responsibility) %>
-           </span>
-</p>
+<div id="responsibility" class="over">
+  <h1 class="no-gap">Responsibility</h1> 
+  <div class="subtext">
+    <%= @responsibility.definition %>
+  </div>
+</div>
 
 <%= form_for @evaluation do |f| %>
-  <h3>Assess the impact of this responsibility on:</h3>
+  <p>How important is this reponsibility to:-</p>
   <div class = "field">
-    <%= f.label :profits, "Business profit:" %> &nbsp;
+    <%= f.label :profits, "..Create business profit *" %><br />
     <%= select( :evaluation, :profits, @ratings ) %>
-    <span style="float:right; margin-right:100px">
-      <%= f.label :customers, "Customer impact:" %> &nbsp;
-      <%= select( :evaluation, :customers, @ratings ) %>
-    </span>
   </div>
-  <div class = "field">
-    <%= f.label :staff, "Staff impact:" %> &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+  <div class="field">
+    <%= f.label :customers, "..Please customers *" %><br />
+    <%= select( :evaluation, :customers, @ratings ) %>
+  </div>
+  <div class="field">
+    <%= f.label :staff, "..Benefit staff *" %><br />
     <%= select( :evaluation, :staff, @ratings ) %>
-    <span style="float:right; margin-right:100px">
-      <%= f.label :processes, "Process enhancement:" %> &nbsp;
+  </div>
+  <div class="field">
+    <%= f.label :processes, "..Maintain / strengthen business processes *" %><br />
       <%= select( :evaluation, :processes, @ratings ) %>
-    </span>
   </div>
-  <br />
   <div class="actions">
-    <%= f.submit "Confirm and calculate" %>
+    <%= f.submit "Confirm and calculate", :class => "create round" %>
   </div>
-<% end %>
-
-<% content_for :javascript do %>
-
-  <%= javascript_tag do %>
-    
-   $(document).ready(function(){
-   
-    $('#info').click(function() {
-      $('#infotext').show('fast', function() {
-      });
-    });
-    
-    $('#no-info').click(function() {
-      $('#infotext').hide('fast', function() {
-      });
-    });
-    
-    $('#no-info2').click(function() {
-      $('#infotext').hide('fast', function() {
-      });
-    });
-    
-   }); 
-  <% end %>
 <% end %>

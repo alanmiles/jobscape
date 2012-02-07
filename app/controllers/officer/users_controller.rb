@@ -25,7 +25,7 @@ class Officer::UsersController < ApplicationController
     if @user.has_previous_jobs?(@business)
       @prev_jobs = @user.previous_jobs(@business)
     end
-    @title = "User details"
+    @title = "Employee"
   end
 
 end

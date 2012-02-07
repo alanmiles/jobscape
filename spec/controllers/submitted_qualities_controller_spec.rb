@@ -172,7 +172,7 @@ describe SubmittedQualitiesController do
         it "should generate a flash guidance message" do
           post :create, :quality => @attr
           @quality = assigns(:quality)
-          flash[:success].should == "#{@quality.quality} added. Now improve the 5 PAMs."
+          flash[:success].should == "'#{@quality.quality}' added. Now improve the 5 grade descriptors."
         end
           
         it "should set 'approved' to false" do
@@ -226,13 +226,13 @@ describe SubmittedQualitiesController do
         it "should have the right title" do
           get :show, :id => @unseen_quality1
           response.should have_selector("title", 
-            :content => "Attribute submission: #{@unseen_quality1.quality}")
+            :content => "Attribute submission")
         end
       
         it "should contain the attribute name" do
           get :show, :id => @unseen_quality1
-          response.should have_selector("p.display_text",
-            :content => "#{@unseen_quality1.quality}")
+          response.should have_selector("div#submitted",
+            :content => "Your attribute is '#{@unseen_quality1.quality}'.")
         end
     
         it "should have a link back to the new attribute selection page" 
@@ -267,8 +267,8 @@ describe SubmittedQualitiesController do
                     
           it "should show the attribute's grades" do
             get :show, :id => @unseen_quality3.id
-            response.should have_selector("td", :content => @pama.descriptor)
-            response.should have_selector("td", :content => @pamb.descriptor)
+            response.should have_selector("li", :content => @pama.descriptor)
+            response.should have_selector("li", :content => @pamb.descriptor)
           end
           
           it "should not show grades for different attributes" do
@@ -328,8 +328,7 @@ describe SubmittedQualitiesController do
       
         it "should have a 'Cancel' button, returning to the submitted Qualities show page" do
           get :edit, :id => @unseen_quality1.id
-          response.should have_selector("a", :href => submitted_quality_path(@unseen_quality1),
-      					:content => "Cancel")
+          response.should have_selector("a", :href => submitted_quality_path(@unseen_quality1))
         end
         
         it "should have a 'confirm changes' button" do

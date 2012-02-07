@@ -1,0 +1,80 @@
+<nav class="topmenu over">
+  <ul>
+    <span id="thisjob"><li><%= link_to "Job menu", @job %></li></span>
+    <span id="aplan"><li><%= link_to "A-Plan menu", @plan %></li></span>
+    <span id="responsibilities"><li><%= link_to "Job responsibilities", responsibilities_path %></li></span>
+    <span id="jobs"><li><%= link_to "All jobs", business_jobs_path(@business) %></li></span>
+  </ul>
+</nav>
+
+<%= link_to image_tag("pageback.png", :title => "Previous"), @plan, :class => "magnify" %>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
+</div>
+
+<div id="responsibility" class="over">
+  <div class="r-float subtext">
+    <%= link_to "Edit", edit_responsibility_path(@responsibility) %>
+  </div>
+  <h1 class="no-gap">Responsibility</h1> 
+  <div class="subtext">
+    <%= @responsibility.definition %>
+  </div>
+</div>
+
+<div class="under">
+  <% unless @responsibility.maximum_goals? %>
+    <div class="r-float subtext">
+      <%= link_to "Add a goal", new_responsibility_goal_path(@responsibility) %>
+    </div>
+  <% end %>
+  <h1 class="no-gap">Goals for this responsibility</h1>
+</div>
+
+<div id="listing" class="under">
+  <ul class="no_dec">
+    <% @goals.each do |goal| %>
+     
+        <li>
+          <span class="r-float push-left">
+            <%= link_to image_tag("edit.png", :size => "15x15"), edit_goal_path(goal),
+                   :title => "Update responsibility text" %>
+            <% if goal.used? %>
+          	<%= link_to image_tag("delete.png", :size => "15x15"), goal, 
+                   :method => :delete, 
+                   :confirm => "This goal has been used in previous reviews, so to preserve the history, it can't be deleted.  But it can be hidden so it doesn't appear in future reviews.  Do you want to hide the goal?",
+                   :title => "Remove this goal from the active list." %>
+            <% else %>
+                <%= link_to image_tag("delete.png", :size => "15x15"), goal, 
+                   :method => :delete, 
+                   :confirm => "This goal has never been used in a review, so it can be safely deleted.  Are you sure you want to continue?",
+                   :title => "Remove this goal completely." %>
+            <% end %>
+          </span>
+          <div class="subtext">
+            <%= goal.objective %>
+          </div>  
+        </li>
+      
+    <% end %>
+  </ul>
+</div>
+
+<div class="under">
+  <div class="r-float subtext">
+    <% if @responsibility.has_rating? %>
+      <%= link_to "Reset rating", edit_evaluation_path(@responsibility.evaluation) %>
+    <% else %>
+      <%= link_to "Set rating", edit_evaluation_path(@responsibility.evaluation) %>
+    <% end %>
+  </div>
+  <h1>Responsibility rating: 
+    <% if @responsibility.has_rating? %>
+      <%= @responsibility.rating %>
+    <% else %>
+     <%= image_tag("warning.png") %>
+     <span class="subtext highlt">Not yet set</span>
+    <% end %>
+  </h1>
+</div>

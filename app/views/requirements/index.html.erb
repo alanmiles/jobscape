@@ -1,69 +1,75 @@
-<div class = "r-float">
-  <%= link_to "Add a requirement", new_plan_requirement_path(@plan) %><br />
-  <%= link_to "Back to A-Plan menu", @plan %>
+<%= render 'shared/aplan_nav' %>
+
+<%= link_to image_tag("pageback.png", :title => "Previous"), @plan, :class => "magnify" %>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
+  <div class = "r-float under">
+    <% unless @plan.max_requirements? %>
+      <%= link_to "New requirement", new_plan_requirement_path(@plan) %><br />
+    <% end %> 
+  </div>
+  
+  <h1 class="no-gap under">Key hiring requirements</h1>
+  <div class="subtext">
+    <% if @plan.has_requirements? %>
+      <%= @plan.count_requirements %> added.  Usable now.
+    <% else %>
+      At least one hiring requirement is needed.
+    <% end %><br />
+    <% unless @plan.requirements.count < 2 %>
+      Sort list by dragging requirements up / down.
+    <% end %>
+  </div>
 </div>
 
-<h1><%= @title %>
-  <% if @plan.has_requirements? %>
-    &nbsp;<span class="success_marker round">ready to use</span>
-  <% end %>
-</h1>
-<h4>for <%= @job.job_title %></h4>
-<div class = "info_box_screen" style = "padding-top:0px">
- 
-  Add at least 1, and up to 10 hiring requirements.
-     <% if @plan.count_requirements >= 2 %>
-       <span class="highlt round">IMPORTANT!</span> As you build your list, arrange the requirements in order of priority with the most
-       important at the top.  Click on a requirement and drag it up or down to its new position.
-     <% end %>
-     <% if @plan.has_requirements? %>
-         <br /><br />
-         Select <%= image_tag("select.png", :size => "15x15") %> to edit and 
-         <%= image_tag("cancel.png", :size => "15x15") %> to remove the requirement.
-     <% end %> 
-   
+<div id="listing">
+
+  <ul id="requirements-list" class ="no_dec under smaller_font">
+    <% @requirements.each do |f| %>
+      <li id="requirement_<%= f.id %>">
+    
+        <div class="r-float">
+          <%= link_to(image_tag("edit.png"), edit_requirement_path(f),
+              :title => "Edit this requirement") %> &nbsp;
+     
+          <%= link_to(image_tag("delete.png"), f,
+      		:method => :delete, 
+		:confirm => "Are you sure you want to remove this requirement?",
+		:title => "Remove this requirement") %>
+        </div> 
+        <span class="handle"><%= f.requirement %></span>
+      </li>
+    <% end %>
+  </ul>
 </div>
-<hr />
-<ul id="requirements-list" style="cursor: move"> 
-  <% @requirements.each do |f| %>
-    <li id="requirement_<%= f.id %>" class = "no_bullet">
-      <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
-                   	:method => :delete, 
-                   	:confirm => "You sure?",
-                   	:title => "Remove this requirement") %>&nbsp;
-      <%= link_to(image_tag("select.png", :size => "15x15"), 
-    			edit_requirement_path(f), 
-    			:title => "Edit this requirement") %> &nbsp;
-      <span class="handle"><%= f.requirement %></span> 
-        
-    </li> 
-  <% end %>
-</ul>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
  
-    $('#requirements-list').sortable(
-     {
-       	axis: 'y',
-	dropOnEmpty: false,
-	handle: '.handle',
-	cursor: 'crosshair',
-	items: 'li',
-	opacity: 0.4,
-	scroll: true,
-	update: function(){
-	  $.ajax({
-	    type: 'post',
-	    data: $('#requirements-list').sortable('serialize') + '&id=<%=@plan.id %>',
-	dataType: 'script',
-	complete: function(request){
-	  $('#requirements-list').effect('highlight');
-	},
-	url: 'requirements/sort'})
-      }
-     })
-
+    $(document).ready(function(){
+    
+      $('#requirements-list').sortable(
+        {
+       	  axis: 'y',
+	  dropOnEmpty: false,
+	  handle: '.handle',
+	  cursor: 'crosshair',
+	  items: 'li',
+	  opacity: 0.4,
+	  scroll: true,
+	  update: function(){
+	    $.ajax({
+	      type: 'post',
+	      data: $('#requirements-list').sortable('serialize') + '&id=<%=@plan.id %>',
+	 dataType: 'script',
+	  complete: function(request){
+	    $('#requirements-list').effect('highlight');
+	  },
+	  url: 'requirements/sort'})
+        }
+       })
+     });
    <% end %>
 <% end %>

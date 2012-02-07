@@ -1,15 +1,9 @@
-<div class = "r-float">
-  <%= link_to "Cancel", submitted_quality_path(@quality) %>
-</div>
-
-<h1><%= "Edit attribute" %></h1>
-
-<%= render 'explanation' %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), submitted_quality_path(@quality), :class => "magnify" %>
 
 <%= form_for(@quality, :url => submitted_quality_path(@quality)) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   <%= render 'fields', :f => f %>
   <div class="actions">
-    <%= f.submit "Confirm" %>
+    <%= f.submit "Confirm", :class => "create round" %>
   </div>
 <% end %>

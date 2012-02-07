@@ -26,7 +26,7 @@ class Department < ActiveRecord::Base
   
   validates 	:business_id,		:presence 	=> true
   validates	:name,			:presence 	=> true,
-  					:length		=> { :maximum => 50 },
+  					:length		=> { :maximum => 20 },
   					:uniqueness	=> { :scope => :business_id,
   							     :case_sensitive => false, 
   			     		     		     :message => " already exists" }

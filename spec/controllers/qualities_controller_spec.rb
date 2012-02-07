@@ -98,13 +98,12 @@ describe QualitiesController do
     
       it "should have the right title" do
         get :new
-        response.should have_selector("title", :content => "New Personal Attribute")
+        response.should have_selector("title", :content => "New attribute")
       end
     
       it "should have a 'Cancel' button, returning to the Qualities list" do
         get :new
-        response.should have_selector("a", :href => qualities_path,
-      					:content => "Cancel")
+        response.should have_selector("a", :href => qualities_path)
       end
     
       it "should have a text field for the attribute name" do
@@ -123,8 +122,7 @@ describe QualitiesController do
       it "should have a 'Create' button" do
         get :new
         response.should have_selector("input", 
-            	    :type => "submit", 
-                    :value => "Create")
+            	    :type => "submit")
     
       end
     end
@@ -152,7 +150,7 @@ describe QualitiesController do
         it "should have the correct title" do
           post :create, :quality => @attr
           response.should have_selector("title", 
-                   :content => "New Personal Attribute")
+                   :content => "New attribute")
         end
         
         it "should render the 'new' page" do
@@ -347,13 +345,12 @@ describe QualitiesController do
       it "should have the right title" do
         get :new
         response.should have_selector("title", 
-                      :content => "New Personal Attribute")
+                      :content => "New attribute")
       end
     
       it "should have a 'Cancel' button, returning to the Qualities list" do
         get :new
-        response.should have_selector("a", :href => qualities_path,
-      					:content => "Cancel")
+        response.should have_selector("a", :href => qualities_path)
       end
     
       it "should have a text field for the attribute name" do
@@ -372,8 +369,7 @@ describe QualitiesController do
       it "should have a 'Create' button" do
         get :new
         response.should have_selector("input", 
-            	    :type => "submit", 
-                    :value => "Create")
+            	    :type => "submit")
     
       end
     end
@@ -396,7 +392,7 @@ describe QualitiesController do
         it "should have the correct title" do
           post :create, :quality => @attr
           response.should have_selector("title", 
-                   :content => "New Personal Attribute")
+                   :content => "New attribute")
         end
         
         it "should render the 'new' page" do

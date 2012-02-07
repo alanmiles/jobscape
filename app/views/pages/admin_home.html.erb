@@ -1,10 +1,13 @@
-<div class = "r-float">
-  <%= link_to "Switch to Standard User", admin_to_standard_path %>
-  <% if @user.has_any_review_requests? || @user.has_any_rejected_review_requests? %>
-    &nbsp;
-    <%= image_tag("important.png") %>
-  <% end %>
-</div>
+<nav class="topmenu over">
+  <ul>
+    <li><%= link_to "Switch to Standard User", admin_to_standard_path %>
+      <% if @user.has_any_review_requests? || @user.has_any_rejected_review_requests? %>
+        &nbsp;
+        <%= image_tag("important.png") %>
+      <% end %>
+    </li>
+  </ul>
+</nav>
 
 <h4><%= @user.name %></h4>
 <br />

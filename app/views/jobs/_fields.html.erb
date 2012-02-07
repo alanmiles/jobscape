@@ -2,40 +2,47 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
   <% if @user.account == 1 %>
-    <%= f.label :job_title, "Enter your job title" %>
+    <%= f.label :job_title, "Enter your job title *" %>
   <% else %>
-    <%= f.label :job_title %>
+    <%= f.label :job_title, "Job title *" %>
   <% end %>
   <br />
-  <%= f.text_field :job_title, :maxlength => 50, :size => 40 %>
-  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  <%= f.text_field :job_title, :maxlength => 30 %>
+  <div class="char-count"><%= @characters_left %> characters left</div>
 </div>
 
 <% if current_user.account == 1 %>
   <%= f.hidden_field :department_id %>
 <% else %>
   <div class="field">
-    <%= f.label :department_id, %><br />
+    <%= f.label :department_id, "Department *" %><br />
     <%= collection_select(:job, :department_id, @departments, :id, 
                         :name, :prompt => true) %>
   </div>
 <% end %>
 
 <div class="field">
-  <%= f.label :occupation_id, "Category" %><br />
+  <%= f.label :occupation_id, "Category *" %><br />
   <%= collection_select(:job, :occupation_id, Occupation.all, :id, 
                         :name, :prompt => true) %>
 </div>
-<br />
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
 
-    $('#job_job_title').live('keyup keydown', function(e) {
-    var maxLen = 50;
-    var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
+    $(document).ready(function(){
+      
+      $('#job_job_title').click(function() {
+        $('.char-count').css('visibility', 'visible');
+      });
+
+      $('#job_job_title').live('keyup keydown', function(e) {
+        var maxLen = 30;
+        var left = maxLen - $(this).val().length;
+        $('.char-count').html(left);
+      });
+    
     });
     
   <% end %>

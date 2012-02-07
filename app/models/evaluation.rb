@@ -20,7 +20,7 @@ class Evaluation < ActiveRecord::Base
   after_save :reset_job_rating
   
   RATING_TYPES = [
-    ["None", 0],
+    ["No impact", 0],
     ["Marginal", 2],
     ["Useful", 5],
     ["Important", 8],

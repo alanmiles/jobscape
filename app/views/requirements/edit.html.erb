@@ -1,15 +1,15 @@
-<div class = "r-float">
-<%= link_to "Cancel", plan_requirements_path(@plan) %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), plan_requirements_path(@plan), :class => "magnify" %>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
 </div>
-<h1><%= @title %></h1>
 
-<h4>for <%= @job.job_title %></h4>
-
-<div class="shift_center">
+<div class = "shift_center_50">
   <%= form_for @requirement do |f| %>
     <%= render @requirement, :f => f %>
     <div class="actions">
-      <%= f.submit "Confirm changes" %>
+      <%= f.submit :class => "create round" %>
     </div>
   <% end %>
 </div>
+

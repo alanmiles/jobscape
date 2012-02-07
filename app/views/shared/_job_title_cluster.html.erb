@@ -1,0 +1,10 @@
+<h1 class="no-gap">
+  <%= @job.job_title %>
+  <%= image_tag("complete.png", :size => "15x15") if @job.plan.complete? %>
+  <%= image_tag("locked.png", :size => "15x15") if @job.plan.no_changes? %>
+</h1>      
+<div class="subtext">
+  <% unless @job.department_id == nil %>
+    Department: <%= @job.department.name %>
+  <% end %>
+</div>

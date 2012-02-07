@@ -9,7 +9,7 @@ class ObjectivesController < ApplicationController
     @characters_objective = 255
     @characters_measurement = 255
     @select_focus = true
-    @title = "Add a company objective"
+    @title = "New objective"
   end
   
   def create
@@ -28,7 +28,7 @@ class ObjectivesController < ApplicationController
         @characters_objective = 255 - @objective.objective.length
         @characters_measurement = 255 - @objective.measurement.length
         @select_focus = true
-        @title = "Add a company objective"
+        @title = "New objective"
         render 'new'
       end
     end

@@ -1,9 +1,9 @@
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
-    <%= f.label :quality, "Attribute *" %>  
-    <div class="subtext">a 1 or 2-word label</div>
+    <%= f.label :quality, "Personal Attribute *" %>  
+    <div class="subtext">a 1 or 2-word label - please read guidance notes</div>
     <%= f.text_field :quality, :maxlength => 25 %>
-    <div id="char-count"><%= @characters_left %> characters left</div>
+    <div class="char-count"><%= @characters_left %> characters left</div>
   </div>
   <%= f.hidden_field :created_by %>
   <%= f.hidden_field :updated_by %>
@@ -15,13 +15,13 @@
     $(document).ready(function(){
     
       $('#quality_quality').click(function() {
-        $('#char-count').css('visibility', 'visible');
+        $('.char-count').css('visibility', 'visible');
       });
       
       $('#quality_quality').live('keyup keydown', function(e) {
       var maxLen = 25;
       var left = maxLen - $(this).val().length;
-      $('#char-count').html(left);
+      $('.char-count').html(left);
       });
     
     });

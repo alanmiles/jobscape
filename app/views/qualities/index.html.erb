@@ -1,4 +1,4 @@
-<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), admin_path %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), admin_path, :class => "magnify" %>
 
 <div class = "r-float">
   <%= link_to "Add an attribute", new_quality_path %> |
@@ -7,7 +7,7 @@
 </div>
 
 <div id = "listing">
-  <ul class="no_dec">
+  <ul class="no_dec smaller_font">
     <% @qualities.each do |quality| %>
       <li>
         <%= link_to quality.quality, quality, :title => "Edit" %>

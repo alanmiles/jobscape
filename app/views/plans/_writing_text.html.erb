@@ -1,0 +1,89 @@
+<% if current_user.account == 4 %>
+      
+      <% if @plan.no_changes? %>
+        <% if @plan.complete? %>
+          Your A-Plan is written and ready to use, and at the moment it's locked - you can't change it.<br /><br />
+        
+          But if you notice that something needs to change - perhaps your job focus has changed, or you feel that the 
+          targets are unachievable or too easy - then speak to your manager about it, and if you both agree, ask one of
+          your HYGWIT administrators to change the A-Plan. You may then be asked to update the A-Plan yourself, subject
+          to approval.<br /><br />
+        
+          Businesses and jobs change all the time - so don't be afraid to ask for a change, particularly if you feel the 
+          job isn't challenging enough and you could do more for the business.  But if you share your job-title with other 
+          colleagues, ask them how they feel before you talk to your boss.  If you're finding everything easy but they're
+          not, ask yourself first whether you could do more to help the rest of the team.
+      
+        <% else %>
+          
+          Your A-Plan isn't ready yet, and it's been locked by your HYGWIT administrator - perhaps it's being prepared now.
+          Talk to your administrator and find out when it'll be ready.
+        
+        <% end %>
+      <% else %>
+        
+        <% if @plan.complete? %>
+          Your A-Plan appears to be ready to use, but it remains open for further editing and updates.  Perhaps you're
+          planning to add more responsibilities or goals.  Normally, when everyone agrees that the Plan's complete, 
+          your HYGWIT administrator will lock it, to make sure that reviews are consistent.  So if you're sure there's
+          nothing more to add and the Plan's been approved by your boss, have a word with your administrator.<br /><br />
+         
+          Locking the A-Plan doesn't mean it will stay fixed for ever.  Most jobs change over time, and you'll probably
+          need to update it if you and your boss agree that you could set more ambitious targets, or if an aspect of
+          the job changes.  When that happens, all you need to do is speak to the administrator again ... unlocking
+          the Plan is straightforward.
+        
+        <% else %>
+          Your A-Plan isn't complete yet.  Who better to write it than you? ... together with any colleagues who share
+          your job-title.  After all, you're supposed to know it best!  Discuss the plan with colleagues and your boss, making
+          sure you all agree with the objectives.  Check too that your plan is well-aligned to the business strategy.
+          <br /><br />
+          You may find that discussion of the A-Plan will also lead to new discoveries: identification of a 
+          problem previously unnoticed, or suggestions for a more effective or efficient approach.<br /><br />
+        
+          When you've finished, ask your direct manager to check it.  It will then pass to your HYGWIT Administrator who'll
+          confirm that everything's been done properly, and then probably lock it until it needs to be updated again.
+        <% end %> 
+      <% end %>
+      
+    <% elsif current_user.account == 1 %>
+    
+      Businesses and jobs change all the time. If the business circumstances or the scope of your job change,
+      don't forget to update the A-Plan.  If you're finding that you're achieving your targets easily (and your
+      colleagues agree that you're doing well, it's probably time to think about setting more difficult targets.  
+      Remember that the whole point of HYGWIT is continuous improvement.  As your achievements begin to stack up, 
+      people will start to think of you as a star.<br /><br />
+      
+      Whenever you're thinking about an update, discuss it with your boss too, just making sure that your thinking is
+      aligned and that what you're planning fits with the boss's plan for the team.  You may find that discussion of the 
+      A-Plan with colleagues will also lead to new discoveries: identification of a problem previously unnoticed, or 
+      suggestions for a more effective or efficient approach.
+      
+    <% else %>
+    	
+      It depends on the status of your business.<br /><br />
+    
+      If you're building a new business, defining the business strategy and then writing A-Plans for the first jobs will give
+      your plans shape and certainty from the outset.<br /><br />
+    
+      In an existing business, when managers suggest that new jobs should be created, get them to make their case by writing 
+      the A-Plan. First, this will make sure that they've thought through the job properly.  Secondly, the job-score ( - the sum of 
+      the top 10 responsibility scores) will help you to decide the appropriate salary: look for other jobs with similar scores.
+      <br /><br />
+    
+      If the business is established but you're just beginning with HYGWIT, ask your employees to write their own A-Plans and then
+      get their managers to approve them.  This approach has many advantages.  First, it's obviously much faster than asking someone
+      in HR to write all the A-Plans.  Secondly, it'll show you how well people understand their jobs.  Third, it'll make sure that
+      employees and their managers have their objectives aligned. (Make sure as well that job-targets are not in conflict with 
+      corporate objectives.)  You may also find that discussion of the A-Plan will lead to new discoveries: identification of a 
+      problem previously unnoticed, or suggestions for a more effective or efficient approach.  Finally, we've found that
+      asking employees to get involved in discussing their own A-Plans gives them a sense of empowerment and increases motivation.
+      <br /><br />
+    
+      When everyone agrees that the A-Plan is complete, the HYGWIT administrator normally locks it.  But that doesn't mean the
+      plan is fixed forever - in fact you should expect it to change.  When?  The business circumstances or the scope of the job
+      may change. Capable and hard-working employees may be struggling to meet the targets.  Or they may be hitting the targets too
+      easily and feel they can offer more.  Whenever this happens, unlock the A-Plan and encourage the jobholder(s) to update it;
+      get the manager's approval for any changes, and check yourself that the Plan is still in line with the business strategy.  
+    
+    <% end %>

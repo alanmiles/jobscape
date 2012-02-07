@@ -9,7 +9,7 @@ class EvaluationsController < ApplicationController
     @plan = Plan.find_by_job_id(@job.id)
     @evaluation = Evaluation.find(params[:id])
     @responsibility = Responsibility.find(@evaluation.responsibility_id)
-    @title = "Set Responsibility Rating"
+    @title = "Responsibility rating"
     @ratings = Evaluation::RATING_TYPES
   end
   
@@ -18,11 +18,12 @@ class EvaluationsController < ApplicationController
     @responsibility = Responsibility.find(@evaluation.responsibility.id)
     if @evaluation.update_attributes(params[:evaluation])
       flash[:success] = "Rating recalculated."
-      redirect_to @responsibility
+      redirect_to session[:return_to]
     else
-      @title = "Set Responsibility Rating"
+      @title = "Responsibility rating"
       @job = Job.find(session[:jobid])
       @plan = Plan.find_by_job_id(@job.id)
+      @ratings = Evaluation::RATING_TYPES
       render 'edit'
     end 
   

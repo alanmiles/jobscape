@@ -22,7 +22,7 @@ class SubmittedQualitiesController < ApplicationController
   def create
     @quality = Quality.new(params[:quality])
     if @quality.save
-      flash[:success] = "#{@quality.quality} added. Now improve the 5 PAMs."
+      flash[:success] = "'#{@quality.quality}' added. Now improve the 5 grade descriptors."
       redirect_to submitted_quality_path(@quality)
     else
       @title = "New attribute submissions"
@@ -36,7 +36,7 @@ class SubmittedQualitiesController < ApplicationController
   
   def show
     @quality = Quality.find(params[:id])
-    @title = "Attribute submission: #{@quality.quality}"
+    @title = "Attribute submission"
     @job = Job.find(session[:jobid])
     @plan = Plan.find_by_job_id(@job)
     @pams = @quality.pams.all
@@ -67,7 +67,7 @@ class SubmittedQualitiesController < ApplicationController
   
   def destroy
     @submission = Quality.find(params[:id]).destroy
-    flash[:success] = "'#{@submission.quality}' and all associated PAMs removed."
+    flash[:success] = "'#{@submission.quality}' and all associated grade descriptors removed."
     #redirect_to submitted_qualities_path
     redirect_to :back
   end

@@ -1,20 +1,11 @@
-<div class = "r-float">
-  <%= link_to "Cancel", qualities_path %>
-</div>
+<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), qualities_path %>
 
-<h1><%= @title %></h1>
-<p>
-  <em>Personal attributes: those aspects of our personalities and natural abilities that we find so difficult to change - 
-      although sometimes training or mentoring can make a difference over time.  If people just don't have the right attributes for a 
-      job, it's unlikely they'll make a success of it ... even if they have the required knowledge and skills.
-    </em>
-</p>
 
-<div class="shift_center">
+<div class="shift_center_50">
   <%= form_for(@quality) do |f| %>
     <%= render @quality, :f => f %>
     <div class="actions">
-      <%= f.submit "Create" %>
+      <%= f.submit "Create Personal Attribute", :class => "create round" %>
     </div>
   <% end %>
 </div>

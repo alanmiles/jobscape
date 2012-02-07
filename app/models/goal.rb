@@ -15,16 +15,21 @@
 
 class Goal < ActiveRecord::Base
 
-  attr_accessible :objective, :removed, :created_by
+  attr_accessible :objective, :removed, :removal_date, :created_by
   
   belongs_to :responsibility
   has_many :reviewgoals
   
   validates	:responsibility_id,	:presence 	=> true
   validates	:objective,		:presence 	=> true,
-                			:length		=> { :maximum => 140 },
-  					:uniqueness	=> { :case_sensitive => false, 
-  							     :scope => :responsibility_id }
+                			:length		=> { :maximum => 140 }
   validates	:created_by,		:presence	=> true,
   					:numericality	=> { :integer => true }
+
+
+  def used?
+    cnt = self.reviewgoals.count
+    cnt > 0
+  end
+
 end

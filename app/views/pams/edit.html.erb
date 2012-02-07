@@ -15,7 +15,7 @@
     <div class = "field">
       <h2><%= f.label :descriptor, "Grade " + @pam.grade + " *" %></h2>
       <%= f.text_area :descriptor, :maxlength => 255 %>
-      <div id="char-count"><%= @characters_left %> characters left</div>
+      <div class="char-count"><%= @characters_left %> characters left</div>
     </div>
     <%= f.hidden_field :updated_by %>
     <div class="actions">
@@ -31,13 +31,13 @@
     $(document).ready(function(){
     
       $('#pam_descriptor').click(function() {
-        $('#char-count').css('visibility', 'visible');
+        $('.char-count').css('visibility', 'visible');
       });
 
       $('#pam_descriptor').live('keyup keydown', function(e) {
       var maxLen = 255;
       var left = maxLen - $(this).val().length;
-      $('#char-count').html(left);
+      $('.char-count').html(left);
       });
     
     });

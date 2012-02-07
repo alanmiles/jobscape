@@ -67,11 +67,12 @@ describe Goal do
       long_objective.should_not be_valid
     end
     
-    it "should not accept a duplicate objective for the same responsibility" do
-      @responsibility.goals.create(@attr)
-      dup_objective = @responsibility.goals.new(@attr)
-      dup_objective.should_not be_valid
-    end
+    #now duplicates are accepted - or at least not considered important enough to reject - user will quickly spot it
+    #it "should not accept a duplicate objective for the same responsibility" do
+    #  @responsibility.goals.create(@attr)
+    #  dup_objective = @responsibility.goals.new(@attr)
+    #  dup_objective.should_not be_valid
+    #end
     
     it "can accept a duplicate objective for a different responsibility" do
       @responsibility2 = Factory(:responsibility, :plan_id => @plan.id,

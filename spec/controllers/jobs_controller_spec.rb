@@ -161,13 +161,13 @@ describe JobsController do
       it "should have the right title" do
         get :index, :business_id => @business.id
         response.should have_selector("title",
-          	:content => "Jobs at #{@business.name}")
+          	:content => "Jobs")
       end
       
       it "should display each of the jobs" do
         get :index, :business_id => @business.id
         @jobs.each do |job|
-          response.should have_selector("td", :content => job.job_title)
+          response.should have_selector("li", :content => job.job_title)
         end
       end
       
@@ -192,7 +192,7 @@ describe JobsController do
       it "should display the job category" do
         get :index, :business_id => @business.id
         @jobs.each do |job|
-          response.should have_selector("td", :content => job.occupation.name)
+          response.should have_selector("li", :content => job.occupation.name)
         end
       end
       
@@ -239,17 +239,17 @@ describe JobsController do
       
       it "should have the right title" do
         get :show, :id => @job
-        response.should have_selector("title", :content => @job.job_title)
+        response.should have_selector("title", :content => "Job details")
       end
       
       it "should include the business name" do
         get :show, :id => @job
-        response.should have_selector("p", :content => @job.business.name)
+        response.should have_selector("h4", :content => @job.business.name_city)
       end
       
       it "should include the job category" do
         get :show, :id => @job
-        response.should have_selector("p", :content => @job.occupation.name)
+        response.should have_selector(".subtext", :content => @job.occupation.name)
       end
       
       it "should include the department"
@@ -338,7 +338,7 @@ describe JobsController do
       it "should have the right title" do
         get :new, :business_id => @business.id
         response.should have_selector("title", 
-                            :content => "Add a job")
+                            :content => "New job")
       end
         
       it "should be the right business" do
@@ -387,7 +387,7 @@ describe JobsController do
 
         it "should have the right title" do
           post :create, :business_id => @business.id, :job => @attr
-          response.should have_selector("title", :content => "Add a job")
+          response.should have_selector("title", :content => "New job")
         end
 
         it "should render the 'new' page" do
@@ -445,13 +445,12 @@ describe JobsController do
       
       it "should have a 'change' button" do
         get :edit, :id => @job
-        response.should have_selector("input", :type => "submit", :value => "Confirm")
+        response.should have_selector("input", :type => "submit", :value => "Update Job")
       end
       
       it "should have a 'cancel' button" do
         get :edit, :id => @job
-        response.should have_selector("a", :href => business_jobs_path(@business),
-        				   :content => "Cancel")
+        response.should have_selector("a", :href => business_jobs_path(@business))
       end
     end
     

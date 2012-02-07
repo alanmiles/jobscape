@@ -48,7 +48,7 @@ describe PlansController do
     
     it "should display the job and business name" do
       get 'show', :id => @plan.id
-      response.should have_selector("h4", 
+      response.should have_selector("#jobtitle", 
              	:content => @job.job_title)
     end
     
@@ -62,20 +62,24 @@ describe PlansController do
     #end
     #SEPARATE TESTS NEEDED FOR BUSINESS AS OPPOSED TO INDIVIDUAL USER
     
-    it "should have a link to 'responsibilities'" do
-      get 'show', :id => @plan.id
-      response.should have_selector("a", :href => plan_responsibilities_path(@plan))
-    end
+    #changed routing on return button
+    
+    #it "should have a link to 'responsibilities'" do
+    #  get 'show', :id => @plan.id
+    #  response.should have_selector("a", :href => plan_responsibilities_path(@plan))
+    #end
     
     it "should count the number of responsibilities entered" do
       get 'show', :id => @plan.id
-      response.should have_selector("span#responsibilities", :content => "2 entered")
+      response.should have_selector(".texthl", :content => "At least 8 more responsibilities needed")
     end
+
+    #change to structure - now only shows a warning for unset goals if at least 10 responsibilities added
     
-    it "should count the number of responsibilities with goals set" do
-      get 'show', :id => @plan.id
-      response.should have_selector("span#goals", :content => "1 / 2")
-    end
+    #it "should count the number of responsibilities with goals set" do
+    #  get 'show', :id => @plan.id
+    #  response.should have_selector("span#goals", :content => "1 / 2")
+    #end
     
     describe "personal attributes" do
       
@@ -92,7 +96,7 @@ describe PlansController do
     
       it "should count the number of personal attributes set" do
         get 'show', :id => @plan.id
-        response.should have_selector("span#attribs", :content => "1 selected")
+        response.should have_selector(".texthl", :content => "9 more attributes needed")
       end
     
     end    

@@ -10,7 +10,7 @@
     <div class="field">
       <%= f.label :content, "Content *" %><br />
       <%= f.text_area :content, :maxlength => 750, :class => "upsize" %>
-      <div id="char-count"><%= @characters_left %> characters left</div>
+      <div class="char-count"><%= @characters_left %> characters left</div>
     </div>
     
     
@@ -28,13 +28,13 @@
     $(document).ready(function(){
     
       $('#letter_template_content').click(function() {
-        $('#char-count').css('visibility', 'visible');
+        $('.char-count').css('visibility', 'visible');
       });
 
       $('#letter_template_content').live('keyup keydown', function(e) {
       var maxLen = 750;
       var left = maxLen - $(this).val().length;
-      $('#char-count').html(left);
+      $('.char-count').html(left);
       });
     
     });

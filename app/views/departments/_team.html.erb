@@ -1,0 +1,14 @@
+<%= will_paginate @users %>
+<div id="listing">
+  <ul class="no_dec">
+    <% @users.each do |u| %>
+      <li>
+        <%= link_to u.name, officer_user_path(u) %>
+        <div class="subtext">
+          <%= u.current_job(@business).job_title %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<%= will_paginate @users %>

@@ -1,9 +1,11 @@
-<div class = "r-float">
- <% if current_user.admin? %>
-    <%= link_to "Admin Mode", standard_to_admin_path %> | 
-  <% end %>
-  <%= link_to "Add a business", new_business_path if current_user.account == 3 %>
-</div>
+<nav class="topmenu over">
+  <ul>
+    <% if current_user.admin? %>
+      <li><%= link_to "Admin mode", standard_to_admin_path %></li>
+    <% end %>
+    <li><%= link_to "Add a business", new_business_path if current_user.account == 3 %></li>
+  </ul>
+</nav>
 
 <h4>
   <%= @user.name %>

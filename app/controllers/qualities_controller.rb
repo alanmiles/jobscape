@@ -10,7 +10,7 @@ class QualitiesController < ApplicationController
   end
 
   def new
-    @title = "New Personal Attribute"
+    @title = "New attribute"
     @quality = Quality.new
     @quality.created_by = current_user.id
     @characters_left = 25
@@ -26,7 +26,7 @@ class QualitiesController < ApplicationController
       flash[:success] = "'#{@quality.quality}' added. Now set the 5 PAMs."
       redirect_to @quality
     else
-      @title = "New Personal Attribute"
+      @title = "New attribute"
       @characters_left = 25 - @quality.quality.length
       @quality.created_by = current_user.id
       render 'new'

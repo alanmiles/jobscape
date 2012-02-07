@@ -78,25 +78,25 @@ describe GoalsController do
         
           it "should have the right title" do
             get 'new', :responsibility_id => @responsibility.id
-            response.should have_selector("title", :content => "Set a goal")
+            response.should have_selector("title", :content => "New goal")
           end
         
           it "should mention the job and business" do
             get 'new', :responsibility_id => @responsibility.id
-            response.should have_selector("h4", 
+            response.should have_selector("h1", 
                   :content => @job.job_title)
           end
         
           it "should mention the responsibility" do
             get 'new', :responsibility_id => @responsibility.id
-            response.should have_selector("p.display_text", 
+            response.should have_selector(".subtext", 
                   :content => @responsibility.definition)
           end
         
           it "should have a link to the responsibility 'show' page" do
             get 'new', :responsibility_id => @responsibility.id
             response.should have_selector("a", 
-                  :href => responsibility_path(@responsibility))
+                  :href => responsibility_goals_path(@responsibility))
           end
         
           it "should have an 'objective' text area" do
@@ -116,7 +116,7 @@ describe GoalsController do
             get 'new', :responsibility_id => @responsibility.id
             response.should have_selector("input", 
                     :type => "submit", 
-                    :value => "Create")
+                    :value => "Create Goal")
           end
           
         end
@@ -150,7 +150,7 @@ describe GoalsController do
 
           it "should redirect to the responsibilities 'show' page" do
             post :create, :responsibility_id => @responsibility.id, :goal => @attr
-            response.should redirect_to(responsibility_path(@responsibility))
+            response.should redirect_to(responsibility_goals_path(@responsibility))
           end
           
         end
@@ -173,7 +173,7 @@ describe GoalsController do
             it "should have the right title" do
               post :create, :responsibility_id => @responsibility.id, :goal => @attr
               response.should have_selector("title", 
-                           :content => "Set a goal")
+                           :content => "New goal")
             end
 
             it "should render the 'new' page" do
@@ -198,7 +198,7 @@ describe GoalsController do
 
             it "should redirect to the responsibility show page" do
               post :create, :responsibility_id => @responsibility.id, :goal => @attr
-              response.should redirect_to responsibility_path(@responsibility)
+              response.should redirect_to responsibility_goals_path(@responsibility)
             end
       
             it "should have a success message" do
@@ -249,14 +249,14 @@ describe GoalsController do
         
         it "should have a 'cancel' link back to the responsibility 'show' page" do
           get :edit, :id => @goal.id
-          response.should have_selector("a", :href => responsibility_path(@responsibility))
+          response.should have_selector("a", :href => responsibility_goals_path(@responsibility))
         end
         
         it "should have a 'confirm changes' button" do
           get :edit, :id => @goal.id
           response.should have_selector("input", 
                     :type => "submit", 
-                    :value => "Confirm changes")
+                    :value => "Update Goal")
         end
         
         it "should have an edit box for the objective" do
@@ -266,12 +266,14 @@ describe GoalsController do
         
         end
         
-        it "should have a 'removed' check box" do
-          get :edit, :id => @goal.id
-          response.should have_selector("input", 
-                    :name => "goal[removed]",
-                    :type => "checkbox")
-        end
+        #no longer required
+        
+        #it "should have a 'removed' check box" do
+        #  get :edit, :id => @goal.id
+        #  response.should have_selector("input", 
+        #            :name => "goal[removed]",
+        #            :type => "checkbox")
+        #end
         
       end
      
@@ -402,7 +404,7 @@ describe GoalsController do
 
           it "should redirect to the responsibilities 'show' page" do
             delete :destroy, :id => @goal
-            response.should redirect_to(responsibility_path(@responsibility))
+            response.should redirect_to(responsibility_goals_path(@responsibility))
           end
         
           it "should have a success message" do

@@ -11,6 +11,7 @@ describe JobqualitiesController do
     @job = Factory(:job, :business_id => @business.id, 
                    :department_id => @department.id, :occupation_id => @occupation.id)
     session[:jobid] = @job.id
+    session[:biz] = @business.id
     @plan = Plan.find_by_job_id(@job.id)
     @quality = Factory(:quality)
     @qualities = [@quality]
@@ -65,13 +66,13 @@ describe JobqualitiesController do
       it "should have the right title" do
         get :index, :plan_id => @plan.id
         response.should have_selector("title", 
-                        :content => "Attributes: #{@job.job_title}")
+                        :content => "Attributes")
       end
       
       it "should refer to the job title and business" do
         get :index, :plan_id => @plan.id
-        response.should have_selector("h4", 
-           :content => "for #{@job.job_title}")  
+        response.should have_selector("h1", 
+           :content => @job.job_title)  
       end
         
       it "should have an 'add an attribute' link (if < 10 attributes)" do
@@ -86,8 +87,6 @@ describe JobqualitiesController do
         			:quality_id => @quality_10.id)
         get :index, :plan_id => @plan.id
         response.should_not have_selector("a", :href => new_plan_jobquality_path(@plan))
-        response.should have_selector("div.r-float", 
-                                      :content => "No more attributes can be added")
       end
         
       it "should have a 'return to A-Plan menu' link" do
@@ -153,7 +152,7 @@ describe JobqualitiesController do
       it "should have the right title" do
         get :show, :id => @jobquality.id
         response.should have_selector("title", 
-             :content => @jobquality.quality.quality)
+             :content => "Attribute + Grades")
       end
       
       it "should list the grades for the attribute" do
@@ -161,15 +160,17 @@ describe JobqualitiesController do
       	@quality = Quality.find(@jobquality.quality_id)
       	@pams = @quality.pams
       	@pams.each do |pam|
-      	  response.should have_selector("td", :content => "#{pam.descriptor}")
+      	  response.should have_selector("li", :content => "#{pam.descriptor}")
       	end
       end
       
-      it "should have a reference to the current job" do
-        get :show, :id => @jobquality.id
-        @job = Job.find(@jobquality.plan.job_id)
-        response.should have_selector("span#job", :content => @job.job_title)
-      end
+      #no longer has reference to current job - applies to all jobs
+      
+      #it "should have a reference to the current job" do
+      #  get :show, :id => @jobquality.id
+      #  @job = Job.find(@jobquality.plan.job_id)
+      #  response.should have_selector("span#job", :content => @job.job_title)
+      #end
       
       it "should maybe allow the user to suggest new definitions"
       
@@ -222,14 +223,13 @@ describe JobqualitiesController do
         it "should have the right title" do
           get :new, :plan_id => @plan.id
           response.should have_selector("title", 
-                    :content => "New attribute: #{@job.job_title}")
+                    :content => "Select attribute")
         end
         
         it "should have a 'cancel' option" do
           get :new, :plan_id => @plan.id
           response.should have_selector("a", 
-                  :href => plan_jobqualities_path(@plan),
-       	          :content => "Cancel")
+                  :href => plan_jobqualities_path(@plan))
         end
         
         it "should have a 'select' box" do
@@ -352,7 +352,7 @@ describe JobqualitiesController do
           it "should have the right title" do
             post :create, :plan_id => @plan.id, :jobquality => @attr
             response.should have_selector("title", 
-                         :content => "New attribute: #{@job.job_title}")
+                         :content => "Select attribute")
           end
 
           it "should render the 'new' page" do

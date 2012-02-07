@@ -1,0 +1,12 @@
+<ul class="no_dec">
+  
+  <% @pams.each do |pam| %>
+    <li>
+      
+      <span class="grade-letter"><%= pam.grade %></span>
+      <span class="subtext">
+        <%= pam.descriptor %>
+      </span>
+    </li>
+  <% end %>
+</ul>

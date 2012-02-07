@@ -1,33 +1,26 @@
-<div class = "r-float">
- <%= link_to "Cancel", @responsibility %>
-</div>
-<h1>Edit goal</h1>
-<h4>for <%= @job.job_title %></h4>
+<%= link_to image_tag("pageback.png", :title => "Previous"), responsibility_goals_path(@responsibility), :class => "magnify" %>
 
-<p class = "display_text grayborder round">
-  <%= @responsibility.definition %>
-</p>
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
+</div>
+
+<div id="responsibility" class="over">
+  <strong>Responsibility</strong> 
+  <div class="subtext">
+    <%= @responsibility.definition %>
+  </div>
+</div>
 
 <%= form_for(@goal) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-  <div class = "field centerplace" >
-    <%= f.label :objective, "Update the objective" %><br /> 
-    <%= f.text_area :objective, :maxlength => 140, :cols => 50, :rows => 4 %>
-    <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  <div class = "field" >
+    <%= f.label :objective, "Update the goal *" %><br /> 
+    <%= f.text_area :objective, :maxlength => 140, :class => "tiny" %>
+    <div class="char-count"><%= @characters_left %> characters left</div>
   </div> 
-  <div class = "field">
-    <em>Or you can check the box below <u>to remove this goal completely</u>.  If you've
-     	used the goal in a previous appraisal, don't worry - it'll be hidden, not deleted,
-     	and you'll still see it when you look back at the appraisal history.
-    </em>
-  </div>
-  <div class = "field centerplace">
-    <%= f.label :removed, "Check this box to remove the objective entirely" %> 
-    <%= f.check_box :removed %>
-  </div>
-  <br />
+  
   <div class="actions">
-    <%= f.submit "Confirm changes" %>
+    <%= f.submit :class => "create round" %>
   </div>
 <% end %>
 
@@ -35,10 +28,18 @@
 
   <%= javascript_tag do %>
 
-    $('#goal_objective').live('keyup keydown', function(e) {
-    var maxLen = 140;
-    var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
+    $(document).ready(function(){
+    
+      $('#goal_objective').click(function() {
+        $('.char-count').css('visibility', 'visible');
+      });    
+    
+      $('#goal_objective').live('keyup keydown', function(e) {
+        var maxLen = 140;
+        var left = maxLen - $(this).val().length;
+        $('.char-count').html(left);
+      });
+    
     });
     
   <% end %>

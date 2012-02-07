@@ -20,7 +20,7 @@ class PamsController < ApplicationController
         redirect_to quality_path(@pam.quality_id)
       end
     else
-      @title = "Edit PAM"
+      @title = "Edit attribute grade"
       @pam.updated_by = current_user.id
       @quality = Quality.find(@pam.quality_id)
       @pams = @quality.pams.all

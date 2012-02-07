@@ -51,6 +51,10 @@ class Business < ActiveRecord::Base
   validates :mission,	:length		=> { :maximum => 500, :allow_blank => true }
   validates :values,	:length		=> { :maximum => 500, :allow_blank => true }
   			
+  def name_city
+    return "#{self.name}, #{self.city}"
+  end
+  
   def self.signed_up
     self.where("name NOT LIKE ?", "Biz_%")
   end

@@ -34,15 +34,25 @@ class NotesController < ApplicationController
   end
   
   def edit
-  
+    @note = Note.find(params[:id])
+    @title = "Edit note"
   end
   
   def update
-  
+    @note = Note.find(params[:id])
+    if @note.update_attributes(params[:note])
+      flash[:success] = "Note updated."
+      redirect_to @note
+    else
+      @title = "Edit note"
+      render 'edit'
+    end
   end
   
   def destroy
-  
+    @note = Note.find(params[:id]).destroy
+    flash[:success] = "Note for '#{@note.title}' removed."
+    redirect_to :back
   end
 
 end

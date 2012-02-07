@@ -1,32 +1,31 @@
-<div class = "r-float">
-  <% if current_user.admin? %>
-    <%= link_to "Admin Mode", standard_to_admin_path %> |
-  <% end %>
-
-  <%= link_to "Add a new business", new_business_path %><br />
-  <% if @user.belongs_to_business? %>
-    <% unless @user.single_business? %>
-      <%= link_to "Switch business", select_business_path %> |
+<nav class="topmenu over">
+  <ul>
+    <% if current_user.admin? %>
+      <li><%= link_to "Admin mode", standard_to_admin_path %></li>
     <% end %>
-  <% end %>
-  <%= link_to "Your own records", officer_to_own_path unless @user.no_current_job?(@business) %>
-  <% unless @no_business == true %>
-    <% if @user.has_review_requests?(@business) || @user.has_rejected_review_requests?(@business) %>
-      &nbsp;
-      <%= image_tag("important.png") %>
-      &nbsp;
-    <% else %>
-      <% unless @user.no_current_job?(@business) %>
-        <% if @user.self_appraisal_due?(@business) || @user.external_review_due?(@business) %>
-          &nbsp;
-          <%= image_tag("important.png") %>
-          &nbsp;
-        <% end %>
+
+    <li><%= link_to "Add business", new_business_path %></li>
+    <% if @user.belongs_to_business? %>
+      <% unless @user.single_business? %>
+        <li><%= link_to "Switch business", select_business_path %></li>
       <% end %>
     <% end %>
-  <% end %>
-</div>
-
+    <li>
+      <%= link_to "Your records", officer_to_own_path unless @user.no_current_job?(@business) %>
+      <% unless @no_business == true %>
+        <% if @user.has_review_requests?(@business) || @user.has_rejected_review_requests?(@business) %>
+          <%= image_tag("important.png", :size => "15x15") %>
+        <% else %>
+          <% unless @user.no_current_job?(@business) %>
+            <% if @user.self_appraisal_due?(@business) || @user.external_review_due?(@business) %>
+              <%= image_tag("important.png", :size => "15x15") %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </li>
+  </ul>
+</nav>
 
 <h4>
   <%= @user.name %>
@@ -49,20 +48,28 @@
     </ol>
   </div>
 <% else %>
-  <h4><%= @business.name %>, <%= @business.city %></h4>
-  <br />
-
-  <div class="menu_box round grayborder">
+  <div class="over">
+    <h4><%= @business.name %>, <%= @business.city %></h4>
+  </div>
+  <div id="listing">
     <% if @business.no_jobs? %>
-      <i class="highlt round">Before starting with employees, set up departments, then jobs.</i>
+      <i class="highlt round">Set up departments, then jobs, then employees.</i>
       <br /><br />
     <% end %> 
-    <ul>
-      <li class="no_bullet_compact"><%= link_to "Business details", @business %></li>
-      <li class="no_bullet_compact"><%= link_to "Business strategy", corporate_plan_path(@business) %></li>
-      <li class="no_bullet_compact"><%= link_to "Departments", business_departments_path(@business.id) %></li>
-      <li class="no_bullet_compact"><%= link_to "Jobs / A-Plans / Vacancies", business_jobs_path(@business.id) %></li>
-      <li class="no_bullet_compact">
+    <ul class="no_dec">
+      <li><%= link_to "Business details", @business %>
+        <div class="subtext">Name, sector, location</div>
+      </li>
+      <li><%= link_to "Business strategy", corporate_plan_path(@business) %>
+        <div class="subtext">Mission, vision, objectives</div>
+      </li>
+      <li><%= link_to "Departments", business_departments_path(@business.id) %>
+        <div class="subtext">+ Department heads & team records</div>      
+      </li>
+      <li><%= link_to "Jobs", business_jobs_path(@business.id) %>
+        <div class="subtext">+ Achievement plans & vacancy announcements</div> 
+      </li>
+      <li>
         <%= link_to "Employees (HYGWIT users)", officer_users_path %>
         <% if @business.count_current_employees > 1 %>
           <% if @business.needs_an_officer? %> 
@@ -71,16 +78,16 @@
           <% end %>
         <% end %>
       </li>
-      <li class="no_bullet_compact"><%= link_to "HYGWIT invitations", business_invitations_path(@business) %></li>
-      <li class="no_bullet_compact"><%= link_to "Performance reviews", performance_reviews_path %></li>
-      <li class="no_bullet_compact"><%= link_to "Recruitment", recruitment_menu_path %></li>  
+      <li><%= link_to "HYGWIT invitations", business_invitations_path(@business) %></li>
+      <li><%= link_to "Performance reviews", performance_reviews_path %></li>
+      <li><%= link_to "Recruitment", recruitment_menu_path %></li>  
     </ul>
     
     <strong><u>ARCHIVE</u></strong>
-    <ul>
-      <li class="no_bullet_compact"><%= link_to "Archived departments", business_hidden_departments_path(@business) %></li>
-      <li class="no_bullet_compact"><%= link_to "Archived jobs", business_inactive_jobs_path(@business) %></li>
-      <li class="no_bullet_compact"><%= link_to "Former employees", officer_leavers_path %></li>
+    <ul class="no_dec">
+      <li><%= link_to "Archived departments", business_hidden_departments_path(@business) %></li>
+      <li><%= link_to "Archived jobs", business_inactive_jobs_path(@business) %></li>
+      <li><%= link_to "Former employees", officer_leavers_path %></li>
     </ul>
   </div>
 <% end %>

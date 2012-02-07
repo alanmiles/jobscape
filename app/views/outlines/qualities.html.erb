@@ -1,0 +1,41 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), @outline, :class => "magnify" %>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
+</div>
+
+<%= form_for(@outline) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field"> 
+    <%= f.label :qualities, "Qualities *" %><br />
+    <%= f.text_area :qualities, :maxlength => 500, :class => "bonus" %>
+    <div class="char-count"><%= @characters_left %> characters left</div>
+  </div>
+  <%= f.hidden_field :role %>
+  <%= f.hidden_field :importance %> 
+
+  <div class="actions">
+    <%= f.submit :class => "create round" %>
+  </div>
+<% end %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $(document).ready(function(){
+    
+      $('#outline_qualities').click(function() {
+        $('.char-count').css('visibility', 'visible');
+      });
+
+      $('#outline_qualities').live('keyup keydown', function(e) {
+        var maxLen = 500;
+        var left = maxLen - $(this).val().length;
+        $('.char-count').html(left);
+      });
+    
+    });
+    
+  <% end %>
+<% end %>

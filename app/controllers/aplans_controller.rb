@@ -14,5 +14,19 @@ class AplansController < ApplicationController
       @title = "Your A-Plan"
     end
   end
-
+  
+  def intro
+    @plan = Plan.find(params[:id])
+    @title = "A-Plan intro"
+  end
+  
+  def uses
+    @plan = Plan.find(params[:id])
+    @title = "A-Plan uses"
+  end
+  
+  def writing
+    @plan = Plan.find(params[:id])
+    @title = "Writing the A-Plan"
+  end
 end

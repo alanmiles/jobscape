@@ -15,7 +15,7 @@ class BusinessesController < ApplicationController
   end
   
   def new
-    @title = "Add a business"
+    @title = "New business"
     @business = Business.new
     @sectors = Sector.order("sector")
   end

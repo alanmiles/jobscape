@@ -1,9 +1,13 @@
-<div class = "info_box_screen" style ="color: #000">
-  <%= @outline.role %><br /><br />
- 
-  <%= @outline.qualities %><br /><br />
-
-  <%= @outline.importance %>
+<div class="over">
+  <h1><%= link_to "ROLE", role_outline_path %></h1>
+  <%= @outline.role %>
 </div>
+<div class="over">
+  <h1><%= link_to "QUALITIES", qualities_outline_path %></h1>
+  <%= @outline.qualities %>
+</div>
+<h1><%= link_to "IMPORTANCE", importance_outline_path %></h1>
+<%= @outline.importance %>
+
 
 

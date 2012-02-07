@@ -1,26 +1,27 @@
-<div class = "r-float">
-  <%= link_to "Back", session[:return_to] %>
-</div>
-<h1>Your suggested attribute</h1>
+<%= link_to image_tag("pageback.png", :title => "Previous"), session[:return_to], :class => "magnify" %>
+<div id="submitted">
+  <div class="r-float subtext">
+    <%= link_to "Edit", edit_submitted_quality_path(@quality) %>
+  </div>
+  Your attribute is '<%= @quality.quality %>'.          
 
 
-<p class = "display_text grayborder round cntr">Attribute: <%= @quality.quality %>
-           &nbsp; <span style = "font-weight: normal">
-             <%= link_to "(Edit)", edit_submitted_quality_path(@quality) %>
-           </span>
-</p>
-<div class="info_box_screen">
-   Your suggestion has been saved and awaits approval.  Now edit the 5 PAMs, 
-   making them clear and if possible measurable, so that 2 people commenting on the same 
-   employee's qualities would agree on the rating. Click on 'Back' when complete.
+  <div class="subtext under">
+    Click on the grade to edit these grade descriptors - following the page notes for guidance. 
+    Click on <%= link_to image_tag("pageback.png", :title => "Previous"), session[:return_to] %> when complete.
+  </div>
+
+  <div id="listing">
+    <ul class="no_dec under">
+  
+      <% @pams.each do |pam| %>
+        <li>
+          <span class="grade-letter"><%= link_to pam.grade, edit_submitted_pam_path(pam) %></span>
+          <span class="subtext">
+            <%= pam.descriptor %>
+          </span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
-<h1>PAMs <i style = "font-size:0.6em">( = personal attribute measurements )</i></h1> 
-<table class="smaller_font">
-  <% @pams.each do |pam| %>
-    <tr>
-      <td class = "at_top"><%= pam.grade %></td>
-      <td><%= pam.descriptor %></td>
-      <td class = "at_top"><%= link_to "Edit", edit_submitted_pam_path(pam) %></td> 
-    </tr>  
-  <% end %>
-</table>

@@ -100,14 +100,16 @@ describe SubmittedPamsController do
           response.should be_success
         end
       
-        it "should refer to the correct attribute" do
-          get :edit, :id => @unseen_pam.id
-          response.should have_selector(".display_text", :content => "Attribute: #{@unseen_quality.quality}")
-        end
+        #Now removed
+              
+        #it "should refer to the correct attribute" do
+        #  get :edit, :id => @unseen_pam.id
+        #  response.should have_selector(".display_text", :content => "Attribute: #{@unseen_quality.quality}")
+        #end
       
         it "should mention the correct grade" do
           get :edit, :id => @unseen_pam.id
-          response.should have_selector(".label_large", :content => "Edit PAM: Grade #{@unseen_pam.grade}")
+          response.should have_selector(".field", :content => "Descriptor for Grade #{@unseen_pam.grade}")
         end
       
         it "should have a textarea containing the descriptor" do
@@ -124,18 +126,19 @@ describe SubmittedPamsController do
       
         it "should have a link to return to the attribute 'show' page" do
           get :edit, :id => @unseen_pam.id
-          response.should have_selector("a", :href => submitted_quality_path(@unseen_pam.quality_id),
-        			:content => "Cancel")
+          response.should have_selector("a", :href => submitted_quality_path(@unseen_pam.quality_id))
         end
       
-        it "should display the other PAMs for the attribute" do
-          @quality = Quality.find(@unseen_pam.quality_id)
-          @pams = @quality.pams.all
-          get :edit, :id => @unseen_pam.id
-          @pams.each do |pam|
-            response.should have_selector("td", :content => pam.descriptor)
-          end
-        end
+        #Other PAMS no longer shown
+        
+        #it "should display the other PAMs for the attribute" do
+        #  @quality = Quality.find(@unseen_pam.quality_id)
+        #  @pams = @quality.pams.all
+        #  get :edit, :id => @unseen_pam.id
+        #  @pams.each do |pam|
+        #    response.should have_selector("li", :content => pam.descriptor)
+        #  end
+        #end
       end
     end
     
@@ -213,7 +216,7 @@ describe SubmittedPamsController do
         
           it "should have the right title" do
             put :update, :id => @unseen_pam, :pam => @attr
-            response.should have_selector("title", :content => "Edit PAM submission")
+            response.should have_selector("title", :content => "Edit grade submission")
           end
         
           it "should re-present the 'edit' page" do

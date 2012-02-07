@@ -5,7 +5,7 @@ class JobsController < ApplicationController
   
   def index
     @business = Business.find(session[:biz])
-    @title = "Jobs at #{@business.name}"
+    @title = "Jobs"
     @jobs = @business.jobs.where("jobs.inactive = ?", false).paginate(:page => params[:page]) 
     session[:jobid] = nil 
   end
@@ -13,7 +13,7 @@ class JobsController < ApplicationController
   def show
     @job = Job.find(params[:id])
     session[:jobid] = @job.id
-    @title = @job.job_title
+    @title = "Job details"
     @plan = Plan.find_by_job_id(@job)
     @count_vacancies = Vacancy.sum_for(@job)
     @vacancy = Vacancy.find_by_job_id(@job) if @job.vacancy_record_count == 1
@@ -21,7 +21,7 @@ class JobsController < ApplicationController
   
   def new
     @business = Business.find(session[:biz])
-    @title = "Add a job"
+    @title = "New job"
     @job = @business.jobs.new
     @user = current_user
     if @user.account == 1
@@ -30,7 +30,7 @@ class JobsController < ApplicationController
     end
     @departments = @business.current_departments
     @occupations = Occupation.find(:all, :order => "name")
-    @characters_left = 50
+    @characters_left = 30
   end
   
   def create
@@ -54,8 +54,8 @@ class JobsController < ApplicationController
         redirect_to business_jobs_path(@business)
       end
     else
-      @title = "Add a job"
-      @characters_left = 50 - @job.job_title.length
+      @title = "New job"
+      @characters_left = 30 - @job.job_title.length
       @user = current_user
       if @user.account == 1
         @dept = @business.departments.first
@@ -73,7 +73,7 @@ class JobsController < ApplicationController
     @title = "Edit job"
     @departments = @business.current_departments
     @occupations = Occupation.find(:all, :order => "name")
-    @characters_left = 50 - @job.job_title.length
+    @characters_left = 30 - @job.job_title.length
   end
   
   def update
@@ -84,7 +84,7 @@ class JobsController < ApplicationController
     else
       @title = "Edit job"
       @business = Business.find_by_id(@job.business_id)
-      @characters_left = 50 - @job.job_title.length
+      @characters_left = 30 - @job.job_title.length
       @departments = @business.current_departments
       @occupations = Occupation.find(:all, :order => "name")
       render 'edit'

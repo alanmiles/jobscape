@@ -1,24 +1,25 @@
-<div class = "r-float">
-  <%= link_to "Cancel", officer_user_path(@user) %>
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), officer_user_path(@user), :class => "magnify" %>
 
-<h1><%= @title %></h1>
-<h4><%= @user.name %></h4>
+<div id="employee">
 
-<%= form_for @placement do |f| %>
-  <%= render "shared/error_messages", :object => f.object %>
-  <div class= "display_wider">
-    <strong>Department:</strong> <%= @job.department.name %><br />
-    <strong>Job-title:</strong> <%= @job.job_title %>
-    <br /><br />
+  <strong><%= @user.name.upcase %></strong>
+  <div class="subtext over">
+    <%= @job.job_title %> <br />
+    in <%= @job.department.name %>
+  </div>  
+
+  <%= form_for @placement do |f| %>
+    <%= render "shared/error_messages", :object => f.object %>
+    
     <div class="field">
-      <%= f.label :started_job, "Start-date in this job" %><br />
+      <%= f.label :started_job, "Start-date: current job" %><br />
       <%= f.date_select :started_job %>
     </div>
     
     <div class="actions" %>
-      <%= f.submit "Confirm" %>
+      <%= f.submit "Confirm", :class => "create round" %>
     </div>
    
-  </div>
-<% end %>
+  <% end %>
+  
+</div>
