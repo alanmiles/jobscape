@@ -8,7 +8,8 @@ class Officer::UsersController < ApplicationController
   def index
     @business = Business.find(session[:biz])
     @users = @business.all_current_employees.paginate(:page => params[:page])
-    @title = "HYGWIT Users"
+    @title = "Employees"
+    store_location
   end
   
   def show

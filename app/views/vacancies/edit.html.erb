@@ -1,14 +1,13 @@
-<div class = "r-float">
-  <%= link_to "Cancel", @vacancy %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), @vacancy, :class => "magnify" %>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster_woicon' %>
 </div>
-<h1>Edit Vacancy</h1>
-<h4>for <%= @job.title_location %></h4>
 
 <%= form_for(@vacancy) do |f| %>
-  
   <%= render "fields", :f => f %>
   <div class="actions">
-    <%= f.submit "Confirm changes" %>
+    <%= f.submit :class => "create round" %>
   </div>
   
 <% end %>

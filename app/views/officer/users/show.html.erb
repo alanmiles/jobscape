@@ -1,9 +1,4 @@
-<% if session[:dept_id] == nil %>
-  <%= link_to image_tag("pageback.png", :title => "Previous"), officer_users_path, :class => "magnify" %>
-<% else %>
-  <%= link_to image_tag("pageback.png", :title => "Previous"), @department, :class => "magnify" %>
-<% end %>
-
+<%= link_to image_tag("pageback.png", :title => "Previous"), session[:return_to], :class => "magnify" %>
 
 <div id="listing">
   <ul class="no_dec">
@@ -18,7 +13,7 @@
       </div>
     </li>
     <li>
-      <h3>CURRENT JOB</h3>
+      <h4>CURRENT JOB</h4>
   
       <% if @business.no_jobs? %>
         <div class="no_data round">

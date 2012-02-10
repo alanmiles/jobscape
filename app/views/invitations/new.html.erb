@@ -1,46 +1,62 @@
-<div class = "r-float">
-  <%= link_to "Cancel", business_invitations_path(@business) %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), officer_users_path, :class => "magnify" %>
+
+<div class="over">
+  <h4><%= @business.name %>, <%= @business.city %></h4>
 </div>
-
-<h1><%= @title %></h1>
-
-<div class="info_box_screen">
-  Give other people in your business access to HYGWIT's employee pages, setting them on the path to high achievement, and allowing 
-  you to keep an eye on their progress. 
-  When you complete the name and email details and then click <em>'Send invitation'</em>, an email will be sent automatically
-  inviting this person to join and directing them to a secure HYGWIT sign-up page.
-  <br /><br />
 
 <%= form_for([@business, @invitation]) do |f| %>
   <%= render "shared/error_messages", :object => f.object %>
 
   <div class="field">
-    <%= f.label :name, "Enter the employee's name" %><br />
+    <%= f.label :name, "Enter the employee's name *" %>
+    <div class="subtext">Normal first name and last name</div>
     <%= f.text_field :name %>
   </div>
 
   <div class="field">
-    <%= f.label :email, "... and email address" %><br />
+    <%= f.label :email, "... and email address *" %><br />
     <%= f.text_field :email %>
   </div>
   
-  <div class="field">
+  <div class="field" style="display:none">
     <%= f.label :staff_no, "... plus an optional staff number" %>&nbsp;
     <%= f.text_field :staff_no, :size => 7 %><br />
     <small>(If you don't enter a number, HYGWIT will assign one automatically.)</small>
   </div>
   
   <div class="field">
-    <%= f.label :job_id %> &nbsp;
+    <%= f.label :job_id %> *<span class="subtext"> (Must already be listed)</span><br />
     <%= collection_select(:invitation, :job_id, @jobs, :id, :title_department, :prompt => true) %> 
   </div>
   
   <%= f.hidden_field :security_code %><br />
   <%= f.hidden_field :inviter_id %>
   
+  <div class="subtext">
+    When you click on 'Send' an email will be sent to the person you've named, with an invitation to sign up for a free
+    HYGWIT Employee account.  When they sign up, they'll be added to your employee list.  More in the page notes 
+    ( <span id="info"><%= link_to image_tag("guidance.png"), note_path(note_reference), :remote => true %></span> ).
+  </div>
+  
   <div class="actions">
-    <%= f.submit "Send invitation" %>
+    <%= f.submit "Send invitation", :class => "create round" %>
   </div>
 
 <% end %>
-</div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+   
+   $(document).ready(function(){
+   
+    $('#info').click(function() {
+      $('#center-panel').toggle( 100, function() {
+      });
+    });
+   
+   });
+    
+  <% end %>
+<% end %>
+

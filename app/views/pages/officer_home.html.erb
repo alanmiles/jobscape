@@ -70,13 +70,17 @@
         <div class="subtext">+ Achievement plans & vacancy announcements</div> 
       </li>
       <li>
-        <%= link_to "Employees (HYGWIT users)", officer_users_path %>
-        <% if @business.count_current_employees > 1 %>
-          <% if @business.needs_an_officer? %> 
-            &nbsp;
-            <span class="highlt round"><small>Appoint another HYGWIT officer</small></span>
+        <%= link_to "Employees", officer_users_path %>
+        <div class="subtext">
+          Detailed records; invitations to HYGWIT
+          <% if @business.count_current_employees > 1 %>
+            <% if @business.needs_an_officer? %> 
+              <div class="highlt">
+                <%= image_tag("warning.png") %> Appoint another HYGWIT officer
+              </div>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
       </li>
       <li><%= link_to "HYGWIT invitations", business_invitations_path(@business) %></li>
       <li><%= link_to "Performance reviews", performance_reviews_path %></li>

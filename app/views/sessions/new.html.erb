@@ -1,4 +1,4 @@
-
+<div class="over">
 
   <%= form_for(:session, :url => sessions_path) do |f| %>
     <div class="field">
@@ -13,6 +13,8 @@
       <%= f.submit "Log in", :class => "create round" %>
     </div>
   <% end %>
-
+</div>
+<br /><br />
+<div class="under">
   <p>New user? <%= link_to "Sign up now!", signup_path %></p>
-
+</div>

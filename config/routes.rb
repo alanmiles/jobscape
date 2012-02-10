@@ -1,5 +1,7 @@
 Jobscape::Application.routes.draw do
 
+  get "jobholders/index"
+
   get "notes/index"
 
   get "notes/new"
@@ -130,13 +132,14 @@ Jobscape::Application.routes.draw do
     end
     resources :portraits
   end
+  resources :jobholders
   resources :latest_vacancies, :only => :index
   resources :current_vacancies, :only => :index
-  resources :aplans do
-    member do
-      get 'intro', 'uses', 'writing'
-    end
-  end
+  #resources :aplans do
+  #  member do
+  #    get 'intro', 'uses', 'writing'
+  #  end
+  #end
   resources :reviews do
     resources :reviewqualities, :shallow => true
   end

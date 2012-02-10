@@ -1,28 +1,31 @@
-<h5>We're looking for ... </h5>
+<h1>We're looking for ... </h1>
 
-<strong>Someone who can:</strong>
-<div class="display_wider">
+<div class="indent">
   <ul>
+    <em>Someone who can:-</em>
     <% @responsibilities.each do |responsibility| %>
-      <li><%= responsibility.definition %></li>
+      <div class="subtext">
+        <li><%= responsibility.definition %></li>
+      </div>
     <% end %>
   </ul>
-</div>
 
-<strong>... with these qualities:</strong>
-<div class="display_wider">
-  <ul>
+
+  <ul class = "under">
+    <em>...with these qualities:</em>
     <% @qualities.each do |q| %>
-      <li><%= q.quality.quality %></li>
+      <div class="subtext">
+        <li><%= q.quality.quality %></li>
+      </div>
     <% end %>
   </ul>
-</div>
 
-<strong>... and meeting these requirements:</strong>
-<div class="display_wider">
-  <ul style = "margin-bottom: 0px">
+  <ul class="under">
+    <em>... and meeting these requirements:</em>
     <% @requirements.each do |requirement| %>
-      <li><%= requirement.requirement %></li>
+      <div class="subtext">
+        <li><%= requirement.requirement %></li>
+      </div>
     <% end %>
   </ul>
 </div>

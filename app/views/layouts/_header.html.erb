@@ -30,7 +30,7 @@
         <li><%= link_to image_tag("user.png"), signin_path, :title => "Log In" %></li>
       <% end %>
       <%  unless signed_in? %>
-        <li><%= link_to image_tag("signup.png"), signup_path, :title => "Sign Up - for free" %></li>
+        <li><%= link_to "Sign up", signup_path, :title => "Sign Up - for free", :class => "create-icon round" %></li>
       <% end %>
     </ul>
   </nav>

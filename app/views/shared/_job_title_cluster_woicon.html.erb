@@ -1,0 +1,8 @@
+<h1 class="no-gap">
+  <%= @job.job_title %>
+</h1>      
+<div class="subtext">
+  <% unless @job.department_id == nil %>
+    Department: <%= @job.department.name %>
+  <% end %>
+</div>

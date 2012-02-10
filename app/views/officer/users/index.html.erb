@@ -1,13 +1,20 @@
-<div class = "r-float">
-  <%= link_to "Menu for this business", officer_home_path %>
-</div>
+<nav class="topmenu over">
+  <ul>
+    <span id="search"><li><%= link_to "Search", "#", :title => "Search for an employee by any part of name, job or department" %></li></span>
+    <span id="invitations"><li><%= link_to "Outstanding invitations", business_invitations_path(@business), 
+      :title => "No response yet from the people in this list" %></li>
+    </span>
+  </ul>
+</nav>
 
-<h1><%= @title %></h1>
-<h4 class="shallow"><%= @business.name %></h4>
-<div class="info_box_screen">
-  Use <%= image_tag("select.png", :size => "15x15") %> to view / edit an employee's record - 
-  including marking the employee as a leaver.<br />
-  HYGWIT officers are shown with their names <strong>highlighted</strong>.
+<%= link_to image_tag("pageback.png", :title => "Previous"), officer_home_path, :class => "magnify" %>
+
+<div class="r-float">
+  <%= link_to "Invite (= Add employee)", new_business_invitation_path(@business),
+    		:title => "Invite people to use HYGWIT - and add them to employee list" %>
+</div>
+<div class="over">
+  <h4><%= @business.name %>, <%= @business.city %></h4>
 </div>
 
 <%= render 'users/current_list' %>

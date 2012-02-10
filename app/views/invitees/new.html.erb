@@ -1,6 +1,6 @@
-<h1><%= @title %></h1>
 
-<div class="info_box_screen">
+
+<div id="rubric">
   You've been invited to sign up to HYGWIT, which your business uses to help everyone maximize their potential.
   HYGWIT will give you an achievement plan with clear targets, tools to help you measure up to key business and personal objectives, 
   and a framework to help you plan your future career development.
@@ -8,18 +8,19 @@
   But before we get started you need to verify your identity.  In the boxes below, enter your full name and the
   security code, both exactly as displayed on your email invitation. 
   <br /><br />
+</div>
+  
   <%= form_for(:invitee, :url => invitees_path) do |f| %>
     <div class="field">
-      <%= f.label :name, "Enter your name" %><br />
+      <%= f.label :name, "Enter your name *" %><br />
       <%= f.text_field :name %>
     </div>
     <div class="field">
-      <%= f.label :security_code %><br />
+      <%= f.label :security_code, "Security code *" %><br />
       <%= f.text_field :security_code, :size => 8 %>
     </div>
     <div class="actions">
-      <%= f.submit "Submit" %>
+      <%= f.submit "Submit", :class => "create round" %>
     </div>
   <% end %>
-  
-</div>
+ 

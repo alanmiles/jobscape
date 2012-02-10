@@ -4,7 +4,7 @@
   <%= link_to "Add a department", new_business_department_path(@department) %>
 </div>
 
-<h4><%= @business.name_city %></h4>
+<h4 class="over"><%= @business.name_city %></h4>
 
 <div id="listing">
   <% unless @departments.empty? %>

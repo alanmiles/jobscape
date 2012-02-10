@@ -1,9 +1,11 @@
-<div class = "r-float">
-  <%= link_to "Menu for this business", officer_home_path %><br />
-  <%= link_to "Invite more people", new_business_invitation_path(@business) unless @business.no_jobs? %>
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), officer_users_path, :class => "magnify" %>
 
-<h1><%= @title %></h1>
+<div class = "r-float">
+  <%= link_to "New invitation", new_business_invitation_path(@business) unless @business.no_jobs? %>
+</div>
+<div>
+  <h4><%= @business.name %>, <%= @business.city %></h4>
+</div>
 
 <% if @business.no_invitations? %>
   <div class="no_data round">
@@ -14,37 +16,34 @@
     <% end %>
   </div>
 <% else %>
-  <div class="info_box_screen" style="margin-top:20px">
-    These people have been sent an email inviting them to start using HYGWIT as members of your business. When the invitation is accepted, 
-    the record will be automatically removed from the list.  To delete an invitation yourself, click on
-    <%= image_tag("cancel.png", :size => "15x15") %>. 
+  <div id="rubric">
+    There's been no response to these invitations yet.
   </div>
 
-  <%= will_paginate @invitations %>
-
-  <table class="smaller_font">
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Invited by</th>
-      <th>Date</th>
-      <th></th>
-    </tr>
-    <% @invitations.each do |invitation| %>
-    <tr>
-      <td><%= invitation.name %></td>
-      <td><%= invitation.email %></td>
-      <td><%= invitation.asked_by %></td>
-      <td><%= display_monthday(invitation.created_at) %></td>
-      <td><%= link_to image_tag("cancel.png", :size => "15x15"), invitation,
-                   :method => :delete, 
-                   :confirm => "You sure?",
-                   :title => "Cancel invitation" %>
-      </td>
-    </tr>
-    <% end %>
-  </table>
-
-  <%= will_paginate @invitations %>
+  <div id="listing">
   
+    <%= will_paginate @invitations %>
+
+    <ul class="no_dec">
+ 
+      <% @invitations.each do |invitation| %>
+        <li>
+          <div class="r-float">
+            <%= link_to image_tag("delete.png", :size => "15x15"), invitation,
+                   :method => :delete, 
+                   :confirm => "Are you sure you want to cancel the invitation to #{invitation.name}?",
+                   :title => "Cancel invitation" %>
+          </div>
+          <%= invitation.name %>
+          <div class="subtext">
+            <%= invitation.job.title_department %><br />
+            <%= invitation.email %><br />
+            Invited by <%= invitation.asked_by %>
+            <%= time_ago_in_words(invitation.created_at) %> ago
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <%= will_paginate @invitations %>
+  </div>
 <% end %>

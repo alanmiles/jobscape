@@ -16,7 +16,7 @@
 
   <ul class="no_dec under">
     <li>
-      <%= link_to "Employees", "#" %>
+      <%= link_to "Employees", jobholders_path %>
       <div class="subtext">
         <%= @job.active_placements.count %> listed.
       </div>
@@ -50,7 +50,7 @@
           <% else %>
             <%= link_to "Vacancy details", @vacancy %>
             <div class="subtext">
-              1 listed
+              <%= pluralize(@count_vacancies, 'vacancy') %> listed
             </div>
           <% end %>
         <% end %>

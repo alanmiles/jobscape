@@ -2,37 +2,36 @@
   <%= render 'shared/error_messages', :object => f.object %>
   
   <div class="field">
-    <%= f.label :quantity, "Number of vacancies" %>&nbsp;
+    <%= f.label :quantity, "Number of vacancies *" %>&nbsp;
     <%= f.text_field :quantity, :size => 5 %>
   </div>
   <div class="field">
-    <strong>Terms</strong> &nbsp; &nbsp;
+    <%= f.label :full_time, "Terms *" %> &nbsp; &nbsp;
     <%= select(:vacancy, :full_time, { "Full-time" => true, "Part-time" => false }) %>
-    <span style = "margin-left: 100px"><%= f.label :voluntary, "Check if an unpaid volunteer job" %>
-    <%= f.check_box :voluntary %></span>
   </div>
   <div class="field">
-    <strong>Salary</strong> &nbsp; £   
-    <%= f.text_field :annual_salary, :size => 5 %>
-    per year <strong><em>OR</em></strong> £
-    <%= f.text_field :hourly_rate, :size => 5 %>
-    per hour <strong><em>OR</em></strong> leave both blank if voluntary work
-  </div>
-  
-  <div class="field">
-    <%= f.label :contact_person, "Person handling applications" %>&nbsp;
-    <%= f.text_field :contact_person %><br />
+    <%= f.label :voluntary, "Check if an unpaid volunteer job" %> &nbsp; &nbsp;
+    <%= f.check_box :voluntary %>
   </div>
   <div class="field">
-    <%= f.label :close_date, "Closing-date for applications" %> &nbsp;
+    <%= f.label :annual_salary, "Salary" %><br />
+    £ <%= f.text_field :annual_salary, :size => 5 %> per year
+    <em>OR</em>
+    £ <%= f.text_field :hourly_rate, :size => 5 %> per hour
+    <div class="subtext">
+       (Leave both boxes blank if unpaid voluntary work)
+    </div>
+  </div>
+  <div class="field">
+    <%= f.label :close_date, "Closing-date for applications *" %><br />
     <%= f.date_select :close_date %>
     <% if @vacancy.close_date < Date.today %>
-      <small class="highlt">&nbsp; Saved close-date has now passed!&nbsp;</small>
+      <div class="highlt"> Saved close-date has now passed!</div>
     <% end %>
   </div>
   <div class="field">
-    <%= f.label :notes %> <small>(e.g. special working hours, length of engagement)</small><br />
-    <%= f.text_area :notes, :cols => 60, :rows => 2 %>
+    <%= f.label :notes %> <span class="subtext"> - e.g. special working hours, length of engagement</span><br />
+    <%= f.text_area :notes, :class => "downsize" %>
   </div>
   <%= f.hidden_field :job_id %> 
   <%= f.hidden_field :sector_id %> 

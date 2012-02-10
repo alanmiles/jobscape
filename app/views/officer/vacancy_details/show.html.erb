@@ -1,12 +1,10 @@
-<div class = "r-float">
-  <%= link_to "Back", @vacancy %><br />
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), @vacancy, :class => "magnify" %>
 
-<h1><%= @title %></h1>
-<br />
 <%= render "/vacancies/brief" %> 
 <br />
-<h4 style = "margin-bottom: 0px">Job summary</h4>
-<%= render "/outlines/fields" %>
-<br />
-<%= render "/applications/specs" %>
+<h1>Job summary</h1>
+<%= render "/outlines/fields_nonedit" %>
+
+<div id="specs" class="under">
+  <%= render "/applications/specs" %>
+</div>

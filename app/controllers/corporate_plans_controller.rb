@@ -9,8 +9,16 @@ class CorporatePlansController < ApplicationController
   def edit
     @business = Business.find(params[:id])
     @title = "Edit strategy"
-    @characters_mission = 500 - @business.mission.length
-    @characters_values = 500 - @business.values.length
+    if @business.mission.nil?
+      @characters_mission = 500
+    else
+      @characters_mission = 500 - @business.mission.length
+    end
+    if @business.values.nil?
+      @characters_values = 500
+    else
+      @characters_values = 500 - @business.values.length
+    end
   end
   
   def update
@@ -20,6 +28,16 @@ class CorporatePlansController < ApplicationController
       redirect_to corporate_plan_path(@business)
     else
       @title = "Edit strategy"
+      if @business.mission.empty?
+        @characters_mission = 500
+      else
+        @characters_mission = 500 - @business.mission.length
+      end
+      if @business.values.empty?
+        @characters_values = 500
+      else
+        @characters_values = 500 - @business.values.length
+      end
       render 'edit'
     end
   end

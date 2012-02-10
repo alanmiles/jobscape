@@ -418,7 +418,7 @@ describe JobqualitiesController do
               
             it "should have a flash message explaining no more can be created" do  
               post :create, :plan_id => @plan.id, :jobquality => @attr
-              flash[:notice].should =~ /You've now set the maximum number of attributes for the job/i   
+              flash[:notice].should =~ /You've now set all 10 attributes required/i   
             end
           end
       

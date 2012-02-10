@@ -46,6 +46,7 @@ class DepartmentsController < ApplicationController
     @users = User.all_active_in(@department).paginate(:page => params[:page])
     session[:dept_id] = @department.id
     @title = "Department"
+    store_location
   end
 
   def edit

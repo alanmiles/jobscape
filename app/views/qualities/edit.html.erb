@@ -1,7 +1,7 @@
 <% if @quality.submitted? | @quality.rejected? %>
-  <%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), attribute_submission_path(@quality) %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), attribute_submission_path(@quality), :class => "magnify" %>
 <% else %>
-  <%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), @quality %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), @quality, :class => "magnify" %>
 <% end %>
 
 <p style="display: none">

@@ -89,7 +89,7 @@ body {
 #blog-content, #about-content, #contact-content {
   margin: 0.5em;
   background: #DDD;
-  color: ##2E2E2E;
+  color: #2E2E2E;
   -moz-border-radius:    1em;
   -webkit-border-radius: 1em;
   border-radius:         1em;
@@ -187,13 +187,12 @@ h3.title {
 /* used */
 h4 {
   font-size: 90%;
-  color: #FFCC33;
-  text-shadow: 0.1em 0.1em 0.2em black;
+  color: #FFFFEE;
+  text-shadow: 0.05em 0.05em 0.1em black;
 }
 
 h4.subtitle {
-  color: #CC3333;
-  font-size: 110%;
+  color: #FFFFDD;
 }
 
 h4.success {
@@ -277,6 +276,7 @@ a:visited {
   padding: 0 1em;
   font-weight: normal;
   cursor: pointer;
+  text-shadow: none;
 }
 
 /* used */
@@ -330,11 +330,12 @@ nav ul li a {
 
 /* used */
 nav ul li a:visited {
-  color: #09c;
+  color: #069;
 }
 
 /* used */
 nav ul li a:hover {
+  color: #069;
   text-decoration: underline;
 }
 
@@ -411,11 +412,17 @@ ul li.smaller_font {
   background: #CCC;
 }
 
+/*used */
+.indent ul li {
+  margin-left: 2em;
+}  
+
 /* used */
 .subtext {
   font-size: 85%;
   font-weight: normal;
 }
+
 
 /* used */
 p {
@@ -455,6 +462,13 @@ p {
 /* used */
 .push-left {
   padding-left: 1em;
+}
+
+/* used */
+#rubric {
+  font-size: 90%;
+  line-height: 1.5;
+  padding: 1em;
 }
 
 .display_text {
@@ -823,7 +837,7 @@ a.signup_button:active {
 /* used */
 .create {
   margin-top: 1em;
-  margin-bottom: 0.5em;
+  margin-bottom: -1em;
   display: block;
   text-align: center;
   color: #fff;
@@ -838,6 +852,11 @@ a.signup_button:active {
 }
 
 /* used */
+.create:visited {
+  color: #fff;
+}
+
+/* used */
 .create:hover {
   color: #FFD83D;
   text-decoration: underline;
@@ -848,6 +867,39 @@ a.signup_button:active {
   position:relative;
   top:1px;
 }   
+
+/* used */
+.create-icon {
+  display: block;
+  font-size: 70%;
+  text-align: center;
+  color: #fff;
+  background: #366BA1;
+  font-weight: bold;
+  padding: 0.25em;
+  background-image: -moz-linear-gradient(top, #B6CFE7, #366BA1);
+  background-image: -ms-linear-gradient(top, #B6CFE7, #366BA1);
+  background-image: -o-linear-gradient(top, #B6CFE7, #366BA1);
+  background-image: -webkit-linear-gradient(top, #B6CFE7, #366BA1);
+  background-image: linear-gradient(top, #B6CFE7, #366BA1); 
+}
+
+/* used */
+.create-icon:visited {
+  color: #fff;
+}
+
+/* used */
+.create-icon:hover {
+  color: #FFD83D;
+  text-decoration: underline;
+}
+
+/* used */
+.create-icon:active {
+  position:relative;
+  top:1px;
+}  
 
 /* Round corners */
 
@@ -944,7 +996,7 @@ div.field {
 }
 
 div.actions {
-  margin-bottom: 0;
+  margin-bottom: 0em;
 }
 
 /* used */

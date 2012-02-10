@@ -1,0 +1,20 @@
+
+<%= link_to image_tag("pageback.png", :title => "Previous"), @job, :class => "magnify" %>
+
+<div class="r-float">
+  <%= link_to "Other jobs", business_jobs_path(@business) unless current_user.account == 1 %>
+</div>
+
+<div id="title" class="over">
+  <%= render '/shared/job_title_cluster' %>
+</div>
+
+<div id="listing">
+  <ul class="no_dec">
+    <% @jobholders.each do |u| %>
+      <li>
+        <%= link_to u.name, officer_user_path(u) %>
+      </li>
+    <% end %>
+  </ul>
+</div>

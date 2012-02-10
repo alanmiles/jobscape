@@ -2,9 +2,9 @@ module VacanciesHelper
 
   def vacant_position
     if @vacancy.quantity == 1
-      @vacancy.job.job_title
+      @vacancy.job.occupation.name
     else
-      "#{@vacancy.quantity} #{@vacancy.job.job_title.pluralize}" 
+      "#{@vacancy.quantity} #{@vacancy.job.occupation.name.pluralize}" 
     end
   end
   

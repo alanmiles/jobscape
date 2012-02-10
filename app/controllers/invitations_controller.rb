@@ -4,7 +4,7 @@ class InvitationsController < ApplicationController
   def index
     @business = Business.find(session[:biz])
     @invitations = @business.invitations.paginate(:page => params[:page])
-    @title = "HYGWIT invitations"
+    @title = "Invitations"
   end
 
   def new

@@ -35,7 +35,7 @@
         <li><%= link_to "Update your Achievement Plan", @plan %></li>
       <% end %>
       <% if @plan.complete? %>
-        <li><%= link_to "View your complete Achievement Plan", aplan_path(@plan) %></li>
+        <li><%= link_to "View your complete Achievement Plan", @plan %></li>
         
         <li>
           <% if current_user.has_incomplete_review?(@business) %>

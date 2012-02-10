@@ -1,24 +1,39 @@
-<div class="display_wider grayborder round">
-  <strong><%= vacant_position %> for <%= @vacancy.sector.sector %> business, <%= @vacancy.job.business.city %>.</strong>
-  <br />
-  <% unless @vacancy.full_time? %>
-    Part-time.
-  <% end %>
-  <% if @vacancy.voluntary? %>
-    This is a voluntary position.
-  <% elsif @vacancy.annual_salary.nil? %>
-    Hourly rate: £<%= two_dec(@vacancy.hourly_rate) %>.
-  <% else %>
-    Annual salary: £<%= number_with_delimiter(@vacancy.annual_salary, :delimiter => ",") %>.
-  <% end %>
-  <br />
-  <%= @vacancy.notes unless @vacancy.notes.empty? %> <%= link_to "(Full details)", officer_vacancy_detail_path(@vacancy) if @details_link == true %>
-  <br />
-  <small>
-     Ref #<%= @vacancy.id %> -  
-     Posted <%= time_ago_in_words(@vacancy.created_at) %> ago.  Apply by <%= @vacancy.close_date.strftime("%a %b %d, %Y") %>.
-     <% if @vacancy.close_date < Date.today %>
-       <span class="highlt round">&nbsp; Close-date has now passed!&nbsp;</span>
-     <% end %>
-  </small>        
+<div id="listing">
+  <ul class="no_dec">
+    <li>
+      <div id="headline" style= "font-weight:bold; border-bottom: 2px solid #BBB">
+        <div class="r-float subtext">
+          <%= link_to "(Full details)", officer_vacancy_detail_path(@vacancy) if @details_link == true %>
+        </div>
+        <%= vacant_position %>, <%= @vacancy.job.business.city %> 
+      </div>
+      <div class="subtext" style ="clear:both">
+        <div id="position">
+          <%= @vacancy.job.job_title %> in <%= @vacancy.sector.sector %> business.
+        </div>
+  	<div id="salary">
+  	  <% unless @vacancy.full_time? %>
+    	    Part-time.
+  	  <% end %>
+  	  <% if @vacancy.voluntary? %>
+    	    This is a voluntary position.
+  	  <% elsif @vacancy.annual_salary.nil? %>
+    	    Hourly rate: £<%= two_dec(@vacancy.hourly_rate) %>.
+  	  <% else %>
+    	    Annual salary: £<%= number_with_delimiter(@vacancy.annual_salary, :delimiter => ",") %>.
+  	  <% end %>
+        </div>   
+        <div id="notes">
+          <%= @vacancy.notes unless @vacancy.notes.empty? %> 
+        </div>
+        <div id="apply">
+          Ref #<%= @vacancy.id %> -  
+          Apply by <%= @vacancy.close_date.strftime("%a %b %d, %Y") %>.
+          <% if @vacancy.close_date < Date.today %>
+            <span class="highlt round">&nbsp; Now closed &nbsp;</span>
+          <% end %>
+        </div>
+      </div>
+    </li>
+  </ul>        
 </div>

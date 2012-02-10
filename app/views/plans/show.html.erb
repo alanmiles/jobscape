@@ -1,8 +1,8 @@
 <nav class="topmenu over">
   <ul>
-    <span id="intro"><li><%= link_to "A-Plan Intro", intro_aplan_path(@plan), :remote => true %></li></span>
-    <span id="uses"><li><%= link_to "Uses", uses_aplan_path(@plan), :remote => true %></li></span>
-    <span id="writing"><li><%= link_to "How to write", writing_aplan_path(@plan), :remote => true %></li></span>
+    <span id="intro"><li><%= link_to "A-Plan Intro", intro_plan_path(@plan), :remote => true %></li></span>
+    <span id="uses"><li><%= link_to "Uses", uses_plan_path(@plan), :remote => true %></li></span>
+    <span id="writing"><li><%= link_to "How to write", writing_plan_path(@plan), :remote => true %></li></span>
   </ul>
 </nav>
 
@@ -34,7 +34,7 @@
 </div>
 
 <div id="intro_text" class="display_off over">
-  <h1>Introducing A-Plans <span class="hide_intro click_link">(Hide)</span></h1>
+  <h4 class="subtitle over">Introducing A-Plans <span class="hide_intro click_link subtext">(Hide)</span></h4> 
   <div class="subtext">
     <%= render "intro_text" %>
     <span class="hide_intro click_link">(Hide)</span>
@@ -42,7 +42,7 @@
 </div>
 
 <div id="uses_text" class="display_off over">
-  <h1>How do we use the A-Plan? <span class="hide_uses click_link">(Hide)</span></h1>
+  <h4 class="subtitle over">How do we use the A-Plan? <span class="hide_uses click_link subtext">(Hide)</span></h4>
   <div class="subtext">
     <%= render "uses_text" %>
     <span class="hide_uses click_link">(Hide)</span>
@@ -50,7 +50,7 @@
 </div>
 
 <div id="writing_text" class="display_off over">
-  <h1>How do we write / edit the A-Plan? <span class="hide_writing click_link">(Hide)</span></h1>
+  <h4 class="subtitle over">How do we write / edit the A-Plan? <span class="hide_writing click_link subtext">(Hide)</span></h4>
   <div class="subtext">
     <%= render "writing_text" %>
     <span class="hide_writing click_link">(Hide)</span>

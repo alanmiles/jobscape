@@ -12,7 +12,7 @@ module Officer::EmployeesHelper
           return "Only another HYGWIT officer can enter your leaver status."
         end
       else
-        return "Check the box if this person has left the business."
+        return "Check the box if this person has left the business.  The record will be held in the Employee Archive, where it can be viewed - or reactivated."
       end
     end
   end
@@ -22,10 +22,10 @@ module Officer::EmployeesHelper
       return "Only another officer can change your HYGWIT access rights."
     elsif @employee.officer?
       return "Clear the checkbox if you no longer want this person to have access to all HYGWIT records.  
-             (There must be at least one officer.)"
+             (There must be at least one HYGWIT officer - and we recommend two.)"
     else
       return "Check the box if you want to give this person access to all HYGWIT records,
-              just like yourself.  (You should have at least two officers.)"
+              just like yourself.  (You should have at least two HYGWIT officers.)"
     end
   end
   

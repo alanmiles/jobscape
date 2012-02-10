@@ -23,7 +23,7 @@ class VacanciesController < ApplicationController
   def create
     @vacancy = Vacancy.new(params[:vacancy])
     if @vacancy.save
-      flash[:success] = "The vacancy has been added.  This is the summary jobseekers will see."
+      flash[:success] = "The vacancy has been added.  This is what jobseekers will see."
       redirect_to @vacancy
     else
       @title = "New vacancy"
@@ -39,7 +39,7 @@ class VacanciesController < ApplicationController
   
   def show
     @vacancy = Vacancy.find(params[:id])
-    @title = "Vacancy announcement"
+    @title = "Vacancy"
     @job = Job.find(@vacancy.job_id)
     @details_link = true
   end

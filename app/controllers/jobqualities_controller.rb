@@ -55,7 +55,7 @@ class JobqualitiesController < ApplicationController
       @jobquality = @plan.jobqualities.new(params[:jobquality])
       if @jobquality.save
         if @plan.count_attributes == 10
-          flash[:notice] = "'#{@jobquality.quality.quality}' added.  You've now set the maximum number of attributes for the job" 
+          flash[:notice] = "'#{@jobquality.quality.quality}' added.  You've now set all 10 attributes required for the A-Plan." 
         else
           flash[:success] = "'#{@jobquality.quality.quality}' added."
         end

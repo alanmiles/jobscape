@@ -1,16 +1,17 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), @job, :class => "magnify" %>
+
 <div class = "r-float">
-  <%= link_to "Menu for #{@job.job_title}", @job %><br />
   <% if @job.vacancy_record_count > 1 %>
     <%= link_to "All vacancies for job", vacancies_path %><br />
   <% end %>
   <%= link_to "Edit", edit_vacancy_path(@vacancy) %> &nbsp; &nbsp; &nbsp; &nbsp;
   <%= link_to "Delete", @vacancy, 
                        :method => :delete, 
-                       :confirm => "You sure?" %>
+                       :title => "Delete vacancy",
+                       :confirm => "Are you sure you want to cancel this vacancy announcement?" %>
 </div>
 
-<h1><%= @title %></h1>
-<br /><br />
-<%= render 'brief' %>
-
+<div class="under">
+  <%= render 'brief' %>
+</div>
 
