@@ -2,7 +2,7 @@ class NotesController < ApplicationController
   
   def index
     @title = "Guidance notes"
-    @notes = Note.order("title").paginate(:page => params[:page])
+    @notes = Note.order("title").paginate(:per_page => 20, :page => params[:page])
   end
 
   def show

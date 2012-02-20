@@ -14,11 +14,11 @@
       <%= link_to "Your records", officer_to_own_path unless @user.no_current_job?(@business) %>
       <% unless @no_business == true %>
         <% if @user.has_review_requests?(@business) || @user.has_rejected_review_requests?(@business) %>
-          <%= image_tag("important.png", :size => "15x15") %>
+          <%= image_tag("warning.png", :size => "15x15") %>
         <% else %>
           <% unless @user.no_current_job?(@business) %>
             <% if @user.self_appraisal_due?(@business) || @user.external_review_due?(@business) %>
-              <%= image_tag("important.png", :size => "15x15") %>
+              <%= image_tag("warning.png", :size => "15x15") %>
             <% end %>
           <% end %>
         <% end %>
@@ -34,7 +34,7 @@
 <% if @no_business == true %>
   <br />
   <div id = "listing">
-    <%= image_tag("important.png") %> &nbsp; BUSINESS DETAILS REQUIRED
+    <%= image_tag("warning.png") %> &nbsp; BUSINESS DETAILS REQUIRED
     <p class="under">
       You've signed up for a Business account, but you haven't entered the details of your business yet.<br /><br/>
       So select one of these options:
@@ -82,17 +82,19 @@
           <% end %>
         </div>
       </li>
-      <li><%= link_to "HYGWIT invitations", business_invitations_path(@business) %></li>
       <li><%= link_to "Performance reviews", performance_reviews_path %></li>
-      <li><%= link_to "Recruitment", recruitment_menu_path %></li>  
+      <li><%= link_to "Recruitment", recruitment_menu_path %></li>
+      <li><%= link_to "Archive", "#" %></li> 
     </ul>
     
-    <strong><u>ARCHIVE</u></strong>
-    <ul class="no_dec">
-      <li><%= link_to "Archived departments", business_hidden_departments_path(@business) %></li>
-      <li><%= link_to "Archived jobs", business_inactive_jobs_path(@business) %></li>
-      <li><%= link_to "Former employees", officer_leavers_path %></li>
-    </ul>
+    <div style="display: none">
+      <strong><u>ARCHIVE</u></strong>
+      <ul class="no_dec">
+        <li><%= link_to "Archived departments", business_hidden_departments_path(@business) %></li>
+        <li><%= link_to "Archived jobs", business_inactive_jobs_path(@business) %></li>
+        <li><%= link_to "Former employees", officer_leavers_path %></li>
+      </ul>
+    </div>
   </div>
 <% end %>
 

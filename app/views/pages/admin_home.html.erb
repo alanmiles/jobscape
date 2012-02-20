@@ -3,7 +3,7 @@
     <li><%= link_to "Switch to Standard User", admin_to_standard_path %>
       <% if @user.has_any_review_requests? || @user.has_any_rejected_review_requests? %>
         &nbsp;
-        <%= image_tag("important.png") %>
+        <%= image_tag("warning.png") %>
       <% end %>
     </li>
   </ul>
@@ -20,5 +20,6 @@
     <li><%= link_to "Applicant response templates", letter_templates_path %></li>
     <li><%= link_to "Users", users_path %></li>
     <li><%= link_to "Notes", notes_path %></li>
+    <li><%= link_to "Page content", contents_path %></li>
   </ul>
 </div>

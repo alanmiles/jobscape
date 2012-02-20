@@ -340,6 +340,10 @@ class User < ActiveRecord::Base
     cnt > 0
   end
   
+  def started_external_reviews(business)
+    self.reviewed_sessions.where("reviews.business_id = ? and reviews.review_type = ?", business.id, 2).order("reviews.created_at DESC")
+  end
+  
   def completed_reviews(business)
     self.reviewed_sessions.where("reviews.completed = ? and reviews.business_id = ?", true, business.id).order("reviews.completion_date DESC")
   end
@@ -359,6 +363,10 @@ class User < ActiveRecord::Base
   
   def last_formal_review(business)
      self.reviewed_sessions.where("reviews.completed = ? and reviews.review_type != ? and reviews.business_id = ?", true, 1, business.id).last
+  end
+  
+  def last_formal_review_started(business)
+    self.reviewed_sessions.where("reviews.review_type != ? and reviews.business_id = ?", 1, business.id).last
   end
   
   def no_self_appraisals?(business)
@@ -414,9 +422,11 @@ class User < ActiveRecord::Base
     @job = Job.find(self.current_job(business))  #make sure A-Plan exists and review is possible
     if @job.plan.complete?
       if self.created_at < Time.now - 60.days
-        if self.completed_reviews(business).count == 0
+        #if self.completed_reviews(business).count == 0
+        if self.started_external_reviews(business).count == 0
           review_due = true
-        elsif self.last_formal_review(business).completion_date < Time.now - 200.days
+        #elsif self.last_formal_review(business).completion_date < Time.now - 200.days
+        elsif self.last_formal_review_started(business).created_at < Time.now - 200.days
           review_due = true
         end 
       end
@@ -429,9 +439,11 @@ class User < ActiveRecord::Base
     #@job = Job.find(self.current_job(business))  #make sure A-Plan exists and review is possible
     #if @job.plan.complete?			  #now cancelled so officer warned A-Plan doesn't exist
       if self.created_at < Time.now - 60.days
-        if self.completed_reviews(business).count == 0 
+        #if self.completed_reviews(business).count == 0 
+        if self.started_external_reviews(business).count == 0 
           review_overdue = true
-        elsif self.last_formal_review(business).completion_date < Time.now - 214.days
+        #elsif self.last_formal_review(business).completion_date < Time.now - 214.days
+        elsif self.last_formal_review_started(business).created_at < Time.now - 214.days
           review_overdue = true
         end
       end 
@@ -564,11 +576,30 @@ class User < ActiveRecord::Base
     cnt == 0
   end
   
+  def not_an_officer_this?(business)
+    cnt = self.businesses.joins(:employees).where("employees.officer = ? and employees.left = ? 
+                               and employees.business_id = ?", true, false, business.id).count
+    cnt == 0
+  end
+  
+  def simple_employee?(business)
+    self.single_business? && self.account == 4 && self.not_an_officer_this?(business)
+  end
+  
+  
   def self.all_active_in(department)
     self.joins(:placements).where("placements.current = ? and placements.department_id = ?", 
          true, department.id).order("users.name")
   end
   
+  def self.search(search)
+    if search  
+      where('name LIKE ?', "%#{search}%")  
+    else  
+      scoped  
+    end  
+  end 
+   
   private
 
     def encrypt_password

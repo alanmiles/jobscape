@@ -14,7 +14,7 @@ class CurrentReviewsController < ApplicationController
     elsif @review.review_type == 3
       @users = @business.all_current_employees
     end
-    @title = "Your current review plans"
+    @title = "Colleague review plan"
   end
   
   def update

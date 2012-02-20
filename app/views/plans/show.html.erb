@@ -2,7 +2,15 @@
   <ul>
     <span id="intro"><li><%= link_to "A-Plan Intro", intro_plan_path(@plan), :remote => true %></li></span>
     <span id="uses"><li><%= link_to "Uses", uses_plan_path(@plan), :remote => true %></li></span>
-    <span id="writing"><li><%= link_to "How to write", writing_plan_path(@plan), :remote => true %></li></span>
+    <% if @plan.no_changes? %>
+      <% if current_user.account == 3 %>
+        <span id="writing"><li><%= link_to "How to write", writing_plan_path(@plan), :remote => true %></li></span>
+      <% else %>
+        <span id="writing"><li><%= link_to "Changing the plan", writing_plan_path(@plan), :remote => true %></li></span>
+      <% end %>
+    <% else %> 
+      <span id="writing"><li><%= link_to "How to write", writing_plan_path(@plan), :remote => true %></li></span>
+    <% end %>
   </ul>
 </nav>
 
@@ -19,17 +27,8 @@
 <% end %>
 
 <div class = "r-float">
-  <% if current_user.account == 4 %>
-    <% unless @plan.no_changes? %>
-      <br />
-      <%= link_to "Update A-Plan", @plan %>
-    <% end %>
-  <% else %>
-    <% if session[:officer_off] == true %>
-      <%= link_to "Update A-Plan", @plan %>
-    <% else %>
-      <%= link_to "Other jobs", business_jobs_path(@business) unless current_user.account == 1 %><br />
-    <% end %>
+  <% unless session[:officer_off] == true %>
+    <%= link_to "Other jobs", business_jobs_path(@business) unless current_user.account == 1 %><br />
   <% end %>
 </div>
 
@@ -61,8 +60,8 @@
 <div id="listing">
   <div id="jobtitle">
     <strong><%= @job.job_title %></strong>
-    <%= image_tag("complete.png") if @job.plan.complete? %>
-    <%= image_tag("locked.png") if @job.plan.no_changes? %>
+    <%= image_tag("complete.png") if @plan.complete? %>
+    <%= image_tag("locked.png") if @plan.no_changes? %>
   </div>
   <div class="subtext">
     Category: <%= @job.occupation.name %><br />
@@ -84,11 +83,25 @@
       <% end %>
       <div class="subtext">    
         Role, qualities, importance<br />
-        Also used in vacancy announcements
-        <% if ! @plan.outline_complete? %>
-          <div class="texthl">Not yet written</div>
+        
+        <% if current_user.account == 3 %>
+          Also used in vacancy announcements
+        <% end %>
+        
+        <% if @plan.no_changes? %>
+          <% if current_user.account == 3 %>
+            <% if ! @plan.outline_complete? %>
+              <div class="texthl">Not yet written</div>
+            <% else %>
+              <div class="textok">Appears ready to use</div>
+            <% end %>
+          <% end %>
         <% else %>
-          <div class="textok">Appears ready to use</div>
+          <% if ! @plan.outline_complete? %>
+            <div class="texthl">Not yet written</div>
+          <% else %>
+            <div class="textok">Appears ready to use</div>
+          <% end %>
         <% end %>
       </div>
     </li>
@@ -100,17 +113,33 @@
       <div class="subtext">    
         10 - 20 key responsibilities<br />
         Each has 1 - 3 goals and a rating value
-        <% if ! @plan.responsibilities_ready? %>
-          <div class="texthl">At least <%= pluralize((10 - @plan.count_responsibilities), "more responsibility") %> needed</div>
-        <% elsif ! @plan.goals_complete? %>
-           <div class="texthl">Some responsibilities still need goals</div>
-        <% elsif ! @plan.ratings_complete? %>
-           <div class="texthl">Some responsibilities still need a rating</div>
+        
+        <% if @plan.no_changes? %>
+          <% if current_user.account == 3 %>
+            <% if ! @plan.responsibilities_ready? %>
+              <div class="texthl">At least <%= pluralize((10 - @plan.count_responsibilities), "more responsibility") %> needed</div>
+            <% elsif ! @plan.goals_complete? %>
+               <div class="texthl">Some responsibilities still need goals</div>
+            <% elsif ! @plan.ratings_complete? %>
+               <div class="texthl">Some responsibilities still need a rating</div>
+            <% else %>
+               <div class="textok"><%= pluralize(@plan.count_responsibilities, "responsibility") %> added - OK to use</div>
+            <% end %>
+          <% end %>
         <% else %>
-           <div class="textok"><%= pluralize(@plan.count_responsibilities, "responsibility") %> added - OK to use</div>
+          <% if ! @plan.responsibilities_ready? %>
+            <div class="texthl">At least <%= pluralize((10 - @plan.count_responsibilities), "more responsibility") %> needed</div>
+          <% elsif ! @plan.goals_complete? %>
+             <div class="texthl">Some responsibilities still need goals</div>
+          <% elsif ! @plan.ratings_complete? %>
+             <div class="texthl">Some responsibilities still need a rating</div>
+          <% else %>
+             <div class="textok"><%= pluralize(@plan.count_responsibilities, "responsibility") %> added - OK to use</div>
+          <% end %>
         <% end %>
       </div>
     </li>
+    
     <li>
       <%= link_to "Attributes", plan_jobqualities_path(@plan) %>
       <% unless @plan.max_attributes? %>
@@ -118,22 +147,46 @@
       <% end %>
       <div class="subtext">    
         10 job-critical personal qualities
-        <% unless @plan.max_attributes? %>
-          <div class="texthl"><%= pluralize((10- @plan.count_attributes), "more attribute") %> needed</div>
+        
+        <% if @plan.no_changes? %>
+          <% if current_user.account == 3 %>
+            <% unless @plan.max_attributes? %>
+              <div class="texthl"><%= pluralize((10- @plan.count_attributes), "more attribute") %> needed</div>
+            <% else %>
+              <div class="textok">Ready to use</div>
+            <% end %>
+          <% end %>
         <% else %>
-          <div class="textok">Ready to use</div>
+          <% unless @plan.max_attributes? %>
+            <div class="texthl"><%= pluralize((10- @plan.count_attributes), "more attribute") %> needed</div>
+          <% else %>
+            <div class="textok">Ready to use</div>
+          <% end %>
         <% end %>
       </div>
     </li>
+    
     <li>
       <%= link_to "Requirements", plan_requirements_path(@plan) %>
       <div class="subtext">    
         1 - 10 hiring criteria
-        <% if @plan.has_requirements? %>
-          <div class="textok"><%= pluralize(@plan.count_requirements, "requirement") %> added - appears ready to use</div>
+        
+        <% if @plan.no_changes? %>
+          <% if current_user.account == 3 %>
+            <% if @plan.has_requirements? %>
+              <div class="textok"><%= pluralize(@plan.count_requirements, "requirement") %> added - appears ready to use</div>
+            <% else %>
+              <div class="texthl">At least 1 requirement needed</div>
+            <% end %>
+          <% end %>
         <% else %>
-          <div class="texthl">At least 1 requirement needed</div>
+          <% if @plan.has_requirements? %>
+            <div class="textok"><%= pluralize(@plan.count_requirements, "requirement") %> added - appears ready to use</div>
+          <% else %>
+            <div class="texthl">At least 1 requirement needed</div>
+          <% end %>
         <% end %>
+        
       </div>
     </li>
   </ul>
@@ -146,27 +199,27 @@
     $(document).ready(function(){
     
       $('#intro').click(function() {
-        $('#intro_text').fadeIn('normal', function() {
-          $('#uses_text').fadeOut('0', function() {
-            $('#writing_text').fadeOut('0', function() {
+        $('#uses_text').fadeOut('0', function() {
+          $('#writing_text').fadeOut('0', function() {
+            $('#intro_text').fadeIn('normal', function() {
             });
           });
         });
       });
       
       $('#uses').click(function() {
-        $('#uses_text').fadeIn('normal', function() {
-          $('#intro_text').fadeOut('0', function() {
-            $('#writing_text').fadeOut('0', function() {
+        $('#intro_text').fadeOut('0', function() {
+          $('#writing_text').fadeOut('0', function() {
+            $('#uses_text').fadeIn('normal', function() {
             });
           });
         });
       });
       
       $('#writing').click(function() {
-        $('#writing_text').fadeIn('normal', function() {
-          $('#intro_text').fadeOut('0', function() { 
-            $('#uses_text').fadeOut('0', function() {
+        $('#intro_text').fadeOut('0', function() { 
+          $('#uses_text').fadeOut('0', function() {
+            $('#writing_text').fadeIn('normal', function() {
             });
           });
         });

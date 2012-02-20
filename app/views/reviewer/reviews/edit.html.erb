@@ -1,24 +1,36 @@
-<div class = "r-float">
-  <%= link_to "Home Page", employee_home_path %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
+
+<h4 class="over">Review for <%= @review.reviewee.name %><br />
+   <%= @job.job_title %>, <%= @department.name %>
+</h4>
+<div class="subtext over">
+  <i>Due to be completed by <%= display_daymonthday(@review.scheduled_completion) %>.</i>
 </div>
 
-<h1><%= @title %></h1>
-<h4>for <%= @review.reviewee.name %> - <%= @job.job_title %>,
-                     <%= @department.name %></h4>
+<div id="listing" class="over">
+  <ul class="no_dec">
+    <li><%= link_to "Responsibilities", "#" %>
+      <div class="subtext">
+        <%=image_tag("warning.png") %>
+        <span class="highlt">Incomplete.</span>
+      </div>
+    </li>
+    <li><%= link_to "Attributes", "#" %>
+      <div class="subtext">
+        <%=image_tag("warning.png") %>
+        <span class="highlt">Incomplete.</span>
+      </div>
+    </li>
+    <li><%= link_to "Comments", "#" %>
+      <div class="subtext">
+        <%=image_tag("warning.png") %>
+        <span class="highlt">Incomplete.</span>
+      </div>
+    </li> 
+  </ul>
+</div>
 
-<div class="info_box_screen" style = "margin-bottom: 0px">
-    <em>
-      Thank you for taking the time to complete this review.
-      <br /><br />
-      <strong><u>All questions must be answered</strong></u>, except in the final <i>'Comments'</i> section, where you just need to add any
-      suggestions or recommendations that you think will be helpful.<br /><br />
-      If you can't complete the review in a single session, click on 'Save changes'
-      at the bottom of this form, and then return at any time until 
-      <%= (@review.created_at + 14.days).strftime("%a %b %d, %Y") %> to pick up from where you left off.
-    </em> 
-    
-</div> 
-<br />
+
 <%= form_for(@review, :url => reviewer_review_path(@review)) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
 

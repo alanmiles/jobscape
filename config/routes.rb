@@ -1,11 +1,5 @@
 Jobscape::Application.routes.draw do
 
-  get "jobholders/index"
-
-  get "notes/index"
-
-  get "notes/new"
-
   resources :users do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true
@@ -141,6 +135,9 @@ Jobscape::Application.routes.draw do
   #  end
   #end
   resources :reviews do
+    collection do
+      get 'reasons', 'reviewers', 'frequency', 'time'
+    end
     resources :reviewqualities, :shallow => true
   end
   resources :self_appraisals
@@ -156,6 +153,8 @@ Jobscape::Application.routes.draw do
     resources :reviews
   end
   resources :notes
+  resources :contents
+  
   
   match '/signup',  		:to => 'users#new'
   match '/signin',  		:to => 'sessions#new'
@@ -183,6 +182,7 @@ Jobscape::Application.routes.draw do
   match '/locked_aplan',	:to => 'pages#locked_aplan'
   match '/reviewer_login',	:to => 'pages#reviewer_login'
   match '/recruitment_menu',	:to => 'pages#recruitment_menu'
+  match '/personal_goals',	:to => 'pages#personal_goals'
   
   root :to => 'pages#home'
 

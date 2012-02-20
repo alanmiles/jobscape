@@ -1,20 +1,15 @@
-<div class = "r-float">
-  <% if @review.consent? %>
-    <%= link_to "Home Page", employee_home_path %>
-  <% else %>
-    <%= link_to "No changes", employee_home_path %>
-  <% end %>
-</div>
-
-<h1><%= @title %></h1>
+<%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
 
 <%= form_for(@review, :url => current_review_path(@review)) do |f| %>
 
+  <h4>
+    <%= @review.reviewee.name %><br />
+    <%= @review.reviewee.current_job(@business).job_title %>
+  </h4>
+  
   <%= render 'shared/error_messages', :object => f.object %>
   
-  <div class="display_wider">
-    <strong>Review for:</strong> &nbsp;&nbsp; <%= @review.reviewee.name.upcase %> - <%= @review.reviewee.current_job(@business).job_title %>,
-                     <%= @review.reviewee.current_department(@business).name %><br />
+  <div id="rubric">
     <strong>Reviewer selected:</strong> <%= @review.reviewer.name %> - <%= @review.reviewer.current_job(@business).job_title %>,
                      <%= @review.reviewer.current_department(@business).name %><br />
 

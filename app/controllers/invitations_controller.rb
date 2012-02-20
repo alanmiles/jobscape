@@ -3,7 +3,7 @@ class InvitationsController < ApplicationController
   
   def index
     @business = Business.find(session[:biz])
-    @invitations = @business.invitations.paginate(:page => params[:page])
+    @invitations = @business.invitations.paginate(:per_page => 20, :page => params[:page])
     @title = "Invitations"
   end
 

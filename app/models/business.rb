@@ -164,9 +164,11 @@ class Business < ActiveRecord::Base
     @no_appraisals = []
     @users = self.all_current_employees
     @users.each do |u|
-      unless u.external_review_overdue?(self) #because external reviews take precedence
-        if u.self_appraisal_overdue?(self)
-          @no_appraisals << User.find(u.id)
+      unless u.external_review_overdue?(self) 			#because external reviews take precedence
+        unless u.has_incomplete_external_review?(self)        #prevents listing if an external review started in last 14 days
+          if u.self_appraisal_overdue?(self)
+            @no_appraisals << User.find(u.id)
+          end
         end
       end
     end
@@ -185,7 +187,7 @@ class Business < ActiveRecord::Base
   end
   
   def reviews_in_progress
-    self.reviews.where("reviews.completed = ? and reviews.cancel = ?", false, false)
+    self.reviews.where("reviews.completed = ? and reviews.cancel = ? and reviews.created_at >= ?", false, false, Date.today - 14)
   end
   
   def current_vacancies

@@ -4,7 +4,12 @@ class ReviewResponsesController < ApplicationController
     @review = Review.find(params[:id])
     @user = current_user
     @business = Business.find(session[:biz])
-    @title = "Respond to a review request"
+    @title = "Review request"
+    if @review.cancellation_reason.nil?
+      @characters_left = 100
+    else
+      @characters_left = 100 - @review.cancellation_reason.length
+    end
   end
   
   def update
@@ -27,8 +32,13 @@ class ReviewResponsesController < ApplicationController
         redirect_to reviewer_reviews_path
       end
     else  
-      @title = "Respond to a review request"
+      @title = "Review request"
       render 'edit'
+      if @review.cancellation_reason.nil?
+        @characters_left = 100
+      else
+        @characters_left = 100 - @review.cancellation_reason.length
+      end
     end
   end
 

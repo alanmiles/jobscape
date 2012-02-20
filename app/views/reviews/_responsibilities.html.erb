@@ -1,6 +1,6 @@
-      <li class = "display_wider" style= "border-bottom: 1px solid #eee">
+      <li>
         <em><%= f.object.responsibility.definition %></em>
-        <div class="field" style="margin-top:5px">
+        <div class="field">
         <%= f.fields_for :reviewgoals do |resp| %>  
           <%= render '/reviews/goals', :f => resp %>  
         <% end %>

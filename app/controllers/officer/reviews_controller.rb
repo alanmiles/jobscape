@@ -3,7 +3,7 @@ class Officer::ReviewsController < ApplicationController
   
   def index
     @business = Business.find(session[:biz])
-    @reviews = @business.reviews_in_progress.paginate(:page => params[:page])
+    @reviews = @business.reviews_in_progress.paginate(:per_page => 20, :page => params[:page])
     @title = "Reviews in progress"
   end
  

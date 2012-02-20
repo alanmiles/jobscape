@@ -1,3 +1,5 @@
+
+  
 <%= render 'shared/aplan_nav' %>
 
 <%= link_to image_tag("pageback.png", :title => "Previous"), @plan, :class => "magnify" %>
@@ -7,5 +9,13 @@
 </div>
 
 <div class="subtext">
-  <%= render 'fields' %>
+  <% if @plan.no_changes? %>
+    <% if current_user.account == 3 %>
+      <%= render 'fields' %>
+    <% else %>
+      <%= render 'fields_nonedit' %>
+    <% end %>
+  <% else %>
+    <%= render 'fields' %>
+  <% end %>
 </div>

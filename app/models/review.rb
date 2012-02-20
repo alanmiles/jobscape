@@ -54,7 +54,7 @@ class Review < ActiveRecord::Base
   attr_accessible :reviewee_id, :reviewer_id, :reviewer_name, :job_id, :completed, :completion_date, :reviewer_email, :secret_code, :comments_complete,
   		 :reviewresponsibilities_attributes, :reviewqualities_attributes, :responsibilities_complete, :qualities_complete, :achievements,
   		 :problems, :observations, :change_responsibilities, :change_goals, :change_attributes, :plan, :responsibilities_score, :review_type,
-  		 :attributes_score, :placement_id, :cancel, :cancellation_reason, :business_id, :consent, :seen_by_reviewee
+  		 :attributes_score, :placement_id, :cancel, :cancellation_reason, :business_id, :consent, :seen_by_reviewee, :created_at
   
   before_save :assign_business
   before_save :calculate_contribution

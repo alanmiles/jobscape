@@ -1,38 +1,61 @@
-<div class = "r-float">
-  <% unless @user.has_review_requests?(@business) %>
-    <%= link_to "Home Page", employee_home_path %>
-  <% else %>
-    <%= link_to "All review requests", reviewer_reviews_path %>
-  <% end %>
-</div>
+<% unless @user.has_review_requests?(@business) %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
+<% else %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), reviewer_reviews_path, :class => "magnify" %>
+<% end %>
 
-
-<h1><%= @title %></h1>
-<h4> 
-  <%= @user.name %> - <%= @business.name %><br />
+<h4 class="over"> 
+  <%= @user.name %><br />
+  <%= @business.name %>, <%= @business.city %>
 </h4>
 
 <%= form_for(@review, :url => review_response_path(@review)) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-
-  <div class="display_wider">  
-    Request from: <%= @review.reviewee.name %> - <%= @review.job.job_title %>, <%= @review.job.department.name %><br />
-    Your review needs to be completed by <%= display_daydate(@review.created_at + 14.days) %>.
+  
+   
+    From: 
+    <%= @review.reviewee.name %><br />
+    <%= @review.job.job_title %>, <%= @review.job.department.name %><br /><br />
+    
+    <div class="subtext">
+    Your review needs to be completed by:<br />
+    <%= display_daydate(@review.created_at + 14.days) %>.
     <br /><br />
   
+    <i>Use this form if you're not ready to start yet.</i><br /><br />
     <div class="field">
       Send a message (via HYGWIT) to <%= @review.reviewee.name %><br />
       <%= f.radio_button :consent, true %> Yes, I'll be able to do the review.<br />
       <%= f.radio_button :consent, false %> Sorry, I won't be able to help with the review.
     </div>
-    <br />
     <div class="field">
-      If you can't do the review, a short explanation would be helpful: - <br />
-      <%= f.text_field :cancellation_reason, :size => 60 %>
+      If you can't do the review, send a short explanation:<br /><br />
+      <%= f.text_area :cancellation_reason, :maxlength => 100, :class => "miniscule" %>
+      <div class="char-count"><%= @characters_left %> characters left</div>
     </div>
-    <br />
+    </div>
     <div class="actions">
-      <%= f.submit "Confirm" %>
+      <%= f.submit "Confirm", :class => "create round" %>
     </div>
-  </div>
+<% end %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $(document).ready(function(){
+    
+      $('#review_cancellation_reason').click(function() {
+        $('.char-count').css('visibility', 'visible');
+      });
+
+      $('#review_cancellation_reason').live('keyup keydown', function(e) {
+      var maxLen = 100;
+      var left = maxLen - $(this).val().length;
+      $('.char-count').html(left);
+      });
+    
+    });
+  
+  <% end %>
 <% end %>

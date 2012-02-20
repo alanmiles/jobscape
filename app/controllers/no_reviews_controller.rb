@@ -2,8 +2,8 @@ class NoReviewsController < ApplicationController
   
   def index
     @business = Business.find(session[:biz])
-    @users = @business.requiring_review.paginate(:page => params[:page])
-    @title = "People who need a review"
+    @users = @business.requiring_review.paginate(:per_page => 20, :page => params[:page])
+    @title = "Reviews due"
     session[:reviewreq] = "external"
   end
 

@@ -1,12 +1,12 @@
 <div class="over">
-  <h1><%= link_to "ROLE", role_outline_path %></h1>
+  <h1><%= link_to "ROLE", role_outline_path, :title => "Edit 'role' paragraph" %></h1>
   <%= @outline.role %>
 </div>
 <div class="over">
-  <h1><%= link_to "QUALITIES", qualities_outline_path %></h1>
+  <h1><%= link_to "QUALITIES", qualities_outline_path, :title => "Edit 'qualities' paragraph" %></h1>
   <%= @outline.qualities %>
 </div>
-<h1><%= link_to "IMPORTANCE", importance_outline_path %></h1>
+<h1><%= link_to "IMPORTANCE", importance_outline_path, :title => "Edit 'importance' paragraph" %></h1>
 <%= @outline.importance %>
 
 

@@ -4,7 +4,7 @@ class Reviewer::ReviewsController < ApplicationController
     @user = current_user
     @business = Business.find(session[:biz])
     @reviews = @user.review_requests(@business)
-    @title = "Performance review requests"
+    @title = "Review requests"
   end
 
   def edit
@@ -15,7 +15,7 @@ class Reviewer::ReviewsController < ApplicationController
     @business = Business.find(@job.business_id)
     @department = Department.find(@job.department_id)
     @grades = Reviewquality::PAM_SCORES
-    @title = "Performance review"
+    @title = "Colleague review"
   end
   
   def update
@@ -55,7 +55,7 @@ class Reviewer::ReviewsController < ApplicationController
       @qualities = @review.reviewqualities.order("reviewqualities.position")
       @job = Job.find(@review.job_id)
       @grades = Reviewquality::PAM_SCORES
-      @title = "Performance review"
+      @title = "Colleague review"
       flash[:error] = "Sorry, your changes could not be accepted.  Please try again."
       render 'edit'
     end

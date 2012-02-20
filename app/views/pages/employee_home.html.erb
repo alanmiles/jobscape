@@ -1,19 +1,26 @@
-<div class = "r-float">
- <% if current_user.admin? %>
-    <%= link_to "Return to Admin Mode", standard_to_admin_path %><br />
-  <% end %>
-  <% unless @user.no_business_set? %>
-    <% if @user.employee_lookup(@business).officer? %>
-      <%= link_to "Officer mode", own_to_officer_path %>
-      <br />
-    <% end %>
-    <% if @user.belongs_to_business? %>
-      <%= link_to "Switch business", select_business_path unless @user.single_business? %>
-    <% end %>
-  <% end %>
-</div>
+<% unless current_user.simple_employee?(@business) %>
+  <nav class="topmenu over">
+    <ul>
+  
+      <% if current_user.admin? %>
+        <li><%= link_to "Admin Mode", standard_to_admin_path %></li>
+      <% end %>
+    
+      <% unless @user.no_business_set? %>
+        <% if @user.employee_lookup(@business).officer? %>
+          <li><%= link_to "Officer mode", own_to_officer_path %></li>
+        <% end %>
+      
+        <% if @user.belongs_to_business? %>
+          <li><%= link_to "Switch business", select_business_path unless @user.single_business? %></li>
+        <% end %>
+    
+      <% end %>
+    </ul>
+  </nav>
+<% end %>
 
-<h1>HYGWIT Home: <%= @user.name %></h1>
+<h4><%= @user.name %></h4>
 
 <% if @user.no_business_set? %>
   
@@ -23,26 +30,54 @@
   
 <% else %>
   <h4>
-    <%= @business.name %><br />
-    <%= @job.title_department %>
+    <%= @job.job_title %>,
+    <%= @job.department.name %><br />
+    <%= @business.name %>, <%= @business.city %>
   </h4>
   <br />
   
   <div id = "listing">
-    <ul class="no_dec">
-      <li><%= link_to "Introduction", hygwit_introduction_path %></li> 
-      <% unless @plan.no_changes? %>
-        <li><%= link_to "Update your Achievement Plan", @plan %></li>
-      <% end %>
+    <h4 class="listheader">Introduction</h4>
+    <ul class="no_dec smaller_font">
+      <li>
+        <%= link_to "Why HYGWIT?", hygwit_introduction_path %> -
+        <%= link_to "The A-Plan", "#" %><br />
+        <%= link_to "Reviews", "#" %> -
+        <%= link_to "Personal Goals", personal_goals_path %>
+      </li>
+    </ul>
+    
+    <h4 class="listheader">Business Strategy</h4>
+    <ul class="no_dec smaller_font">
+      <li>
+        <%= link_to "View mission, values, objectives", corporate_plan_path(@business) %>
+      </li> 
+    </ul>
+    
+    <h4 class="listheader">Achievement Plan
+      <%= image_tag("complete.png") if @plan.complete? %>
+      <%= image_tag("locked.png") if @plan.no_changes? %>
+    </h4>
+    <ul class="no_dec smaller_font">  
       <% if @plan.complete? %>
-        <li><%= link_to "View your complete Achievement Plan", @plan %></li>
-        
+        <li><%= link_to "View A-Plan for your job", @plan %></li>
+      <% else %>
+        <li class="highlt">A-Plan for your job is not yet complete.</li>
+      <% end %>  
+      <% unless @plan.no_changes? %>
+        <li><%= link_to "Update A-Plan for your job", @plan %></li>
+      <% end %>
+    </ul>
+    
+    <h4 class="listheader">Reviews</h4>
+    <ul class="no_dec smaller_font"> 
+      <% if @plan.complete? %>
         <li>
           <% if current_user.has_incomplete_review?(@business) %>
             
             <% if @review.reviewer_id == current_user.id %>
               <%= link_to "Continue your self-appraisal", edit_self_appraisal_path(@review) %>
-              &nbsp; <span class="highlt round"><small> incomplete</small></span>
+              &nbsp; <span class="highlt"><small> incomplete</small></span>
             <% else %>
               
               <% if @review.consent? %>
@@ -61,31 +96,36 @@
           <% else %>
             <%= link_to "Set up a performance review / self-appraisal", new_review_path %>
             <% if current_user.external_review_due?(@business) || current_user.self_appraisal_due?(@business) %>
-              &nbsp; <small><span class="highlt round">Due now!</span></small>
+              &nbsp; <small><span class="highlt">Due now!</span></small>
             <% end %>
           <% end %>  
         </li>
       <% else %>
-        <li><%= link_to "Your Achievement Plan", locked_aplan_path %></li>
-        <li style = "color: #999">Arrange a performance review</li> 
+        <li class="highlt">No reviews till A-Plan is complete.</li>
       <% end %>
       <% if @user.has_completed_reviews?(@business) %>  
         <li><%= link_to "Review history", my_reviews_path %></li>
-      <% else %>
-        <div style ="color: #999">
-          <li>Review history</li>
-        </div>
       <% end %> 
-      <li><%= link_to "Targets", my_targets_path %></li>
-      <li><%= link_to "Daily tasks", my_tasks_path %></li>
-      <% if @user.has_review_requests?(@business) %>
-        <% if @user.review_requests(@business).count == 1 %>
-          <span class="highlt round">1 review request to deal with </span> &nbsp;
-        <% else %>
-          <span class="highlt round"><%= @user.review_requests(@business).count %> review requests to deal with </span> &nbsp;
-        <% end %>
-        <%= link_to "Details", reviewer_reviews_path %>
-      <% end %>
     </ul>
+    
+    <h4 class="listheader">Personal Goals</h4>
+    <ul class="no_dec smaller_font"> 
+      <li>
+        <%= link_to "Annual", "#" %> -
+        <%= link_to "Monthly", my_targets_path %> -
+        <%= link_to "Daily", my_tasks_path %>
+      </li>
+    </ul>  
+    
+    <% if @user.has_review_requests?(@business) %>
+      <h4 class="listheader">Review Requests</h4>
+      <ul class="no_dec smaller_font"> 
+        <% if @user.review_requests(@business).count == 0 %>
+          <li class="not-found">None</li>
+        <% else %>
+          <li><%= link_to "Details of #{pluralize(@user.review_requests(@business).count, 'request')}", reviewer_reviews_path %></li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
 <% end %>

@@ -1,11 +1,12 @@
-<nav class="topmenu over">
-  <ul>
-    <span id="search"><li><%= link_to "Search", "#", :title => "Search for an employee by any part of name, job or department" %></li></span>
-    <span id="invitations"><li><%= link_to "Outstanding invitations", business_invitations_path(@business), 
-      :title => "No response yet from the people in this list" %></li>
-    </span>
-  </ul>
-</nav>
+<% unless @business.no_invitations? %>
+  <nav class="topmenu over">
+    <ul>
+      <span id="invitations"><li><%= link_to "Outstanding invitations", business_invitations_path(@business), 
+        :title => "No response yet from the people in this list" %></li>
+      </span>
+    </ul>
+  </nav>
+<% end %>
 
 <%= link_to image_tag("pageback.png", :title => "Previous"), officer_home_path, :class => "magnify" %>
 
@@ -16,5 +17,12 @@
 <div class="over">
   <h4><%= @business.name %>, <%= @business.city %></h4>
 </div>
-
+<%= form_tag officer_users_path, :method => 'get' do %>  
+  <div id="search" class="over">
+    <div class="r-float">
+      <%= submit_tag "Search", :name => nil, :class => "create-icon round" %>  
+    </div> 
+    Name-search: <%= text_field_tag :search, params[:search] %>   
+  </div>
+<% end %>
 <%= render 'users/current_list' %>

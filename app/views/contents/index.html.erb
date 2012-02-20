@@ -1,0 +1,29 @@
+<div class = "r-float">
+  <%= link_to "New content", new_content_path %><br />
+</div>
+
+<%= link_to image_tag("pageback.png", :title => "Previous"), admin_path, :class => "magnify" %>
+
+<div class="pagination over">
+  <%= will_paginate @notes %>
+</div>
+
+<div id="listing">
+  <ul class="no_dec">
+    <% @contents.each do |content| %>
+      <li>
+        <%= link_to content.header, content, :title => "View/edit page content" %>
+        <span class="r-float">
+          <%= link_to image_tag("delete.png"), content, 
+    			:method => :delete, 
+    			:confirm => "Are you sure you want to delete the page content for '#{content.header}'?",
+                        :title => "Delete note for '#{content.header}'" %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="pagination under">
+  <%= will_paginate @notes %>
+</div>

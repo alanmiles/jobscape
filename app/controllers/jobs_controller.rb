@@ -6,7 +6,7 @@ class JobsController < ApplicationController
   def index
     @business = Business.find(session[:biz])
     @title = "Jobs"
-    @jobs = @business.jobs.where("jobs.inactive = ?", false).paginate(:page => params[:page]) 
+    @jobs = @business.jobs.where("jobs.inactive = ?", false).paginate(:per_page => 20, :page => params[:page]) 
     session[:jobid] = nil 
   end
 

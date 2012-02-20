@@ -1,59 +1,47 @@
-<div class = "r-float">
-  <%= link_to "Performance reviews menu", performance_reviews_path %>
-</div>
-
-<h1><%= @title %></h1>
-<h4><%= @business.name %></h4>
+<%= link_to image_tag("pageback.png", :title => "Previous"), performance_reviews_path, :class => "magnify" %>
 
 <%= will_paginate @reviews %>
 
-<table class="smaller_font">
-  <tr>
-    <th>Employee</th>
-    <th>Department</th>
-    <th>Reviewer</th>
-    <th>Set up</th>
-    <th>Status</th>
-  </tr>
-
-  <% @reviews.each do |review| %>
-  <tr>
-    <td><%= review.reviewee.name %></td>
-    <td><%= review.reviewee.current_department(@business).name %></td>
-    <td>
-      <% if review.reviewer_id == review.reviewee_id %>
-        Self-appraisal
-      <% else %>
-        <%= review.reviewer.name %>
-      <% end %>
-    </td>
-    <td><%= time_ago_in_words(review.created_at) %> ago</td>
-    <td>
-      <% if review.reviewer_id == review.reviewee_id %>
-        <% if review.started? %>
-          In progress
-        <% else %>
-          Not started yet
-        <% end %>
-      <% else %>
-        <% if review.consent? %>
-          <% if review.started? %>
-            Reviewer has started
+<div id="listing">
+  <ul class="no_dec">
+    <% @reviews.each do |review| %>
+      <li>
+        <%= review.reviewee.name %>
+        <div class="subtext">
+          <%= review.reviewee.current_job(@business).job_title %>, <%= review.reviewee.current_department(@business).name %> <br />  
+          <% if review.reviewer_id == review.reviewee_id %>
+            Self-appraisal
           <% else %>
-            Reviewer agreement
+            Reviewer: <%= review.reviewer.name %>, <%= review.reviewer.current_department(@business).name %>
           <% end %>
+          <br />
+          Started: <%= time_ago_in_words(review.created_at) %> ago.<br />
+          Status:
+          <% if review.reviewer_id == review.reviewee_id %>
+            <% if review.started? %>
+              In progress.
+            <% else %>
+              Not started yet.
+            <% end %>
+          <% else %>
+            <% if review.consent? %>
+              <% if review.started? %>
+                Reviewer has started.
+              <% else %>
+                Reviewer has agreed to participate.
+              <% end %>
   
-        <% else %>
-          <% if review.started? %>
-            Reviewer has started
-          <% else %>
-            No reviewer response
+            <% else %>
+              <% if review.started? %>
+                Reviewer has started.
+              <% else %>
+                No reviewer response yet.
+              <% end %>
+            <% end %>
           <% end %>
-        <% end %>
-      <% end %>
-    </td>
-  </tr>
-  <% end %>
-</table>
-
+        </div>
+      </li>
+    <% end %>
+  <ul>
+</div>
 <%= will_paginate @reviews %>

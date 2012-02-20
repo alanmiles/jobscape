@@ -4,12 +4,14 @@
   <%= link_to "Edit", edit_business_path(@business) %><br />
 </div>
 
-<h1><%= @business.name %></h1>
-<p>Sector: <%= @business.sector.sector %></p>
-<p>Address was entered as '<%= @business.address %>'.</p>
-<p><i>Verifying location ... <br />
-</i> In the neighbourhood of <b> <%= @business.city %>, <%= @business.country %></b>.
-</p>
+<div id="rubric">
+  <h1><%= @business.name %></h1>
+  <p>Sector: <%= @business.sector.sector %></p>
+  <p>Address was entered as '<%= @business.address %>'.</p>
+  <p><i>Verifying location ... <br />
+  </i> In the neighbourhood of <b> <%= @business.city %>, <%= @business.country %></b>.
+  </p>
 
-<p>If the location is unknown or looks wrong, click on 'Edit' 
+  <p>If the location is unknown or looks wrong, click on 'Edit' 
    and re-enter the address line.</p>
+</div>

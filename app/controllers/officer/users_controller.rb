@@ -7,7 +7,7 @@ class Officer::UsersController < ApplicationController
   
   def index
     @business = Business.find(session[:biz])
-    @users = @business.all_current_employees.paginate(:page => params[:page])
+    @users = @business.all_current_employees.search(params[:search]).paginate(:per_page => 20, :page => params[:page])
     @title = "Employees"
     store_location
   end

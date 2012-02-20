@@ -1,57 +1,56 @@
 <%= will_paginate @users %>
-
-<ul>
-  <% @users.each do |user| %>
-    <li class="no_bullet">
-      <%= user.current_employee_at(@business).ref_no %> &nbsp;
-      <strong><%= user.name %></strong> - <%= user.current_job(@business).job_title %>, <%= user.current_department(@business).name %> <br />
-      <div style = "margin-left: 25px; font-size: 0.85em">
-        
-        Last external review:
-        <% if user.no_formal_reviews?(@business) %> 
-          None
-        <% else %> 
-          <%= link_to display_date(Review.find(user.last_formal_review(@business)).completion_date), 
+<div id="listing">
+  <ul class="no_dec">
+    <% @users.each do |user| %>
+      <li>
+        <%= user.name %>
+        <div class="subtext">
+          <%= user.current_job(@business).job_title %>, <%= user.current_department(@business).name %> <br />  
+          Last colleague review:
+          <% if user.no_formal_reviews?(@business) %> 
+            None
+          <% else %> 
+            <%= link_to display_date(Review.find(user.last_formal_review(@business)).completion_date), 
               officer_review_path(user.last_formal_review(@business)) %>
-        <% end %> &nbsp;
-        
-        Last self-appraisal: 
-        <% if user.no_self_appraisals?(@business) %>
-          None
-        <% else %>     
-          <%= link_to display_date(Review.find(user.last_self_appraisal(@business)).completion_date), 
+          <% end %>
+          <br />
+          Last self-appraisal: 
+          <% if user.no_self_appraisals?(@business) %>
+            None
+          <% else %>     
+            <%= link_to display_date(Review.find(user.last_self_appraisal(@business)).completion_date), 
               officer_review_path(user.last_self_appraisal(@business)) %>
-        <% end %>
-        <% if user.employee_lookup(@business).created_at > Date.today - 6.months %>
-          &nbsp;
-          <em>(Added: <%= display_date(user.employee_lookup(@business).created_at) %>)</em>
-        <% end %>
-        <br />
-        
-        <% unless user.current_job(@business).plan.complete? %>
-          <span class="highlt round">
-            There's no A-Plan for this job - so no reviews or self-appraisals are possible.
-          </span>
-        <% else %>
-          <% if user.has_incomplete_external_review?(@business) %>
-            <span class="highlt round">An external review is in progress - started
-              <%= display_monthday(Review.find(user.incomplete_review(@business)).created_at) %>.
-            </span>
-          <% elsif user.has_incomplete_self_appraisal?(@business) %>
-            <span class="highlt round">A self-appraisal is in progress - started 
-              <%= display_monthday(Review.find(user.incomplete_review(@business)).created_at) %>.
+          <% end %>
+          <% if user.employee_lookup(@business).created_at > Date.today - 6.months %>
+            <br />
+            <em>(Added: <%= display_date(user.employee_lookup(@business).created_at) %>)</em>
+            <br />
+          <% end %>
+      
+          <% unless user.current_job(@business).plan.complete? %>
+            <span class="highlt">
+              There's no A-Plan for this job - so no reviews or self-appraisals are possible.
             </span>
           <% else %>
-            <% if session[:reviewreq] == "external" %>
-              <%= link_to "Set up a review now", edit_no_review_path(user) %>
+            <% if user.has_incomplete_external_review?(@business) %>
+              <span class="highlt">A colleague review is in progress - started
+                <%= display_monthday(Review.find(user.incomplete_review(@business)).created_at) %>.
+              </span>
+            <% elsif user.has_incomplete_self_appraisal?(@business) %>
+              <span class="highlt round">A self-appraisal is in progress - started 
+                <%= display_monthday(Review.find(user.incomplete_review(@business)).created_at) %>.
+              </span>
             <% else %>
-              <%= link_to "Set up a self-appraisal now", edit_no_review_path(user) %>    
+              <% if session[:reviewreq] == "external" %>
+                <%= link_to "Set up review", edit_no_review_path(user) %>
+              <% else %>
+                <%= link_to "Set up self-appraisal", edit_no_review_path(user) %>    
+              <% end %>
             <% end %>
-          <% end %>
-        <% end %>    
-      </div>
-    </li>    
-  <% end %>
-</ul>
-
+          <% end %>    
+        </div>
+      </li>    
+    <% end %>
+  </ul>
+</div>
 <%= will_paginate @users %>

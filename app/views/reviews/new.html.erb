@@ -1,13 +1,49 @@
-<div class = "r-float">
-  <%= link_to "Home page", employee_home_path %>
+<nav class="topmenu over">
+  <ul>
+    <span id="reasons"><li><%= link_to "Why review?", url_for(:action => "reasons"), :remote => true %></li></span>
+    <span id="reviewers"><li><%= link_to "Who reviews?", url_for(:action => "reviewers"), :remote => true %></li></span>   
+    <span id="frequency"><li><%= link_to "How often?", url_for(:action => "frequency"), :remote => true %></li></span>
+    <span id="time"><li><%= link_to "How long?", url_for(:action => "time"), :remote => true %></li></span>
+  </ul>
+</nav>
+
+
+<%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
+
+<div id="reasons_text" class="display_off over">
+  <h4 class="subtitle over">Why review? <span class="hide_reasons click_link subtext">(Hide)</span></h4> 
+  <div class="subtext">
+    <%= render "reasons_text" %>
+  </div>
 </div>
 
-<h1><%= @title %></h1>
+<div id="reviewers_text" class="display_off over">
+  <h4 class="subtitle over">Who should review? <span class="hide_reviewers click_link subtext">(Hide)</span></h4> 
+  <div class="subtext">
+    <%= render "reviewers_text" %>
+  </div>
+</div>
 
-<p class = "display_text grayborder round cntr">
-  <u><strong><%= @user.name %></strong> - 
-  <%= @job.job_title %></u><br />
-  
+<div id="frequency_text" class="display_off over">
+  <h4 class="subtitle over">Why often should you review? <span class="hide_frequency click_link subtext">(Hide)</span></h4> 
+  <div class="subtext">
+    <%= render "frequency_text" %>
+  </div>
+</div>
+
+<div id="time_text" class="display_off over">
+  <h4 class="subtitle over">How long does a review take? <span class="hide_time click_link subtext">(Hide)</span></h4> 
+  <div class="subtext">
+    <%= render "time_text" %>
+  </div>
+</div>
+
+
+<h4 class="over"><%= @user.name %><br /> 
+  <%= @job.title_department %>
+</h4>
+
+<div class="subtext over">  
   Last colleague review: 
   <% if @user.no_formal_reviews?(@business) %> 
     None
@@ -30,27 +66,22 @@
       &nbsp; <small><span class="highlt round">Due now!</span></small>
     <% end %>
   <% end %> 
-</p>
-
-<%= render 'explanation' %>
-
-<br />
-
+</div>
 
 <%= form_for @review do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-  
+
+  <div class="subtext over">
+    To start a new review session, just select the name of the reviewer and then click on 'Confirm'.  Select your own name for a
+    self-appraisal, or someone else for a colleague review.
+  </div>
+    
   <div class="shift_center_50">
     <div class="field">
-      <%= f.label :reviewer_id %> &nbsp;
-      <%= grouped_collection_select(:review, :reviewer_id, @departments, :current_team, :name, :id, :name) %><br /> 
-      <small>
-        (Select your own name for a self-appraisal, or someone else if you want a colleague to review.)
-      </small> 
+      <%= f.label :reviewer_id %><br />
+      <%= grouped_collection_select(:review, :reviewer_id, @departments, :current_team, :name, :id, :name) %>
     </div>
-    <br />
-  
-  
+ 
     <%= f.hidden_field :job_id %>
     <%= f.hidden_field :reviewee_id %>
     <%= f.hidden_field :placement_id %>
@@ -58,8 +89,84 @@
     <%= f.hidden_field :review_type %>
   
     <div class="actions">
-      <%= f.submit "Confirm" %>
+      <%= f.submit "Confirm", :class => "create round" %>
     </div>
   </div>
 <% end %>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+    
+    $(document).ready(function(){
+    
+      $('#reasons').click(function() {
+        $('#reviewers_text').fadeOut('0', function() {
+          $('#frequency_text').fadeOut('0', function() {
+            $('#time_text').fadeOut('0', function() {
+              $('#reasons_text').fadeIn('normal', function() {
+              });
+            });
+          });
+        });
+      });
+      
+      $('#reviewers').click(function() {
+        $('#reasons_text').fadeOut('0', function() {
+          $('#frequency_text').fadeOut('0', function() {
+            $('#time_text').fadeOut('0', function() {
+              $('#reviewers_text').fadeIn('normal', function() {
+              });
+            });
+          });
+        });
+      });
+      
+      $('#frequency').click(function() {
+        $('#reasons_text').fadeOut('0', function() { 
+          $('#reviewers_text').fadeOut('0', function() {
+            $('#time_text').fadeOut('0', function() {
+              $('#frequency_text').fadeIn('normal', function() {
+              });
+            });
+          });
+        });
+      });
+      
+      $('#time').click(function() {
+        $('#reasons_text').fadeOut('0', function() { 
+          $('#reviewers_text').fadeOut('0', function() {
+            $('#frequency_text').fadeOut('0', function() {
+              $('#time_text').fadeIn('normal', function() {
+              });
+            });
+          });
+        });
+      });
+      
+      $('.hide_reasons').click(function() {
+        $('#reasons_text').fadeOut('fast', function() {
+        });
+      });
+      
+      $('.hide_reviewers').click(function() {
+        $('#reviewers_text').fadeOut('fast', function() {
+        });
+      });
+      
+      $('.hide_frequency').click(function() {
+        $('#frequency_text').fadeOut('fast', function() {
+        });
+      });
+      
+      $('.hide_time').click(function() {
+        $('#time_text').fadeOut('fast', function() {
+        });
+      });
+      
+    });
+   
+  <% end %>
+<% end %>  
+  
 

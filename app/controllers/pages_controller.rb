@@ -5,6 +5,7 @@ class PagesController < ApplicationController
   #before_filter :not_with_single_business, :only => :select_business
   
   def home
+    session[:aspect] = nil
     session[:biz] = nil
     if signed_in?
       if current_user.account == 2
@@ -44,6 +45,7 @@ class PagesController < ApplicationController
   end
   
   def admin_home
+    session[:aspect] = "admin"
     @title = "Admin Home"
     @user = User.find(current_user)
     session[:admin_off] = nil
@@ -97,6 +99,7 @@ class PagesController < ApplicationController
   end
   
   def jobseeker_home
+    session[:aspect] = nil
     @title = "Jobseeker Home"
     @user = current_user
     session[:jobid] = nil
@@ -110,6 +113,7 @@ class PagesController < ApplicationController
   end
   
   def officer_home
+    session[:aspect] = "officer"
     @title = "Officer Home"
     @user = current_user
     @no_business = false
@@ -138,6 +142,7 @@ class PagesController < ApplicationController
   end
   
   def user_home
+    session[:aspect] = "sole"
     @title = "User Home"
     @user = current_user
     clear_return_to
@@ -176,6 +181,7 @@ class PagesController < ApplicationController
   end
   
   def employee_home
+    session[:aspect] = "employee"
     session[:invited] = nil
     session[:dept_id] = nil
     @title = "Employee Home"
@@ -223,6 +229,7 @@ class PagesController < ApplicationController
   end
   
   def reviewer_login
+    session[:aspect] = "reviewer"
     @title = "Reviewer log-in"
   end
   
@@ -235,7 +242,23 @@ class PagesController < ApplicationController
   end
   
   def hygwit_introduction
-    @title = "Introduction to HYGWIT"
+    @title = "Introducing HYGWIT"
+    @content = Content.find_by_header(@title)
+    if @content.nil?
+      @page_content = "Information not found"
+    else
+      @page_content = @content.content
+    end
+  end
+  
+  def personal_goals
+    @title = "Personal Goals"
+    @content = Content.find_by_header(@title)
+    if @content.nil?
+      @page_content = "Information not found"
+    else
+      @page_content = @content.content
+    end
   end
   
   def performance_reviews
@@ -244,6 +267,7 @@ class PagesController < ApplicationController
     @title = "Performance reviews"
     session[:reviewreq] = nil
     session[:reviewee] = nil
+    @progressed = @business.reviews_in_progress.count
   end
   
   def recruitment_menu

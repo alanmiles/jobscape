@@ -1,24 +1,46 @@
-<div class = "r-float">
-  <%= link_to "Home Page", officer_home_path %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), officer_home_path, :class => "magnify" %>
+
+<div class="over">
+  <h4><%= @business.name %>, <%= @business.city %></h4>
 </div>
 
-<h1><%= @title %></h1>
-<h4><%= @business.name %></h4>
-
-<div class="menu_box round grayborder">
-  <br />
-  <ul>
-    <li class="no_bullet_compact"><%= link_to "Reviews & self-appraisals in progress", officer_reviews_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Who needs a self-appraisal?", no_appraisals_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Who needs a colleague review?", no_reviews_path %></li>    
-    <br />
-    <li class="no_bullet_compact"><%= link_to "Employee reviews: results", officer_reviewed_users_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Department reviews: results", department_reviews_path %></li>
-    <li class="no_bullet_compact"><%= link_to "Best / worst results", "#" %></li>
-    <li class="no_bullet_compact"><%= link_to "Who's out of step with their reviewer?", "#" %></li>
-    <li class="no_bullet_compact"><%= link_to "Employee contribution", "#" %></li>
-    <br />
-    <li class="no_bullet_compact"><%= link_to "Recent reviewer activity", "#" %></li>
+<div id = "listing">
+  <h4 class="listheader">Review alerts</h4>
+  
+  <ul class="no_dec smaller_font">
+    <% if @progressed == 0 %>
+      <li class="not-found">No reviews or self-appraisals currently in progress</li>
+    <% elsif @progressed == 1 %>
+      <li><%= link_to "Status of 1 review / self-appraisal in progress", officer_reviews_path %></li>
+    <% else %>
+      <li><%= link_to "Status of #{@progressed} reviews / self-appraisals in progress", officer_reviews_path %></li>
+    <% end %>
+    
+    <% if @business.requiring_appraisal.count > 0 %>
+      <li><%= link_to "Check #{pluralize(@business.requiring_appraisal.count, 'self-appraisal')} required", no_appraisals_path %></li>
+    <% else %>
+      <li class="not-found">No self-appraisals due</li>
+    <% end %>
+    
+    <% if @business.requiring_review.count > 0 %>
+      <li><%= link_to "Check #{pluralize(@business.requiring_review.count, 'colleague review')} required", no_reviews_path %></li>  
+    <% else %>
+      <li class="not-found">No colleague reviews due</li>
+    <% end %>  
   </ul>
-
+  
+  
+  
+  <h4 class="listheader">Results</h4>
+  <ul class="no_dec smaller_font">
+    <li><%= link_to "Employee reviews: results", officer_reviewed_users_path %></li>
+    <li><%= link_to "Department reviews: results", department_reviews_path %></li>
+    <li><%= link_to "Best / worst results", "#" %></li>
+    <li><%= link_to "Who's out of step with their reviewer?", "#" %></li>
+    <li><%= link_to "Employee contribution", "#" %></li>
+  </ul>
+  <h4 class="listheader">Reviewers</h4>
+  <ul class="no_dec smaller_font">
+    <li><%= link_to "Recent reviewer activity", "#" %></li>
+  </ul>
 </div>

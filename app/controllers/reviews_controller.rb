@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
     @placement = Placement.find_by_user_id_and_job_id_and_current(@user, @job, true)
     @review = Review.new(:reviewee_id => @user.id, :reviewer_id => @user.id, 
       		:reviewer_name => @user.name, :job_id => @job.id, :placement_id => @placement.id, :review_type => 1)
-    @title = "Set up a new performance review"  
+    @title = "New performance review"  
   end
   
   def create
@@ -29,9 +29,26 @@ class ReviewsController < ApplicationController
       @departments = @business.current_departments
       @job = Job.find(session[:jobid])
       @placement = Placement.find_by_user_id_and_job_id_and_current(@user, @job, true)
-      @title = "Set up a new performance review"
+      @title = "New performance review"
       render 'new'
     end
+  end
+  
+  def reasons
+    @title = "Why review?"
+    
+  end
+  
+  def reviewers
+    @title = "Who should review?"
+  end
+  
+  def frequency
+    @title = "Review frequency?"
+  end
+  
+  def time
+    @title = "Time taken to review?"
   end
   
 end

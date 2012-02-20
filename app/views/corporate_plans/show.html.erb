@@ -1,12 +1,18 @@
-<%= link_to image_tag("pageback.png", :title => "Previous"), officer_home_path, :class => "magnify" %>
+<% if session[:aspect] == "officer" %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), officer_home_path, :class => "magnify" %>
+<% elsif session[:aspect] == "employee" %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
+<% end %>
 
 <h4><%= @business.name_city %></h4>
 <br />
 <div id="listing">
   <div id="mission">
-    <div class="r-float">
-      <%= link_to "Edit", edit_corporate_plan_path(@business) %>
-    </div>
+    <% if session[:aspect] == "officer" %>
+      <div class="r-float">
+        <%= link_to "Edit", edit_corporate_plan_path(@business) %>
+      </div>
+    <% end %>
     <h1>MISSION</h1> 
     <div class="shift_center_50 cut_right_50 subtext">
       <%= mission_statement %> 
@@ -14,9 +20,11 @@
   </div>
   
   <div id="values" class="under">
-    <div class="r-float">
-      <%= link_to "Edit", edit_corporate_plan_path(@business) %>
-    </div>
+    <% if session[:aspect] == "officer" %>
+      <div class="r-float">
+        <%= link_to "Edit", edit_corporate_plan_path(@business) %>
+      </div>
+    <% end %>
     <h1>VALUES</h1>
     <div class="shift_center_50 cut_right_50 subtext">
       <%= values_statement %>
@@ -24,36 +32,54 @@
   </div>
   
   <div id="objectives" class="under">
-  
-    <div class="r-float">
-      <%= link_to "Add an objective", new_business_objective_path(@business) %>
-    </div>
-    <h1>OBJECTIVES</h1>
-    <% if @objectives.empty? %>
-      <div class="subtext">
-        No objectives set.
+    <% if session[:aspect] == "officer" %>
+      <div class="r-float">
+        <%= link_to "Add an objective", new_business_objective_path(@business) %>
       </div>
-    <% else %>
-      <ul class="no_dec">
-        <% @objectives.each do |objective| %>
-          <li>
+      <h1>OBJECTIVES</h1>
+      <% if @objectives.empty? %>
+        <div class="subtext">
+          No objectives set.
+        </div>
+      <% else %>
+        <ul class="no_dec">
+          <% @objectives.each do |objective| %>
+            <li>
             
-            <%= link_to objective.focus_name.upcase, edit_objective_path(objective), :title => "Click to edit" %>
-            <span class= "r-float">
-              <%= link_to image_tag("delete.png"), objective,
+              <%= link_to objective.focus_name.upcase, edit_objective_path(objective), :title => "Click to edit" %>
+              <span class= "r-float">
+                <%= link_to image_tag("delete.png"), objective,
                           :method => :delete, 
                           :confirm => "Are you sure you want to delete this objective?",
                           :title => "Delete this objective" %>
-            </span>
-            <div class="subtext">
-              <%= objective.objective %>
-            </div>
-            <div class="subtext">
-              <i>Measurement:</i> <%= objective.measurement %>
-            </div>
-          </li>    
-        <% end %>
-      </ul>  
-    <% end %>
+              </span>
+              <div class="subtext">
+                <%= objective.objective %>
+              </div>
+              <div class="subtext">
+                <i>Measurement:</i> <%= objective.measurement %>
+              </div>
+            </li>    
+          <% end %>
+        </ul>  
+      <% end %>
+    <% else %>
+      <h1>OBJECTIVES</h1>
+      <% if @objectives.empty? %>
+        <div class="subtext">
+          No objectives set.
+        </div>
+      <% else %>
+        <ul class="no_dec subtext">
+          <% @objectives.each do |objective| %>
+            <li>
+              <%= objective.focus_name.upcase %>:  
+              <%= objective.objective %><br />
+              <i>Measurement:</i> <%= objective.measurement %>   
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>			
   </div>
 </div>

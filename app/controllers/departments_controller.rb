@@ -7,7 +7,7 @@ class DepartmentsController < ApplicationController
   def index
     @business = Business.find(session[:biz])
     @title = "Departments"
-    @departments = @business.current_departments.paginate(:page => params[:page])
+    @departments = @business.current_departments.paginate(:per_page => 20, :page => params[:page])
   end
 
   def new
