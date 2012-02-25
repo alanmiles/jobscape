@@ -1,19 +1,17 @@
-      <li class= "display_wider" style = "padding:0"> 
+      <li> 
+         <%= f.object.quality.quality %>
          
-         <em><%= f.object.quality.quality %></em>
-        
-         <div class="field" style="margin-top: 5px">
-                   
-          <% @pams = f.object.quality.pams %> 
+         <% @pams = f.object.quality.pams %> 
+         
+         <%= render '/reviews/grades' %>  
+         
+   
+         <div class="field subtext highlt under" style="clear: both">
+           <%= f.label :reviewer_score, "Best description?" %>
+           <%= f.select :reviewer_score, @grades %>
+         </div>
           
-          <%= render "/reviews/grades" %>
-         
-          <div class="field" style="float:left">
-            <%= f.label :reviewer_score, "Which description fits best?" %>
-            <%= f.select :reviewer_score, @grades %>
-          </div>
-          <hr />
-      </li>
+       </li>
       
       
     

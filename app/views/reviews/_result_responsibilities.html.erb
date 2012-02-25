@@ -1,18 +1,16 @@
-<div class="small_action_label round" style="margin-bottom:15px">RESPONSIBILITIES</div>
-<div class= "info_box_screen round" style ="background-color: #EEE">
-  Responsibilities are listed in order of importance to the business, the most important first.<br />
+<div class= "subtext under over">
   <%= image_tag("true.png") %> = goal achieved; <%= image_tag("false.png") %> = goal not achieved.
 </div>
 
-<ol>
-  <% @responsibilities.each do |r| %>
-    <li class = "display_wider" style= "border-bottom: 1px solid #eee">
-      <% @goals = r.reviewgoals %>
-      <em><%= r.responsibility.definition %></em>
-      
+<div id="listing">
+  <ul class="no_dec subtext">
+    <% @responsibilities.each do |r| %>
+      <li>
+        <% @goals = r.reviewgoals %>
+        <em>* <%= r.responsibility.definition %> *</em>
         <ul>
           <% @goals.each do |g| %>
-            <li class= "info_box_screen no_bullet" style="margin-left:0px; margin-bottom: 0px">
+            <li>
               <% if g.achieved? %>
                 <%= image_tag("true.png") %>
               <% else %>
@@ -23,7 +21,9 @@
             </li>
           <% end %>
         </ul>
-     
-    </li>
-  <% end %>
-</ol>
+      </li>
+    <% end %>
+  </ul>
+</div>
+  
+  

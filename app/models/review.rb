@@ -156,6 +156,18 @@ class Review < ActiveRecord::Base
     score = (@jvalue * total_score / 100).to_i 
   end
   
+  def editable?
+    if completion_date == nil
+      return true
+    else
+      if Time.now > completion_date + 7.days
+        return false
+      else
+        return true
+      end
+    end
+  end
+  
   def editable_date
     if completion_date == nil
       created_at + 7.days

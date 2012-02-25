@@ -1,0 +1,51 @@
+<% if @review.completed? %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), completed_attributes_review_path(@review), :class => "magnify" %>
+<% else %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), edit_reviewer_review_path(@review), :class => "magnify" %>
+<% end %>
+
+<% if @review.completed? && @review.editable? %>
+  <div class="r-float highlt">
+    Editable till <%= @review.completion_date.strftime("%H:%M") %> on <%= display_date(@review.editable_date) %> only.
+  </div>
+<% end %>
+
+<h1 class="no-gap">Review for <%= @review.reviewee.name %></h1>
+<div class="subtext over">
+  <%= @review.job.job_title %>, <%= @review.job.department.name %><br />
+  Reviewer: <%= @review.reviewer.name %>
+</div>
+
+<%= form_for(@review, :url => reviewer_score_attribute_path(@review)) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  
+  <div class="subtext over">
+    <i>How well do <%= @review.reviewee.name %>'s personality and key aptitudes fit the job?
+    For each of these 10 attributes, select the most accurate description. Then when you've finished, finalize at the bottom of the page.</i>
+  </div> 
+  
+  <div id="listing">
+    <ul class="no_dec">
+      <%= f.fields_for :reviewqualities do |qlt| %>
+        <%= render "/reviews/attributes", :f => qlt %>
+      <% end %>
+    </ul>
+  </div>
+  
+  <div class="field under">
+    <% if @review.completed? %>
+      <span class="subtext highlt">
+        You're making a late change after the review was originally signed off
+        as complete on <%= display_date(@review.completion_date) %>.
+      </span>
+    <% else %>
+      <%= f.check_box :qualities_complete %>
+      <span class="highlt"><strong>Check when you've rated all attributes.</strong></span>
+    <% end %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Save changes", :class => "create round" %>
+  </div>
+  
+<% end %>

@@ -1,0 +1,48 @@
+<% if @review.completed? %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), completed_comments_review_path(@review), :class => "magnify" %>
+<% else %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), edit_reviewer_review_path(@review), :class => "magnify" %>
+<% end %>
+
+<% if @review.completed? && @review.editable? %>
+  <div class="r-float highlt">
+    Editable till <%= @review.completion_date.strftime("%H:%M") %> on <%= display_date(@review.editable_date) %> only.
+  </div>
+<% end %>
+
+<h1 class="no-gap">Review for <%= @review.reviewee.name %></h1>
+<div class="subtext over">
+  <%= @review.job.job_title %>, <%= @review.job.department.name %><br />
+  Reviewer: <%= @review.reviewer.name %>
+</div>
+
+<%= form_for(@review, :url => reviewer_comment_path(@review)) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  
+  <div class="subtext over">
+    <i>Now support your colleague by adding comments here - there's more guidance in the page-notes.  
+       When you've finished, go to the bottom of the page to finalize.</i>
+  </div>
+  
+  <div class="subtext">
+    <%= render "/reviews/comments", :f => f %>
+  </div>
+
+  <div class="field under">
+    <% if @review.completed? %>
+      <span class="subtext highlt">
+        You're making a late change after the review was originally signed off
+        as complete on <%= display_date(@review.completion_date) %>.
+      </span>
+    <% else %>
+      <%= f.check_box :comments_complete %>
+      <span class="highlt"><strong>Check if you've finished entering comments.</strong></span>
+    <% end %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Save changes", :class => "create round" %>
+  </div>
+  
+<% end %>
+

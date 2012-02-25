@@ -1,0 +1,80 @@
+<div id="listing" class="under">
+  <ul class="subtext no_dec">
+    <li>
+      <em>* Best achievement(s) *</em>
+      <div class="subtext">
+        <% if @review.achievements.nil? || @review.achievements.empty? %>
+          None
+        <% else %>
+          <%= @review.achievements %>
+        <% end %>
+      </div>
+    </li>
+  
+    <li>
+      <em>* Biggest problem(s) *</em>
+      <div class="subtext">
+        <% if @review.problems.nil? || @review.problems.empty? %>
+          None
+        <% else %>
+          <%= @review.problems %>
+        <% end %>
+      </div>
+    </li>
+
+    <li>
+      <em>* Other notes on performance *</em>
+      <div class="subtext">
+        <% if @review.observations.nil? || @review.observations.empty? %>
+          No comment
+        <% else %>
+          <%= @review.observations %>
+        <% end %>
+      </div>
+    </li>
+  
+    <li>
+      <em>* Any responsibilities to be removed or added? *</em>
+      <div class="subtext">
+        <% if @review.change_responsibilities.nil? || @review.change_responsibilities.empty? %>
+          No suggestions
+        <% else %>
+          <%= @review.change_responsibilities %>
+        <% end %>
+      </div>
+    </li>
+  
+    <li>
+      <em>* Any goals to be modified, removed or added? *</em>
+      <div class="subtext">
+        <% if @review.change_goals.nil? || @review.change_goals.empty? %>
+          No suggestions
+        <% else %>
+          <%= @review.change_goals %>
+        <% end %>
+      </div>
+    </li>
+  
+    <li>
+      <em>* Any changes needed to the attributes list? *</em>
+      <div class="subtext">
+        <% if @review.change_attributes.nil? || @review.change_attributes.empty? %>
+          No suggestions
+        <% else %>
+          <%= @review.change_attributes %>
+        <% end %>
+      </div>
+    </li>
+  
+    <li>
+      <em>* Suggestions for future achievement *</em>
+      <div class="subtext">
+        <% if @review.plan.nil? || @review.plan.empty? %>
+          No suggestions
+        <% else %>
+          <%= @review.plan %>
+        <% end %>
+      </div>
+    </li>
+  </ul>
+</div>

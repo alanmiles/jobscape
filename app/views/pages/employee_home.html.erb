@@ -69,7 +69,7 @@
       <% end %>
     </ul>
     
-    <h4 class="listheader">Reviews</h4>
+    <h4 class="listheader">Reviews of your performance</h4>
     <ul class="no_dec smaller_font"> 
       <% if @plan.complete? %>
         <li>
@@ -89,7 +89,11 @@
                 <%= link_to "Change review arrangements", edit_current_review_path(@review) %>
               
               <% elsif @review.consent.nil? %>
-                <%= link_to "Review in progress: change reviewer or cancel", edit_current_review_path(@review) %>
+                <% if @review.started? %>
+                  <%= link_to "Review in progress - details", edit_current_review_path(@review) %>
+                <% else %>
+                  <%= link_to "Review set up: change reviewer or cancel", edit_current_review_path(@review) %>
+                <% end %>
               <% end %>
             <% end %>   
           
@@ -117,14 +121,21 @@
       </li>
     </ul>  
     
-    <% if @user.has_review_requests?(@business) %>
-      <h4 class="listheader">Review Requests</h4>
+    <% if @user.has_review_requests?(@business) || @user.has_been_reviewer? %>
+      <h4 class="listheader">Your role as a reviewer</h4>
       <ul class="no_dec smaller_font"> 
-        <% if @user.review_requests(@business).count == 0 %>
-          <li class="not-found">None</li>
-        <% else %>
-          <li><%= link_to "Details of #{pluralize(@user.review_requests(@business).count, 'request')}", reviewer_reviews_path %></li>
-        <% end %>
+        <li>
+          <% if @user.review_requests(@business).count == 0 %>
+            <div class="not-found">No current review requests</div>
+          <% else %>
+            <div><%= link_to "#{pluralize(@user.review_requests(@business).count, 'current request')}", reviewer_reviews_path %></div>
+          <% end %>
+          <% if @user.has_been_reviewer? %>
+            <div>
+              <%= link_to "Reviews you've given", reviewer_completed_reviews_path %>
+            </div>
+          <% end %>
+        </li>
       </ul>
     <% end %>
   </div>

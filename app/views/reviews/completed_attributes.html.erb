@@ -1,0 +1,9 @@
+<% if @review.editable? %>
+  <div class="r-float">
+    <%= link_to "Edit attribute scores", edit_reviewer_score_attribute_path(@review) %>
+  </div>
+<% end %>
+
+<%= render 'review_for' %>
+
+<%= render 'result_attributes' %>

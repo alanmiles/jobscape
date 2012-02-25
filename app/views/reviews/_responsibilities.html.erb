@@ -1,5 +1,5 @@
-      <li>
-        <em><%= f.object.responsibility.definition %></em>
+      <li class = subtext over">
+        <%= f.object.responsibility.definition %>
         <div class="field">
         <%= f.fields_for :reviewgoals do |resp| %>  
           <%= render '/reviews/goals', :f => resp %>  

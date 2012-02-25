@@ -9,7 +9,7 @@
   <ul class="no_dec">
     <% if @plan.complete? %>
       <li><%= link_to "Update your Achievement Plan", plan_path(@plan) %></li>
-      <li><%= link_to "View the complete Achievement Plan", aplan_path(@plan) %></li>
+      <li><%= link_to "View the complete Achievement Plan", @plan %></li>
       <li>
         <% if current_user.has_incomplete_self_appraisal?(@business) %>        
           <%= link_to "Continue your self-appraisal", edit_self_appraisal_path(@review) %>

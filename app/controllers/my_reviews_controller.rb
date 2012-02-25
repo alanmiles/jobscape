@@ -5,7 +5,7 @@ class MyReviewsController < ApplicationController
     @business = Business.find(session[:biz])
     @job = Job.find(session[:jobid])
     @reviews = Review.completed_for(@user, @business).paginate(:page => params[:page])
-    @title = "Your review history"
+    @title = "Review history"
   end
 
   def show
@@ -19,6 +19,23 @@ class MyReviewsController < ApplicationController
     end
     @responsibilities = @review.reviewresponsibilities.order("rating_value DESC")
     @qualities = @review.reviewqualities.order("position")
+  end
+  
+  def responsibilities
+    @review = Review.find(params[:id])
+    @title = "Responsibility scores"
+    @responsibilities = @review.reviewresponsibilities.order("position")
+  end
+  
+  def attributes
+    @review = Review.find(params[:id])
+    @title = "Attribute ratings"
+    @qualities = @review.reviewqualities.order("position")
+  end
+  
+  def comments
+    @review = Review.find(params[:id])
+    @title = "Review comments"
   end
 
 end

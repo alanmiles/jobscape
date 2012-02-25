@@ -1,0 +1,9 @@
+<% if @review.editable? %>
+  <div class="r-float">
+    <%= link_to "Edit responsibility scores", edit_reviewer_score_responsibility_path(@review) %>
+  </div>
+<% end %>
+
+<%= render 'review_for' %>
+
+<%= render 'result_responsibilities' %>

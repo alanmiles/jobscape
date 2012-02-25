@@ -1,0 +1,39 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
+
+<h4 class="over">
+  <%= @user.name %><br />
+  <%= @business.name %>, <%= @business.city %>
+</h4>
+
+<div class="pagination over">
+  <%= will_paginate @reviews %>
+</div>
+
+<div id="listing">
+  <ul class="no_dec">
+    <% @reviews.each do |review| %>
+      <li>
+        <div class="r-float">
+          <h1><%= review.total_score %> % </h1>  
+        </div>
+        <%= review.reviewee.name %>: 
+        <span class="subtext"><%= display_date(review.completion_date) %></span>
+        <div class="subtext">
+          <%= review.job.title_department %><br />
+          <span class="align-left"><%= link_to "Responsibilities (#{review.responsibilities_score})", completed_responsibilities_review_path(review) %> -</span>
+          <%= link_to "Attributes (#{review.attributes_score})", completed_attributes_review_path(review) %> -
+          <%= link_to "Comments", completed_comments_review_path(review) %>
+          <% if review.editable? %>
+            <div class="highlt">
+               Editable till <%= review.editable_date.strftime("%H:%M") %> on <%= display_date(review.editable_date) %>
+            </div>
+          <% end %>
+        </div>      
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="pagination under">
+  <%= will_paginate @reviews %>
+</div>

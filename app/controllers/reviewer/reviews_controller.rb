@@ -64,7 +64,7 @@ class Reviewer::ReviewsController < ApplicationController
   def show
     @review = Review.find(params[:id])
     @job = Job.find(@review.job_id)
-    @title = "Completed performance review"
+    @title = "Performance review"
     @responsibilities = @review.reviewresponsibilities.order("rating_value DESC")
     @qualities = @review.reviewqualities.order("position")
   end

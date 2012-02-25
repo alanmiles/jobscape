@@ -1,21 +1,19 @@
-<div class = "r-float">
-  <% if current_user.account == 1 %>
-    <%= link_to "#{@job.job_title} menu", my_job_path %>
-  <% else %>
-    <%= link_to "Home Page", employee_home_path %>
-  <% end %>
-</div>
+<% if current_user.account == 1 %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), my_job_path, :class => "magnify" %>
+<% else %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
+<% end %>
 
-<h1><%= @title %></h1>
-<h4>
+<h4 class="over">
   <%= @user.name %>
   <% unless @user.account == 1 %>
-    - <%= @business.name %><br />
+    <br />
+    <%= @business.name %>, <%= @business.city %>
   <% end %>
 </h4>
 
 <% if @reviews.count == 0 %>
-  <div class="no_data round" style = "margin-top: 30px"> 
+  <div class="no_data round"> 
     There haven't been any reviews or self-appraisals yet.
   </div>
 <% else %>

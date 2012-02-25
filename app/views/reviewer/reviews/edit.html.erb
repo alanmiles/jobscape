@@ -9,22 +9,34 @@
 
 <div id="listing" class="over">
   <ul class="no_dec">
-    <li><%= link_to "Responsibilities", "#" %>
+    <li><%= link_to "Responsibilities", edit_reviewer_score_responsibility_path(@review) %>
       <div class="subtext">
-        <%=image_tag("warning.png") %>
-        <span class="highlt">Incomplete.</span>
+        <% if @review.responsibilities_complete? %>
+          Completed, scoring <%= @review.responsibilities_score %> / 50.
+        <% else %>
+          <%=image_tag("warning.png") %>
+          <span class="highlt">Incomplete.</span>
+        <% end %>
       </div>
     </li>
-    <li><%= link_to "Attributes", "#" %>
+    <li><%= link_to "Attributes", edit_reviewer_score_attribute_path(@review) %>
       <div class="subtext">
-        <%=image_tag("warning.png") %>
-        <span class="highlt">Incomplete.</span>
+        <% if @review.qualities_complete? %>
+          Completed, scoring <%= @review.attributes_score %> / 50.
+        <% else %>
+          <%=image_tag("warning.png") %>
+          <span class="highlt">Incomplete.</span>
+        <% end %>
       </div>
     </li>
-    <li><%= link_to "Comments", "#" %>
+    <li><%= link_to "Comments", edit_reviewer_comment_path(@review) %>
       <div class="subtext">
-        <%=image_tag("warning.png") %>
-        <span class="highlt">Incomplete.</span>
+        <% if @review.comments_complete? %>
+          Completed.
+        <% else %>
+          <%=image_tag("warning.png") %>
+          <span class="highlt">Incomplete.</span>
+        <% end %>
       </div>
     </li> 
   </ul>
@@ -33,85 +45,36 @@
 
 <%= form_for(@review, :url => reviewer_review_path(@review)) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-
-  <div class="small_action_label round">RESPONSIBILITIES</div>
-  <br />
-  <div class="info_box_screen round" style = "margin-bottom: 0px; background-color:#EEE">
-    Check each of the goals where the target has been achieved in the review period.<br />
-      No excuses!  No almosts!  Each statement is either true ... or it isn't.
-  </div> 
-   
-  <ol>
-    <%= f.fields_for :reviewresponsibilities do |resp| %>
-      <%= render "/reviews/responsibilities", :f => resp %>
+    
+  <div class="field under over">
+    <% if @review.elements_complete? %>
+    
+      <u>Review now completed.  Score: <%= @review.total_score %> %</u> <br />
+      <div class="subtext under">
+        If you're happy with everything, sign off on the review <i><strong>(before the completion date)</strong></i>
+        by checking <i>'Publish results'</i> and then clicking on <i>'Save Completed Review'</i>.
+        You'll still be allowed to edit the review for another 7 days after submission - but not
+        after that.
+      </div>
+      <br />
+      <%= f.check_box :completed %><span class="highlt"><strong>Check to publish results.</strong></span>
+    
+    <% else %>
+      <div class="subtext under">
+        If you haven't completed your review and you want to continue later, just click
+        on 'Save changes'.  You can come back and continue the review at any time up to 
+        <%= (@review.created_at + 14.days).strftime("%a %b %d, %Y") %>.  If you haven't completed by then, your review
+        scores and comments will be automatically deleted. 
+      </div>
     <% end %>
-  </ol>
-  
-  <div class="field shift_center_50">
-    <strong>CHECK WHEN YOU'VE FINISHED SCORING RESPONSIBILITIES</strong>
-    <%= f.check_box :responsibilities_complete %>
   </div>
-  <br /><br />
   
-  <div class="small_action_label round">ATTRIBUTES</div>
-  <br />
-  <div class="info_box_screen round" style = "background-color: #EEE">
-    How well do <%= @review.reviewee.name %>'s personality and key aptitudes fit the job?<br />
-    For each attribute, select one statement.
-  </div> 
-  
-  <ol>  
-    <%= f.fields_for :reviewqualities do |qlt| %>
-     <%= render "/reviews/attributes", :f => qlt %>
-    <% end %>
-  </ol>
- 
-  
-  
-    <div class="field shift_center_50">
-      <strong>CHECK WHEN YOU'VE FINISHED GRADING ATTRIBUTES</strong>
-      <%= f.check_box :qualities_complete %>
-    </div>
-    <br /><br />
-    
-  <div class="small_action_label round">COMMENTS & PLANS</div>
-  <br />
-  <div class="info_box_screen round" style = "margin-bottom: 0px; background-color: #EEE">
-    You've completed half the job - looking back and reviewing recent performance.
-    Now it's time to look forward. Do the questions in this review seem to fit the job - 
-    or does the Achievement Plan need to change?  If everything's being achieved, should the
-    standards be raised?  Or if there are problem areas, what do you recommend?
-  </div> 
-  <br />
-  <%= render "/reviews/comments", :f => f %>
-
-    <div class="field shift_center_50">
-      <strong>CHECK WHEN YOU'VE FINISHED ENTERING COMMENTS</strong>
-      <%= f.check_box :comments_complete %>
-    </div>
-    <br /><br />
-    
-    <div class="display_wider grayborder round">
-      <strong>CHECK IF YOU'VE NOW COMPLETED THE REVIEW</strong>
-      <%= f.check_box :completed %>
-    </div>
-    <br />
-    <div class="info_box_screen round" style="background-color: #EEE">
-           Before you sign off on the review, by clicking the box above, you must check the 'Finished' boxes
-           for Responsibilities, Attributes and Comments.<br /><br />
-           
-           If you're happy with everything, click on 'Save Changes' below to finalize.  You'll still be able to
-           edit the review for another 7 days after submission - but not after that.
-           <br /><br />
-           If you haven't completed your review, but you want to save your changes to continue later, just click
-           on 'Save changes'.  You can come back and continue the review up to 
-           <%= (@review.created_at + 14.days).strftime("%a %b %d, %Y") %>.  If you haven't completed by then, the review
-           will be automatically deleted.
-    </div> 
-    <br />
-
   <div class="actions">
-    <%= f.submit "Save changes" %>
+    <% if @review.elements_complete? %>
+      <%= f.submit "Save completed review", :class => "create round" %>
+    <% else %>
+      <%= f.submit "Save changes", :class => "create round" %>
+    <% end %>
   </div>
  
 <% end %>  

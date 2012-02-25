@@ -51,4 +51,20 @@ class ReviewsController < ApplicationController
     @title = "Time taken to review?"
   end
   
+   def completed_responsibilities
+    @review = Review.find(params[:id])
+    @title = "Responsibility scores"
+    @responsibilities = @review.reviewresponsibilities.order("position")
+  end
+  
+  def completed_attributes
+    @review = Review.find(params[:id])
+    @title = "Attribute ratings"
+    @qualities = @review.reviewqualities.order("position")
+  end
+  
+  def completed_comments
+    @review = Review.find(params[:id])
+    @title = "Review comments"
+  end
 end

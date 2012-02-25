@@ -1,0 +1,2 @@
+module Reviewer::CommentsHelper
+end

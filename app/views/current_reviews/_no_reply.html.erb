@@ -1,23 +1,45 @@
-   There's been no response from <%= @review.reviewer.name %> yet.
+There's been no response from your reviewer yet.
  
+<br />
     
-    <br />
-    
-    
-      <div class="field">    
-        <%= f.label :reviewer_id, "Change reviewer" %> &nbsp;
-        <%= collection_select(:review, :reviewer_id, @users, :id, 
+<div class="field">    
+  <%= f.label :reviewer_id, "Change reviewer" %> &nbsp;
+  <%= collection_select(:review, :reviewer_id, @users, :id, 
                         :name, :prompt => true) %>
-      </div>
+</div>
     
-      <div class="field">
-        <%= f.label :cancel, "Check this box to cancel the review completely" %> &nbsp;
-        <%= f.check_box :cancel %><br />
-        <small>(Only cancel for a good reason - e.g. your reviewer is unavailable, and there's no time to find a replacement)</small>
-      </div>
+<div class="field">
+  <%= f.label :cancel, "Check this box to cancel the review completely" %> &nbsp;
+  <%= f.check_box :cancel %>
+  <div class="subtext">
+    (Only cancel for a good reason - e.g. your reviewer is unavailable, and there's no time to find a replacement)
+  </div>
+</div>
     
-      <div class="field">
-        <%= f.label :cancellation_reason, "If you're cancelling the review, briefly explain why." %><br />
-        <%= f.text_field :cancellation_reason, :size => 50 %>
-      </div>
+<div class="field">
+  <%= f.label :cancellation_reason, "If you're cancelling the review, briefly explain why." %><br />
+  <%= f.text_area :cancellation_reason, :maxlength => 255, :class => "tiny" %>
+  <div class="char-count"><%= @characters_left %> characters left</div>
+</div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $(document).ready(function(){
+    
+      $('#review_cancellation_reason').click(function() {
+        $('.char-count').css('visibility', 'visible');
+      });
+
+      $('#review_cancellation_reason').live('keyup keydown', function(e) {
+      var maxLen = 255;
+      var left = maxLen - $(this).val().length;
+      $('.char-count').html(left);
+      });
+    
+    });
+  
+  <% end %>
+<% end %>
       

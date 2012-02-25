@@ -136,12 +136,19 @@ Jobscape::Application.routes.draw do
   #end
   resources :reviews do
     collection do
-      get 'reasons', 'reviewers', 'frequency', 'time'
+      get 'reasons', 'reviewers', 'frequency', 'time', 
+    end
+    member do
+      get 'completed_responsibilities', 'completed_attributes', 'completed_comments'
     end
     resources :reviewqualities, :shallow => true
   end
   resources :self_appraisals
-  resources :my_reviews
+  resources :my_reviews do
+    member do
+      get 'responsibilities', 'attributes', 'comments'
+    end
+  end
   resources :current_reviews
   resources :external_reviewers, :only => [:edit, :update]
   resources :no_reviews
@@ -151,6 +158,10 @@ Jobscape::Application.routes.draw do
   resources :department_reviews
   namespace :reviewer do
     resources :reviews
+    resources :completed_reviews
+    resources :score_responsibilities
+    resources :score_attributes
+    resources :comments
   end
   resources :notes
   resources :contents

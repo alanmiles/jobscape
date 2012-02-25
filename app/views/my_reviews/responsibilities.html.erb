@@ -1,0 +1,18 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), my_reviews_path, :class => "magnify" %>
+
+<h1 class="no-gap">
+  <% if @review.self_appraisal? %>
+    Self-Appraisal: 
+  <% else %>
+    Colleague Review:
+  <% end %>  
+  <%= display_date(@review.completion_date) %>
+</h1>
+<div class="subtext">
+  Job: <%= @review.job.title_department %><br />
+  <% unless @review.self_appraisal? %>
+    Reviewer: <%= @review.reviewer.name %>     
+  <% end %>
+</div>
+
+<%= render '/reviews/result_responsibilities' %>

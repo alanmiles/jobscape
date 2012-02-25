@@ -88,7 +88,7 @@ body {
 /* used */
 #center-content {
   padding: 2em 2em;
-  max-height: 35em;
+  max-height: 85%;
   overflow: auto;
 }
 
@@ -402,6 +402,11 @@ ul li a {
   padding-left: 0.25em;
 }
 
+/* used */
+.align-left a  {
+  padding-left: 0;
+}
+
 ul li.no_bullet {
   list-style-type: none;
   padding-bottom: 10px;
@@ -416,9 +421,11 @@ ul li.smaller_font {
   font-size: 0.85em;
 }
 
+
 /* used */
 .not-found {
   color: #888;
+  padding-left: 0.25em;
 }
 
 /* used */
@@ -438,13 +445,30 @@ ul li.smaller_font {
 /* used */
 #listing ul li {
   padding: 0.5em 0;
-  /* border-bottom: 1px #BBB solid; */
   border-bottom: 3px white ridge;
 }
 
 /* used */
 #listing ul li:nth-child(odd) {
   background: #CCC;
+}
+
+/* used */
+#listing ul li ul  {
+  list-style: none;
+  font-size: 85%;
+  margin-bottom: 1em;
+}
+
+/* used */
+#listing ul li ul li {
+  padding: 1em;
+  border-bottom: none;
+}
+
+/* used */
+#listing ul li ul li:nth-child(odd) {
+  background: none;
 }
 
 /*used */
@@ -1167,6 +1191,23 @@ ul.users {
   font-size: 90%;
   float:right;
 }
+
+/* used */
+.l-float {
+  float: left;
+}
+
+/*used */
+.list-90 {
+  width:90%;
+  margin-bottom: 1em;
+}
+  
+/* used */
+.list-05;
+  width: 5%;  
+}
+
 
 .centerplace {
   margin-left:140px}

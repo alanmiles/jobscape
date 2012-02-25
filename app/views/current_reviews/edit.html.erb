@@ -26,19 +26,28 @@
       <%= render 'rejection', :f => f %>
     
     <% else %>
-      <%= render 'no_reply', :f => f %>
-    
+      <% if @review.started? %>
+        Your review is in progress.
+      <% else %>
+        <%= render 'no_reply', :f => f %>
+      <% end %>
     <% end %>
-  
-    <br />
  
     <div class="actions">
       <% if @review.consent? %>
-        <%= link_to "Return to Home Page", employee_home_path %>
+        <div class="under">
+          <strong><%= link_to "Return to Home Page", employee_home_path %></strong>
+        </div>
       <% elsif @review.consent == false %>
-        <%= f.submit "Confirm and continue" %>
+        <%= f.submit "Confirm and continue", :class => "create round" %>
       <% else %>
-        <%= f.submit "Confirm changes" %>
+        <% if @review.started? %>
+          <div class = "under">
+            <strong><%= link_to "Return to Home Page", employee_home_path %></strong>
+          </div>
+        <% else %>
+          <%= f.submit "Confirm changes", :class => "create round" %>
+        <% end %>
       <% end %>
     </div>
   </div>

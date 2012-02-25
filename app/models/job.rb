@@ -48,7 +48,11 @@ class Job < ActiveRecord::Base
   end
   
   def title_department
-    "#{self.job_title}, #{self.department.name}"
+    if self.department.name == "Unknown"
+      "#{self.job_title}"
+    else
+      "#{self.job_title}, #{self.department.name}"
+    end
   end
   
   def unfilled_vacancies

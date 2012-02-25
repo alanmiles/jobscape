@@ -1,19 +1,44 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
+
+
 <div class = "r-float">
   <% if @review.editable_date > Date.today %>
     <%= link_to "Edit results (till #{display_date(@review.editable_date)} only)", edit_reviewer_review_path(@review) %>
     <br />
   <% end %>
-  <%= link_to "Home Page", employee_home_path %>
 </div>
 
-<h1><%= @title %></h1>
-<h4>
-    For: <%= @review.reviewee.name %> <br />
-    Reviewed by: <%= @review.reviewer.name %><br />
-    Completed:  <%= display_date(@review.completion_date) %>
+<h4 class="over">
+    <%= @review.reviewee.name %><br />
+    <%= @review.job.title_department %>
 </h4>
 
-<br />
+<div class="subtext">
+  Reviewed by: <%= @review.reviewer.name %><br />
+  Completed:  <%= display_date(@review.completion_date) %>
+</div>
+
+<div id="listing" class="under">
+  Overall review score: <%= @review.total_score %> %
+  <hr />
+  Job rating: <%= @review.job.plan.job_value %><br />
+  Contribution: <%= @review.total_score * @review.job.plan.job_value / 100 %>
+  <hr /><br />
+  <ul class="no_dec">
+    <li>Responsibilities 
+      <div class="subtext">
+        Review score: <%= @review.responsibilities_score %> / 50
+      </div>    
+    </li>
+    <li>Attributes
+      <div class="subtext">
+        Review score: <%= @review.attributes_score %> / 50
+      </div>  
+    </li>
+    <li>Comments</li>
+  
+  </ul>
+</div>
 
 <%= render "/reviews/overall_result" %>
 

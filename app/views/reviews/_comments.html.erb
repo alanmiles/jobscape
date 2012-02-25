@@ -1,37 +1,124 @@
-<div class= "shift_center">
+
   <div class="field">
     <%= f.label :achievements, "Best achievement(s) in this period" %><br />
-    <%= f.text_area :achievements, :cols => 60, :rows => 3 %>
+    <%= f.text_area :achievements, :maxlength => 255, :class => "tiny" %>
+    <div id="achievements-count" class="char-count"><%= @achievement_characters_left %> characters left</div>
   </div>
   
   <div class="field">
     <%= f.label :problems, "Biggest problem(s) in this period" %><br />
-    <%= f.text_area :problems, :cols => 60, :rows => 3 %>
+    <%= f.text_area :problems, :maxlength => 255, :class => "tiny" %>
+    <div id="problems-count" class="char-count"><%= @problem_characters_left %> characters left</div>
   </div>
 
   <div class="field">
-    <%= f.label :observations, "Other observations / notes" %><br />
-    <%= f.text_area :observations, :cols => 60, :rows => 3 %>
+    <%= f.label :observations, "Other observations / notes on performance" %><br />
+    <%= f.text_area :observations, :maxlength => 255, :class => "tiny" %>
+    <div id="observations-count" class="char-count"><%= @observation_characters_left %> characters left</div>
   </div>
   
   <div class="field">
     <%= f.label :change_reponsibilities, "Any responsibilities to be removed or added?" %><br />
-    <%= f.text_area :change_responsibilities, :cols => 60, :rows => 3 %>
+    <%= f.text_area :change_responsibilities, :maxlength => 255, :class => "tiny" %>
+    <div id="change-responsibilities-count" class="char-count"><%= @change_responsibility_characters_left %> characters left</div>
   </div>
   
   <div class="field">
     <%= f.label :change_goals, "Any goals to be modified, removed or added?" %><br />
-    <%= f.text_area :change_goals, :cols => 60, :rows => 3 %>
+    <%= f.text_area :change_goals, :maxlength => 255, :class => "tiny" %>
+    <div id="change-goals-count" class="char-count"><%= @change_goal_characters_left %> characters left</div>
   </div>
   
   <div class="field">
     <%= f.label :change_attributes, "Any changes needed to the attributes list?" %><br />
-    <%= f.text_area :change_attributes, :cols => 60, :rows => 3 %>
+    <%= f.text_area :change_attributes, :maxlength => 255, :class => "tiny" %>
+    <div id="change-attributes-count" class="char-count"><%= @change_attribute_characters_left %> characters left</div>
   </div>
   
   <div class="field">
-    <%= f.label :plan, "What's the plan to address weaknesses / build on strengths?" %><br />
-    <%= f.text_area :plan, :cols => 60, :rows => 4 %>
+    <%= f.label :plan, "Suggestions to address weaknesses / build on strengths?" %><br />
+    <%= f.text_area :plan, :maxlength => 255, :class => "tiny" %>
+    <div id="plan-count" class="char-count"><%= @plan_characters_left %> characters left</div>
   </div>
-</div>
 
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $(document).ready(function(){
+    
+      $('#review_achievements').click(function() {
+        $('#achievements-count').css('visibility', 'visible');
+      });
+
+      $('#review_achievements').live('keyup keydown', function(e) {
+        var maxLen = 255;
+        var left = maxLen - $(this).val().length;
+        $('#achievements-count').html(left);
+      });
+      
+      $('#review_problems').click(function() {
+        $('#problems-count').css('visibility', 'visible');
+      });
+
+      $('#review_problems').live('keyup keydown', function(e) {
+        var maxLen = 255;
+        var left = maxLen - $(this).val().length;
+        $('#problems-count').html(left);
+      });
+    
+    
+      $('#review_observations').click(function() {
+        $('#observations-count').css('visibility', 'visible');
+      });
+
+      $('#review_observations').live('keyup keydown', function(e) {
+        var maxLen = 255;
+        var left = maxLen - $(this).val().length;
+        $('#observations-count').html(left);
+      });
+      
+      $('#review_change_responsibilities').click(function() {
+        $('#change-responsibilities-count').css('visibility', 'visible');
+      });
+
+      $('#review_change_responsibilities').live('keyup keydown', function(e) {
+        var maxLen = 255;
+        var left = maxLen - $(this).val().length;
+        $('#change-responsibilities-count').html(left);
+      });
+      
+      $('#review_change_goals').click(function() {
+        $('#change-goals-count').css('visibility', 'visible');
+      });
+
+      $('#review_change_goals').live('keyup keydown', function(e) {
+        var maxLen = 255;
+        var left = maxLen - $(this).val().length;
+        $('#change-goals-count').html(left);
+      });
+      
+      $('#review_change_attributes').click(function() {
+        $('#change-attributes-count').css('visibility', 'visible');
+      });
+
+      $('#review_change_attributes').live('keyup keydown', function(e) {
+        var maxLen = 255;
+        var left = maxLen - $(this).val().length;
+        $('#change-attributes-count').html(left);
+      });
+      
+      $('#review_plan').click(function() {
+        $('#plan-count').css('visibility', 'visible');
+      });
+
+      $('#review_plan').live('keyup keydown', function(e) {
+        var maxLen = 255;
+        var left = maxLen - $(this).val().length;
+        $('#plan-count').html(left);
+      });
+      
+    });
+  
+  <% end %>
+<% end %>

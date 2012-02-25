@@ -1,0 +1,9 @@
+<% if @review.editable? %>
+  <div class="r-float">
+    <%= link_to "Edit comments", edit_reviewer_comment_path(@review) %>
+  </div>
+<% end %>
+
+<%= render 'review_for' %>
+
+<%= render 'comments_received' %>

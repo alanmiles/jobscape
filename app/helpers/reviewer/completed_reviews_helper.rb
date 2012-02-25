@@ -1,0 +1,2 @@
+module Reviewer::CompletedReviewsHelper
+end

@@ -14,6 +14,11 @@ class CurrentReviewsController < ApplicationController
     elsif @review.review_type == 3
       @users = @business.all_current_employees
     end
+    if @review.cancellation_reason.nil?
+      @characters_left = 255
+    else
+      @characters_left = 255 - @review.cancellation_reason.length
+    end
     @title = "Colleague review plan"
   end
   
@@ -40,6 +45,11 @@ class CurrentReviewsController < ApplicationController
         @users = User.all_active_in(@department)
       elsif @review.review_type == 3
         @users = @business.all_current_employees
+      end
+      if @review.cancellation_reason.nil?
+        @characters_left = 255
+      else
+        @characters_left = 255 - @review.cancellation_reason.length
       end
       @title = "Your current review plans"
       render 'edit'

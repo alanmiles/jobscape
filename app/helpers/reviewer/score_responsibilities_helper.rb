@@ -1,0 +1,2 @@
+module Reviewer::ScoreResponsibilitiesHelper
+end

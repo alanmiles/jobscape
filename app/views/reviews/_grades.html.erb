@@ -1,10 +1,10 @@
          <% @pams.each do |p| %>
-            <ul style="font-size: 85%; margin-top: 10px; margin-bottom: 5px; display: block">
-              <li class= "no_bullet">
-                <div style="float:right; width: 75%; margin-right:100px; margin-bottom: 10px"><%= p.descriptor %></div>
-                <div style="float:left"><%= p.grade %></div>
-              </li>
-            </ul> 
-          <br />
-          <% end %>
+           <ul>
+             <li>
+               <div class="r-float list-90"><%= p.descriptor %></div>
+               <div class="l-float list-05"><%= p.grade %></div>    
+             </li>
+           </ul> 
+          
+         <% end %>
         

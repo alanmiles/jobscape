@@ -456,7 +456,11 @@ class User < ActiveRecord::Base
   end
   
   def recent_reviewer_sessions
-    self.reviewer_sessions.where("reviews.completion_date > ?", Date.today - 1.year)
+    self.reviewer_sessions.where("reviews.completion_date > ? and reviews.review_type = ?", Date.today - 1.year, 2).order("reviews.completion_date DESC")
+  end
+  
+  def has_been_reviewer?
+    self.recent_reviewer_sessions.count > 0
   end
   
   def involved_in_recent_reviews?
