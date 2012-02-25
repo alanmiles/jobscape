@@ -1,7 +1,7 @@
 <% if signed_in? %>
-  <%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), jobsearch_menu_path %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), jobsearch_menu_path, :class => "magnify" %>
 <% else %>
-  <%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), root_path %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), root_path, :class => "magnify" %>
 <% end %>
 
 <% if @vacancies.count == 0 %>
