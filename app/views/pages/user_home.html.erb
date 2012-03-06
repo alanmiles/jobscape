@@ -19,8 +19,8 @@
     <li><%= link_to "Try HYGWIT Corporate", new_business_path %>
       <div class="subtext">Get your whole business focused on achievement.</div> 
     </li>
-    <li><%= link_to "Your settings", edit_user_path(current_user) %>
-      <div class="subtext">Reset your user name / password.</div> 
+    <li><%= link_to "Your settings", @user %>
+      <div class="subtext">User name / email / password / account-type.</div> 
     </li>
   </ul>
 </div>

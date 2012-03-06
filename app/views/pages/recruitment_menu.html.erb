@@ -1,13 +1,13 @@
-<div class = "r-float">
-  <%= link_to "Home Page", officer_home_path %>
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), officer_home_path, :class => "magnify" %>
 
-<h4><%= @business.name %></h4>
+<h4 class="over"><%= @business.name %></h4>
 
 <div id="listing">
-  <br />
   <ul class="no_dec">
-    <li><%= link_to "Current vacancies", officer_vacancies_path %></li>
+    <li>
+      <%= link_to "Current vacancies", officer_vacancies_path %> &nbsp;
+      <%= image_tag("warning.png") if @business.vacancies_warning? %>
+    </li>
     <li><%= link_to "Search applicants", "#" %></li>    
     <li><%= link_to "Find internal candidates", "#" %></li>
     <li><%= link_to "Interview scoring", "#" %></li>       

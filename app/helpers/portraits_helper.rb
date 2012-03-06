@@ -2,9 +2,9 @@ module PortraitsHelper
 
   def legality
     if @portrait.right_to_work == true
-      return "I have the legal right to work in this country."
+      return "Permitted to work in #{@user.country}."
     else
-      return "I am not permitted to work in this country."
+      return "Not permitted to work in #{@user.country}."
     end
   end
   

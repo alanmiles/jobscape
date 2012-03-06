@@ -1,21 +1,32 @@
 <%= render 'shared/error_messages', :object => f.object %>
 
 <div class="field">
-  <%= f.label :achievement, "Mention an achievement you're proud of" %><br />
-  <small> ... not necessarily at work - anything in your life (max 200 characters)</small><br />
-  <%= f.text_area :achievement, :cols => 60, :maxlength => 200, :rows => 5 %>
-  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  <%= f.label :achievement, "Mention an achievement you're proud of *" %>
+  <div class="subtext under"> 
+    ... not necessarily just at work - anything in your life.
+    <br /><br />
+  </div>
+  <%= f.text_area :achievement, :maxlength => 200, :class => "downsize" %>
+  <div class="char-count"><%= @characters_left %> characters left</div>
 </div>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
 
-    $('#achievement_achievement').live('keyup keydown', function(e) {
-    var maxLen = 200;
-    var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
-    });
+    $(document).ready(function(){
     
+      $('#achievement_achievement').click(function() {
+        $('.char-count').css('visibility', 'visible');
+      });
+      
+      $('#achievement_achievement').live('keyup keydown', function(e) {
+        var maxLen = 200;
+        var left = maxLen - $(this).val().length;
+        $('.char-count').html(left);
+      });
+    
+     });
+     
   <% end %>
 <% end %>

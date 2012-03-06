@@ -194,4 +194,9 @@ class Business < ActiveRecord::Base
     self.vacancies.where("vacancies.filled = ?", false).order("created_at")  
   end
   
+  def vacancies_warning?
+    nmbr = self.vacancies.where("vacancies.filled = ? and vacancies.close_date < ?", false, Date.today).count
+    nmbr > 0
+  end
+  
 end

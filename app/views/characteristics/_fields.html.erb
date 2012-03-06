@@ -1,19 +1,30 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :characteristic, "What's #{@user.name} like?" %><br />
-  <small>How might a colleague or friend respond?</small><br />
+  <%= f.label :characteristic, "What's #{@user.name} like? *" %>
+  <div class="subtext under">
+    How might a colleague or friend respond?
+    <br /><br />
+  </div>
   <%= f.text_field :characteristic, :maxlength => 50, :size => 40 %>
-  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  <div class="char-count"><%= @characters_left %> characters left</div>
 </div>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
-
-    $('#characteristic_characteristic').live('keyup keydown', function(e) {
-    var maxLen = 50;
-    var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
+ 
+    $(document).ready(function(){
+    
+      $('#characteristic_characteristic').click(function() {
+        $('.char-count').css('visibility', 'visible');
+      });
+         
+      $('#characteristic_characteristic').live('keyup keydown', function(e) {
+        var maxLen = 50;
+        var left = maxLen - $(this).val().length;
+        $('.char-count').html(left);
+      });
+    
     });
     
   <% end %>

@@ -1,49 +1,51 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), user_portrait_path(@user), :class => "magnify" %>
+
 <div class = "r-float">
   <% unless @user.max_previousjobs? %>
     <%= link_to "Add a previous job", new_user_previousjob_path(@user) %><br /> 
   <% end %>
-  <%= link_to "Full Portrait", user_portrait_path(@user) %>
 </div>
 
-<h1><%= @user.name %>'s previous jobs</h1>
-<div class="display_wider">
+<h4><%= @user.name %>'s previous jobs</h4>
+<div id="rubric">
   <em>
     <% if @user.has_previousjobs? %>   
-      Click on <%= image_tag("cancel.png", :size => "15x15") %> to delete 
-      and <%= image_tag("select.png", :size => "15x15") %> to modify a job.
-      <br /><br />
       <% if @user.count_previousjobs > 1 %>
-        Then click and drag the list-items till your most recent (or current) job is at the top.
+        Click and drag the list-items till your most recent (or current) job is at the top.
       <% end %>
     <% end %>
     You can add up to 5 jobs.
   </em>
 </div>
-<hr />
-<ul id="previousjobs-list" style="cursor: move">
-  <% @previousjobs.each do |f| %>
-  <li id="previousjob_<%= f.id %>" class="no_bullet">
-    <span style="vertical-align:top">
-       <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+
+<div id="listing" class="under">
+  <ul id="previousjobs-list" class="no_dec">
+    <% @previousjobs.each do |f| %>
+      <li id="previousjob_<%= f.id %>">
+        <span style="vertical-align:top">
+          <%= link_to(image_tag("delete.png"), f, 
                    	:method => :delete, 
-                   	:confirm => "You sure?",
+                   	:confirm => "Are you sure you want to remove this job?",
                    	:title => "Remove this job") %>
-    </span> &nbsp;
-    <span style="vertical-align:top"> 
-       <%= link_to(image_tag("select.png", :size => "15x15"), 
+        </span> &nbsp;
+        <span style="vertical-align:top"> 
+          <%= link_to(image_tag("details.png"), 
     			edit_previousjob_path(f), 
     			:title => "Edit this job") %> 
-    </span>&nbsp;    
-    <span class="handle" style = "display:inline-block; width:80%"><%= f.job_details %></span>
+        </span>&nbsp;    
+        <span class="handle" style = "display:inline-block; width:80%"><%= f.job_details %></span>
    
-   </li>
-  <% end %>
-</ul>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
- 
+
+   $(document).ready(function(){
+    
     $('#previousjobs-list').sortable(
      {
        	axis: 'y',
@@ -64,6 +66,8 @@
 	url: 'previousjobs/sort'})
       }
      })
+    
+    });
 
    <% end %>
 <% end %>

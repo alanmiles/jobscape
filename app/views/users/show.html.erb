@@ -1,25 +1,38 @@
+<%= render 'home_redirection' %>
+
 <div class = "r-float">
-  <%= render 'home_redirection' %> <br />
-  <%= link_to "Re-edit account details", edit_user_path(@user) %>
+  <%= link_to "Edit settings", edit_user_path(@user) %>
 </div>
 
-<h1><%= @user.name %></h1>
 
-<div class="display_box_left rightpos">
-  
-
-</div>
-
-<div class="display_box_left">
-  <strong>Account-type:</strong> <%= @user.account_type.upcase %>
-  <br /><br />
-  <em><%= account_explanation %></em>
-  <br /><br />
-  <strong>Email:</strong> <%= @user.email %>
-  <% if @user.account == 2 %>
-    <br /><br />  
-    <strong>Location: </strong><%= @user.city %>, <%= @user.country %>
-  <% end %>
+<div id="listing" class="under">
+  <ul class="no_dec"> 
+    <li>Name: <br /><%= @user.name %></li>
+    <li>Email:<br /><%= @user.email %></li>
+    <li>Account-type: 
+       <%= @user.account_type.upcase %>
+      <div class="subtext">
+        <%= account_explanation %>
+      </div>
+    </li>
+    <% if @user.account == 4 %>
+      <% unless session[:biz] == nil %>
+        <li>
+          Employer: <br /><%= @business.name %>, <%= @business.city %>
+        </li>
+      <% end %>
+    <% else %>
+      <li>  
+        Location: <br /><%= @user.city %>, <%= @user.country %>
+      </li>
+    <% end %>
+    <li>
+      Your password is never shown -  
+      <div class="subtext">
+        but you can change it by editing settings
+      </div>  
+    </li>
+  </ul>
 </div>
 
 

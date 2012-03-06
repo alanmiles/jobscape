@@ -12,7 +12,12 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @title = @user.name
+    if @user.account == 4
+      @title = "Settings"
+      @business = Business.find(session[:biz]) unless session[:biz] == nil
+    else
+      @title = "Your settings"
+    end
   end
   
   def new
@@ -110,25 +115,27 @@ class UsersController < ApplicationController
   end
   
   def edit
-    @title = "Edit account settings"
     @user = User.find(params[:id])
     if @user.account == 4
-      @business = Business.find(session[:biz])
+      @business = Business.find(session[:biz]) unless session[:biz] == nil
+      @title = "Employee settings"
     else
       @accounts = User::ACCOUNT_TYPES
+      @title = "User settings"
     end
   end
   
   def update
     if @user.update_attributes(params[:user])
-      flash[:success] = "Profile updated. Check that the details are correct."
+      flash[:success] = "Settings updated. Check that the details are correct."
       session[:biz] = nil
       redirect_to @user
     else
-      @title = "Edit account settings"
       if @user.account == 4
+        @title = "Employee settings"
         @business = Business.find(session[:biz])
       else
+        @title = "User settings"
         @accounts = User::ACCOUNT_TYPES
       end
       render 'edit'

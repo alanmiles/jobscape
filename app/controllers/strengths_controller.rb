@@ -18,7 +18,7 @@ class StrengthsController < ApplicationController
   def new
     @user = current_user
     @strength = @user.strengths.new
-    @title = "Add one of your strengths"
+    @title = "New strength"
     @characters_left = 50
   end
   
@@ -33,7 +33,7 @@ class StrengthsController < ApplicationController
       end
       redirect_to user_strengths_path(@user)
     else
-      @title = "Add one of your strengths"
+      @title = "New strength"
       @characters_left = 50 - @strength.strength.length
       @user = current_user
       render 'new'

@@ -36,6 +36,12 @@
      
         <% if @user.has_review_requests?(biz) || @user.has_rejected_review_requests?(biz) %>
           <%= image_tag("warning.png") %>
+        <% else %>
+          <% if employee.role == "Officer" %>
+            <% if biz.vacancies_warning? || biz.needs_an_officer? %>
+              <%= image_tag("warning.png") %>
+            <% end %>
+          <% end %>
         <% end %>
         <div class="subtext">
           <%= employee.role %>

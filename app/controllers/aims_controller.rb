@@ -18,7 +18,7 @@ class AimsController < ApplicationController
   def new
     @user = current_user
     @aim = @user.aims.new
-    @title = "Add an aim"
+    @title = "New aim"
     @characters_left = 50
   end
   
@@ -33,7 +33,7 @@ class AimsController < ApplicationController
       end
       redirect_to user_aims_path(@user)
     else
-      @title = "Add an aim"
+      @title = "New aim"
       @characters_left = 50 - @aim.aim.length
       @user = current_user
       render 'new'

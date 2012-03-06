@@ -1,12 +1,10 @@
-<div class = "r-float">
-  <%= link_to "Cancel", user_referees_path(@user) %>
-</div>
+<%= link_to image_tag("pageback.png", :title => "Previous"), user_referees_path(@user), :class => "magnify" %>
 
-<h1><%= @title %></h1> 
+<h4 class="over">For <%= @referee.user.name %></h4> 
   <%= form_for([@user,@referee]) do |f| %>
     <%= render 'fields', :f => f %> 
     <div class="actions">
-      <%= f.submit "Create" %>
+      <%= f.submit "Create", :class => "create round" %>
     </div>
   <% end %>
 

@@ -1,14 +1,16 @@
-<div class = "r-float">
-  <%= link_to "Cancel", user_strengths_path(@strength.user_id) %>
+<div class="r-float">
+  <%= link_to "Entire portrait", user_portrait_path(@strength.user) %>
 </div>
 
-<h1><%= @title %></h1>
-<br /><br />
-<div class="shift_center">
+<%= link_to image_tag("pageback.png", :title => "Strengths list"), user_strengths_path(@strength.user), :class => "magnify" %>
+
+<h4 class="over"><%= @strength.user.name %></h4>
+
+<div class="shift_center_50">
   <%= form_for @strength do |f| %>
     <%= render 'fields', :f => f %> 
     <div class="actions">
-      <%= f.submit "Confirm changes" %>
+      <%= f.submit :class => "create round" %>
     </div>
   <% end %>
 </div>

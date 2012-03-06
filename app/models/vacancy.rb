@@ -90,6 +90,15 @@ class Vacancy < ActiveRecord::Base
     Application.where("vacancy_id = ? and user_id = ?", self.id, user.id).first
   end
   
+  def all_applications_rejected?
+    nmb_rejections = self.applications.where("applications.employer_action = ?", 2).count
+    nmb_rejections == all_completed_applications.count
+  end
+  
+  def deletable?
+    all_completed_applications.count == 0 || all_applications_rejected?
+  end
+  
   def headline
     @headline = "#{self.job.job_title} - #{self.job.business.city}"
   end

@@ -83,7 +83,13 @@
         </div>
       </li>
       <li><%= link_to "Performance reviews", performance_reviews_path %></li>
-      <li><%= link_to "Recruitment", recruitment_menu_path %></li>
+      <li>
+        <%= link_to "Recruitment", recruitment_menu_path %> &nbsp;
+        <%= image_tag("warning.png") if @business.vacancies_warning? %>
+        <div class="subtext">
+          Vacancies / applications / interviews + history
+        </div>
+      </li>
       <li><%= link_to "Archive", "#" %></li> 
     </ul>
     

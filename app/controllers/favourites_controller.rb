@@ -18,7 +18,7 @@ class FavouritesController < ApplicationController
   def new
     @user = current_user
     @favourite = @user.favourites.new
-    @title = "Add a favourite"
+    @title = "New favourite"
     @characters_left = 50
   end
   
@@ -33,7 +33,7 @@ class FavouritesController < ApplicationController
       end
       redirect_to user_favourites_path(@user)
     else
-      @title = "Add a favourite"
+      @title = "New favourite"
       @characters_left = 50 - @favourite.favourite.length
       @user = current_user
       render 'new'

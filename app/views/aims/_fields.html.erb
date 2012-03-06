@@ -1,21 +1,32 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :aim, "What would you like to achieve in the next 2-3 years" %><br />
-  <small>Give us a view of what you'd like to accomplish - whether at work, <br />
-         perhaps a course of study, or in your personal life.</small><br />
+  <%= f.label :aim, "What would you like to achieve in the next 3-5 years? *" %>
+  <div class="subtext under">
+    Give us a view of what you'd like to accomplish - at work, or
+    perhaps in a course of study, or in your personal life.
+    <br /><br />
+  </div>
   <%= f.text_field :aim, :maxlength => 50, :size => 40 %>
-  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  <div class="char-count"><%= @characters_left %> characters left</div>
 </div>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
+  
+   $(document).ready(function(){
+
+    $('#aim_aim').click(function() {
+      $('.char-count').css('visibility', 'visible');
+    });
 
     $('#aim_aim').live('keyup keydown', function(e) {
-    var maxLen = 50;
-    var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
+      var maxLen = 50;
+      var left = maxLen - $(this).val().length;
+      $('.char-count').html(left);
     });
     
+   });
+   
   <% end %>
 <% end %>

@@ -1,49 +1,51 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), user_portrait_path(@user), :class => "magnify" %>
+
 <div class = "r-float">
   <% unless @user.max_achievements? %>
     <%= link_to "Add an achievement", new_user_achievement_path(@user) %><br /> 
   <% end %>
-  <%= link_to "Full Portrait", user_portrait_path(@user) %>
 </div>
 
-<h1>Achievements for <%= @user.name %></h1>
-<div class="display_wider">
+<h4><%= @user.name %></h4>
+
+<div id="rubric">
   <em>
-    <% if @user.has_achievements? %>   
-      Click on <%= image_tag("cancel.png", :size => "15x15") %> to delete 
-      and <%= image_tag("select.png", :size => "15x15") %> to modify an achievement.
-      <br /><br />
-      <% if @user.count_achievements > 1 %>
-        Then click and drag the achievements to arrange them in descending order of importance.
-      <% end %>
+  <% if @user.has_achievements? %>    
+    <% if @user.count_achievements > 1 %>
+        Click and drag the achievements to arrange them in descending order of importance.
     <% end %>
-    You can add up to 3 achievements.
+  <% end %>
+  You can add up to 3 achievements.
   </em>
 </div>
-<hr />
-<ul id="achievements-list">
-  <% @achievements.each do |f| %>
-  <li id="achievement_<%= f.id %>" class="no_bullet">
-    <span style="vertical-align:top">
-       <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+
+<div id="listing" class="under">
+  <ul id="achievements-list" class="no_dec">
+    <% @achievements.each do |f| %>
+      <li id="achievement_<%= f.id %>">
+        <span style="vertical-align:top">
+          <%= link_to(image_tag("delete.png"), f, 
                    	:method => :delete, 
-                   	:confirm => "You sure?",
+                   	:confirm => "Are you sure you want to remove this achievement?",
                    	:title => "Remove this achievement") %>
-    </span> &nbsp;
-    <span style="vertical-align:top"> 
-       <%= link_to(image_tag("select.png", :size => "15x15"), 
+        </span> &nbsp;
+        <span style="vertical-align:top"> 
+          <%= link_to(image_tag("details.png"), 
     			edit_achievement_path(f), 
     			:title => "Edit this achievement") %> 
-    </span>&nbsp;    
-    <span class="handle" style = "display:inline-block; width:80%"><%= f.achievement %></span>
+        </span>&nbsp;    
+        <span class="handle" style = "display:inline-block; width:80%"><%= f.achievement %></span>
    
-   </li>
-  <% end %>
-</ul>
-
+      </li>
+    <% end %>
+  </ul>
+</div>
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
- 
+
+   $(document).ready(function(){
+    
     $('#achievements-list').sortable(
      {
        	axis: 'y',
@@ -64,6 +66,6 @@
 	url: 'achievements/sort'})
       }
      })
-
+    });
    <% end %>
 <% end %>

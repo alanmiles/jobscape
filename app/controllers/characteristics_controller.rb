@@ -19,7 +19,7 @@ class CharacteristicsController < ApplicationController
   def new
     @user = current_user
     @characteristic = @user.characteristics.new
-    @title = "Add a characteristic"
+    @title = "New characteristic"
     @characters_left = 50
   end
   
@@ -34,7 +34,7 @@ class CharacteristicsController < ApplicationController
       end
       redirect_to user_characteristics_path(@user)
     else
-      @title = "Add a characteristic"
+      @title = "New characteristic"
       @characters_left = 50 - @characteristic.characteristic.length
       render 'new'
     end

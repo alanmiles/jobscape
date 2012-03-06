@@ -123,12 +123,12 @@ describe UsersController do
     
       it "should have the right title" do
         get :show, :id => @user
-        response.should have_selector("title", :content => @user.name)
+        response.should have_selector("title", :content => "Your settings")
       end
 
       it "should include the user's name" do
         get :show, :id => @user
-        response.should have_selector("h1", :content => @user.name)
+        response.should have_selector("#listing", :content => @user.name)
       end
       
     end
@@ -237,7 +237,7 @@ describe UsersController do
 
     it "should have the right title" do
       get :edit, :id => @user
-      response.should have_selector("title", :content => "Edit account settings")
+      response.should have_selector("title", :content => "User settings")
     end
 
   end
@@ -263,7 +263,7 @@ describe UsersController do
 
       it "should have the right title" do
         put :update, :id => @user, :user => @attr
-        response.should have_selector("title", :content => "Edit account settings")
+        response.should have_selector("title", :content => "User settings")
       end
     end
 

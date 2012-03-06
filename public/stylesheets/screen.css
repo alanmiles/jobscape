@@ -436,13 +436,6 @@ ul li.smaller_font {
 }
 
 /* used */
-#listing {
-  /*margin-left: 2em;
-  margin-right: 2em; */
-  /* padding: 1em; */
-}
-
-/* used */
 #listing ul li {
   padding: 0.5em 0;
   border-bottom: 3px white ridge;
@@ -482,6 +475,35 @@ ul li.smaller_font {
   font-weight: normal;
 }
 
+
+
+#portrait ul li {
+  padding: 0.5em 0;
+  border-bottom: 3px white ridge;
+}
+
+/* used */
+#portrait ul li:nth-child(odd) {
+  background: #CCC;
+}
+
+/* used */
+#portrait ul li ul  {
+  list-style: none;
+  font-size: 90%;
+  margin-bottom: 0em;
+}
+
+/* used */
+#portrait ul li ul li {
+  padding: 0.25em;
+  border-bottom: none;
+}
+
+/* used */
+#portrait ul li ul li:nth-child(odd) {
+  background: none;
+}
 
 /* used */
 p {
@@ -530,6 +552,12 @@ p {
   padding: 1em;
   /*max-height: 35em;
   overflow: auto; */
+}
+
+#menu-page {
+  font-size: 90%;
+  line-height: 1.5;
+  padding: 1em 0 1em 1em;
 }
 
 .scroller {
@@ -1190,6 +1218,11 @@ ul.users {
 .r-float {
   font-size: 90%;
   float:right;
+}
+
+/* used */
+.smaller {
+  font-size: 80%;
 }
 
 /* used */

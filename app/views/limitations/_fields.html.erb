@@ -1,23 +1,28 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :limitation, "Limitations that employers need to know about" %><br />
-  <small>Perhaps a physical disability may prevent you from taking on some jobs,<br />
-         or perhaps you have commitments which mean you can only work certain times and days.<br />
-         Best to tell potential employers now - declaring it may actually help to get a job.
-  </small><br />
+  <%= f.label :limitation, "Limitations that employers need to know about *" %>
+    <br /><br />
   <%= f.text_field :limitation, :maxlength => 50, :size => 40 %>
-  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  <div class="char-count"><%= @characters_left %> characters left</div>
 </div>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
 
+   $(document).ready(function(){
+   
+    $('#limitation_limitation').click(function() {
+      $('.char-count').css('visibility', 'visible');
+    });
+      
     $('#limitation_limitation').live('keyup keydown', function(e) {
-    var maxLen = 50;
-    var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
+      var maxLen = 50;
+      var left = maxLen - $(this).val().length;
+      $('.char-count').html(left);
     });
     
+   });
+   
   <% end %>
 <% end %>

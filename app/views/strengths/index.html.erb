@@ -1,49 +1,51 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), user_portrait_path(@user), :class => "magnify" %>
+
 <div class = "r-float">
   <% unless @user.max_strengths? %>
     <%= link_to "Add one of your strengths", new_user_strength_path(@user) %><br /> 
   <% end %>
-  <%= link_to "Full Portrait", user_portrait_path(@user) %>
 </div>
 
-<h1><%= @user.name %>'s strengths</h1>
-<div class="display_wider">
+<h4><%= @user.name %>'s strengths</h4>
+<div id="rubric">
   <em>
     <% if @user.has_strengths? %>   
-      Click on <%= image_tag("cancel.png", :size => "15x15") %> to delete 
-      and <%= image_tag("select.png", :size => "15x15") %> to modify a strength.
-      <br /><br />
       <% if @user.count_strengths > 1 %>
-        Then click and drag the list-items until your greatest strength is at the top.
+        Click and drag the list-items until your greatest strength is at the top.
       <% end %>
     <% end %>
     You can add up to 5 strengths.
   </em>
 </div>
-<hr />
-<ul id="strengths-list" style="cursor: move">
-  <% @strengths.each do |f| %>
-  <li id="strength_<%= f.id %>" class="no_bullet">
-    <span style="vertical-align:top">
-       <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+
+<div id="listing" class="under">
+  <ul id="strengths-list" class="no_dec">
+    <% @strengths.each do |f| %>
+      <li id="strength_<%= f.id %>">
+        <span style="vertical-align:top">
+          <%= link_to(image_tag("delete.png"), f, 
                    	:method => :delete, 
-                   	:confirm => "You sure?",
+                   	:confirm => "Are you sure you want to remove this strength?",
                    	:title => "Remove this strength") %>
-    </span> &nbsp;
-    <span style="vertical-align:top"> 
-       <%= link_to(image_tag("select.png", :size => "15x15"), 
+        </span> &nbsp;
+        <span style="vertical-align:top"> 
+          <%= link_to(image_tag("details.png"), 
     			edit_strength_path(f), 
     			:title => "Edit this strength") %> 
-    </span>&nbsp;    
-    <span class="handle" style = "display:inline-block; width:80%"><%= f.strength %></span>
+        </span>&nbsp;    
+        <span class="handle" style = "display:inline-block; width:80%"><%= f.strength %></span>
    
-   </li>
-  <% end %>
-</ul>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
  
+   $(document).ready(function(){
+   
     $('#strengths-list').sortable(
      {
        	axis: 'y',
@@ -64,6 +66,8 @@
 	url: 'strengths/sort'})
       }
      })
-
+    
+    });
+    
    <% end %>
 <% end %>

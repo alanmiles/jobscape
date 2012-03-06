@@ -1,49 +1,50 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), user_portrait_path(@user), :class => "magnify" %>
+
 <div class = "r-float">
   <% unless @user.max_limitations? %>
     <%= link_to "Add a limitation", new_user_limitation_path(@user) %><br /> 
   <% end %>
-  <%= link_to "Full Portrait", user_portrait_path(@user) %>
 </div>
-
-<h1>Limitations that employers may need to know about</h1>
-<div class="display_wider">
+<h4>Possible limitations for <%= @user.name %></h4>
+<div id = "rubric">
   <em>
     <% if @user.has_limitations? %>   
-      Click on <%= image_tag("cancel.png", :size => "15x15") %> to delete 
-      and <%= image_tag("select.png", :size => "15x15") %> to modify a limitation.
-      <br /><br />
       <% if @user.count_limitations > 1 %>
-        Then click and drag the list-items until the most important limitation is at the top.
+        Click and drag the list-items until the most important limitation is at the top.
       <% end %>
     <% end %>
     You can add up to 3 limitations.
   </em>
 </div>
-<hr />
-<ul id="limitations-list" style="cursor: move">
-  <% @limitations.each do |f| %>
-  <li id="limitation_<%= f.id %>" class="no_bullet">
-    <span style="vertical-align:top">
-       <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+
+<div id="listing" class="under">
+  <ul id="limitations-list" class="no_dec">
+    <% @limitations.each do |f| %>
+      <li id="limitation_<%= f.id %>">
+        <span style="vertical-align:top">
+          <%= link_to(image_tag("delete.png"), f, 
                    	:method => :delete, 
-                   	:confirm => "You sure?",
+                   	:confirm => "Are you sure you want to remove this limitation?",
                    	:title => "Remove this limitation") %>
-    </span> &nbsp;
-    <span style="vertical-align:top"> 
-       <%= link_to(image_tag("select.png", :size => "15x15"), 
+        </span> &nbsp;
+        <span style="vertical-align:top"> 
+          <%= link_to(image_tag("details.png"), 
     			edit_limitation_path(f), 
     			:title => "Edit this limitation") %> 
-    </span>&nbsp;    
-    <span class="handle" style = "display:inline-block; width:80%"><%= f.limitation %></span>
+        </span>&nbsp;    
+        <span class="handle" style = "display:inline-block; width:80%"><%= f.limitation %></span>
    
-   </li>
-  <% end %>
-</ul>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
- 
+  
+   $(document).ready(function(){
+    
     $('#limitations-list').sortable(
      {
        	axis: 'y',
@@ -64,6 +65,8 @@
 	url: 'limitations/sort'})
       }
      })
+     
+    });
 
    <% end %>
 <% end %>

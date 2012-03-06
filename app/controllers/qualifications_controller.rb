@@ -3,7 +3,7 @@ class QualificationsController < ApplicationController
   def index
     @user = current_user
     @qualifications = @user.qualifications.order("qualifications.position ASC")
-    @title = "My qualifications"
+    @title = "Qualifications"
   end
 
   def sort
@@ -19,7 +19,7 @@ class QualificationsController < ApplicationController
   def new
     @user = current_user
     @qualification = @user.qualifications.new
-    @title = "Add a qualification"
+    @title = "New qualification"
     @characters_left = 50
   end
   
@@ -28,13 +28,13 @@ class QualificationsController < ApplicationController
     @qualification = @user.qualifications.new(params[:qualification])
     if @qualification.save
       if @user.max_qualifications?
-        flash[:success] = "Qualification successfully added - you've now entered all 3 qualifications allowed."
+        flash[:success] = "Qualification successfully added - you've now entered all 5 qualifications allowed."
       else
         flash[:success] = "Qualification successfully added."
       end
       redirect_to user_qualifications_path(@user)
     else
-      @title = "Add a qualification"
+      @title = "New qualification"
       @characters_left = 50 - @qualification.qualification.length
       @user = current_user
       render 'new'

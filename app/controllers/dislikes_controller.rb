@@ -3,7 +3,7 @@ class DislikesController < ApplicationController
   def index
     @user = current_user
     @dislikes = @user.dislikes.order("dislikes.position")
-    @title = "I get mad when ..."
+    @title = "Dislikes"
   end
 
   def sort
@@ -18,7 +18,7 @@ class DislikesController < ApplicationController
   def new
     @user = current_user
     @dislike = @user.dislikes.new
-    @title = "Add something that annoys you"
+    @title = "New dislike"
     @characters_left = 50
   end
   
@@ -33,7 +33,7 @@ class DislikesController < ApplicationController
       end
       redirect_to user_dislikes_path(@user)
     else
-      @title = "Add something that annoys you"
+      @title = "New dislike"
       @characters_left = 50 - @dislike.dislike.length
       @user = current_user
       render 'new'

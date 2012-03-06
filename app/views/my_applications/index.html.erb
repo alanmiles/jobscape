@@ -1,4 +1,4 @@
-<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), jobsearch_menu_path %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), jobsearch_menu_path, :class => "magnify" %>
 
 <% if Application.none_made?(@user) %>
   <div class="no_data round">
@@ -14,7 +14,6 @@
  
         <li>
           <div class="r-float">
-            <%= link_to image_tag("details.png"), my_application_path(application), :title => "Application details" %> &nbsp;
             <%= link_to image_tag("delete.png"), my_application_path(application),
           
                    :method => :delete, 

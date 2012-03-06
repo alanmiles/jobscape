@@ -1,14 +1,16 @@
-<div class = "r-float">
-  <%= link_to "Cancel", user_previousjobs_path(@user) %>
+<div class="r-float">
+  <%= link_to "Entire portrait", user_portrait_path(@user) %>
 </div>
 
-<h1><%= @title %></h1> 
-<br /><br />
-<div class="shift_center">
+<%= link_to image_tag("pageback.png", :title => "Previous jobs list"), user_previousjobs_path(@user), :class => "magnify" %>
+
+<h4 class="over"><%= @user.name %></h4>
+
+<div class="shift_center_50">
   <%= form_for([@user,@previousjob]) do |f| %>
     <%= render 'fields', :f => f %> 
     <div class="actions">
-      <%= f.submit "Create" %>
+      <%= f.submit "Create the Job", :class => "create round" %>
     </div>
   <% end %>
 </div>

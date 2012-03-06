@@ -1,4 +1,4 @@
-<%= render 'home_redirection' %>
+<%= link_to image_tag("pageback.png", :title => "view settings"), @user, :class => "magnify" %>
 
 <% unless @user.account == 4 %>
   <div class="info_box grayborder rightpos" style="display:none">
@@ -13,34 +13,36 @@
     <%= render 'shared/error_messages', :object => f.object %>
   
     <div class="field">
-      <%= f.label :name %> 
-      <div class="subtext">Your normal first name and family name - <br />
-         the name you use at work.  
+      <%= f.label :name, "Name *" %> 
+      <div class="subtext">Your normal first name and family name
       </div>
       <%= f.text_field :name %>
     </div>
     <div class="field">
-      <%= f.label :email %> <br />
+      <%= f.label :email, "Email *" %> <br />
       <%= f.text_field :email %>
     </div>
   
     <div class="field">
       <% if @user.account == 4 %>
-        Signed up for an Employee account with<br /> <strong><%= @business.name.upcase %></strong>.
+        Signed up for an Employee account 
+        <% unless session[:biz] == nil %>  
+           with<br /> <%= @business.name.upcase %>, <%= @business.city %>.
+        <% end %>
         <%= f.hidden_field :account %>
         <br /><br />
       <% else %>
-        <%= f.label :account, "Account-type" %><br />
+        <%= f.label :account, "Account-type *" %> &nbsp;
         <%= select( :user, :account, @accounts ) %>
       <% end %>
     </div>
   
-    <% if @user.account == 2 %>
-      <div class="field" style = "width:300px">
-        Location <br />
+    <% unless @user.account == 4 %>
+      <div class="field">
+        Location *<br />
         <%= @user.city %>, <%= @user.country %>.
         <br /><br />
-        <div class="subtext">If the location's wrong, replace your IP address below with your post-code or address. (Max 50 characters)</div> 
+        <div class="subtext">If the location's wrong, replace your IP address below with your post-code or address.</div> 
         <%= f.text_field :address %>
       </div>
     <% end %>

@@ -206,7 +206,7 @@ class User < ActiveRecord::Base
   end
   
   def max_qualifications?
-    count_qualifications >= 3  
+    count_qualifications >= 5  
   end
   
   def count_strengths
@@ -279,9 +279,9 @@ class User < ActiveRecord::Base
   end
   
   def account_type
-    if self.admin? 
-      return "Admin"
-    else
+    #if self.admin? 
+    #  return "Admin"
+    #else
       if account == 2
         return "Jobseeker"
       elsif account == 3
@@ -291,7 +291,7 @@ class User < ActiveRecord::Base
       else
         return "Individual"
       end
-    end
+    #end
   end
   
   def no_job?
@@ -463,7 +463,7 @@ class User < ActiveRecord::Base
     self.recent_reviewer_sessions.count > 0
   end
   
-  def involved_in_recent_reviews?
+  def involved_in_mrecent_reviews?
     self.recent_reviewed_sessions.count > 0 || self.recent_reviewer_sessions.count > 0
   end
   

@@ -1,35 +1,12 @@
-<div class = "two_column rightpos"> 
-   <em>
-     You need to add 2-3 references, preferably one from someone senior (a former manager, 
-     or if you're just starting your career, a teacher), a colleague or classmate, and perhaps
-     a friend.
-     <br /><br />
-     <% if @user.portrait.public %>
-       Your Self-Portrait is already public, so when you click the 'Create' button, an email will
-       immediately be sent to this new reference, asking for confirmation that the details are
-       fair and accurate.
-       <br /><br />
-     <% else %>
-       When you decide to make your Self-Portrait public, an email will automatically be sent to
-       your references, asking them to verify that the picture you've created shows the real you - so 
-       you'd better make sure it does!
-       <br /><br />
-     <% end %>
-     You'll see on your profile whether they've responded - but not what they've said of course! If 
-     they haven't responded, ask them to check their email inbox (check the spam filter, just in case), 
-     and tell them it'll only take a couple of minutes of their time.
-     <br /><br />
-     If that doesn't work, delete the record and create it again ... or get yourself another reference.
-   </em>
-</div>
+
 
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :name %><br />
+  <%= f.label :name, "Name *" %><br />
   <%= f.text_field :name %>
 </div>
 <div class="field">
-  <%= f.label :relationship, "How connected with you?" %>
+  <%= f.label :relationship, "How connected with you? *" %>
   <%= select( :referee, :relationship, @relationships ) %>
 </div>
 <div class="field">
@@ -42,15 +19,15 @@
 </div>
 <div class="field">
   <%= f.label :address, "Full postal address" %> <small>(recommended)</small><br />
-  <%= f.text_area :address, :cols => 40, :rows => 2 %> 
+  <%= f.text_area :address, :class => "miniscule" %> 
 </div>
 <div class="field">
   <%= f.label :phone %> <small>(recommended)</small>
   <%= f.text_field :phone, :size => 16 %>
 </div>
 <div class="field">
-  <%= f.label :email %> <small class = "highlt round">(required)</small>
-  <%= f.text_field :email, :size => 19 %>
+  <%= f.label :email, "Email *" %> 
+  <%= f.text_field :email %>
 </div>
 <%= f.hidden_field :portrait_rating %>
 <%= f.hidden_field :access_code %>

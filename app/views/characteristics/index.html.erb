@@ -1,53 +1,54 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), user_portrait_path(@user), :class => "magnify" %>
+
 <div class = "r-float">
   <% unless @user.max_characteristics? %>
     <%= link_to "Add a characteristic", new_user_characteristic_path(@user) %><br /> 
   <% end %>
-  <%= link_to "Full Portrait", user_portrait_path(@user) %>
 </div>
 
-<h1>What's <%= @user.name %> like?</h1>
-<div class="display_wider">
+<h4>What's <%= @user.name %> like?</h4>
+<div id="rubric">
   <em>
-    If we asked colleagues or friends this question, what would they say?<br />
-    You can add up to 5 characteristics. 
+    If we asked colleagues or friends this question, what would they say?
+    Add up to 5 characteristics. 
     <% if @user.has_characteristics? %>
-      <br /><br />   
-      Click on <%= image_tag("cancel.png", :size => "15x15") %> to delete 
-      and <%= image_tag("select.png", :size => "15x15") %> to modify a characteristic.
-      <br /><br />
       <% if @user.count_characteristics > 1 %>
-        Which characteristic best describes you? Click and drag to bring it to the top of the list.
+        <br /><br />
+        Which are your strongest characteristics? Click and drag to bring them to the top of the list.
       <% end %>
     <% end %>
   </em>
 </div>
-<hr />
-<ul id="characteristics-list" style="cursor: move">
-  <% @characteristics.each do |f| %>
-  <li id="characteristic_<%= f.id %>" class="no_bullet">
-    <span style="vertical-align:top">
-       <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+
+<div id="listing" class="under">
+  <ul id="characteristics-list" class="no_dec">
+    <% @characteristics.each do |f| %>
+      <li id="characteristic_<%= f.id %>">
+        <span style="vertical-align:top">
+          <%= link_to(image_tag("delete.png"), f, 
                    	:method => :delete, 
-                   	:confirm => "You sure?",
+                   	:confirm => "Are you sure you want to remove this characteristic?",
                    	:title => "Remove this characteristic") %>
-    </span> &nbsp;
-    <span style="vertical-align:top"> 
-       <%= link_to(image_tag("select.png", :size => "15x15"), 
+        </span> &nbsp;
+        <span style="vertical-align:top"> 
+          <%= link_to(image_tag("details.png"), 
     			edit_characteristic_path(f), 
     			:title => "Edit this characteristic") %> 
-    </span>&nbsp;    
-    <span class="handle" style = "display:inline-block; width:80%"><%= f.characteristic %></span>
+        </span>&nbsp;    
+        <span class="handle" style = "display:inline-block; width:80%"><%= f.characteristic %></span>
    
-   </li>
-  <% end %>
-</ul>
-
+      </li>
+    <% end %>
+  </ul>
+</div>
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
  
-    $('#characteristics-list').sortable(
-     {
+    $(document).ready(function(){
+    
+      $('#characteristics-list').sortable(
+       {
        	axis: 'y',
 	dropOnEmpty: false,
 	handle: '.handle',
@@ -64,8 +65,8 @@
 	  $('#characteristics-list').effect('highlight');
 	},
 	url: 'characteristics/sort'})
-      }
-     })
-
-   <% end %>
+       }
+      })
+    });
+  <% end %>
 <% end %>

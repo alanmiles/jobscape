@@ -49,6 +49,6 @@ class Previousjob < ActiveRecord::Base
   end
   
   def job_details
-    "#{self.job} #{self.service_length}"  
+    "#{self.job} - #{self.service_length}"  
   end
 end

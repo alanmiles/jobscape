@@ -1,9 +1,12 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :job, "Previous or current job" %><br />  
-  <small>You can add the name of the employer if you want to - max 50 characters in total.</small><br />
+  <%= f.label :job, "Previous or current job" %>
+  <div class="subtext under">  
+    Enter the job-title and, optionally, add the name of the employer. Max 50 characters in total.
+    <br /><br />
+  </div>
   <%= f.text_field :job, :maxlength => 50, :size => 40 %>
-  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  <div class="char-count"><%= @characters_left %> characters left</div>
 </div>
 <div class="field">
   <%= f.label :years, "Number of years in job" %> 
@@ -13,12 +16,20 @@
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
-
+  
+   $(document).ready(function(){
+   
+    $('#previousjob_job').click(function() {
+     $('.char-count').css('visibility', 'visible');
+    });
+      
     $('#previousjob_job').live('keyup keydown', function(e) {
     var maxLen = 50;
     var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
+    $('.char-count').html(left);
     });
+    
+   });
     
   <% end %>
 <% end %>

@@ -3,32 +3,33 @@
     <%= link_to "Return to Admin Mode", standard_to_admin_path %>
   <% end %>
 </div>
-  <h1>
-    Home - <%= @user.name %>
-  </h1>
+<h4>
+  Home - <%= @user.name %>
+</h4>
 
+<div id="rubric">
   With your HYGWIT JOBSEEKER ACCOUNT, you can:
   
-  <div class ="menu_box round grayborder" style = "margin-top: 15px; margin-bottom: 15px">
-  <ul style="margin-bottom: 0px">
-    <li>Check that your <%= link_to "user details and location", edit_user_path(@user) %> are correct</li>
-    <li><%= link_to "Build your HYGWIT Self-Portrait", user_portrait_path(@user) %> - to get employers' attention</li>
-    <li>Set your job-search preferences</li>
-    <li>Check out recommended job-matches</li>
-    <li><%= link_to "Search, bookmark and apply for jobs", jobsearch_menu_path %></li>
-    <li>Check your application history</li>
-  </ul>
+  <div id="menu-page">
+    <ul class="no_dec under over">
+      <li><%= link_to "* Check your user details and location", @user %></li>
+      <li><%= link_to "* Build a turbo-charged HYGWIT CV", user_portrait_path(@user) %></li>
+      <li><%= link_to "* Set your job-search preferences", "#" %></li>
+      <li><%= link_to "* Check out recommended job-matches", "#" %></li>
+      <li><%= link_to "* Search, bookmark and apply for jobs", jobsearch_menu_path %></li>
+      <li><%= link_to "* Check your application history", "#" %></li>
+    </ul>
   </div>
   
-     With HYGWIT, you'll be dealing directly with employers, not recruitment agencies.  These employers have 
+     You'll be dealing directly with employers, not recruitment agencies.  These employers have 
      made two commitments. They're ready to give opportunities to people who need to get started or re-started in
      work.  And they WILL respond to your applications, and not leave you hanging.<br /><br />
 
-     When you're working again, <%= link_to "switch to a HYGWIT individual, business, or 
-     invitee account", edit_user_path(current_user) %>.  Backed with our
-     achievement tools, you'll make yourself irreplaceable.<br /><br />
-  
-     BEST OF LUCK WITH YOUR SEARCH!
-
+     When you're working again, <%= link_to "switch to a HYGWIT individual or business 
+     account", @user %>.  Backed with our
+     achievement tools, you'll make yourself irreplaceable.
+     <br /><br />
+     GOOD LUCK WITH YOUR JOB-SEARCH.
+</div>
   
 

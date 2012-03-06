@@ -19,7 +19,7 @@ class LimitationsController < ApplicationController
   def new
     @user = current_user
     @limitation = @user.limitations.new
-    @title = "Limitations"
+    @title = "New limitation"
     @characters_left = 50
   end
   
@@ -34,7 +34,7 @@ class LimitationsController < ApplicationController
       end
       redirect_to user_limitations_path(@user)
     else
-      @title = "Limitations"
+      @title = "New limitation"
       @characters_left = 50 - @limitation.limitation.length
       @user = current_user
       render 'new'

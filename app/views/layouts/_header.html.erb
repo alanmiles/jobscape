@@ -23,8 +23,9 @@
       <% else %>
         <li><%= link_to image_tag("home.png"), root_path, :title => "Home" %></li>
       <% end %>
-      <li><span class="guidance"><%= link_to image_tag("guidance.png"), note_path(note_reference), :remote => true %></span></li>
+      <li><span class="guidance"><%= link_to image_tag("guidance.png"), note_path(note_reference), :title => "Page help", :remote => true %></span></li>
       <% if signed_in? %>
+        <li><%= link_to image_tag("user.png"), @user, :title => "Your account settings" %></li>
         <li><%= link_to image_tag("exit.png"), signout_path, :method => :delete, :title => "Exit" %></li>
       <% else %>
         <li><%= link_to image_tag("user.png"), signin_path, :title => "Log In" %></li>

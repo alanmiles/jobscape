@@ -1,49 +1,52 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), user_portrait_path(@user), :class => "magnify" %>
+
+
 <div class = "r-float">
   <% unless @user.max_aims? %>
     <%= link_to "Add an aim", new_user_aim_path(@user) %><br /> 
   <% end %>
-  <%= link_to "Full Portrait", user_portrait_path(@user) %>
 </div>
 
-<h1>In <%= @user.name %>'s sights</h1>
-<div class="display_wider">
+<h4><%= @user.name %>'s long-term aims</h4>
+<div id="rubric">
   <em>
     <% if @user.has_aims? %>   
-      Click on <%= image_tag("cancel.png", :size => "15x15") %> to delete 
-      and <%= image_tag("select.png", :size => "15x15") %> to modify an aim.
-      <br /><br />
       <% if @user.count_aims > 1 %>
-        Then click and drag the list-items until your biggest aim is at the top.
+        Click and drag the list-items until your biggest aim is at the top.
       <% end %>
     <% end %>
-    You can add up to 5 aims.
+    You can add up to 3 aims.
   </em>
 </div>
-<hr />
-<ul id="aims-list" style="cursor: move">
-  <% @aims.each do |f| %>
-  <li id="aim_<%= f.id %>" class="no_bullet">
-    <span style="vertical-align:top">
-       <%= link_to(image_tag("cancel.png", :size => "15x15"), f, 
+
+<div id="listing" class="under">
+  <ul id="aims-list" class="no_dec">
+    <% @aims.each do |f| %>
+      <li id="aim_<%= f.id %>">
+        <span style="vertical-align:top">
+          <%= link_to(image_tag("delete.png"), f, 
                    	:method => :delete, 
-                   	:confirm => "You sure?",
+                   	:confirm => "Are you sure you want to remove this aim?",
                    	:title => "Remove this aim") %>
-    </span> &nbsp;
-    <span style="vertical-align:top"> 
-       <%= link_to(image_tag("select.png", :size => "15x15"), 
+        </span> &nbsp;
+        <span style="vertical-align:top"> 
+          <%= link_to(image_tag("details.png"), 
     			edit_aim_path(f), 
     			:title => "Edit this aim") %> 
-    </span>&nbsp;    
-    <span class="handle" style = "display:inline-block; width:80%"><%= f.aim %></span>
+        </span>&nbsp;    
+        <span class="handle" style = "display:inline-block; width:80%"><%= f.aim %></span>
    
-   </li>
-  <% end %>
-</ul>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
- 
+
+   $(document).ready(function(){ 
+   
     $('#aims-list').sortable(
      {
        	axis: 'y',
@@ -64,6 +67,8 @@
 	url: 'aims/sort'})
       }
      })
-
+     
+    });
+    
    <% end %>
 <% end %>

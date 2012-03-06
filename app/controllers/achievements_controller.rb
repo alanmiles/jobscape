@@ -20,7 +20,7 @@ class AchievementsController < ApplicationController
   def new
     @user = current_user
     @achievement = @user.achievements.new
-    @title = "Add an achievement"
+    @title = "New achievement"
     @characters_left = 200
   end
   
@@ -35,7 +35,7 @@ class AchievementsController < ApplicationController
       end
       redirect_to user_achievements_path(@user)
     else
-      @title = "Add an achievement"
+      @title = "New achievement"
       @characters_left = 200 - @achievement.achievement.length
       @user = current_user
       render 'new'

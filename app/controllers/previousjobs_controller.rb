@@ -45,7 +45,7 @@ class PreviousjobsController < ApplicationController
   def edit
     @user = current_user
     @previousjob = Previousjob.find(params[:id])
-    @title = "Edit job"
+    @title = "Edit previous job"
     @characters_left = 50 - @previousjob.job.length
     @periods = Previousjob::SERVICE_TYPES
   end
@@ -56,7 +56,7 @@ class PreviousjobsController < ApplicationController
       flash[:success] = "Job updated."
       redirect_to user_previousjobs_path(@previousjob.user_id)
     else
-      @title = "Edit job"
+      @title = "Edit previous job"
       @characters_left = 50 - @previousjob.job.length
       @user = current_user
       @periods = Previousjob::SERVICE_TYPES

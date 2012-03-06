@@ -1,105 +1,94 @@
-<div class = "r-float">
-  <% if @user.account == 2 %>
-    <%= link_to "Home", jobseeker_home_path %>
-  <% elsif @user.account == 1 %>
-    <%= link_to "Home", user_home_path %>
-  <% end %>
-</div>
-
-<%= image_tag("info.png", :size => "20x20") %>
-<h4 class= "shallow"><%= @user.name.upcase %></h4>
-
-  <div id ="infotext" class="info_box_wide beige round" style = "display:none; margin-left:0px">
-  
-      Update each of the sections until you've created an all-round picture of your capabilities and aspirations.
-      Tell the truth!  We'll be asking your references to verify that this is a fair and reasonable portrait.<br /><br />
-      When you've finished, your portrait will be attached to any application you send through HYGWIT.
-      Potential employers can also search through the portraits when they're head-hunting.<br /><br />
-      You can keep your portrait private if you want to, until you feel ready to start applying for jobs.
-      &nbsp; <span id = "no-info" style="color:#069; cursor:n-resize">(Hide)</span>
-    
-  </div>
-  <hr />
-
-<div class="two_column rightpos">
-  <h4 class="shallow">What they say about me  &nbsp;<small><%= link_to "(Update)", user_characteristics_path(@user) %></small></h4>
-  <%= render 'characteristics' %>
-</div>
-
-<div class="two_column">
-  <h4 class="shallow">Achievements  &nbsp;<small><%= link_to "(Update)", user_achievements_path(@user) %></small></h4>
-  <%= render 'achievements' %>
-</div>  
-<hr /> 
-
-<div class="two_column rightpos">  
-  <h4 class="shallow">My favourite things  &nbsp;<small><%= link_to "(Update)", user_favourites_path(@user) %></small></h4>
-  <%= render 'favourites' %>
-</div>
-
-<div class="two_column">
-  <h4 class="shallow">My qualifications &nbsp;<small><%= link_to "(Update)", user_qualifications_path(@user) %></small></h4>
-  <%= render 'qualifications' %>
-</div>
-<hr />
-
-<div class="two_column rightpos"> 
-  <h4 class="shallow">It drives me mad when ...  &nbsp;<small><%= link_to "(Update)", user_dislikes_path(@user) %></small></h4>
-  <%= render 'dislikes' %>
-</div>
-
-<div class="two_column"> 
-  <h4 class="shallow">My strengths &nbsp;<small><%= link_to "(Update)", user_strengths_path(@user) %></small></h4>
-  <%= render 'strengths' %>
-</div>
-
-<hr />
-<div class="two_column rightpos"> 
-  <h4 class="shallow">Possible limitations &nbsp;<small><%= link_to "(Update)", user_limitations_path(@user) %></small></h4>
-  <%= render 'limitations' %>
-</div>
-
-<div class="two_column">
-  <h4 class="shallow">In my sights &nbsp;<small><%= link_to "(Update)", user_aims_path(@user) %></small></h4>
-  <%= render 'aims' %>
-</div>
-<hr />
-<div class="two_column rightpos">
-
-</div>
-
-<div class="two_column rightpos">
-  <h4 class="shallow">And finally ... &nbsp;<small><%= link_to "(Update)", edit_user_portrait_path(@user) %></small></h4>
-  <%= render 'notes' %>
-</div>
-  
-<div class="two_column">
-  <h4 class="shallow">My previous jobs &nbsp;<small><%= link_to "(Update)", user_previousjobs_path(@user) %></small></h4>
-  <%= render 'jobs' %>
-</div>
-<hr />
-
-<div class="two_column wide_85">
-  <h4 class="shallow">References &nbsp;<small><%= link_to "(Update)", user_referees_path(@user) %></small></h4>
-  <%= render 'references' %>
-</div>
-
-<% content_for :javascript do %>
-
-  <%= javascript_tag do %>
-    
-   $(document).ready(function(){
-    
-    $('#info').click(function() {
-      $('#infotext').show('fast', function() {
-      });
-    });
-    
-    $('#no-info').click(function() {
-      $('#infotext').hide('fast', function() {
-      });
-    });
-   });
-   
-  <% end %>
+<% if @user.account == 2 %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), jobseeker_home_path, :class => "magnify" %>
+<% elsif @user.account == 1 %>
+  <%= link_to image_tag("pageback.png", :title => "Previous"), user_home_path, :class => "magnify" %>
 <% end %>
+
+<h4><%= @user.name.upcase %></h4>
+
+<div id="rubric">
+  <em>
+    Click on a heading to add / update your details.
+  </em>
+</div>
+
+<div id="portrait">
+  <ul class="no_dec">
+    <li>
+      <%= link_to "Achievements", user_achievements_path(@user) %>
+      <div class="subtext">
+        <%= render 'achievements' %>
+      </div>
+    </li>
+    
+    <li>
+      <%= link_to "What people say about me", user_characteristics_path(@user) %>
+      <div class="subtext">
+        <%= render 'characteristics' %>
+      </div>
+    </li>
+    
+    <li>
+      <%= link_to "My qualifications", user_qualifications_path(@user) %>
+      <div class="subtext">
+        <%= render 'qualifications' %>
+      </div>
+    </li>
+    
+    <li>
+      <%= link_to "My strengths", user_strengths_path(@user) %>
+      <div class="subtext">
+        <%= render 'strengths' %>
+      </div>
+    </li>
+    
+    <li>
+      <%= link_to "My favourite things", user_favourites_path(@user) %>
+      <div class="subtext">
+        <%= render 'favourites' %>
+      </div>
+    </li>
+    
+    <li>
+      <%= link_to "It drives me mad when ...", user_dislikes_path(@user) %>
+      <div class="subtext">
+        <%= render 'dislikes' %>
+      </div>
+    </li>
+    
+    <li>
+      <%= link_to "Long-term aims", user_aims_path(@user) %>
+      <div class="subtext">
+        <%= render 'aims' %>
+      </div>
+    </li>
+    
+    <li>
+      <%= link_to "Possible limitations", user_limitations_path(@user) %>
+      <div class="subtext">
+        <%= render 'limitations' %>
+      </div>
+    </li>
+    
+    <li> 
+      <%= link_to "Previous jobs", user_previousjobs_path(@user) %>
+      <div class="subtext">
+        <%= render 'jobs' %>
+      </div>
+    </li>
+    
+    <li>
+      <%= link_to "Other information", edit_user_portrait_path(@user) %>
+      <div class="subtext">
+        <%= render 'notes' %>
+      </div>
+    </li>
+    
+    <li>
+      <%= link_to "References", user_referees_path(@user) %>
+      <div class="subtext">
+        <%= render 'references' %>
+      </div>
+    </li>
+  </ul>
+</div>

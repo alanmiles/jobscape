@@ -1,21 +1,32 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :strength, "Your greatest strengths" %><br />
-  <small>Not necessarily your qualifications.  When it comes right down to it, in which <br />
-         areas do you feel you can make the biggest contribution to a team effort?</small><br />
+  <%= f.label :strength, "Your greatest strengths *" %>
+  <div class="subtext over under">
+    Not necessarily your qualifications.  When it comes right down to it, in which
+    areas do you feel you can make the biggest contribution to a team effort?
+    <br /><br />
+  </div>
   <%= f.text_field :strength, :maxlength => 50, :size => 40 %>
-  <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
+  <div class="char-count"><%= @characters_left %> characters left</div>
 </div>
 
 <% content_for :javascript do %>
 
   <%= javascript_tag do %>
+  
+   $(document).ready(function(){
 
+    $('#strength_strength').click(function() {
+      $('.char-count').css('visibility', 'visible');
+    });
+      
     $('#strength_strength').live('keyup keydown', function(e) {
     var maxLen = 50;
     var left = maxLen - $(this).val().length;
-    $('#char-count').html(left);
+    $('.char-count').html(left);
     });
     
+   });
+   
   <% end %>
 <% end %>

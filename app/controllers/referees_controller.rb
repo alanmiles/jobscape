@@ -10,7 +10,7 @@ class RefereesController < ApplicationController
   def new
     @user = current_user
     @referee = @user.referees.new
-    @title = "Add a reference"
+    @title = "New reference"
     @relationships = Referee::RELATIONSHIP_TYPES
   end
   
@@ -47,7 +47,7 @@ class RefereesController < ApplicationController
       end
       redirect_to user_referees_path(@user)
     else
-      @title = "Add a reference"
+      @title = "New reference"
       @relationships = Referee::RELATIONSHIP_TYPES
       render 'new'
     end
