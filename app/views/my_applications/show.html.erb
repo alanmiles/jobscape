@@ -1,111 +1,75 @@
 <%= link_to image_tag("pageback.png", :title => "Previous"), my_applications_path, :class => "magnify" %>
 
-<div>
+<%= render "brief_without_status" %>
 
-  <strong>
-    <% if @vacancy.quantity == 1 %>
-      <%= @vacancy.job.job_title %>
-    <% else %>
-      <%= "#{@vacancy.quantity.to_s} #{@vacancy.job.job_title.pluralize}" %>
-    <% end %>
-    - <%= @vacancy.job.business.city %>
-  </strong>       
-  <div class="subtext">   
-    Sector: <%= @vacancy.sector.sector %><br />
-    <% if @vacancy.full_time? %>
-      Full-time  
-    <% else %>
-      Part-time 
-    <% end %> 
-    -
-    <% if @vacancy.voluntary? %>
-      Voluntary work.
-    <% else %>
-      Salary: £<%= number_with_delimiter(@vacancy.remuneration, :delimiter => ",") %><%= @vacancy.remuneration_rate %>.
-    <% end %>
-    <br />
-    Posted: <%= @vacancy.created_at.strftime("%b %d") %>.
-    Deadline: <%= @vacancy.close_date.strftime("%b %d") %>.
-    &nbsp;<em>(<%= pluralize(@vacancy.all_completed_applications.count, "applicant") %>)</em>
-    <br />
-    <% unless @vacancy.notes.empty? %> 
-      <%= @vacancy.notes %>
-      <br />
-    <% end %>
-    <% if @details_link == true %>
-      <% unless @vacancy.interest_from?(current_user) %>
-        <%= link_to "(Full details)", new_vacancy_application_path(@vacancy) %>
-      <% else %>
-        <% if @vacancy.application_from(current_user).next_action == 1 %>
-          <%= link_to "(Review job details & apply)", "#" %>
-        <% else %>
-          <% if @vacancy.application_from(current_user).submitted? %>
-            <%= link_to "(Review your application)", "#" %>
-          <% else %>
-            <%= link_to "(Continue with application)", "#" %>
-          <% end %>
-        <% end %>
-      <% end %>
-      <br />
-    <% end %>
-    <%= link_to image_tag("details.png"), "#" %> &nbsp;
-    <%= link_to "Detailed description of job", "#" %>   
+<div class="under">
+  <div id="display_outline" class="no-print">
+    <%= link_to "Detailed job outline", summary_application_path(@application), :remote => true %> 
+  </div>
+  <div id="outline" class="display_off">
+    <%= render "/applications/full_outline" %>
+  </div>
+  <div class="no-print"><%= link_to "Change your application", edit_my_application_path(@application) if @application.submitted_today? %></div>
+</div>
+<br />
+
+<h4 class="over">You were asked...</h4>
+<h2>Do you have the experience to ... ?</h2>
+<div id="listing">
+  <ul class="no_dec subtext">
+    <% @responsibilities.each do |responsibility| %>
+      <li>
+        ... <%= responsibility.responsibility.definition %>
+        <div>
+          <em>"<%= responsibility.rating %>"</em>
+        </div>
+    <% end %>  
+  </ul>
+  <br />
+  <h2>How would you rate yourself on ... ?</h2>
+  <ul class="no_dec subtext">
+    <% @qualities.each do |quality| %>
+      <li>
+        ... <%= quality.quality.quality %>
+        <div>
+          <em>"<%= quality.rating %>"</em>
+        </div>
+    <% end %>  
+  </ul>
+
+  <br />
+  <h2>Do you meet these hiring requirements?</h2>
+  <ul class="no_dec subtext">
+    <% @requirements.each do |requirement| %>
+      <li>
+        <%= requirement.requirement.requirement %>
+        <div>
+          <em>"<%= requirement.rating %>"</em>
+        </div>
+    <% end %>  
+  </ul>
+
+  <br />
+  <h2>What makes you a great candidate for this job?</h2>
+  <div class="subtext">
+    <em>"<%= application_message %>"</em>
   </div>
 </div>
 
-<br />
+<% content_for :javascript do %>
 
-<h4>You were asked..</h4>
-
-<table class="smaller_font">
-  <tr>
-    <th class="grayborder round beige">Do you have the experience to ... ?</th>
-    <th class="grayborder round beige">You said ...</th>
-  </tr>
-  <% @responsibilities.each do |responsibility| %>
-  <tr>
-    <td class="round width_65"><%= responsibility.responsibility.definition %></td>
-    <td class="round at_top"><%= responsibility.rating %></td>
-  </tr>
+  <%= javascript_tag do %>
+   
+   $(document).ready(function(){
+   
+    $('#display_outline').click(function() {
+      $('#outline').toggle( 100, function() {
+      });
+    });
+   
+   });
+    
   <% end %>
-</table>
-<br />
-<table class="smaller_font">
-  <tr>
-    <th class="grayborder round beige">How would you rate yourself on ... ?</th>
-    <th class="grayborder round beige">You said ...</th>
-  </tr>
-  <% @qualities.each do |quality| %>
-  <tr>
-    <td class="round width_65"><%= quality.quality.quality %></td>
-    <td class="round at_top"><%= quality.rating %></td>
-  </tr>
-  <% end %>
-</table>
-<br />
-<table class="smaller_font">
-  <tr>
-    <th class="grayborder round beige">Do you meet these hiring requirements ... ?</th>
-    <th class="grayborder round beige">You said ...</th>
-  </tr>
-  <% @requirements.each do |requirement| %>
-  <tr>
-    <td class="round width_65"><%= requirement.requirement.requirement %></td>
-    <td class="round at_top"><%= requirement.rating %></td>
-  </tr>
-  <% end %>
-</table>
-<br />
-<span class="wide_label grayborder round beige">What makes you a great candidate for this job?  &nbsp; You said ...</span>
-<div class="info_box_wide grayborder round" style="margin-left: 0px">
-  <%= application_message %>
-</div>
-<br />
+<% end %>
 
-<div class = "r-float">
-  <%= link_to "Your completed applications list", my_applications_path %><br />
-  <%= link_to "Change your application", edit_my_application_path(@application) %>
-</div>
-<br />
 
-<%= render 'guidance' %>

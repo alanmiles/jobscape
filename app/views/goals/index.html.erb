@@ -1,13 +1,25 @@
 <nav class="topmenu over">
-  <ul>
-    <span id="thisjob"><li><%= link_to "Job menu", @job %></li></span>
-    <span id="aplan"><li><%= link_to "A-Plan menu", @plan %></li></span>
-    <span id="responsibilities"><li><%= link_to "Job responsibilities", responsibilities_path %></li></span>
-    <span id="jobs"><li><%= link_to "All jobs", business_jobs_path(@business) %></li></span>
-  </ul>
+  <% unless current_user.account < 3 %>
+    <ul>
+      <span id="thisjob"><li><%= link_to "Job menu", @job %></li></span>
+      <span id="aplan"><li><%= link_to "A-Plan menu", @plan %></li></span>
+      <span id="responsibilities"><li><%= link_to "Job responsibilities", responsibilities_path %></li></span>
+      <span id="jobs"><li><%= link_to "All jobs", business_jobs_path(@business) %></li></span>
+    </ul>
+  <% else %>
+    <ul>
+      <span id="aplan"><li><%= link_to "A-Plan menu", @plan %></li></span>
+    </ul>
+  <% end %>
 </nav>
 
-<%= link_to image_tag("pageback.png", :title => "Previous"), @plan, :class => "magnify" %>
+<% unless @plan.max_responsibilities? %>
+  <div class = "r-float">
+    <%= link_to "Add another responsibility", new_plan_responsibility_path(@plan) %>
+  </div>
+<% end %>  
+
+<%= link_to image_tag("pageback.png", :title => "Previous"), plan_responsibilities_path(@plan), :class => "magnify" %>
 
 <div id="title" class="over">
   <%= render '/shared/job_title_cluster' %>
@@ -17,7 +29,7 @@
   <div class="r-float subtext">
     <%= link_to "Edit", edit_responsibility_path(@responsibility) %>
   </div>
-  <h1 class="no-gap">Responsibility</h1> 
+  <h2 class="no-gap">Responsibility</h2> 
   <div class="subtext">
     <%= @responsibility.definition %>
   </div>
@@ -29,7 +41,7 @@
       <%= link_to "Add a goal", new_responsibility_goal_path(@responsibility) %>
     </div>
   <% end %>
-  <h1>Goals for this responsibility</h1>
+  <h2>Goals for this responsibility</h2>
 </div>
 
 <div id="listing" class="under">
@@ -69,12 +81,12 @@
       <%= link_to "Set rating", edit_evaluation_path(@responsibility.evaluation) %>
     <% end %>
   </div>
-  <h1>Responsibility rating: 
+  <h2>Responsibility rating: 
     <% if @responsibility.has_rating? %>
       <%= @responsibility.rating %>
     <% else %>
      <%= image_tag("warning.png") %>
      <span class="subtext highlt">Not yet set</span>
     <% end %>
-  </h1>
+  </h2>
 </div>

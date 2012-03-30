@@ -66,4 +66,10 @@ class ApplicationsController < ApplicationController
     end   
   end
   
+  def summary
+    @application = Application.find(params[:id])
+    @job = Job.find(@application.vacancy.job_id)
+    @outline = @job.outline
+    @title = "Full job summary"
+  end
 end

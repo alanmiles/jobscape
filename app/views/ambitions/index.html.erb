@@ -1,0 +1,33 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), employee_home_path, :class => "magnify" %>
+
+<% unless @user.max_ambitions? %>
+  <div class="r-float">
+    <%= link_to "Add an ambition", new_user_ambition_path(@user) %>
+  </div>
+<% end %>
+
+<h4 class="over"><%= @user.name %></h4>
+
+<div id="listing">
+  <% if @user.has_ambitions? %>
+    <div class="subtext">
+    <ul class="no_dec">
+      <% @ambitions.each do |ambition| %>
+        <li>
+          <%= link_to(image_tag("delete.png"), ambition, 
+                   	:method => :delete, 
+                   	:confirm => "Are you sure you want to remove this ambition - and all related targets and tasks?",
+                   	:title => "Remove this ambition") %>
+          <%= link_to image_tag("details.png"), ambition, :title => "Edit ambition - or view related targets" %> &nbsp;
+          <%= ambition.ambition %>
+        </li> 
+      <% end %>
+    </ul>
+    </div>
+  <% else %>
+    <div class="no_data round">
+      <%= image_tag("no_entry.png") %> &nbsp;
+      You haven't added any ambitions yet.
+    </div> 
+  <% end %>
+</div>

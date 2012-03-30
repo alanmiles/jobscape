@@ -1,3 +1,9 @@
+<% if @user.account == 2 %>
+  <%= link_to image_tag("pageback.png", :title => "Home"), jobseeker_home_path, :class => "magnify" %>
+<% elsif @user.account == 1 %>
+  <%= link_to image_tag("pageback.png", :title => "Home"), user_home_path, :class => "magnify" %>
+<% end %>
+
 <% unless current_user.has_public_portrait? %>
   <div class="warning round">
     <%= image_tag("important.png") %>  Before you start applying for jobs, first create a public 

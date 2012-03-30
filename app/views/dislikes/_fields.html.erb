@@ -1,9 +1,8 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :dislike, "I get annoyed when ..." %>
+  <%= f.label :dislike, "List one of your pet peeves" %>
   <div class="subtext under">
-    At work, outside work, when you're with other people ...
-    Mention one of your pet peeves.
+    ... at work, outside work, when you're with other people ...
     <br /><br />
   </div>
   <%= f.text_field :dislike, :maxlength => 50, :size => 40 %>

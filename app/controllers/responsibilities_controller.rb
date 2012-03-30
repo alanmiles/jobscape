@@ -70,7 +70,7 @@ class ResponsibilitiesController < ApplicationController
     if @responsibility.update_attributes(params[:responsibility])
       @responsibility.update_attribute(:updated_by, current_user.id)
       flash[:success] = "Responsibility successfully updated."
-      redirect_back_or(plan_path(@plan))
+      redirect_back_or(plan_responsibilities_path(@plan))
     else
       @title = "Edit responsibility"
       @job = Job.find(session[:jobid])

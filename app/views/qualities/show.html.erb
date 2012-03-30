@@ -1,7 +1,13 @@
-<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), qualities_path %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), qualities_path, :class => "magnify" %>
 
 <div id ="listing">
-  <h1><%= @quality.quality.upcase %><%= link_to "Edit", edit_quality_path(@quality) %></h1>
+  
+  <h1>
+    <%= @quality.quality.upcase %>
+    <span class="subtext">
+      <%= link_to " (Edit)", edit_quality_path(@quality) %>
+    </span>
+  </h1>
   <ul class="no_dec">
     <% @pams.each do |pam| %>
       <li>

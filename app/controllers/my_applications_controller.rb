@@ -9,7 +9,7 @@ class MyApplicationsController < ApplicationController
 
   def edit
     @application = Application.find(params[:id])
-    @title = "Finalize application details"
+    @title = "Finalize application"
     @vacancy = Vacancy.find(@application.vacancy_id)
     @r_scores = Applicresponsibility::RESPONSIBILITY_SCORES
     @q_scores = Applicquality::ATTRIBUTE_SCORES
@@ -41,7 +41,7 @@ class MyApplicationsController < ApplicationController
         redirect_to incomplete_applications_path
       end
     else
-      @title = "Finalize application details"
+      @title = "Finalize application"
       @vacancy = Vacancy.find(@application.vacancy_id)
       @r_scores = Applicresponsibility::RESPONSIBILITY_SCORES
       @a_qualities = @application.applicqualities.order("position")

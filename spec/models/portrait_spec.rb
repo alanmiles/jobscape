@@ -10,6 +10,9 @@
 #  public        :boolean         default(FALSE)
 #  created_at    :datetime
 #  updated_at    :datetime
+#  mail_address  :string(255)
+#  home_phone    :string(255)
+#  mobile        :string(255)
 #
 
 require 'spec_helper'

@@ -1,0 +1,41 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), user_ambitions_path(@user), :class => "magnify" %>
+
+<div id="rubric">
+  
+  <%= form_for([@user, @ambition]) do |f| %>
+    <div class="field">
+      <%= f.label :ambition, "Describe one of your long term ambitions *" %>
+      <div class="subtext under"> 
+        ... either at work or away from it.
+      </div>
+      <%= f.text_area :ambition, :maxlength => 100, :class => "tiny" %>
+    </div>
+    <div class="char-count"><%= @characters_left %> characters left</div>
+  
+    <div class="actions">
+      <%= f.submit :class => "create round" %>
+    </div>
+  <% end %>
+
+</div>
+
+<% content_for :javascript do %>
+
+  <%= javascript_tag do %>
+
+    $(document).ready(function(){
+    
+      $('#ambition_ambition').click(function() {
+        $('.char-count').css('visibility', 'visible');
+      });
+      
+      $('#ambition_ambition').live('keyup keydown', function(e) {
+        var maxLen = 100;
+        var left = maxLen - $(this).val().length;
+        $('.char-count').html(left);
+      });
+    
+     });
+     
+  <% end %>
+<% end %>

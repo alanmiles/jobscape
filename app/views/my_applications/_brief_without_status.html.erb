@@ -1,82 +1,50 @@
-<div class="display_wider grayborder round">
-        <strong>
-          <% if vacancy.quantity == 1 %>
-            <%= vacancy.job.job_title %>
-          <% else %>
-            <%= "#{vacancy.quantity.to_s} #{vacancy.job.job_title.pluralize}" %>
-          <% end %>
-           for <%= vacancy.sector.sector %> business, <%= vacancy.job.business.city %>.
-        </strong>
-  
-        <br />
-        <% if vacancy.full_time? %>
-          Full-time.  
-        <% else %>
-          Part-time. 
-        <% end %>
-        <% if vacancy.voluntary? %>
-          This is a voluntary position.
-        <% elsif vacancy.annual_salary.nil? %>
-          Hourly rate: £<%= two_dec(vacancy.hourly_rate) %>.
-        <% else %>
-          Annual salary: £<%= number_with_delimiter(vacancy.annual_salary, :delimiter => ",") %>.
-        <% end %>
-        <br />
-        <%= vacancy.notes unless vacancy.notes.empty? %> 
-        <% if @details_link == true %>
-          <% unless vacancy.interest_from?(current_user) %>
-            <%= link_to "(Full details)", new_vacancy_application_path(vacancy) %>
-          <% else %>
-            <% if vacancy.application_from(current_user).next_action == 1 %>
-              <%= link_to "(Review job details & apply)", "#" %>
-            <% else %>
-              <% if vacancy.application_from(current_user).submitted? %>
-                <%= link_to "(Review your application)", "#" %>
-              <% else %>
-                <%= link_to "(Continue with application)", "#" %>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-        <br />
-        <small>
-           Ref #<%= vacancy.id %> -  
-           Posted <%= time_ago_in_words(vacancy.created_at) %> ago.  Apply
-           by <%= vacancy.close_date.strftime("%a %b %d, %Y") %>.
-           &nbsp;<em>(<%= pluralize(vacancy.all_completed_applications.count, "application") %>)</em>
-        </small>
-        <br />
-        <span id="info", style ="cursor:help; color:#09c; font-size:85%">View job summary</span>
-        
-        <div id ="infotext" class="info_box_wide shift_center_50 beige round" style = "display:none; margin-top: 10px; width: 75%">
-          <%= @outline.role %><br /><br />
-          <%= @outline.qualities %><br /><br />
-          <%= @outline.importance %>
-          &nbsp; <span id = "no-info" style="color:#09c; cursor:n-resize">(Hide)</span>
-        </div>
-        
-      </div>
-   
-      
-      
-<% content_for :javascript do %>
+<div>
 
-  <%= javascript_tag do %>
-    
-   $(document).ready(function(){
-    
-    $('#info').click(function() {
-      $('#infotext').show('fast', function() {
-      // Animation complete.
-      });
-    });
-    
-    $('#no-info').click(function() {
-      $('#infotext').hide('fast', function() {
-      // Animation complete.
-      });
-    });
-   }); 
-  <% end %>
-<% end %>
-  
+  <strong>
+    <% if @vacancy.quantity == 1 %>
+      <%= @vacancy.job.job_title %>
+    <% else %>
+      <%= "#{@vacancy.quantity.to_s} #{@vacancy.job.job_title.pluralize}" %>
+    <% end %>
+    - <%= @vacancy.job.business.city %>
+  </strong>       
+  <div class="subtext">   
+    Sector: <%= @vacancy.sector.sector %><br />
+    <% if @vacancy.full_time? %>
+      Full-time  
+    <% else %>
+      Part-time 
+    <% end %> 
+    -
+    <% if @vacancy.voluntary? %>
+      Voluntary work.
+    <% else %>
+      Salary: £<%= number_with_delimiter(@vacancy.remuneration, :delimiter => ",") %><%= @vacancy.remuneration_rate %>.
+    <% end %>
+    <br />
+    Posted: <%= @vacancy.created_at.strftime("%b %d") %>.
+    Deadline: <%= @vacancy.close_date.strftime("%b %d") %>.
+    &nbsp;<em>(<%= pluralize(@vacancy.all_completed_applications.count, "applicant") %>)</em>
+    <br />
+    <% unless @vacancy.notes.empty? %> 
+      <%= @vacancy.notes %>
+      <br />
+    <% end %>
+    <% if @details_link == true %>
+      <% unless @vacancy.interest_from?(current_user) %>
+        <%= link_to "(Full details)", new_vacancy_application_path(@vacancy) %>
+      <% else %>
+        <% if @vacancy.application_from(current_user).next_action == 1 %>
+          <%= link_to "(Review job details & apply)", "#" %>
+        <% else %>
+          <% if @vacancy.application_from(current_user).submitted? %>
+            <%= link_to "(Review your application)", "#" %>
+          <% else %>
+            <%= link_to "(Continue with application)", "#" %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <br />
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,2 @@
+module AmbitionsHelper
+end

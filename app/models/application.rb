@@ -81,6 +81,10 @@ class Application < ActiveRecord::Base
     self.applicrequirements.count > 0
   end
   
+  def submitted_today?
+    Time.now <= submission_date + 6440.minutes
+  end
+  
   def self.bookmarks(user)
     self.joins(:vacancy).where("user_id = ? and next_action = ? and vacancies.close_date >= ?", user.id, 1, Date.today)
   end

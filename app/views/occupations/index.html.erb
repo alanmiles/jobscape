@@ -2,7 +2,7 @@
   <%= link_to "New occupation", new_occupation_path %><br />
 </div>
 
-<%= link_to image_tag("pageback.png", :size => "25x25", :title => "Previous"), admin_path %>
+<%= link_to image_tag("pageback.png", :title => "Previous"), admin_path, :class => "magnify" %>
 
 <div class="pagination over">
   <%= will_paginate @occupations %>

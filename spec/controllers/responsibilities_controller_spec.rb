@@ -94,7 +94,7 @@ describe ResponsibilitiesController do
           get :index, :plan_id => @plan.id
           response.should_not have_selector("a", :href => new_plan_responsibility_path(@plan))
           response.should have_selector("div.r-float", 
-                                        :content => "List is full")
+                                        :content => "All responsibilities entered")
         end
         
         it "should have a 'return to A-Plan menu' link" do

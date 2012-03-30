@@ -1,0 +1,6 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), my_application_path(@application), :class => "magnify" %>
+
+<h4><%= @job.job_title %> - <%= @job.business.city %></h4>
+
+<%= render "/applications/full_outline" %>
+

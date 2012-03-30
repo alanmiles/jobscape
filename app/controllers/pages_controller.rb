@@ -36,6 +36,10 @@ class PagesController < ApplicationController
     @title = "About"
   end
   
+  def consultancy
+    @title = "Services"
+  end
+  
   def help
     @title = "Help"
   end

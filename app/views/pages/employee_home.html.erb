@@ -115,9 +115,11 @@
     <h4 class="listheader">Personal Goals</h4>
     <ul class="no_dec smaller_font"> 
       <li>
-        <%= link_to "Annual", "#" %> -
-        <%= link_to "Monthly", my_targets_path %> -
-        <%= link_to "Daily", my_tasks_path %>
+        <%= link_to "Ambitions", user_ambitions_path(@user) %> 
+        <%= image_tag("warning.png") unless @user.has_ambitions? %>
+        -
+        <%= link_to "Targets", my_targets_path %> -
+        <%= link_to "Daily tasks", my_tasks_path %>
       </li>
     </ul>  
     

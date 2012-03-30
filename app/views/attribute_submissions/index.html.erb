@@ -1,8 +1,8 @@
+<%= link_to image_tag("pageback.png", :title => "Approved attributes list"), qualities_path, :class => "magnify" %>
+
 <div class = "r-float">
-  <%= link_to "Approved list", qualities_path %><br />
   <%= link_to "Recent rejections", attribute_rejections_path %> <span id="submits">(<%= @rejections %>)</span><br />  
 </div>
 
-<h1>Personal Attributes: new submissions</h1>
   
 <%= render "/qualities/attribute_list" %>

@@ -3,7 +3,9 @@
   <head>
     <title><%= title %></title>
     <%= csrf_meta_tag %>
-    <%= render 'layouts/stylesheets' %>
+   
+    <%= stylesheet_link_tag 'screen', :media => :screen %>
+    <%= stylesheet_link_tag 'print', :media => :print %>
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js", "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js", "jquery_ujs.js" %>
   </head>
   <body>
@@ -22,15 +24,22 @@
         <%= render 'layouts/footer' %> 
       </div>
       <div id="right-panel">
-        <div id="blog-content">
-          This is where the blog is going to go.  Hello, I'd like to tell you a little story about a famous wolf.  
-          He lived deep in the forest with only his old Granny for protection ...
-        </div>
+        
         <div id="about-content">
           <%= render '/pages/about_us' %>
         </div>
+        
+        <div id="services-content">
+          <%= render '/pages/our_services' %>
+        </div>
+        
         <div id="contact-content">
           <%= render '/pages/contact_us' %>
+        </div>
+        
+        <div id="blog-content">
+          This is where the blog is going to go.  Hello, I'd like to tell you a little story about a famous wolf.  
+          He lived deep in the forest with only his old Granny for protection ...
         </div>
       </div>
       

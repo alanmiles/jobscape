@@ -33,26 +33,26 @@
 </div>
 
 <div id="intro_text" class="display_off over">
-  <h4 class="subtitle over">Introducing A-Plans <span class="hide_intro click_link subtext">(Hide)</span></h4> 
+  <h4 class="subtitle over">Introducing A-Plans <span class="hide_intro click_link subtext no-print">(Hide)</span></h4> 
   <div class="subtext">
     <%= render "intro_text" %>
-    <span class="hide_intro click_link">(Hide)</span>
+    <span class="hide_intro click_link no-print">(Hide)</span>
   </div>
 </div>
 
 <div id="uses_text" class="display_off over">
-  <h4 class="subtitle over">How do we use the A-Plan? <span class="hide_uses click_link subtext">(Hide)</span></h4>
+  <h4 class="subtitle over">How do we use the A-Plan? <span class="hide_uses click_link subtext no-print">(Hide)</span></h4>
   <div class="subtext">
     <%= render "uses_text" %>
-    <span class="hide_uses click_link">(Hide)</span>
+    <span class="hide_uses click_link no-print">(Hide)</span>
   </div>
 </div>
 
 <div id="writing_text" class="display_off over">
-  <h4 class="subtitle over">How do we write / edit the A-Plan? <span class="hide_writing click_link subtext">(Hide)</span></h4>
+  <h4 class="subtitle over">How do we write / edit the A-Plan? <span class="hide_writing click_link subtext no-print">(Hide)</span></h4>
   <div class="subtext">
     <%= render "writing_text" %>
-    <span class="hide_writing click_link">(Hide)</span>
+    <span class="hide_writing click_link no-print">(Hide)</span>
   </div>
 </div>
 
@@ -61,11 +61,13 @@
   <div id="jobtitle">
     <strong><%= @job.job_title %></strong>
     <%= image_tag("complete.png") if @plan.complete? %>
-    <%= image_tag("locked.png") if @plan.no_changes? %>
+    <% unless current_user.account == 1 %>
+      <%= image_tag("locked.png") if @plan.no_changes? %>
+    <% end %>
   </div>
   <div class="subtext">
     Category: <%= @job.occupation.name %><br />
-    <% unless @job.department_id == nil %>
+    <% unless @job.department.name == "Unknown" %>
       Department: <%= @job.department.name %><br />
     <% end %>
     <% if @plan.job_value.nil? %>

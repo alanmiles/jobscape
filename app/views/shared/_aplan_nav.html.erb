@@ -1,7 +1,9 @@
-<nav class="topmenu over">
-  <ul>
-    <span id="thisjob"><li><%= link_to "Job menu", @job %></li></span>
-    <span id="aplan"><li><%= link_to "A-Plan menu", @plan %></li></span>
-    <span id="jobs"><li><%= link_to "All jobs", business_jobs_path(@business) %></li></span>
-  </ul>
-</nav>
+<% unless @job.department.name == "Unknown" %>
+  <nav class="topmenu over">
+    <ul>
+      <span id="thisjob"><li><%= link_to "Job menu", @job %></li></span>
+      <span id="aplan"><li><%= link_to "A-Plan menu", @plan %></li></span>
+      <span id="jobs"><li><%= link_to "All jobs", business_jobs_path(@business) %></li></span>
+    </ul>
+  </nav>
+<% end %>

@@ -1,6 +1,6 @@
-<%= render 'shared/aplan_nav' %>
+<%= render 'shared/aplan_nav' unless current_user.account < 3 %>
 
-<%= link_to image_tag("pageback.png", :title => "Previous"), @plan, :class => "magnify" %>
+<%= link_to image_tag("pageback.png", :title => "A-Plan menu"), @plan, :class => "magnify" %>
 
 <div id="title" class="over">
   <%= render '/shared/job_title_cluster' %>
@@ -12,7 +12,7 @@
   </div>
 
   <h1 class="under no-gap">Key attributes</h1>
-  <div class="subtext">
+  <div class="subtext no-print">
     <% if @plan.max_attributes? %>
       Ready to use.
     <% else %>

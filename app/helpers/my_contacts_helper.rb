@@ -1,0 +1,2 @@
+module MyContactsHelper
+end

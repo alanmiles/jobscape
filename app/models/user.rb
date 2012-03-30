@@ -53,6 +53,7 @@ class User < ActiveRecord::Base
   has_many :issued_invitations, :through => :invitation_issues
   has_many :invitation_receipts, :foreign_key => "invitee_id", :class_name => "Invitation", :dependent => :destroy
   has_many :received_invitations, :through => :invitation_receipts
+  has_many :ambitions, :dependent => :destroy
   
   accepts_nested_attributes_for :placements
   
@@ -147,6 +148,18 @@ class User < ActiveRecord::Base
   def has_attribute_submissions?
     total = Quality.find_all_by_created_by(self.id).count
     return true if total > 0 
+  end
+  
+  def count_ambitions
+    self.ambitions.count
+  end
+  
+  def has_ambitions?
+    count_ambitions > 0
+  end
+      
+  def max_ambitions?
+    count_ambitions >= 5  
   end
   
   def count_achievements

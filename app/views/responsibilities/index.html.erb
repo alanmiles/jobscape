@@ -1,17 +1,17 @@
-<%= render 'shared/aplan_nav' %>
+<%= render 'shared/aplan_nav' unless current_user.account < 3 %>
 
-<%= link_to image_tag("pageback.png", :title => "Previous"), @plan, :class => "magnify" %>
+<div class = "r-float">
+  <% if @plan.max_responsibilities? %>
+    <u>All responsibilities entered</u>
+  <% else %>
+    <%= link_to "Add a responsibility", new_plan_responsibility_path(@plan) %><br />
+  <% end %>
+</div>
+
+<%= link_to image_tag("pageback.png", :title => "A-Plan menu"), @plan, :class => "magnify" %>
 
 <div id="title" class="over">
   <%= render '/shared/job_title_cluster' %>
-  
-  <div class = "r-float under">
-    <% if @plan.max_responsibilities? %>
-      <u>List is full</u>
-    <% else %>
-      <%= link_to "New responsibility", new_plan_responsibility_path(@plan) %><br />
-    <% end %>
-  </div>
   
   <h1 class="under no-gap">Responsibilities for this job</h1>
   <div class="subtext">

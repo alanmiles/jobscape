@@ -2,7 +2,7 @@
   <%= @job.job_title %>
 </h1>      
 <div class="subtext">
-  <% unless @job.department_id == nil %>
+  <% unless @job.department.name == "Unknown" %>
     Department: <%= @job.department.name %>
   <% end %>
 </div>

@@ -65,11 +65,11 @@ class GoalsController < ApplicationController
   
   def update
     @goal = Goal.find(params[:id])
-    @responsibility = Responsibility.find(session[:responid])
+    @responsibility = Responsibility.find(@goal.responsibility_id)
     if @goal.update_attributes(params[:goal])
       @goal.update_attribute(:updated_by, current_user.id)
       flash[:success] = "Goal successfully updated."
-      redirect_to @responsibility
+      redirect_to responsibility_goals_path(@responsibility)
     else
       @title = "Edit goal"
       @job = Job.find(session[:jobid])

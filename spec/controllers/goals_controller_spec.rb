@@ -361,9 +361,9 @@ describe GoalsController do
               @goal.updated_by.should  == @user.id
             end
 
-            it "should redirect to the responsibility 'show' page" do
+            it "should redirect to the goals list for the responsibility" do
               put :update, :id => @goal, :goal => @attr
-              response.should redirect_to responsibility_path(@responsibility)
+              response.should redirect_to responsibility_goals_path(@responsibility)
             end
 
             it "should have a flash message" do

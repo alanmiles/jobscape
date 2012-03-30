@@ -11,11 +11,13 @@
 #  note         :string(255)
 #  created_at   :datetime
 #  updated_at   :datetime
+#  ambition_id  :integer
 #
 
 class Target < ActiveRecord::Base
 
   belongs_to :placement
+  belongs_to :ambition
   
   attr_accessible :placement_id, :target, :target_date, :achieved, :cancelled, :note
   

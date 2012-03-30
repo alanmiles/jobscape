@@ -1,12 +1,12 @@
 <% if @user.account == 2 %>
-  <%= link_to image_tag("pageback.png", :title => "Previous"), jobseeker_home_path, :class => "magnify" %>
+  <%= link_to image_tag("pageback.png", :title => "Home"), jobseeker_home_path, :class => "magnify" %>
 <% elsif @user.account == 1 %>
-  <%= link_to image_tag("pageback.png", :title => "Previous"), user_home_path, :class => "magnify" %>
+  <%= link_to image_tag("pageback.png", :title => "Home"), user_home_path, :class => "magnify" %>
 <% end %>
 
 <h4><%= @user.name.upcase %></h4>
 
-<div id="rubric">
+<div id="rubric" class="no-print">
   <em>
     Click on a heading to add / update your details.
   </em>
@@ -50,7 +50,7 @@
     </li>
     
     <li>
-      <%= link_to "It drives me mad when ...", user_dislikes_path(@user) %>
+      <%= link_to "Things that drive me mad", user_dislikes_path(@user) %>
       <div class="subtext">
         <%= render 'dislikes' %>
       </div>
@@ -81,6 +81,13 @@
       <%= link_to "Other information", edit_user_portrait_path(@user) %>
       <div class="subtext">
         <%= render 'notes' %>
+      </div>
+    </li>
+    
+    <li>
+      <%= link_to "Contact details", edit_my_contact_path(@portrait) %>
+      <div class="subtext">
+        <%= render 'contacts' %>
       </div>
     </li>
     

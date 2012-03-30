@@ -4,6 +4,7 @@ Jobscape::Application.routes.draw do
     resource :portrait, :shallow => true
     resources :placements, :shallow => true
     resources :rehires, :shallow => true
+    resources :ambitions, :shallow => true
     resources :achievements, :shallow => true do
       collection do
         post :sort
@@ -81,6 +82,7 @@ Jobscape::Application.routes.draw do
       end
     end  
   end
+  resources :my_contacts
   resources :outlines, :only => [:show, :edit, :update] do
     member do
       get 'role', 'qualities', 'importance'
@@ -108,6 +110,9 @@ Jobscape::Application.routes.draw do
     resources :applicqualities, :shallow => true
     resources :applicresponsibilities, :shallow => true
     resources :applicrequirements, :shallow => true
+    member do
+      get 'summary'
+    end
   end
   resources :bookmarks
   resources :letter_templates
@@ -194,6 +199,7 @@ Jobscape::Application.routes.draw do
   match '/reviewer_login',	:to => 'pages#reviewer_login'
   match '/recruitment_menu',	:to => 'pages#recruitment_menu'
   match '/personal_goals',	:to => 'pages#personal_goals'
+  match '/consultancy',		:to => 'pages#consultancy'
   
   root :to => 'pages#home'
 

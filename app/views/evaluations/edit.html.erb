@@ -1,11 +1,27 @@
-<%= link_to image_tag("pageback.png", :title => "Previous"), session[:return_to], :class => "magnify" %>
+<nav class="topmenu over">
+  <% unless current_user.account < 3 %>
+    <ul>
+      <span id="thisjob"><li><%= link_to "Job menu", @job %></li></span>
+      <span id="aplan"><li><%= link_to "A-Plan menu", @plan %></li></span>
+      <span id="responsibilities"><li><%= link_to "Job responsibilities", responsibilities_path %></li></span>
+      <span id="jobs"><li><%= link_to "All jobs", business_jobs_path(@business) %></li></span>
+    </ul>
+  <% else %>
+    <ul>
+      <span id="aplan"><li><%= link_to "A-Plan menu", @plan %></li></span>
+    </ul>
+  <% end %>
+</nav>
+
+
+<%= link_to image_tag("pageback.png", :title => "Responsibilities list"), session[:return_to], :class => "magnify" %>
 
 <div id="title" class="over">
   <%= render '/shared/job_title_cluster' %>
 </div>
 
 <div id="responsibility" class="over">
-  <h1 class="no-gap">Responsibility</h1> 
+  <h2 class="no-gap">Responsibility</h2> 
   <div class="subtext">
     <%= @responsibility.definition %>
   </div>
@@ -14,19 +30,19 @@
 <%= form_for @evaluation do |f| %>
   <p>How important is this reponsibility to:-</p>
   <div class = "field">
-    <%= f.label :profits, "..Create business profit *" %><br />
+    <%= f.label :profits, "..Create business profit? *" %><br />
     <%= select( :evaluation, :profits, @ratings ) %>
   </div>
   <div class="field">
-    <%= f.label :customers, "..Please customers *" %><br />
+    <%= f.label :customers, "..Please customers? *" %><br />
     <%= select( :evaluation, :customers, @ratings ) %>
   </div>
   <div class="field">
-    <%= f.label :staff, "..Benefit staff *" %><br />
+    <%= f.label :staff, "..Benefit staff? *" %><br />
     <%= select( :evaluation, :staff, @ratings ) %>
   </div>
   <div class="field">
-    <%= f.label :processes, "..Maintain / strengthen business processes *" %><br />
+    <%= f.label :processes, "..Maintain / strengthen business processes? *" %><br />
       <%= select( :evaluation, :processes, @ratings ) %>
   </div>
   <div class="actions">

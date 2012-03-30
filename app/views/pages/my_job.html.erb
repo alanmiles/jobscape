@@ -1,7 +1,5 @@
-<div class = "r-float">
-<%= link_to "Your home page", user_home_path %>
-</div>
-<h1><%= @title %></hi>
+<%= link_to image_tag("pageback.png", :title => "home"), user_home_path, :class => "magnify" %>
+
 <h4><%= @job.job_title %></h4>
 
 <div id="listing">

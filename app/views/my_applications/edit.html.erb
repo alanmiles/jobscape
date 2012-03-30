@@ -1,53 +1,54 @@
-<div class = "r-float">
-  <%= link_to "Return to list", session[:return_to] %>
-</div>
-<h1><%= @title %></h1>
+<%= link_to image_tag("pageback.png", :title => "Return to list"), session[:return_to], :class => "magnify" %>
 
 
 <%= form_for(@application, :url => my_application_path(@application)) do |f| %>
-  <%= render 'brief_without_status', :vacancy => @vacancy %>
+  <%= render 'brief_without_status' %>
+  <div class="under no-print">
+    <%= link_to "Detailed description of job", "#" %> 
+  </div>
   <br />
   
-  <h4 class = "shallow" style="margin-left:25px">How would you cope with the job's key responsibilities?</h4>
-  <ul class="no_dec" style="margin-left:50px">
-    <%= f.fields_for :applicresponsibilities do |builder| %>  
-      <li style= "border-bottom: 1px solid #eee">
-        <span style="display:inline-block; width:60%">
+  <div id="listing">
+    <h4 class="over">How would you cope with the job's key responsibilities?</h4>
+    <ul class="no_dec">
+      <% f.fields_for :applicresponsibilities do |builder| %>  
+        <li>
           <%= builder.object.responsibility.definition %>
-        </span>
-        <%= builder.select :applicant_score, @r_scores %>    
-      </li>
-    <% end %>
-  </ul>
-
-  <%= render "qualities", :f => f %>
-
-  <h4 class = "shallow" style="margin-left:25px">Can you meet these requirements?</h4>
-  <ul class="no_dec" style="margin-left:50px">
-    <%= f.fields_for :applicrequirements do |builder3| %> 
-      <li style= "border-bottom: 1px solid #eee">
-        <span style="display:inline-block; width:85%"><%= builder3.object.requirement.requirement %></span>
-        <%= builder3.select :applicant_score, @req_scores %>  
-      </li>
-    <% end %>
-  </ul>
-
-  <h4 class = "shallow" style="margin-left:25px">What makes you a great candidate for this job?</h4>
+          <div><%= builder.select :applicant_score, @r_scores %></div>    
+        </li>
+      <% end %>
+    </ul>
   
-  <div class="field" style = "margin-left: 50px">
+    <%= render "qualities", :f => f %>
+  
+    <h4 class="under over">Can you meet these requirements?</h4>
+    <ul class="no_dec">
+      <% f.fields_for :applicrequirements do |builder3| %> 
+        <li>
+          <%= builder3.object.requirement.requirement %>
+          <div><%= builder3.select :applicant_score, @req_scores %></div> 
+        </li>
+      <% end %>
+    </ul>  
+  </div>
+
+  <h4 class="under over">What makes you a great candidate for this job?</h4>
+  <div class="field">
     <%= f.text_area :personal_statement, :maxlength => 255, :cols => 60, :rows => 4 %>
     <span id="char-count" style = "color:blue; padding-left: 5px"><%= @characters_left %></span>
   </div>
+ 
   <%= f.hidden_field :submission_date %>
-  <div class="field shift_center_50" style="width: 70%">
-    <small>If you're happy with all your changes, check the 'Ready to submit' box, and your application will be
-    sent directly to the recruiting business, together with your self-portrait.</small><br /><br />
+  <div class="subtext">
+    If you're happy with all your changes, check the 'Ready to submit' box, and your application will be
+    sent directly to the recruiting business, together with your self-portrait.
+  </div>
+  <div class="field under">
     <%= f.label :submitted, "Ready to submit" %>
     <%= f.check_box :submitted %>
   </div>
-  <br />
-  <div class="actions" style= "margin-left: 50px">
-    <%= f.submit "Save your application" %>
+  <div class="actions">
+    <%= f.submit "Save your application", :class => "create round" %>
   </div>  
 <% end %>
 

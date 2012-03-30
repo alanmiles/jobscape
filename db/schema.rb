@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120216104454) do
+ActiveRecord::Schema.define(:version => 20120318092047) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(:version => 20120216104454) do
     t.integer  "user_id"
     t.string   "aim"
     t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ambitions", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "ambition"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -289,6 +296,9 @@ ActiveRecord::Schema.define(:version => 20120216104454) do
     t.boolean  "public",        :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "mail_address"
+    t.string   "home_phone"
+    t.string   "mobile"
   end
 
   create_table "previousjobs", :force => true do |t|
@@ -445,6 +455,7 @@ ActiveRecord::Schema.define(:version => 20120216104454) do
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ambition_id"
   end
 
   create_table "tasks", :force => true do |t|

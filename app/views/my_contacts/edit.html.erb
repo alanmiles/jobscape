@@ -1,0 +1,28 @@
+<%= link_to image_tag("pageback.png", :title => "Previous"), user_portrait_path(@user), :class => "magnify" %>
+
+<h4 class="over">Contact details for <%= @user.name %></h4>
+
+<%= form_for([@user, @portrait], :url => my_contact_path) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  
+  <div class="field">
+    <%= f.label :mail_address, "Your mailing address (recommended)" %>
+    <%= f.text_area :mail_address, :class => "tiny" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :home_phone %><br />
+    <%= f.text_field :home_phone, :size => 20 %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :mobile %><br />
+    <%= f.text_field :mobile, :size => 20 %>
+  </div>
+  
+  Email: <%= @user.email %>
+  
+  <div class="actions">
+    <%= f.submit "Confirm changes", :class => "create round" %>
+  </div>
+<% end %>
